@@ -4,26 +4,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LoginUIManager : MonoBehaviour
+public class RegisterUIManager : MonoBehaviour
 {
     public InputField emailInputField;
     public InputField passwordInputField;
-    public Button loginButton;
+    public InputField confirmPasswordInputField;
     public Button registerButton;
+    public Button backButton;
     void Start()
     {
-        loginButton.onClick.AddListener(OnLoginButtonClick);
         registerButton.onClick.AddListener(OnRegisterButtonClick);
+        backButton.onClick.AddListener(OnBackButtonClick);
     }
 
-    void OnLoginButtonClick()
+    void OnRegisterButtonClick()
     {
         string email = emailInputField.text;
         string password = passwordInputField.text;
+        string confirmPassword = confirmPasswordInputField.text;
 
-        if (IsValidEmail(email) && IsValidPassword(password))
+        if (IsValidEmail(email) && IsValidPassword(password) && password == confirmPassword)
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Login");
+        }
+        else if (password != confirmPassword)
+        {
+            Debug.Log("Passwords do not match");
         }
         else
         {
@@ -31,9 +37,9 @@ public class LoginUIManager : MonoBehaviour
         }
     }
 
-    void OnRegisterButtonClick()
+    void OnBackButtonClick()
     {
-        SceneManager.LoadScene("RegisterScene");
+        SceneManager.LoadScene("Login");
     }
 
     bool IsValidEmail(string email)
