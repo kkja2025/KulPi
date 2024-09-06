@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameMenuController : MonoBehaviour
+public class SettingsController : MonoBehaviour
 {
     public GameObject settingsPanel;
     public Button settingsButton;
