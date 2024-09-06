@@ -10,9 +10,9 @@ public class SceneNavigationManager : MonoBehaviour
         SceneManager.LoadSceneAsync("Load Game");
     }
 
-    public void Options()
+    public void Settings()
     {
-        SceneManager.LoadSceneAsync("Options");
+        SceneManager.LoadSceneAsync("Settings");
     }
 
     public void Back()
