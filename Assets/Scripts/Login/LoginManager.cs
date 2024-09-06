@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 
 public class LoginManager : MonoBehaviour
 {
@@ -71,13 +74,7 @@ public class LoginManager : MonoBehaviour
         }
         catch (Exception exception)
         {
-            ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
-            panel.Open("Failed to start the client service.", "Retry");
-            Debug.LogException(exception);
-        }
-        finally
-        {
-            PanelManager.GetSingleton("loading").Close();
+            ShowError(ErrorMenu.Action.StartService, "Failed to connect to the network.", "Retry");
         }
     }
 
@@ -88,16 +85,55 @@ public class LoginManager : MonoBehaviour
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-        catch (Exception exception)
+        catch (AuthenticationException exception)
         {
-            ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
-            panel.Open("Failed to sign in anonymously.", "Retry");
-            Debug.LogException(exception);
+            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to sign in.", "OK");
         }
-        finally
+        catch (RequestFailedException exception)
         {
-            PanelManager.GetSingleton("loading").Close();
+            ShowError(ErrorMenu.Action.SignIn, "Failed to connect to the network.", "Retry");
         }
+    }
+
+    public async void SignInWithEmailAndPasswordAsync(string email, string password)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(email, password);
+        }
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorMenu.Action.OpenAuthMenu, "Email or password is wrong.", "OK");
+        }
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+        }
+    }
+
+    public async void SignUpWithEmailAndPasswordAsync(string email, string password)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(email, password);
+        }
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to sign you up.", "OK");
+        }
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+        }
+    }
+
+    public void SignOut()   //Method for main menu
+    {
+        AuthenticationService.Instance.SignOut();
+        PanelManager.CloseAll();
+        PanelManager.Open("auth");
     }
 
     private void SetupEvents()
@@ -105,15 +141,40 @@ public class LoginManager : MonoBehaviour
         eventsInitialized = true;
         AuthenticationService.Instance.SignedIn += () =>
         {
-            PanelManager.GetSingleton("main").Open();
+            SignInConfirmAsync();
         };
         AuthenticationService.Instance.SignedOut += () =>
         {
+            PanelManager.CloseAll();
             PanelManager.GetSingleton("auth").Open();
         };
-        AuthenticationService.Expired += () =>
+        AuthenticationService.Instance.Expired += () =>
         {
-            PanelManager.GetSingleton("auth").Open();
+            SignInAnonymouslyAsync();
         };
+    }
+
+    private void ShowError(ErrorMenu.Action action = ErrorMenu.Action.None, string error = "", string button = "")
+    {
+        PanelManager.Close("loading");
+        ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
+        panel.Open(action, error, button);
+    }
+
+    private async void SignInConfirmAsync()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
+            {
+                await AuthenticationService.Instance.UpdatePlayerNameAsync("Player");
+            }
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("main").Open();
+        }
+        catch
+        {
+            
+        }
     }
 }

@@ -1,95 +1,56 @@
-using Unity.Services.Authentication;
-using Unity.Services.Core;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class AuthenticationMenu : Panel
 {
-    private async void Start()
+    [SerializeField] private TMP_InputField emailInput = null;
+    [SerializeField] private TMP_InputField passwordInput = null;
+    [SerializeField] private Button SignInButton = null;
+    [SerializeField] private Button SignUpButton = null;
+    [SerializeField] private Button ForgotPasswordButton = null;
+
+    public override void Initialize()
     {
-        await UnityServices.InitializeAsync();
+        if (IsInitialized)
+        {
+            return;
+        }
+        ForgotPasswordButton.onClick.AddListener(ForgotPassword);
+        SignInButton.onClick.AddListener(SignIn);
+        SignUpButton.onClick.AddListener(SignUp);
+        base.Initialize();
     }
 
-    private async void SignUpWithUsernamePasswordAsync(string username, string password)
+    public override void Open()
     {
-        try
-        {
-            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
-            Debug.Log("SignUp is successful.");
-        }
-        catch (AuthenticationException ex)
-        {
-            // Compare error code to AuthenticationErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
-        catch (RequestFailedException ex)
-        {
-            // Compare error code to CommonErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
+        emailInput.text = "";
+        passwordInput.text = "";
+        base.Open();
     }
 
-    private async void SignInWithUsernamePasswordAsync(string username, string password)
+    private void ForgotPassword()
     {
-        try
+        PanelManager.GetSingleton("auth").Close();
+        PanelManager.GetSingleton("forgot").Open();
+    }
+
+    private void SignIn()
+    {
+        string email = emailInput.text.Trim();
+        string pass = passwordInput.text.Trim();
+        if (string.IsNullOrEmpty(email) == false && string.IsNullOrEmpty(pass) == false)
         {
-            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
-            Debug.Log("SignIn is successful.");
-        }
-        catch (AuthenticationException ex)
-        {
-            // Compare error code to AuthenticationErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
-        catch (RequestFailedException ex)
-        {
-            // Compare error code to CommonErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
+            LoginManager.Singleton.SignInWithEmailAndPasswordAsync(email, pass);
         }
     }
 
-    private async void AddUsernamePasswordAsync(string username, string password)
+    private void SignUp()
     {
-        try
-        {
-            await AuthenticationService.Instance.AddUsernamePasswordAsync(username, password);
-            Debug.Log("Username and password added.");
-        }
-        catch (AuthenticationException ex)
-        {
-            // Compare error code to AuthenticationErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
-        catch (RequestFailedException ex)
-        {
-            // Compare error code to CommonErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
-    }
+        PanelManager.GetSingleton("auth").Close();
+        PanelManager.GetSingleton("register").Open();
 
-    private async void UpdatePasswordAsync(string currentPassword, string newPassword)
-    {
-        try
-        {
-            await AuthenticationService.Instance.UpdatePasswordAsync(currentPassword, newPassword);
-            Debug.Log("Password updated.");
-        }
-        catch (AuthenticationException ex)
-        {
-            // Compare error code to AuthenticationErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
-        catch (RequestFailedException ex)
-        {
-            // Compare error code to CommonErrorCodes
-            // Notify the player with the proper error message
-            Debug.LogException(ex);
-        }
     }
 }

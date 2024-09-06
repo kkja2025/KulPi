@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class RegisterMenu : Panel
 {
-    [SerializeField] private TMP_InputField usernameInput = null;
+    [SerializeField] private TMP_InputField emailInput = null;
     [SerializeField] private TMP_InputField passwordInput = null;
     [SerializeField] private TMP_InputField confirmPasswordInput = null;
-    [SerializeField] private Button registerButton = null;
-    [SerializeField] private Button backButton = null;
+    [SerializeField] private Button SignUpButton = null;
+    [SerializeField] private Button BackButton = null;
 
     public override void Initialize()
     {
@@ -19,47 +19,102 @@ public class RegisterMenu : Panel
         {
             return;
         }
-        registerButton.onClick.AddListener(Register);
-        backButton.onClick.AddListener(Back);
+        SignUpButton.onClick.AddListener(SignUp);
+        BackButton.onClick.AddListener(Back);
         base.Initialize();
     }
 
-    private void Register()
+    public override void Open()
     {
-        if (string.IsNullOrEmpty(usernameInput.text) || string.IsNullOrEmpty(passwordInput.text) || string.IsNullOrEmpty(confirmPasswordInput.text))
+        emailInput.text = "";
+        passwordInput.text = "";
+        confirmPasswordInput.text = "";
+        base.Open();
+    }
+
+    private void SignUp()
+    {
+        string email = emailInput.text.Trim();
+        string pass = passwordInput.text.Trim();
+        string passConfirm = confirmPasswordInput.text.Trim();
+        if (string.IsNullOrEmpty(email) == false && string.IsNullOrEmpty(pass) == false && string.IsNullOrEmpty(passConfirm) == false)
         {
-            PanelManager.GetSingleton("error").Open(ErrorMenu.Action.None, "Please fill in all fields.", "OK");
-            return;
+            if (IsEmailValid(email) == false)
+            {
+                ShowError(ErrorMenu.Action.None, "Invalid email address", "OK");
+            }
+            else if (IsPasswordValid(pass) == false)
+            {
+                ShowError(ErrorMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
+            }
+            else if (pass != passConfirm)
+            {
+                ShowError(ErrorMenu.Action.None, "Passwords do not match", "OK");
+            }
+            else
+            {
+                LoginManager.Singleton.SignUpWithEmailAndPasswordAsync(email, pass);
+            }
         }
-        if (passwordInput.text != confirmPasswordInput.text)
-        {
-            PanelManager.GetSingleton("error").Open(ErrorMenu.Action.None, "Passwords do not match.", "OK");
-            return;
-        }
-        SignUpWithUsernamePasswordAsync(usernameInput.text, passwordInput.text);
     }
 
     private void Back()
     {
         PanelManager.GetSingleton("register").Close();
-        PanelManager.GetSingleton("login").Open();
+        PanelManager.GetSingleton("auth").Open();
     }
 
-    private async void SignUpWithUsernamePasswordAsync(string username, string password)
+    private bool IsPasswordValid(string password)
+    {
+        if (password.Length < 8 || password.Length > 30)
+        {
+            return false;
+        }
+        
+        bool hasUppercase = false;
+        bool hasLowercase = false;
+        bool hasDigit = false;
+        bool hasSymbol = false;
+
+        foreach (char c in password)
+        {
+            if (char.IsUpper(c))
+            {
+                hasUppercase = true;
+            }
+            else if (char.IsLower(c))
+            {
+                hasLowercase = true;
+            }
+            else if (char.IsDigit(c))
+            {
+                hasDigit = true;
+            }
+            else if (!char.IsLetterOrDigit(c))
+            {
+                hasSymbol = true;
+            }
+        }
+        return hasUppercase && hasLowercase && hasDigit && hasSymbol;
+    }
+
+      private bool IsEmailValid(string email) 
     {
         try
         {
-            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
-            PanelManager.GetSingleton("error").Open(ErrorMenu.Action.None, "SignUp is successful.", "OK");
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
         }
-        catch (AuthenticationException ex)
+        catch
         {
-            PanelManager.GetSingleton("error").Open(ErrorMenu.Action.None, ex.Message, "OK");
-        }
-        catch (RequestFailedException ex)
-        {
-            PanelManager.GetSingleton("error").Open(ErrorMenu.Action.None, ex.Message, "OK");
+            return false;
         }
     }
-    
+
+    private void ShowError(ErrorMenu.Action action = ErrorMenu.Action.None, string error = "", string button = "")
+    {
+        PanelManager.Close("loading");
+        ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
+        panel.Open(action, error, button);
+    }
 }
