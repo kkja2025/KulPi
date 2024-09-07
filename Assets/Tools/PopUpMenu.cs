@@ -4,16 +4,16 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ErrorMenu : Panel
+public class PopUpMenu : Panel
 {
 
-    [SerializeField] private TextMeshProUGUI errorText = null;
-    [SerializeField] private TextMeshProUGUI buttonText = null;
-    [SerializeField] private Button actionButton = null;
+    [SerializeField] private TextMeshProUGUI MenuText = null;
+    [SerializeField] private TextMeshProUGUI ButtonText = null;
+    [SerializeField] private Button ActionButton = null;
 
     public enum Action
     {
-        None = 0, StartService = 1, SignIn = 2, OpenAuthMenu = 3
+        None = 0, StartService = 1, OpenAuthMenu = 2
     }
     
     private Action action = Action.None;
@@ -24,7 +24,7 @@ public class ErrorMenu : Panel
         {
             return;
         }
-        actionButton.onClick.AddListener(ButtonAction);
+        ActionButton.onClick.AddListener(ButtonAction);
         base.Initialize();
     }
 
@@ -34,17 +34,17 @@ public class ErrorMenu : Panel
         base.Open();
     }
     
-    public void Open(Action action, string error, string button)
+    public void Open(Action action, string menu, string button)
     {
         Open();
         this.action = action;
-        if (string.IsNullOrEmpty(error) == false)
+        if (string.IsNullOrEmpty(menu) == false)
         {
-            errorText.text = error;
+            MenuText.text = menu;
         }
         if (string.IsNullOrEmpty(button) == false)
         {
-            buttonText.text = button;
+            ButtonText.text = button;
         }
     }
     
@@ -56,14 +56,10 @@ public class ErrorMenu : Panel
             case Action.StartService:
                 LoginManager.Singleton.StartClientService();
                 break;
-            case Action.SignIn:
-                LoginManager.Singleton.SignInAnonymouslyAsync();
-                break;
             case Action.OpenAuthMenu:
                 PanelManager.CloseAll();
                 PanelManager.Open("auth");
                 break;
         }
-    }
-    
+    } 
 }
