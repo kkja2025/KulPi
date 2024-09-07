@@ -41,15 +41,15 @@ public class RegisterMenu : Panel
         {
             if (IsEmailValid(email) == false)
             {
-                ShowError(ErrorMenu.Action.None, "Invalid email address", "OK");
+                LoginManager.Singleton.ShowError(ErrorMenu.Action.None, "Invalid email address", "OK");
             }
             else if (IsPasswordValid(pass) == false)
             {
-                ShowError(ErrorMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
+                LoginManager.Singleton.ShowError(ErrorMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
             }
             else if (pass != passConfirm)
             {
-                ShowError(ErrorMenu.Action.None, "Passwords do not match", "OK");
+                LoginManager.Singleton.ShowError(ErrorMenu.Action.None, "Passwords do not match", "OK");
             }
             else
             {
@@ -109,12 +109,5 @@ public class RegisterMenu : Panel
         {
             return false;
         }
-    }
-
-    private void ShowError(ErrorMenu.Action action = ErrorMenu.Action.None, string error = "", string button = "")
-    {
-        PanelManager.Close("loading");
-        ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
-        panel.Open(action, error, button);
     }
 }

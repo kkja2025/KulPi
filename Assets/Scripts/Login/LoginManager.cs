@@ -129,13 +129,6 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public void SignOut()   //Method for main menu
-    {
-        AuthenticationService.Instance.SignOut();
-        PanelManager.CloseAll();
-        PanelManager.Open("auth");
-    }
-
     private void SetupEvents()
     {
         eventsInitialized = true;
@@ -154,13 +147,6 @@ public class LoginManager : MonoBehaviour
         };
     }
 
-    private void ShowError(ErrorMenu.Action action = ErrorMenu.Action.None, string error = "", string button = "")
-    {
-        PanelManager.Close("loading");
-        ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
-        panel.Open(action, error, button);
-    }
-
     private async void SignInConfirmAsync()
     {
         try
@@ -175,6 +161,47 @@ public class LoginManager : MonoBehaviour
         catch
         {
             
+        }
+    }
+
+    
+    public void ShowError(ErrorMenu.Action action = ErrorMenu.Action.None, string error = "", string button = "")
+    {
+        PanelManager.Close("loading");
+        ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
+        panel.Open(action, error, button);
+    }
+
+    // public void SignOut()   //Method for main menu
+    // {
+    //     AuthenticationService.Instance.SignOut();
+    //     PanelManager.CloseAll();
+    //     PanelManager.Open("auth");
+    // }
+
+    public async void RequestPasswordResetAsync(string email)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+
+        }
+        catch 
+        {
+
+        }
+    }
+
+    public async void ResetPasswordAsync(string newPassword, string confirmPassword)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+
+        }
+        catch 
+        {
+
         }
     }
 }
