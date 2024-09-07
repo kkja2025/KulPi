@@ -64,7 +64,7 @@ public class LoginManager : MonoBehaviour
                 SetupEvents();
             }
 
-            if (AuthenticationService.Instance.SessionTokenExists)
+            if (AuthenticationService.Instance.IsSignedIn)
             {
                 SignInAnonymouslyAsync();
             }
@@ -76,7 +76,8 @@ public class LoginManager : MonoBehaviour
         }
         catch (Exception exception)
         {
-            ShowError(ErrorMenu.Action.StartService, "Failed to connect to the network.", "Retry");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client.", "Retry");
         }
     }
 
@@ -89,11 +90,13 @@ public class LoginManager : MonoBehaviour
         }
         catch (AuthenticationException exception)
         {
-            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to sign in.", "OK");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Logging in failed.", "OK");
         }
         catch (RequestFailedException exception)
         {
-            ShowError(ErrorMenu.Action.SignIn, "Failed to connect to the network.", "Retry");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Failed to connect. Please try again.", "Retry");
         }
     }
 
@@ -106,11 +109,13 @@ public class LoginManager : MonoBehaviour
         }
         catch (AuthenticationException exception)
         {
-            ShowError(ErrorMenu.Action.OpenAuthMenu, "Email or password is wrong.", "OK");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Email or password is wrong.", "OK");
         }
         catch (RequestFailedException exception)
         {
-            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Failed to connect. Please try again.", "Retry");
         }
     }
 
@@ -120,15 +125,16 @@ public class LoginManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(email, password);
-            ShowError(ErrorMenu.Action.OpenAuthMenu, "Registration Success.", "OK");
         }
         catch (AuthenticationException exception)
         {
-            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to sign you up.", "OK");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.None, "Failed to register.", "OK");
         }
         catch (RequestFailedException exception)
         {
-            ShowError(ErrorMenu.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+            Debug.Log(exception);
+            ShowPopUp(PopUpMenu.Action.None, "Failed to connect. Please try again.", "Retry");
         }
     }
 
@@ -139,14 +145,9 @@ public class LoginManager : MonoBehaviour
         {
             SignInConfirmAsync();
         };
-        AuthenticationService.Instance.SignedOut += () =>
-        {
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("auth").Open();
-        };
         AuthenticationService.Instance.Expired += () =>
         {
-            SignInAnonymouslyAsync();
+            PanelManager.GetSingleton("auth").Open();
         };
     }
 
@@ -155,16 +156,15 @@ public class LoginManager : MonoBehaviour
             PanelManager.CloseAll();
             SceneManager.LoadScene("Main Menu");
     }
-
     
-    public void ShowError(ErrorMenu.Action action = ErrorMenu.Action.None, string error = "", string button = "")
+    public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string error = "", string button = "")
     {
         PanelManager.Close("loading");
-        ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
+        PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("error");
         panel.Open(action, error, button);
     }
 
-    public async void RequestPasswordResetAsync(string email)
+    public void RequestPasswordResetAsync(string email)
     {
         PanelManager.GetSingleton("loading").Open();
         try
@@ -177,7 +177,7 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void ResetPasswordAsync(string newPassword, string confirmPassword)
+    public void ResetPasswordAsync(string newPassword, string confirmPassword)
     {
         PanelManager.GetSingleton("loading").Open();
         try

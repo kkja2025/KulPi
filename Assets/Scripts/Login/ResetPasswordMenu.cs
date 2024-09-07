@@ -37,7 +37,7 @@ public class ResetPasswordMenu : Panel
         {
             if (newPassword != confirmPassword)
             {
-                LoginManager.Singleton.ShowError(ErrorMenu.Action.None, "Passwords do not match", "OK");
+                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Passwords do not match", "OK");
                 Debug.Log("Passwords do not match");
                 return;
             }
