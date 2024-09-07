@@ -28,9 +28,10 @@ public class ForgotPasswordMenu : Panel
     private void RequestPasswordReset()
     {
         string email = emailInput.text;
-        if (string.IsNullOrEmpty(email))
+        if (string.IsNullOrEmpty(email) == false)
         {
-            return;
+            // Request password reset logic
+            // LoginManager.Singleton.RequestPasswordResetAsync(email);
         }
     }
 }
