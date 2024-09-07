@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using UnityEngine.SceneManagement;
 
 public class LoginManager : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class LoginManager : MonoBehaviour
             }
             else
             {
+                PanelManager.CloseAll();
                 PanelManager.GetSingleton("auth").Open();
             }
         }
@@ -118,6 +120,7 @@ public class LoginManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(email, password);
+            ShowError(ErrorMenu.Action.OpenAuthMenu, "Registration Success.", "OK");
         }
         catch (AuthenticationException exception)
         {
@@ -147,21 +150,10 @@ public class LoginManager : MonoBehaviour
         };
     }
 
-    private async void SignInConfirmAsync()
+    private void SignInConfirmAsync()
     {
-        try
-        {
-            if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
-            {
-                await AuthenticationService.Instance.UpdatePlayerNameAsync("Player");
-            }
             PanelManager.CloseAll();
-            PanelManager.GetSingleton("main").Open();
-        }
-        catch
-        {
-            
-        }
+            SceneManager.LoadScene("Main Menu");
     }
 
     
@@ -171,13 +163,6 @@ public class LoginManager : MonoBehaviour
         ErrorMenu panel = (ErrorMenu)PanelManager.GetSingleton("error");
         panel.Open(action, error, button);
     }
-
-    // public void SignOut()   //Method for main menu
-    // {
-    //     AuthenticationService.Instance.SignOut();
-    //     PanelManager.CloseAll();
-    //     PanelManager.Open("auth");
-    // }
 
     public async void RequestPasswordResetAsync(string email)
     {

@@ -8,6 +8,7 @@ public class ForgotPasswordMenu : Panel
 {
     [SerializeField] private TMP_InputField emailInput = null;
     [SerializeField] private Button RequestButton = null;
+    [SerializeField] private Button BackButton = null;
 
     public override void Initialize()
     {
@@ -16,6 +17,7 @@ public class ForgotPasswordMenu : Panel
             return;
         }
         RequestButton.onClick.AddListener(RequestPasswordReset);
+        BackButton.onClick.AddListener(Back);
         base.Initialize();
     }
 
@@ -33,5 +35,11 @@ public class ForgotPasswordMenu : Panel
             // Request password reset logic
             // LoginManager.Singleton.RequestPasswordResetAsync(email);
         }
+    }
+
+    private void Back()
+    {
+        PanelManager.GetSingleton("forget").Close();
+        PanelManager.GetSingleton("auth").Open();
     }
 }

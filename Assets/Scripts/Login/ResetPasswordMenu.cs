@@ -9,6 +9,7 @@ public class ResetPasswordMenu : Panel
     [SerializeField] private TMP_InputField newPasswordInput = null;
     [SerializeField] private TMP_InputField confirmPasswordInput = null;
     [SerializeField] private Button ResetButton = null;
+    [SerializeField] private Button BackButton = null;
 
     public override void Initialize()
     {
@@ -17,6 +18,7 @@ public class ResetPasswordMenu : Panel
             return;
         }
         ResetButton.onClick.AddListener(ResetPassword);
+        BackButton.onClick.AddListener(Back);
         base.Initialize();
     }
 
@@ -42,5 +44,11 @@ public class ResetPasswordMenu : Panel
             // Reset password logic
             // LoginManager.Singleton.ResetPasswordAsync(newPassword, confirmPassword);
         }
+    }
+
+    private void Back()
+    {
+        PanelManager.GetSingleton("reset").Close();
+        PanelManager.GetSingleton("forgot").Open();
     }
 }
