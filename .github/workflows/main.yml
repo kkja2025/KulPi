@@ -16,6 +16,14 @@ jobs:
       with:
         lfs: true
 
+    - name: Check available disk space
+      run: df -h
+
+    - name: Clean up Docker space
+      run: |
+        docker system prune --all --force
+        docker system df
+
     - name: Set up Unity
       uses: game-ci/unity-builder@v4
       env:
@@ -39,6 +47,7 @@ jobs:
         unityVersion: '2022.3.31f1'
         testMode: All
         artifactsPath: artifacts
+        dockerIsolationMode: none 
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v3
