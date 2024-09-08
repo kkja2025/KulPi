@@ -74,8 +74,7 @@ public class LoginManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
-                return;
+                Debug.Log($"Could not resolve all Firebase dependencies: {dependencyStatus}");
             }
 
             if (!eventsInitialized)
@@ -85,10 +84,12 @@ public class LoginManager : MonoBehaviour
 
             if (AuthenticationService.Instance.IsSignedIn)
             {
+                Debug.Log("User is signed in.");
                 SignInAnonymouslyAsync();
             }
             else
             {
+                Debug.Log("User is not signed in.");
                 PanelManager.CloseAll();
                 PanelManager.GetSingleton("auth").Open();
             }
@@ -119,22 +120,22 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void SignInWithEmailAndPasswordAsync(string email, string password)
+    public async void SignInWithUsernameAndPasswordAsync(string username, string password)
     {
         PanelManager.GetSingleton("loading").Open();
         try
         {
-            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(email, password);
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
         }
         catch (AuthenticationException exception)
         {
             Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Email or password is wrong.", "OK");
+            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
         }
         catch (RequestFailedException exception)
         {
             Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Failed to connect. Please try again.", "Retry");
+            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
         }
     }
 
@@ -148,12 +149,12 @@ public class LoginManager : MonoBehaviour
         catch (AuthenticationException exception)
         {
             Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.None, "Failed to register.", "OK");
+            ShowPopUp(PopUpMenu.Action.None, "Username already exists.", "OK");
         }
         catch (RequestFailedException exception)
         {
             Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.None, "Failed to connect. Please try again.", "Retry");
+            ShowPopUp(PopUpMenu.Action.None, "Username already taken. Please try again.", "Retry");
         }
     }
 
@@ -173,13 +174,13 @@ public class LoginManager : MonoBehaviour
     private void SignInConfirmAsync()
     {
             PanelManager.CloseAll();
-            SceneManager.LoadScene("Main Menu");
+            SceneManager.LoadScene("MainMenu");
     }
     
-    public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string error = "", string button = "")
+    public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
     {
         PanelManager.Close("loading");
-        PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("error");
-        panel.Open(action, error, button);
+        PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
+        panel.Open(action, text, button);
     }
 }

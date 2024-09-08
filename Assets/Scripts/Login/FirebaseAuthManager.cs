@@ -1,6 +1,7 @@
 using UnityEngine;
 using Firebase;
 using Firebase.Auth;
+using System;
 using System.Threading.Tasks;
 
 public class FirebaseAuthManager : MonoBehaviour
@@ -42,33 +43,39 @@ public class FirebaseAuthManager : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
     }
 
-    public void RegisterUser(string email, string password)
+    public async void RegisterUser(string email, string password)
     {
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task => {
-            if (task.IsCanceled) {
-                Debug.LogError("User creation canceled.");
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "User creation cancelled", "OK");
-            }
-            if (task.IsFaulted) {
-                Debug.LogError("Error during user creation: " + task.Exception);
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
-            }
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
 
-            AuthResult result = task.Result;
-            FirebaseUser newUser = result.User;
+            FirebaseUser newUser = authResult.User;
             Debug.Log("User created successfully: " + newUser.Email);
-        });
+            PanelManager.GetSingleton("link").Close();
+            PanelManager.GetSingleton("register").Open();
+        }
+        catch (FirebaseException firebaseException)
+        {
+            Debug.Log("Firebase error during user creation: " + firebaseException.Message);
+            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
+        }
+        catch (Exception exception)
+        {
+            Debug.Log("Error during user creation: " + exception.Message);
+            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
+        }
     }
 
     public void ResetPassword(string email)
     {
         auth.SendPasswordResetEmailAsync(email).ContinueWith(task => {
             if (task.IsCanceled) {
-                Debug.LogError("Password reset was canceled.");
+                Debug.Log("Password reset was canceled.");
                 LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Password reset was canceled.", "OK");
             }
             if (task.IsFaulted) {
-                Debug.LogError("Password reset encountered an error: " + task.Exception);
+                Debug.Log("Password reset encountered an error: " + task.Exception);
                 LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
             }
 
