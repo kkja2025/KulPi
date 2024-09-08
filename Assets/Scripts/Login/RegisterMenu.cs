@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class RegisterMenu : Panel
 {
+    [SerializeField] private TMP_InputField usernameInput = null;
     [SerializeField] private TMP_InputField emailInput = null;
     [SerializeField] private TMP_InputField passwordInput = null;
     [SerializeField] private TMP_InputField confirmPasswordInput = null;
@@ -26,6 +27,7 @@ public class RegisterMenu : Panel
 
     public override void Open()
     {
+        usernameInput.text = "";
         emailInput.text = "";
         passwordInput.text = "";
         confirmPasswordInput.text = "";
@@ -34,12 +36,18 @@ public class RegisterMenu : Panel
 
     private void SignUp()
     {
+        string username = usernameInput.text.Trim();
         string email = emailInput.text.Trim();
         string pass = passwordInput.text.Trim();
         string passConfirm = confirmPasswordInput.text.Trim();
-        if (string.IsNullOrEmpty(email) == false && string.IsNullOrEmpty(pass) == false && string.IsNullOrEmpty(passConfirm) == false)
+        if (string.IsNullOrEmpty(email) == false && string.IsNullOrEmpty(pass) == false && string.IsNullOrEmpty(passConfirm) == false && string.IsNullOrEmpty(username) == false)
         {
-            if (IsEmailValid(email) == false)
+            if (IsUsernameValid(username) == false)
+            {
+                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Username must be between 3 and 20 characters and only supports letters, numbers and symbols like ., -, @ or _.", "OK");
+            }             
+
+            else if (IsEmailValid(email) == false)
             {
                 LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
             }
@@ -53,7 +61,8 @@ public class RegisterMenu : Panel
             }
             else
             {
-                LoginManager.Singleton.SignUpWithEmailAndPasswordAsync(email, pass);
+                FirebaseAuthManager.Singleton.RegisterUser(email, pass);
+                LoginManager.Singleton.SignUpWithUsernameAndPasswordAsync(username, pass);
             }
         }
     }
@@ -62,6 +71,22 @@ public class RegisterMenu : Panel
     {
         PanelManager.GetSingleton("register").Close();
         PanelManager.GetSingleton("auth").Open();
+    }
+
+    private bool IsUsernameValid(string username)
+    {
+        if (username.Length < 3 || username.Length > 20)
+        {
+            return false;
+        }
+        foreach (char c in username)
+        {
+            if (!char.IsLetterOrDigit(c) && c != '.' && c != '-' && c != '@' && c != '_')
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private bool IsPasswordValid(string password)

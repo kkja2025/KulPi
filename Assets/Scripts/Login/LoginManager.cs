@@ -5,6 +5,8 @@ using UnityEngine;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine.SceneManagement;
+using Firebase;
+using Firebase.Extensions;
 
 public class LoginManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class LoginManager : MonoBehaviour
     private bool eventsInitialized = false;
     
     private static LoginManager singleton = null;
+    private FirebaseApp app;
 
     public static LoginManager Singleton
     {
@@ -57,6 +60,22 @@ public class LoginManager : MonoBehaviour
                 var options = new InitializationOptions();
                 options.SetProfile("default_profile");
                 await UnityServices.InitializeAsync();
+            }
+
+           var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
+        
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            {
+                if (FirebaseApp.DefaultInstance != null)
+                {
+                    app = FirebaseApp.DefaultInstance;
+                    Debug.Log("Firebase initialized successfully.");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
+                return;
             }
 
             if (!eventsInitialized)
@@ -119,12 +138,12 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void SignUpWithEmailAndPasswordAsync(string email, string password)
+    public async void SignUpWithUsernameAndPasswordAsync(string username, string password)
     {
         PanelManager.GetSingleton("loading").Open();
         try
         {
-            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(email, password);
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
         }
         catch (AuthenticationException exception)
         {
@@ -162,31 +181,5 @@ public class LoginManager : MonoBehaviour
         PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("error");
         panel.Open(action, error, button);
-    }
-
-    public void RequestPasswordResetAsync(string email)
-    {
-        PanelManager.GetSingleton("loading").Open();
-        try
-        {
-
-        }
-        catch 
-        {
-
-        }
-    }
-
-    public void ResetPasswordAsync(string newPassword, string confirmPassword)
-    {
-        PanelManager.GetSingleton("loading").Open();
-        try
-        {
-
-        }
-        catch 
-        {
-
-        }
     }
 }
