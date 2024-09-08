@@ -16,6 +16,14 @@ jobs:
       with:
         lfs: true
 
+    - name: Clean up Docker
+      run: |
+        docker system prune -af
+        docker volume prune -f
+
+    - name: Check Docker Disk Usage
+      run: docker system df
+
     - name: Set up Unity
       uses: game-ci/unity-builder@v4
       env:
