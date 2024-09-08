@@ -16,6 +16,11 @@ jobs:
       with:
         lfs: true
 
+    - name: Stash uncommitted changes
+      run: |
+        git add -A
+        git stash
+
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
       env:
