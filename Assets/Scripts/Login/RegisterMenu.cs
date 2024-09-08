@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class RegisterMenu : Panel
 {
-    [SerializeField] private TMP_InputField usernameInput = null;
+    [SerializeField] private TMP_InputField emailInput = null;
     [SerializeField] private TMP_InputField passwordInput = null;
     [SerializeField] private TMP_InputField confirmPasswordInput = null;
     [SerializeField] private Button SignUpButton = null;
+    [SerializeField] private Button BackButton = null;
 
     public override void Initialize()
     {
@@ -19,12 +20,13 @@ public class RegisterMenu : Panel
             return;
         }
         SignUpButton.onClick.AddListener(SignUp);
+        BackButton.onClick.AddListener(Back);
         base.Initialize();
     }
 
     public override void Open()
     {
-        usernameInput.text = "";
+        emailInput.text = "";
         passwordInput.text = "";
         confirmPasswordInput.text = "";
         base.Open();
@@ -32,15 +34,15 @@ public class RegisterMenu : Panel
 
     private void SignUp()
     {
-        string username = usernameInput.text.Trim();
+        string email = emailInput.text.Trim();
         string pass = passwordInput.text.Trim();
         string passConfirm = confirmPasswordInput.text.Trim();
-        if (string.IsNullOrEmpty(pass) == false && string.IsNullOrEmpty(passConfirm) == false && string.IsNullOrEmpty(username) == false)
+        if (string.IsNullOrEmpty(pass) == false && string.IsNullOrEmpty(passConfirm) == false && string.IsNullOrEmpty(email) == false)
         {
-            if (IsUsernameValid(username) == false)
+            if (LoginManager.Singleton.IsEmailValid(email) == false)
             {
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Username must be between 3 and 20 characters and only supports letters, numbers and symbols like ., -, @ or _.", "OK");
-            }             
+                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
+            }            
             else if (IsPasswordValid(pass) == false)
             {
                 LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
@@ -51,8 +53,7 @@ public class RegisterMenu : Panel
             }
             else
             {
-                Debug.Log("Registering user with username: " + username + " and password: " + pass);
-                LoginManager.Singleton.SignUpWithUsernameAndPasswordAsync(username, pass);
+                LoginManager.Singleton.SignUpAsync(email, pass);
             }
         }
         else
@@ -61,21 +62,10 @@ public class RegisterMenu : Panel
         }
     }
 
-// Username must be between 3 and 20 characters and only supports letters, numbers and symbols like ., -, @ or _.
-    private bool IsUsernameValid(string username)
+    private void Back()
     {
-        if (username.Length < 3 || username.Length > 20)
-        {
-            return false;
-        }
-        foreach (char c in username)
-        {
-            if (!char.IsLetterOrDigit(c) && c != '.' && c != '-' && c != '@' && c != '_')
-            {
-                return false;
-            }
-        }
-        return true;
+        PanelManager.GetSingleton("register").Close();
+        PanelManager.GetSingleton("auth").Open();
     }
 
     private bool IsPasswordValid(string password)

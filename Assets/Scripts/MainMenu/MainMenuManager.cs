@@ -1,15 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.Services.Authentication;
-using Unity.Services.Core;
 using UnityEngine.SceneManagement;
+using Firebase;
+using Firebase.Auth;
+using Firebase.Extensions;
 
 public class MainMenuManager : MonoBehaviour
 {
     private bool initialized = false;
-    private bool eventsInitialized = false;
     private static MainMenuManager singleton = null;
 
     public static MainMenuManager Singleton
@@ -29,6 +27,7 @@ public class MainMenuManager : MonoBehaviour
     {
         if (initialized) { return; }
         initialized = true;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnDestroy()
@@ -46,51 +45,49 @@ public class MainMenuManager : MonoBehaviour
     }
 
     public async void StartClientService()
+    {
+        PanelManager.CloseAll();
+        PanelManager.GetSingleton("loading").Open();
+        try
         {
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("loading").Open();
-            try
+            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                if (UnityServices.State != ServicesInitializationState.Initialized)
-                {
-                    var options = new InitializationOptions();
-                    options.SetProfile("default_profile");
-                    await UnityServices.InitializeAsync();
-                }
+                var auth = FirebaseAuth.DefaultInstance;
+                Debug.Log("Firebase initialized successfully.");
 
-                if (!eventsInitialized)
+                if (auth.CurrentUser != null)
                 {
-                    SetupEvents();
-                }
-
-                if (AuthenticationService.Instance.SessionTokenExists)
-                {
+                    Debug.Log($"User is signed in: {auth.CurrentUser.Email}");
                     PanelManager.CloseAll();
                     PanelManager.GetSingleton("main").Open();
-                } else
+                }
+                else
                 {
                     SceneManager.LoadScene("Login");
                 }
             }
-            catch (Exception exception)
+            else
             {
-                Debug.LogError(exception);
+                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
                 LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.StartService, "Failed to connect to the network.", "Retry");
             }
         }
-
-        private void SetupEvents()
+        catch (Exception exception)
         {
-            eventsInitialized = true;
-            AuthenticationService.Instance.Expired += () =>
-            {
-                SceneManager.LoadScene("Login");
-            };
+            Debug.LogError(exception);
+            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.StartService, "Failed to connect to the network.", "Retry");
         }
+    }
 
         public void SignOut()
         {
-            AuthenticationService.Instance.SignOut();
-            SceneManager.LoadScene("Login");
+            var auth = FirebaseAuth.DefaultInstance;
+            if (auth.CurrentUser != null)
+            {
+                auth.SignOut();
+                Debug.Log("User signed out.");
+                SceneManager.LoadScene("Login"); // Replace with your actual login scene name
+            }
         }
-    }
+}
