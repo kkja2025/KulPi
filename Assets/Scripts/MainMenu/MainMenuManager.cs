@@ -48,7 +48,7 @@ public class MainMenuManager : MonoBehaviour
     public async void StartClientService()
         {
             PanelManager.CloseAll();
-            // PanelManager.GetSingleton("loading").Open();
+            PanelManager.GetSingleton("loading").Open();
             try
             {
                 if (UnityServices.State != ServicesInitializationState.Initialized)
@@ -65,13 +65,17 @@ public class MainMenuManager : MonoBehaviour
 
                 if (AuthenticationService.Instance.SessionTokenExists)
                 {
+                    PanelManager.CloseAll();
                     PanelManager.GetSingleton("main").Open();
+                } else
+                {
+                    SceneManager.LoadScene("Login");
                 }
             }
             catch (Exception exception)
             {
-                Debug.Log(exception);
-                // ShowError(ErrorMenu.Action.StartService, "Failed to connect to the network. client service", "Retry");
+                Debug.LogError(exception);
+                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.StartService, "Failed to connect to the network.", "Retry");
             }
         }
 
