@@ -18,11 +18,14 @@ jobs:
 
     - name: Clean up Docker
       run: |
-        docker system prune -af
-        docker volume prune -f
+        docker system prune -af --volumes
+        docker builder prune -af
 
     - name: Check Docker Disk Usage
       run: docker system df
+
+    - name: Check Disk Space Before Build
+      run: df -h
 
     - name: Set up Unity
       uses: game-ci/unity-builder@v4
@@ -61,3 +64,6 @@ jobs:
       with:
         name: Build artifacts
         path: build
+
+    - name: Check Disk Space After Build
+      run: df -h
