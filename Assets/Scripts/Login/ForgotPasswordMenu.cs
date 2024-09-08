@@ -39,24 +39,15 @@ public class ForgotPasswordMenu : Panel
         if (string.IsNullOrEmpty(email))
         {
             Debug.Log("Email field is empty.");
-            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Please enter a valid email address", "OK");
-        } 
+            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Enter a valid email", "OK");
+        } else if (LoginManager.Singleton.IsEmailValid(email) == false)
+        {
+            Debug.Log("Invalid email address.");
+            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
+        }
         else
         {
-        //     auth.SendPasswordResetEmailAsync(email).ContinueWith(task => 
-        // {
-        //     if (task.IsCanceled)
-        //     {
-        //         Debug.LogError("Password reset was canceled.");
-        //     }
-        //     if (task.IsFaulted)
-        //     {
-        //         Debug.LogError("Error encountered during password reset: " + task.Exception);
-        //     }
-
-        //     Debug.Log("Password reset email sent successfully.");
-        // });
-            FirebaseAuthManager.Singleton.ResetPassword(email);
+            LoginManager.Singleton.RequestResetPasswordAsync(email);
         }
     }
 }

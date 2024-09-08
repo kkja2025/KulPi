@@ -1,20 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.Services.Authentication;
-using Unity.Services.Core;
 using UnityEngine.SceneManagement;
 using Firebase;
+using Firebase.Auth;
 using Firebase.Extensions;
 
 public class LoginManager : MonoBehaviour
 {
     private bool initialized = false;
-    private bool eventsInitialized = false;
-    
     private static LoginManager singleton = null;
     private FirebaseApp app;
+    private FirebaseAuth auth;
 
     public static LoginManager Singleton
     {
@@ -33,6 +29,7 @@ public class LoginManager : MonoBehaviour
     {
         if (initialized) { return; }
         initialized = true;
+        DontDestroyOnLoad(gameObject);
     }
     
     private void OnDestroy()
@@ -54,38 +51,26 @@ public class LoginManager : MonoBehaviour
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
         try
-        {
-            if (UnityServices.State != ServicesInitializationState.Initialized)
-            {
-                var options = new InitializationOptions();
-                options.SetProfile("default_profile");
-                await UnityServices.InitializeAsync();
-            }
-
+        {       
            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
-        
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                if (FirebaseApp.DefaultInstance != null)
-                {
-                    app = FirebaseApp.DefaultInstance;
-                    Debug.Log("Firebase initialized successfully.");
-                }
+                app = FirebaseApp.DefaultInstance;
+                auth = FirebaseAuth.DefaultInstance;
+                Debug.Log("Firebase initialized successfully.");
+
+                AutomaticSignIn();
             }
             else
             {
                 Debug.Log($"Could not resolve all Firebase dependencies: {dependencyStatus}");
+                return;
             }
 
-            if (!eventsInitialized)
-            {
-                SetupEvents();
-            }
-
-            if (AuthenticationService.Instance.IsSignedIn)
+             if (auth.CurrentUser != null)
             {
                 Debug.Log("User is signed in.");
-                SignInAnonymouslyAsync();
+                AutomaticSignIn();
             }
             else
             {
@@ -101,74 +86,106 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void SignInAnonymouslyAsync()
+    private void AutomaticSignIn()
     {
         PanelManager.GetSingleton("loading").Open();
-        try
+        FirebaseUser user = auth.CurrentUser;
+        if (user != null)
         {
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            Debug.Log($"User is already signed in: {user.Email}");
+            SceneManager.LoadScene("MainMenu");
         }
-        catch (AuthenticationException exception)
+        else
         {
-            Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Logging in failed.", "OK");
-        }
-        catch (RequestFailedException exception)
-        {
-            Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Failed to connect. Please try again.", "Retry");
-        }
-    }
-
-    public async void SignInWithUsernameAndPasswordAsync(string username, string password)
-    {
-        PanelManager.GetSingleton("loading").Open();
-        try
-        {
-            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
-        }
-        catch (AuthenticationException exception)
-        {
-            Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
-        }
-        catch (RequestFailedException exception)
-        {
-            Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
-        }
-    }
-
-    public async void SignUpWithUsernameAndPasswordAsync(string username, string password)
-    {
-        PanelManager.GetSingleton("loading").Open();
-        try
-        {
-            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
-        }
-        catch (AuthenticationException exception)
-        {
-            Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.None, "Username already exists.", "OK");
-        }
-        catch (RequestFailedException exception)
-        {
-            Debug.Log(exception);
-            ShowPopUp(PopUpMenu.Action.None, "Username already taken. Please try again.", "Retry");
-        }
-    }
-
-    private void SetupEvents()
-    {
-        eventsInitialized = true;
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            SignInConfirmAsync();
-        };
-        AuthenticationService.Instance.Expired += () =>
-        {
+            Debug.Log("No user is signed in.");
+            PanelManager.CloseAll();
             PanelManager.GetSingleton("auth").Open();
-        };
+        }
+    }
+
+    public async void SignInAsync(string email, string password)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            await auth.SignInWithEmailAndPasswordAsync(email, password);
+            Debug.Log("Signed in successfully.");
+            SignInConfirmAsync();
+        }
+        catch (FirebaseException firebaseException)
+        {
+            Debug.Log("Firebase error during sign in: " + firebaseException.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Email or password incorrect", "OK");
+        }
+        catch (Exception exception)
+        {
+            Debug.Log("Error during sign in: " + exception.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Error during sign in", "OK");
+        }
+    }
+
+    public async void SignUpAsync(string email, string password)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
+
+            FirebaseUser newUser = authResult.User;
+            Debug.Log("User created successfully: " + newUser.Email);
+            ShowPopUp(PopUpMenu.Action.None, "User created successfully", "OK");
+        }
+        catch (FirebaseException firebaseException)
+        {
+            Debug.Log("Firebase error during user creation: " + firebaseException.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
+        }
+        catch (Exception exception)
+        {
+            Debug.Log("Error during user creation: " + exception.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
+        }
+    }
+
+    public async void RequestResetPasswordAsync(string email)
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            await auth.SendPasswordResetEmailAsync(email);
+            Debug.Log("Password reset email sent successfully.");
+            ShowPopUp(PopUpMenu.Action.None, "Password reset email sent successfully.", "OK");
+        }
+        catch (FirebaseException firebaseException)
+        {
+            Debug.Log("Firebase error during password reset: " + firebaseException.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
+        }
+        catch (Exception exception)
+        {
+            Debug.Log("Error during password reset: " + exception.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
+        }
+    }
+
+    public void SignOutUser()
+    {
+        PanelManager.GetSingleton("loading").Open();
+        try
+        {
+            if (auth.CurrentUser != null)
+            {
+                auth.SignOut();
+                Debug.Log("Firebase user signed out.");
+            }
+
+            PanelManager.CloseAll();
+            SceneManager.LoadScene("Login");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error during logout: {ex}");
+        }
     }
 
     private void SignInConfirmAsync()
@@ -182,5 +199,18 @@ public class LoginManager : MonoBehaviour
         PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
+    }
+
+    public bool IsEmailValid(string email) 
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

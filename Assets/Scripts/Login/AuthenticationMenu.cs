@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AuthenticationMenu : Panel
 {
-    [SerializeField] private TMP_InputField usernameInput = null;
+    [SerializeField] private TMP_InputField emailInput = null;
     [SerializeField] private TMP_InputField passwordInput = null;
     [SerializeField] private Button SignInButton = null;
     [SerializeField] private Button SignUpButton = null;
@@ -26,7 +26,7 @@ public class AuthenticationMenu : Panel
 
     public override void Open()
     {
-        usernameInput.text = "";
+        emailInput.text = "";
         passwordInput.text = "";
         base.Open();
     }
@@ -39,18 +39,25 @@ public class AuthenticationMenu : Panel
 
     private void SignIn()
     {
-        string username = usernameInput.text.Trim();
+        string email = emailInput.text.Trim();
         string pass = passwordInput.text.Trim();
-        if (string.IsNullOrEmpty(username) == false && string.IsNullOrEmpty(pass) == false)
+        if (string.IsNullOrEmpty(email) == false && string.IsNullOrEmpty(pass) == false)
         {
-            LoginManager.Singleton.SignInWithUsernameAndPasswordAsync(username, pass);
+            if (LoginManager.Singleton.IsEmailValid(email) == false)
+            {
+                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
+            }
+            else
+            {
+                LoginManager.Singleton.SignInAsync(email, pass);
+            }
         }
     }
 
     private void SignUp()
     {
         PanelManager.GetSingleton("auth").Close();
-        PanelManager.GetSingleton("link").Open();
+        PanelManager.GetSingleton("register").Open();
 
     }
 }
