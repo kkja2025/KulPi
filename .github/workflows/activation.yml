@@ -1,18 +1,30 @@
-name: Acquire activation file
+name: Unity Activation Request
+
 on:
-  workflow_dispatch: {}
+  workflow_dispatch: 
+  push:
+    branches:
+      - master
+
 jobs:
-  activation:
-    name: Request manual activation file 🔑
+  requestActivationFile:
     runs-on: ubuntu-latest
+
     steps:
-      # Request manual activation file
-      - name: Request manual activation file
-        id: getManualLicenseFile
-        uses: game-ci/unity-request-activation-file@v2
-      # Upload artifact (Unity_v20XX.X.XXXX.alf)
-      - name: Expose as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.getManualLicenseFile.outputs.filePath }}
-          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Unity - Request Activation File
+      uses: game-ci/unity-request-activation-file@v2.2.0
+      with:
+        unityVersion: '2022.3.31f1'  
+        email: ${{ secrets.UNITY_EMAIL }}
+        password: ${{ secrets.UNITY_PASSWORD }}
+        serial: null
+
+    # Upload the generated activation file as an artifact
+    - name: Upload Activation File
+      uses: actions/upload-artifact@v3
+      with:
+        name: Unity Activation File
+        path: unity_v*.alf
