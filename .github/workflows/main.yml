@@ -19,15 +19,15 @@ jobs:
     - name: Stash uncommitted changes
       run: |
         git add -A
-        git stash
-
-    - name: Check for local changes
-      run: |
-        git status
+        git stash --include-untracked
 
     - name: Clean repository
       run: |
         git clean -fdx
+
+    - name: Check for local changes
+      run: |
+        git status
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -43,15 +43,29 @@ jobs:
 
     - name: Set up Unity
       uses: game-ci/unity-builder@v4
-      env:
-        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
       with:
         projectPath: .
         unityVersion: '2022.3.31f1'
         targetPlatform: Android
         buildName: AndroidBuild
+        versioning: Semantic
+        androidExportType: androidPackage
+        androidSymbolType: none
+        runAsHostUser: false
+        dockerIsolationMode: default
+        containerRegistryRepository: unityci/editor
+        containerRegistryImageVersion: 3
+        awsStackName: game-ci
+        providerStrategy: local
+        kubeVolumeSize: 5Gi
+        watchToEnd: true
+        cacheUnityInstallationOnMac: false
+        dockerWorkspacePath: /github/workspace
+        skipActivation: false
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v3
