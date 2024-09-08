@@ -21,6 +21,14 @@ jobs:
         git add -A
         git stash
 
+    - name: Check for local changes
+      run: |
+        git status
+
+    - name: Clean repository
+      run: |
+        git clean -fdx
+
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
       env:
