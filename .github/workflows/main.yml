@@ -1,4 +1,4 @@
-name: Build and Test Unity Package
+name: Test and Build Unity Package
 
 on:
   push:
@@ -16,18 +16,6 @@ jobs:
       with:
         lfs: true
 
-    - name: Set up Unity
-      uses: game-ci/unity-builder@v4
-      env:
-        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-      with:
-        projectPath: .
-        unityVersion: '2022.3.31f1'
-        targetPlatform: Android
-        buildName: AndroidBuild
-
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
       env:
@@ -39,6 +27,18 @@ jobs:
         unityVersion: '2022.3.31f1'
         testMode: All
         artifactsPath: artifacts
+
+    - name: Set up Unity
+      uses: game-ci/unity-builder@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        projectPath: .
+        unityVersion: '2022.3.31f1'
+        targetPlatform: Android
+        buildName: AndroidBuild
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v3
