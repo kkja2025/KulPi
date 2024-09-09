@@ -1,0 +1,40 @@
+name: Test on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - main  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+
+    - name: Clean repository
+      run: |
+        git clean -fdx
+
+    - name: Run Unity Package Tests
+      uses: game-ci/unity-test-runner@v4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        projectPath: .
+        unityVersion: '2022.3.31f1'
+        testMode: All
+        artifactsPath: artifacts
+
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: Test results
+        path: artifacts
