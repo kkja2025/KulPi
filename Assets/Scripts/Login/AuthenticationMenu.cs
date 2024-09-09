@@ -51,6 +51,9 @@ public class AuthenticationMenu : Panel
             {
                 LoginManager.Singleton.SignInAsync(email, pass);
             }
+        } else
+        {
+            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Email and password are required", "OK");
         }
     }
 
