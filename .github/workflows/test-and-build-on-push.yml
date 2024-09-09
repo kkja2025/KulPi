@@ -1,37 +1,22 @@
-name: Test and Build Unity Package
+name: Test and Build on Push
 
 on:
   push:
     branches:
-      - '**' 
-  
-  pull_request:
-    branches:
-      - dev  
-      - main 
+      - '**'  
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         lfs: true
 
-    - name: Stash uncommitted changes
-      run: |
-        git add -A
-        git stash --include-untracked
-
     - name: Clean repository
       run: |
-        git clean -fdx
-
-    - name: Check for local changes
-      run: |
-        git status
+          git clean -fdx
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -54,7 +39,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: test 
+    needs: test
 
     steps:
     - name: Checkout repository
@@ -62,20 +47,7 @@ jobs:
       with:
         lfs: true
 
-    - name: Stash uncommitted changes
-      run: |
-        git add -A
-        git stash --include-untracked
-
-    - name: Clean repository
-      run: |
-        git clean -fdx
-
-    - name: Check for local changes
-      run: |
-        git status
-
-    - name: Set up Unity
+    - name: Build Unity Project for Android
       uses: game-ci/unity-builder@v4
       with:
         projectPath: .
