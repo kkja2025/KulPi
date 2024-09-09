@@ -2,6 +2,8 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+.plastic/
+artifacts/
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -9,6 +11,18 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+
+# Firebase 
+/[Aa]ssets/Firebase/
+/[Aa]ssets/Editor\ Default\ Resources/
+/[Aa]ssets/ExternalDependencyManager/
+/[Aa]ssets/GeneratedLocalRepo
+/[Aa]ssets/Plugins/
+Assets/Editor Default Resources.meta
+Assets/ExternalDependencyManager.meta
+Assets/Firebase.meta
+Assets/GeneratedLocalRepo.meta
+Assets/Plugins.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -71,15 +85,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# Firebase 
-/[Aa]ssets/Firebase/
-/[Aa]ssets/Editor\ Default\ Resources/
-/[Aa]ssets/ExternalDependencyManager/
-/[Aa]ssets/GeneratedLocalRepo
-/[Aa]ssets/Plugins/
-Assets/Editor Default Resources.meta
-Assets/ExternalDependencyManager.meta
-Assets/Firebase.meta
-Assets/GeneratedLocalRepo.meta
-Assets/Plugins.meta
