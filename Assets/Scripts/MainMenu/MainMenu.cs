@@ -44,10 +44,18 @@ public class MainMenu : Panel
     {
         PanelManager.GetSingleton("main").Close();
         PanelManager.GetSingleton("settings").Open();
+        PanelManager.GetSingleton("volumemaster").Open();
+        PanelManager.GetSingleton("volumebgm").Open();
+        PanelManager.GetSingleton("volumesfx").Open();
+        PanelManager.GetSingleton("volumevoice").Open();
     }
 
     private void CloseGame()
     {
-        
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

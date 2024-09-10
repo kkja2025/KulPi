@@ -27,7 +27,6 @@ public class MainMenuManager : MonoBehaviour
     {
         if (initialized) { return; }
         initialized = true;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void OnDestroy()
@@ -82,6 +81,7 @@ public class MainMenuManager : MonoBehaviour
 
         public void SignOut()
         {
+            PanelManager.GetSingleton("loading").Open();
             var auth = FirebaseAuth.DefaultInstance;
             if (auth.CurrentUser != null)
             {
@@ -89,5 +89,12 @@ public class MainMenuManager : MonoBehaviour
                 Debug.Log("User signed out.");
                 SceneManager.LoadScene("Login");
             }
+        }
+
+        public void LoadGame()
+        {
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("loading").Open();
+            SceneManager.LoadScene("GameScene");
         }
 }

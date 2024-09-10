@@ -35,7 +35,7 @@ public class LoadGameMenu : Panel
 
     private void StartGame()
     {
-        
+        MainMenuManager.Singleton.LoadGame();
     }
 
     private void NewGame()

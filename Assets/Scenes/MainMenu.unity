@@ -387,7 +387,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3429856205466571890, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_text
-      value: Sound Effects
+      value: SFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: id
+      value: volumesfx
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: volumeType
+      value: SoundEffects
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_Pivot.x
@@ -451,11 +459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 28
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -189
+      value: -191
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -608,11 +616,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2376823713893669119, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_Name
-      value: VolumeMusic
+      value: VolumeBGM
       objectReference: {fileID: 0}
     - target: {fileID: 3429856205466571890, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_text
-      value: Music
+      value: BGM
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: id
+      value: volumebgm
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: volumeType
+      value: BackgroundMusic
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_Pivot.x
@@ -676,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 147
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -693,6 +709,10 @@ PrefabInstance:
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667719021398020058, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2273,6 +2293,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3429856205466571890, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_text
+      value: Voice Over
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: id
+      value: volumevoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: volumeType
       value: VoiceOver
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
@@ -2337,7 +2365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 95
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2565,6 +2593,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Master
       objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: id
+      value: volumemaster
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693276607257360712, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
+      propertyPath: volumeType
+      value: Master
+      objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2627,7 +2663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 130
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5303050865058387491, guid: c496c8a4cd992f440805a69e0f86c630, type: 3}
       propertyPath: m_AnchoredPosition.y

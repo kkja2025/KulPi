@@ -38,10 +38,13 @@ public class AudioManager : MonoBehaviour
         if (singleton != null && singleton != this)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {
+            singleton = this;
             DontDestroyOnLoad(gameObject);
+            
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -61,8 +64,9 @@ public class AudioManager : MonoBehaviour
         if (scene.name == "Login" || scene.name == "MainMenu")
         {
             PlayBackgroundMusic("bgm1");
+            PlaySoundEffect("bgm2");
         }
-        else if (scene.name == "GameMenu")
+        else if (scene.name == "GameScene")
         {
             PlayBackgroundMusic("bgm3");
         }
@@ -158,12 +162,39 @@ public class AudioManager : MonoBehaviour
         voiceOverSource.Play();
     }
 
-
-    public void SetMasterVolume(float volume)
+    private float MapVolumeToDb(int volume)
     {
-        if (masterMixer != null)
+        volume = Mathf.Clamp(volume, 0, 10);
+        if (volume == 0)
         {
-            masterMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+            return -80f;
+        } else
+        {
+            return Mathf.Lerp(-80f, 0f, volume / 10f);
         }
+    }
+
+    public void SetMasterVolume(int volume)
+    {
+        float volumeDb = MapVolumeToDb(volume);
+        masterMixer.SetFloat("Master", volumeDb);
+    }
+
+    public void SetBackgroundMusicVolume(int volume)
+    {
+        float volumeDb = MapVolumeToDb(volume);
+        masterMixer.SetFloat("Background", volumeDb); 
+    }
+
+    public void SetSoundEffectsVolume(int volume)
+    {
+        float volumeDb = MapVolumeToDb(volume);
+        masterMixer.SetFloat("SoundEffects", volumeDb); 
+    }
+
+    public void SetVoiceOverVolume(int volume)
+    {
+        float volumeDb = MapVolumeToDb(volume);
+        masterMixer.SetFloat("VoiceOver", volumeDb); 
     }
 }

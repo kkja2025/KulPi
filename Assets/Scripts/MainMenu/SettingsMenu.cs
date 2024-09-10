@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -25,7 +23,7 @@ public class SettingsMenu : Panel
 
     private void Back()
     {
-        PanelManager.GetSingleton("settings").Close();
+        PanelManager.CloseAll();
         PanelManager.GetSingleton("main").Open();
     }
 }
