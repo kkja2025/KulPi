@@ -59,13 +59,17 @@ jobs:
 
     - name: Find Unity Executable
       run: |
-        UNITY_PATH=$(find /opt/unity -name "Unity" -type f 2>/dev/null | head -n 1)
-        if [ -z "$UNITY_PATH" ]; then
-          echo "Unity executable not found"
-          exit 1
-        fi
+        UNITY_PATH=$(find / -name "Unity" -type f 2>/dev/null | grep -E "Unity$" | head -n 1)
         echo "Unity path found at: ${UNITY_PATH}"
         echo "UNITY_PATH=${UNITY_PATH}" >> $GITHUB_ENV
+
+    - name: Debug Unity Path
+      run: |
+        if [ -z "$UNITY_PATH" ]; then
+          echo "UNITY_PATH is not set or Unity executable not found"
+          exit 1
+        fi
+        echo "Unity executable path: $UNITY_PATH"
 
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
