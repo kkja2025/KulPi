@@ -16,7 +16,7 @@ jobs:
 
     - name: Clean repository
       run: |
-          git clean -fdx
+        git clean -fdx
 
     - name: Download Firebase SDK
       run: |
@@ -30,11 +30,23 @@ jobs:
         # Download the file
         curl -L -o ${DESTINATION} "https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
         
+        # Check if the file was downloaded
+        if [ ! -f ${DESTINATION} ]; then
+          echo "Download failed or file does not exist"
+          exit 1
+        fi
+        
         # Ensure the directory exists
         mkdir -p Assets/Firebase
         
         # Extract the contents
         unzip -o ${DESTINATION} -d Assets/Firebase
+        
+        # Check if unzip was successful
+        if [ $? -ne 0 ]; then
+          echo "Unzip failed"
+          exit 1
+        fi
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -58,7 +70,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

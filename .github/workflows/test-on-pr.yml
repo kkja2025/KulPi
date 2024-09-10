@@ -25,14 +25,30 @@ jobs:
         FILE_ID="1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
         DESTINATION="firebase-unity-sdk.zip"
         
+        # Fetch the download confirmation token for large files
         CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | \
                   grep -oP 'confirm=\K[\w-]+')
-      
+        
+        # Download the file
         curl -L -o ${DESTINATION} "https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
-
+        
+        # Check if the file was downloaded
+        if [ ! -f ${DESTINATION} ]; then
+          echo "Download failed or file does not exist"
+          exit 1
+        fi
+        
+        # Ensure the directory exists
         mkdir -p Assets/Firebase
         
+        # Extract the contents
         unzip -o ${DESTINATION} -d Assets/Firebase
+        
+        # Check if unzip was successful
+        if [ $? -ne 0 ]; then
+          echo "Unzip failed"
+          exit 1
+        fi
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
