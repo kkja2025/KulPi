@@ -20,6 +20,10 @@ jobs:
       run: |
         git clean -fdx
 
+    - name: Clean Firebase SDK directory
+      run: |
+        rm -rf Assets/Firebase
+
     - name: Download Firebase SDK
       run: |
         FIREBASE_URL="https://firebase.google.com/download/unity"
@@ -45,6 +49,10 @@ jobs:
           echo "Unzip failed"
           exit 1
         fi
+
+    - name: Re-import Unity Assets
+      run: |
+        /opt/unity/Editor/Unity -quit -batchmode -projectPath . -importPackage Assets/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
