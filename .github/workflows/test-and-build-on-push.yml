@@ -57,11 +57,20 @@ jobs:
       with:
         lfs: true
 
+    - name: Find Unity Executable
+      run: |
+        UNITY_PATH=$(find /opt/unity -name "Unity" -type f 2>/dev/null | head -n 1)
+        if [ -z "$UNITY_PATH" ]; then
+          echo "Unity executable not found"
+          exit 1
+        fi
+        echo "Unity path found at: ${UNITY_PATH}"
+        echo "UNITY_PATH=${UNITY_PATH}" >> $GITHUB_ENV
+
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
-        UNITY_PATH="/opt/unity/Editor/Unity"  
-        if [ ! -f "$UNITY_PATH" ]; then
-          echo "Unity executable not found at $UNITY_PATH"
+        if [ -z "$UNITY_PATH" ]; then
+          echo "Unity executable not found"
           exit 1
         fi
         "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
@@ -96,9 +105,8 @@ jobs:
 
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
-        UNITY_PATH="/opt/unity/Editor/Unity" 
-        if [ ! -f "$UNITY_PATH" ]; then
-          echo "Unity executable not found at $UNITY_PATH"
+        if [ -z "$UNITY_PATH" ]; then
+          echo "Unity executable not found"
           exit 1
         fi
         "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
