@@ -22,15 +22,11 @@ jobs:
 
     - name: Download Firebase SDK
       run: |
-        FILE_ID="1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
+        FIREBASE_URL="https://firebase.google.com/download/unity"
         DESTINATION="firebase-unity-sdk.zip"
         
-        # Fetch the download confirmation token for large files
-        CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | \
-                  grep -oP 'confirm=\K[\w-]+')
-        
-        # Download the file
-        curl -L -o ${DESTINATION} "https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
+        # Download the Firebase SDK zip file
+        curl -L -o ${DESTINATION} ${FIREBASE_URL}
         
         # Check if the file was downloaded
         if [ ! -f ${DESTINATION} ]; then
