@@ -48,9 +48,6 @@ jobs:
       run: |
         ls -R Assets/Firebase
 
-    outputs:
-      sdk-directory: Assets/Firebase
-
   test:
     runs-on: ubuntu-latest
     needs: setup-firebase-sdk
@@ -60,14 +57,9 @@ jobs:
       with:
         lfs: true
 
-    - name: Install Unity
-      uses: game-ci/unity-setup@v2
-      with:
-        unityVersion: '2022.3.31f1'
-
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
-        /opt/unity-editor/Unity -quit -batchmode -projectPath . -importPackage Assets/Firebase
+        /opt/unity/Editor/Unity -quit -batchmode -projectPath . -importPackage Assets/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -97,14 +89,9 @@ jobs:
       with:
         lfs: true
 
-    - name: Install Unity
-      uses: game-ci/unity-setup@v2
-      with:
-        unityVersion: '2022.3.31f1'
-
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
-        /opt/unity-editor/Unity -quit -batchmode -projectPath . -importPackage Assets/Firebase
+        /opt/unity/Editor/Unity -quit -batchmode -projectPath . -importPackage Assets/Firebase
 
     - name: Build Unity Project for Android
       uses: game-ci/unity-builder@v4
