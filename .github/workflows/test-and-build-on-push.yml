@@ -3,7 +3,7 @@ name: Test and Build on Push
 on:
   push:
     branches:
-      - '**'  
+      - '**'
 
 jobs:
   test:
@@ -17,6 +17,12 @@ jobs:
     - name: Clean repository
       run: |
           git clean -fdx
+
+    - name: Download Firebase SDK
+      run: |
+        curl -L -o firebase-unity-sdk.zip "https://drive.google.com/uc?export=download&id=1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
+        mkdir -p Assets/Plugins/Firebase
+        unzip firebase-unity-sdk.zip -d Assets/Plugins/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -46,6 +52,12 @@ jobs:
       uses: actions/checkout@v4
       with:
         lfs: true
+
+    - name: Download Firebase SDK
+      run: |
+        curl -L -o firebase-unity-sdk.zip "https://drive.google.com/uc?export=download&id=1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
+        mkdir -p Assets/Plugins/Firebase
+        unzip firebase-unity-sdk.zip -d Assets/Plugins/Firebase
 
     - name: Build Unity Project for Android
       uses: game-ci/unity-builder@v4
