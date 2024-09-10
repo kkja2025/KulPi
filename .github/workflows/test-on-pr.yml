@@ -50,9 +50,19 @@ jobs:
           exit 1
         fi
 
+    - name: Find Unity Executable
+      run: |
+        UNITY_PATH=$(find / -name "Unity" -type f 2>/dev/null | grep -E "Unity$" | head -n 1)
+        echo "Unity path found at: ${UNITY_PATH}"
+        echo "UNITY_PATH=${UNITY_PATH}" >> $GITHUB_ENV
+
     - name: Re-import Unity Assets
       run: |
-        /opt/unity/Editor/Unity -quit -batchmode -projectPath . -importPackage Assets/Firebase
+        if [ -z "$UNITY_PATH" ]; then
+          echo "Unity executable not found"
+          exit 1
+        fi
+        "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4

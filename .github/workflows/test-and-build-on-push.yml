@@ -65,7 +65,11 @@ jobs:
 
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
-        /bin/bash -c "$UNITY_PATH -quit -batchmode -projectPath . -importPackage Assets/Firebase"
+        if [ -z "$UNITY_PATH" ]; then
+          echo "Unity executable not found"
+          exit 1
+        fi
+        "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -74,7 +78,7 @@ jobs:
         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
       with:
-        projectPath: .
+        projectPath: . 
         unityVersion: '2022.3.31f1'
         testMode: All
         artifactsPath: artifacts
@@ -103,7 +107,11 @@ jobs:
 
     - name: Re-import Unity Assets (Firebase SDK)
       run: |
-        /bin/bash -c "$UNITY_PATH -quit -batchmode -projectPath . -importPackage Assets/Firebase"
+        if [ -z "$UNITY_PATH" ]; then
+          echo "Unity executable not found"
+          exit 1
+        fi
+        "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
 
     - name: Build Unity Project for Android
       uses: game-ci/unity-builder@v4
