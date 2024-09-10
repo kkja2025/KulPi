@@ -20,9 +20,21 @@ jobs:
 
     - name: Download Firebase SDK
       run: |
-        curl -L -o firebase-unity-sdk.zip "https://drive.google.com/uc?export=download&id=1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
-        mkdir -p Assets/Plugins/Firebase
-        unzip firebase-unity-sdk.zip -d Assets/Plugins/Firebase
+        FILE_ID="1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
+        DESTINATION="firebase-unity-sdk.zip"
+        
+        # Fetch the download confirmation token for large files
+        CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | \
+                  grep -oP 'confirm=\K[\w-]+')
+        
+        # Download the file
+        curl -L -o ${DESTINATION} "https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
+        
+        # Ensure the directory exists
+        mkdir -p Assets/Firebase
+        
+        # Extract the contents
+        unzip -o ${DESTINATION} -d Assets/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -55,9 +67,17 @@ jobs:
 
     - name: Download Firebase SDK
       run: |
-        curl -L -o firebase-unity-sdk.zip "https://drive.google.com/uc?export=download&id=1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
-        mkdir -p Assets/Plugins/Firebase
-        unzip firebase-unity-sdk.zip -d Assets/Plugins/Firebase
+        FILE_ID="1Gy92ah8rEXaRIWp0eCc_7BjAOk5eq2Ra"
+        DESTINATION="firebase-unity-sdk.zip"
+        
+        CONFIRM=$(curl -sc /tmp/gcookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" | \
+                  grep -oP 'confirm=\K[\w-]+')
+        
+        curl -L -o ${DESTINATION} "https://drive.google.com/uc?export=download&confirm=${CONFIRM}&id=${FILE_ID}"
+        
+        mkdir -p Assets/Firebase
+        
+        unzip -o ${DESTINATION} -d Assets/Firebase
 
     - name: Build Unity Project for Android
       uses: game-ci/unity-builder@v4
