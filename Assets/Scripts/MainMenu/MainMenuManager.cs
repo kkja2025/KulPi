@@ -87,7 +87,7 @@ public class MainMenuManager : MonoBehaviour
             {
                 auth.SignOut();
                 Debug.Log("User signed out.");
-                SceneManager.LoadScene("Login"); // Replace with your actual login scene name
+                SceneManager.LoadScene("Login");
             }
         }
 }
