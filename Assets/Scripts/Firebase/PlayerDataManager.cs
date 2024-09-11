@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase.Auth;
@@ -72,181 +73,119 @@ public class PlayerDataManager : MonoBehaviour
     }
 
     // Save player data
-    private void SavePlayerData(PlayerData playerData)
+    public async Task SavePlayerDataAsync(PlayerData playerData)
     {
-        if (auth == null || auth.CurrentUser == null)
-        {
-            Debug.LogError("Firebase Auth is not initialized or user is not signed in.");
-            return;
-        }
-
         string userId = auth.CurrentUser.UserId;
         DatabaseReference playerRef = databaseReference.Child("users").Child(userId).Child("progress");
 
         string json = JsonUtility.ToJson(playerData);
 
-        playerRef.SetRawJsonValueAsync(json).ContinueWith(task =>
+        try
         {
-            if (task.IsCompleted)
-            {
-                Debug.Log("Player data saved successfully.");
-            }
-            else
-            {
-                Debug.LogError("Error saving player data: " + task.Exception);
-            }
-        });
+            await playerRef.SetRawJsonValueAsync(json);
+            Debug.Log("Player data saved successfully.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error saving player data: " + ex.Message);
+        }
     }
 
     // Update player data
-    private void UpdatePlayerData(Dictionary<string, object> updatedData)
+    public async Task UpdatePlayerDataAsync(Dictionary<string, object> updatedData)
     {
-        if (auth == null || auth.CurrentUser == null)
-        {
-            Debug.LogError("Firebase Auth is not initialized or user is not signed in.");
-            return;
-        }
-
         string userId = auth.CurrentUser.UserId;
         DatabaseReference playerRef = databaseReference.Child("users").Child(userId).Child("progress");
 
-        playerRef.UpdateChildrenAsync(updatedData).ContinueWith(task =>
+        try
         {
-            if (task.IsCompleted)
-            {
-                Debug.Log("Player data updated successfully.");
-            }
-            else
-            {
-                Debug.LogError("Error updating player data: " + task.Exception);
-            }
-        });
+            await playerRef.UpdateChildrenAsync(updatedData);
+            Debug.Log("Player data updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error updating player data: " + ex.Message);
+        }
     }
 
     // Load player data
-    private void LoadPlayerData(Action<PlayerData> onLoaded)
+    public async Task<PlayerData> LoadPlayerDataAsync()
     {
         if (auth == null || auth.CurrentUser == null)
         {
             Debug.LogError("Firebase Auth is not initialized or user is not signed in.");
-            return;
+            return null;
         }
 
         string userId = auth.CurrentUser.UserId;
         DatabaseReference playerRef = databaseReference.Child("users").Child(userId).Child("progress");
 
-        playerRef.GetValueAsync().ContinueWith(task =>
+        try
         {
-            if (task.IsCompleted)
+            DataSnapshot snapshot = await playerRef.GetValueAsync();
+
+            if (snapshot.Exists)
             {
-                DataSnapshot snapshot = task.Result;
-                if (snapshot.Exists)
-                {
-                    string json = snapshot.GetRawJsonValue();
-                    PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
-                    Debug.Log("Player data loaded successfully.");
-                    onLoaded?.Invoke(playerData);
-                }
-                else
-                {
-                    Debug.Log("No player data found.");
-                }
+                string json = snapshot.GetRawJsonValue();
+                return JsonUtility.FromJson<PlayerData>(json);
             }
             else
             {
-                Debug.LogError("Error loading player data: " + task.Exception);
+                Debug.Log("No player data found.");
+                return null;
             }
-        });
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error loading player data: " + ex.Message);
+            return null;
+        }
     }
 
     // Delete player data
-    private void DeletePlayerData()
+    public async Task DeletePlayerDataAsync()
     {
-        if (auth == null || auth.CurrentUser == null)
-        {
-            Debug.LogError("Firebase Auth is not initialized or user is not signed in.");
-            return;
-        }
-
         string userId = auth.CurrentUser.UserId;
         DatabaseReference playerRef = databaseReference.Child("users").Child(userId).Child("progress");
 
-        playerRef.RemoveValueAsync().ContinueWith(task =>
+        try
         {
-            if (task.IsCompleted)
-            {
-                Debug.Log("Player data deleted successfully.");
-            }
-            else
-            {
-                Debug.LogError("Error deleting player data: " + task.Exception);
-            }
-        });
+            await playerRef.RemoveValueAsync();
+            Debug.Log("Player data deleted successfully.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error deleting player data: " + ex.Message);
+        }
     }
 
-    // Example method to save new game data
+    // Check for save data
+    public async Task<bool> CheckForSaveDataAsync()
+    {
+        try
+        {
+            string userId = auth.CurrentUser.UserId;
+            DatabaseReference playerRef = databaseReference.Child("users").Child(userId).Child("progress");
+            DataSnapshot snapshot = await playerRef.GetValueAsync();
+            return snapshot.Exists;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error checking save data: " + ex.Message);
+            return false;
+        }
+    }
+
+
     public void SaveNewGame()
     {
         PlayerData newPlayerData = new PlayerData(1, 0, new List<string> { "Starter Sword", "Starter Shield" });
-        SavePlayerData(newPlayerData);
+        SavePlayerDataAsync(newPlayerData);
     }
 
-    // Example method to check for saved game data
-    public void CheckForSaveData(Action<bool> callback)
+    public async void NewGame()
     {
-        if (auth == null || auth.CurrentUser == null)
-        {
-            Debug.LogError("Firebase Auth is not initialized or user is not signed in.");
-            callback(false);
-            return;
-        }
-
-        string userId = auth.CurrentUser.UserId;
-        DatabaseReference playerRef = databaseReference.Child("users").Child(userId).Child("progress");
-
-        playerRef.GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                bool dataExists = snapshot.Exists; // Check if data exists
-                callback?.Invoke(dataExists);
-            }
-            else
-            {
-                Debug.LogError("Error checking save data: " + task.Exception);
-                callback?.Invoke(false);
-            }
-        });
-    }
-
-    // Method to load game data and start the game
-    public void LoadGameData()
-    {
-        LoadPlayerData((playerData) =>
-        {
-            if (playerData != null)
-            {
-                Debug.Log($"Loaded Player Data - Level: {playerData.level}, Score: {playerData.score}");
-                SceneManager.LoadScene("GameScene");
-            }
-        });
-    }
-
-    // Example method to update score
-    public void UpdateScore(int newScore)
-    {
-        Dictionary<string, object> updates = new Dictionary<string, object>
-        {
-            {"score", newScore}
-        };
-        UpdatePlayerData(updates);
-    }
-
-    // Example method to start a new game
-    public void NewGame()
-    {
-        DeletePlayerData();
+        DeletePlayerDataAsync();
         SaveNewGame();
         Debug.Log("New game started, previous progress deleted.");
     }

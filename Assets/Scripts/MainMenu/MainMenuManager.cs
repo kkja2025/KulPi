@@ -76,26 +76,39 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    public void LoadGame()
+    public async void LoadGame()
     {
-        // Check if there's existing save data
-        PlayerDataManager.Singleton.CheckForSaveData((exists) =>
+        try
         {
-            if (exists)
+            bool dataExists = await PlayerDataManager.Singleton.CheckForSaveDataAsync();
+            if (dataExists)
             {
-                // Load save data and start the game
-                PlayerDataManager.Singleton.LoadGameData();
-                PanelManager.GetSingleton("loading").Open();
-                SceneManager.LoadScene("GameScene");
+                Debug.Log("Save data found. Loading game...");
+                PlayerData playerData = await PlayerDataManager.Singleton.LoadPlayerDataAsync();
+                if (playerData != null)
+                {
+                    Debug.Log($"Loaded Player Data - Level: {playerData.level}, Score: {playerData.score}");
+                    PanelManager.GetSingleton("loading").Open();
+                    SceneManager.LoadScene("GameScene");
+                }
+                else
+                {
+                    Debug.LogError("Failed to load player data.");
+                    ShowPopUp(PopUpMenu.Action.None, "Failed to load player data. Please try again.", "OK");
+                }
             }
             else
             {
                 Debug.Log("No save data found. Please start a new game.");
-            }
-        });
                 ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error during LoadGame: " + ex.Message);
+            ShowPopUp(PopUpMenu.Action.None, "An error occurred while loading the game. Please try again.", "OK");
+        }
     }
-
     public void NewGame()
     {
         PanelManager.CloseAll();
