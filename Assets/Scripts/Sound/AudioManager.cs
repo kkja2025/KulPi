@@ -64,7 +64,6 @@ public class AudioManager : MonoBehaviour
         if (scene.name == "Login" || scene.name == "MainMenu")
         {
             PlayBackgroundMusic("bgm1");
-            PlaySoundEffect("bgm2");
         }
         else if (scene.name == "GameScene")
         {
