@@ -97,4 +97,12 @@ public class MainMenuManager : MonoBehaviour
             PanelManager.GetSingleton("loading").Open();
             SceneManager.LoadScene("GameScene");
         }
+
+        public void NewGame()
+        {
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("loading").Open();
+            // TODO: Add code to reset the game state.
+            SceneManager.LoadScene("GameScene");
+        }
 }
