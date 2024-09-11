@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
-using Firebase.Extensions;
+using Firebase.Database;
 
 public class MainMenuManager : MonoBehaviour
 {
     private bool initialized = false;
+    private DatabaseReference reference;
     private static MainMenuManager singleton = null;
 
     public static MainMenuManager Singleton
@@ -16,8 +17,15 @@ public class MainMenuManager : MonoBehaviour
         {
             if (singleton == null)
             {
-                singleton = FindFirstObjectByType<MainMenuManager>();
-                singleton.Initialize();
+                singleton = FindObjectOfType<MainMenuManager>();
+                if (singleton != null)
+                {
+                    singleton.Initialize();
+                }
+                else
+                {
+                    Debug.LogError("MainMenuManager not found in the scene!");
+                }
             }
             return singleton;
         }
@@ -25,16 +33,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Initialize()
     {
-        if (initialized) { return; }
+        if (initialized) return;
         initialized = true;
-    }
-
-    private void OnDestroy()
-    {
-        if (singleton == this)
-        {
-            singleton = null;
-        }
     }
 
     private void Awake()
@@ -43,66 +43,51 @@ public class MainMenuManager : MonoBehaviour
         StartClientService();
     }
 
-    public async void StartClientService()
+    private void StartClientService()
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
         try
         {
-            var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            reference = FirebaseService.Singleton.Reference;
+            if (reference != null)
             {
-                var auth = FirebaseAuth.DefaultInstance;
-                Debug.Log("Firebase initialized successfully.");
-
-                if (auth.CurrentUser != null)
-                {
-                    Debug.Log($"User is signed in: {auth.CurrentUser.Email}");
-                    PanelManager.CloseAll();
-                    PanelManager.GetSingleton("main").Open();
-                }
-                else
-                {
-                    SceneManager.LoadScene("Login");
-                }
-            }
-            else
-            {
-                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.StartService, "Failed to connect to the network.", "Retry");
+                Debug.Log("Connected to the database.");
+                PanelManager.GetSingleton("loading").Close();
+                PanelManager.GetSingleton("main").Open();
             }
         }
         catch (Exception exception)
         {
-            Debug.LogError(exception);
-            LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.StartService, "Failed to connect to the network.", "Retry");
+            Debug.LogError("Error connecting to Firebase: " + exception);
+            PanelManager.GetSingleton("loading").Close();
         }
     }
 
-        public void SignOut()
+    public void SignOut()
+    {
+        PanelManager.GetSingleton("loading").Open();
+        var auth = FirebaseAuth.DefaultInstance;
+        if (auth.CurrentUser != null)
         {
-            PanelManager.GetSingleton("loading").Open();
-            var auth = FirebaseAuth.DefaultInstance;
-            if (auth.CurrentUser != null)
-            {
-                auth.SignOut();
-                Debug.Log("User signed out.");
-                SceneManager.LoadScene("Login");
-            }
+            auth.SignOut();
+            Debug.Log("User signed out.");
+            SceneManager.LoadScene("Login");
         }
+    }
 
-        public void LoadGame()
-        {
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("GameScene");
-        }
+    public void LoadGame()
+    {
+        PanelManager.CloseAll();
+        PanelManager.GetSingleton("loading").Open();
+        SceneManager.LoadScene("GameScene");
+    }
 
-        public void NewGame()
-        {
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("loading").Open();
-            // TODO: Add code to reset the game state.
-            SceneManager.LoadScene("GameScene");
-        }
+    public void NewGame()
+    {
+        PanelManager.CloseAll();
+        PanelManager.GetSingleton("loading").Open();
+        // TODO: Add code to reset the game state.
+        SceneManager.LoadScene("GameScene");
+    }
 }
