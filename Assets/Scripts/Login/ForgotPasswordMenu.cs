@@ -40,7 +40,7 @@ public class ForgotPasswordMenu : Panel
         {
             Debug.Log("Email field is empty.");
             LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Enter a valid email", "OK");
-        } else if (LoginManager.Singleton.IsEmailValid(email) == false)
+        } else if (IsEmailValid(email) == false)
         {
             Debug.Log("Invalid email address.");
             LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
@@ -48,6 +48,19 @@ public class ForgotPasswordMenu : Panel
         else
         {
             LoginManager.Singleton.RequestResetPasswordAsync(email);
+        }
+    }
+
+    private bool IsEmailValid(string email) 
+    {
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
         }
     }
 }

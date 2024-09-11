@@ -39,11 +39,7 @@ public class RegisterMenu : Panel
         string passConfirm = confirmPasswordInput.text.Trim();
         if (string.IsNullOrEmpty(pass) == false && string.IsNullOrEmpty(passConfirm) == false && string.IsNullOrEmpty(email) == false)
         {
-            if (LoginManager.Singleton.IsEmailValid(email) == false)
-            {
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
-            }            
-            else if (IsPasswordValid(pass) == false)
+            if (IsPasswordValid(pass) == false)
             {
                 LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
             }

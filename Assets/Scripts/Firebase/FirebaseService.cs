@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
 using Firebase.Extensions;
 
 public class FirebaseService : MonoBehaviour
@@ -11,7 +11,10 @@ public class FirebaseService : MonoBehaviour
     private static FirebaseService singleton = null;
     private FirebaseApp app;
     private FirebaseAuth auth;
+    private DatabaseReference reference;
+
     public FirebaseAuth Auth => auth;
+    public DatabaseReference Reference => reference;
 
     public static FirebaseService Singleton
     {
@@ -19,28 +22,29 @@ public class FirebaseService : MonoBehaviour
         {
             if (singleton == null)
             {
-                singleton = FindFirstObjectByType<FirebaseService>();
-                singleton.Initialize();
+                singleton = FindObjectOfType<FirebaseService>();
+                if (singleton != null)
+                {
+                    singleton.Initialize();
+                }
+                else
+                {
+                    Debug.LogError("FirebaseService not found in the scene!");
+                }
             }
-            return singleton; 
+            return singleton;
         }
     }
 
     private void Initialize()
     {
-        if (initialized) { return; }
+        if (initialized) return;
+
         initialized = true;
         DontDestroyOnLoad(gameObject);
+        Debug.Log("FirebaseService Initialized");
     }
-    
-    private void OnDestroy()
-    {
-        if (singleton == this)
-        {
-            singleton = null;
-        }
-    }
-    
+
     private void Awake()
     {
         Application.runInBackground = true;
@@ -54,12 +58,21 @@ public class FirebaseService : MonoBehaviour
         {
             app = FirebaseApp.DefaultInstance;
             auth = FirebaseAuth.DefaultInstance;
+            reference = FirebaseDatabase.DefaultInstance.RootReference;
             Debug.Log("Firebase initialized successfully.");
         }
         else
         {
-            Debug.Log($"Could not resolve all Firebase dependencies: {dependencyStatus}");
+            Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
             return;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (singleton == this)
+        {
+            singleton = null;
         }
     }
 }

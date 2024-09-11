@@ -50,8 +50,25 @@ public class LoginManager : MonoBehaviour
         PanelManager.GetSingleton("loading").Open();
         try
         {   
-            auth = FirebaseService.Singleton.Auth;
-             if (auth.CurrentUser != null)
+            var firebaseService = FirebaseService.Singleton;
+            
+            if (firebaseService == null)
+            {
+                Debug.LogError("FirebaseService singleton is null.");
+                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
+                return;
+            }
+
+            auth = firebaseService.Auth;
+            
+            if (auth == null)
+            {
+                Debug.LogError("FirebaseAuth instance is null.");
+                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
+                return;
+            }
+            
+            if (auth.CurrentUser != null)
             {
                 Debug.Log("User is signed in.");
                 AutomaticSignIn();
@@ -65,7 +82,7 @@ public class LoginManager : MonoBehaviour
         }
         catch (Exception exception)
         {
-            Debug.Log(exception);
+            Debug.LogException(exception);
             ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client.", "Retry");
         }
     }
@@ -98,13 +115,32 @@ public class LoginManager : MonoBehaviour
         }
         catch (FirebaseException firebaseException)
         {
+            // Handle specific Firebase error codes
+            switch ((AuthError)firebaseException.ErrorCode)
+            {
+                case AuthError.InvalidEmail:
+                    ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
+                    break;
+                case AuthError.WrongPassword:
+                    ShowPopUp(PopUpMenu.Action.None, "Incorrect password", "OK");
+                    break;
+                case AuthError.UserNotFound:
+                    ShowPopUp(PopUpMenu.Action.None, "User not found", "OK");
+                    break;
+                default:
+                    ShowPopUp(PopUpMenu.Action.None, "Login failed. Please try again.", "OK");
+                    break;
+            }
             Debug.Log("Firebase error during sign in: " + firebaseException.Message);
-            ShowPopUp(PopUpMenu.Action.None, "Email or password incorrect", "OK");
         }
         catch (Exception exception)
         {
             Debug.Log("Error during sign in: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Error during sign in", "OK");
+        }
+        finally
+        {
+            PanelManager.Close("loading");
         }
     }
 
@@ -114,20 +150,34 @@ public class LoginManager : MonoBehaviour
         try
         {
             var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
-
             FirebaseUser newUser = authResult.User;
             Debug.Log("User created successfully: " + newUser.Email);
             ShowPopUp(PopUpMenu.Action.None, "User created successfully", "OK");
         }
         catch (FirebaseException firebaseException)
         {
+            switch ((AuthError)firebaseException.ErrorCode)
+            {
+                case AuthError.EmailAlreadyInUse:
+                    ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
+                    break;
+                case AuthError.InvalidEmail:
+                    ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
+                    break;
+                default:
+                    ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
+                    break;
+            }
             Debug.Log("Firebase error during user creation: " + firebaseException.Message);
-            ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
         }
         catch (Exception exception)
         {
             Debug.Log("Error during user creation: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
+        }
+        finally
+        {
+            PanelManager.Close("loading");
         }
     }
 
@@ -149,6 +199,10 @@ public class LoginManager : MonoBehaviour
         {
             Debug.Log("Error during password reset: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
+        }
+        finally
+        {
+            PanelManager.Close("loading");
         }
     }
 
@@ -183,18 +237,5 @@ public class LoginManager : MonoBehaviour
         PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
-    }
-
-    public bool IsEmailValid(string email) 
-    {
-        try
-        {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == email;
-        }
-        catch
-        {
-            return false;
-        }
     }
 }

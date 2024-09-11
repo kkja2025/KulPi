@@ -43,14 +43,7 @@ public class AuthenticationMenu : Panel
         string pass = passwordInput.text.Trim();
         if (string.IsNullOrEmpty(email) == false && string.IsNullOrEmpty(pass) == false)
         {
-            if (LoginManager.Singleton.IsEmailValid(email) == false)
-            {
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Invalid email address", "OK");
-            }
-            else
-            {
-                LoginManager.Singleton.SignInAsync(email, pass);
-            }
+            LoginManager.Singleton.SignInAsync(email, pass);
         } else
         {
             LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Email and password are required", "OK");
