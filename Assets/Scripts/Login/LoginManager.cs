@@ -9,7 +9,6 @@ public class LoginManager : MonoBehaviour
 {
     private bool initialized = false;
     private static LoginManager singleton = null;
-    private FirebaseApp app;
     private FirebaseAuth auth;
 
     public static LoginManager Singleton
@@ -29,7 +28,6 @@ public class LoginManager : MonoBehaviour
     {
         if (initialized) { return; }
         initialized = true;
-        DontDestroyOnLoad(gameObject);
     }
     
     private void OnDestroy()
@@ -46,27 +44,13 @@ public class LoginManager : MonoBehaviour
         StartClientService();
     }
 
-    public async void StartClientService()
+    public void StartClientService()
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
         try
-        {       
-           var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
-                app = FirebaseApp.DefaultInstance;
-                auth = FirebaseAuth.DefaultInstance;
-                Debug.Log("Firebase initialized successfully.");
-
-                AutomaticSignIn();
-            }
-            else
-            {
-                Debug.Log($"Could not resolve all Firebase dependencies: {dependencyStatus}");
-                return;
-            }
-
+        {   
+            auth = FirebaseService.Singleton.Auth;
              if (auth.CurrentUser != null)
             {
                 Debug.Log("User is signed in.");
