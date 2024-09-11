@@ -40,7 +40,6 @@ public class LoadGameMenu : Panel
 
     private void NewGame()
     {
-        PanelManager.Close("loading");
         PopUpMenu_2 panel = (PopUpMenu_2)PanelManager.GetSingleton("popup2");
         panel.Open(PopUpMenu_2.Action.NewGame, "Are you sure you want to start a new game? Old save data will be overwritten.", "Cancel", "Confirm");
     }

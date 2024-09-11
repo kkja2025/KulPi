@@ -78,16 +78,36 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadGame()
     {
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
-        SceneManager.LoadScene("GameScene");
+        // Check if there's existing save data
+        PlayerDataManager.Singleton.CheckForSaveData((exists) =>
+        {
+            if (exists)
+            {
+                // Load save data and start the game
+                PlayerDataManager.Singleton.LoadGameData();
+                PanelManager.GetSingleton("loading").Open();
+                SceneManager.LoadScene("GameScene");
+            }
+            else
+            {
+                Debug.Log("No save data found. Please start a new game.");
+            }
+        });
+                ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "OK");
     }
 
     public void NewGame()
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
-        // TODO: Add code to reset the game state.
+        PlayerDataManager.Singleton.NewGame();
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
+    {
+        PanelManager.Close("loading");
+        PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
+        panel.Open(action, text, button);
     }
 }
