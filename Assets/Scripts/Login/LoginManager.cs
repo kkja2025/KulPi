@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase;
@@ -11,8 +10,6 @@ public class LoginManager : MonoBehaviour
     private bool initialized = false;
     private static LoginManager singleton = null;
     private FirebaseAuth auth;
-    private const int MaxRetries = 3;
-    private int retryCount = 0;
 
     public static LoginManager Singleton
     {
@@ -51,68 +48,43 @@ public class LoginManager : MonoBehaviour
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
-        AttemptInitializeFirebase();
-    }
-
-    private async void AttemptInitializeFirebase()
-    {
-        retryCount = 0; // Reset retry count
-        while (retryCount < MaxRetries)
-        {
-            try
+        try
+        {   
+            var firebaseService = FirebaseService.Singleton;
+            
+            if (firebaseService == null)
             {
-                var firebaseService = FirebaseService.Singleton;
-
-                if (firebaseService == null)
-                {
-                    Debug.LogError("FirebaseService singleton is null.");
-                    retryCount++;
-                    await RetryInitialization();
-                    continue;
-                }
-
-                auth = firebaseService.Auth;
-
-                if (auth == null)
-                {
-                    Debug.LogError("FirebaseAuth instance is null.");
-                    retryCount++;
-                    await RetryInitialization();
-                    continue;
-                }
-
-                if (auth.CurrentUser != null)
-                {
-                    Debug.Log("User is signed in.");
-                    AutomaticSignIn();
-                    return;
-                }
-                else
-                {
-                    Debug.Log("User is not signed in.");
-                    PanelManager.CloseAll();
-                    PanelManager.GetSingleton("auth").Open();
-                    return;
-                }
+                Debug.LogError("FirebaseService singleton is null.");
+                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
+                return;
             }
-            catch (Exception exception)
+
+            auth = firebaseService.Auth;
+            
+            if (auth == null)
             {
-                Debug.LogException(exception);
-                retryCount++;
-                await RetryInitialization();
+                Debug.LogError("FirebaseAuth instance is null.");
+                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
+                return;
+            }
+            
+            if (auth.CurrentUser != null)
+            {
+                Debug.Log("User is signed in.");
+                AutomaticSignIn();
+            }
+            else
+            {
+                Debug.Log("User is not signed in.");
+                PanelManager.CloseAll();
+                PanelManager.GetSingleton("auth").Open();
             }
         }
-
-        // If max retries reached and still not successful
-        ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client after multiple attempts.", "Retry");
-    }
-
-    private async Task RetryInitialization()
-    {
-        // Close the loading panel and wait before retrying
-        PanelManager.GetSingleton("loading").Close();
-        await Task.Delay(2000); // Wait for 2 seconds before retrying
-        PanelManager.GetSingleton("loading").Open();
+        catch (Exception exception)
+        {
+            Debug.LogException(exception);
+            ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client.", "Retry");
+        }
     }
 
     private void AutomaticSignIn()

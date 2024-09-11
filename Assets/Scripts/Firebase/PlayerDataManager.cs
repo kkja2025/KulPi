@@ -177,15 +177,15 @@ public class PlayerDataManager : MonoBehaviour
     }
 
 
-    public async void SaveNewGame()
+    public void SaveNewGame()
     {
         PlayerData newPlayerData = new PlayerData(1, 0, new List<string> { "Starter Sword", "Starter Shield" });
-        await SavePlayerDataAsync(newPlayerData);
+        SavePlayerDataAsync(newPlayerData);
     }
 
     public async void NewGame()
     {
-        await DeletePlayerDataAsync();
+        DeletePlayerDataAsync();
         SaveNewGame();
         Debug.Log("New game started, previous progress deleted.");
     }
