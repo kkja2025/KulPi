@@ -250,6 +250,50 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &85632583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 85632584}
+  - component: {fileID: 85632585}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &85632584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85632583}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1319229996}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &85632585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85632583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5134737bf1dbb4bbfebdec2c5e9144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &116532091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3145,7 +3189,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 85632584}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1383406547 stripped
@@ -5029,51 +5074,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4701831652411733372, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7100059333607863768, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7886030729847769529}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
---- !u!1 &7886030729847769525 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7100059333607863768, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
-  m_PrefabInstance: {fileID: 7886030729847769524}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &7886030729847769526 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3022840515618960294, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
-  m_PrefabInstance: {fileID: 7886030729847769524}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &7886030729847769527 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 9001360268357828256, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
-  m_PrefabInstance: {fileID: 7886030729847769524}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &7886030729847769528 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 6421315338350729746, guid: d18b11e1f187d5f4ca30c0ce711e465d, type: 3}
-  m_PrefabInstance: {fileID: 7886030729847769524}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7886030729847769529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7886030729847769525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfd0b5b654eedbb428f068c93c1d896b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterMixer: {fileID: 24100000, guid: 4d9d70a743cf10c47a71963a046bbcde, type: 2}
-  backgroundMusicSource: {fileID: 7886030729847769528}
-  soundEffectsSource: {fileID: 7886030729847769527}
-  voiceOverSource: {fileID: 7886030729847769526}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5081,6 +5086,6 @@ SceneRoots:
   - {fileID: 21280602}
   - {fileID: 288883163}
   - {fileID: 1319229996}
-  - {fileID: 765141077}
   - {fileID: 7886030729847769524}
+  - {fileID: 765141077}
   - {fileID: 1054854518}

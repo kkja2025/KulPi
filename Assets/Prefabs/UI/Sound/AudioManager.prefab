@@ -393,8 +393,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8360423161358695948}
-  - component: {fileID: 4701831652411733372}
   - component: {fileID: 4501154466032112191}
+  - component: {fileID: 4961117510495993332}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -420,7 +420,15 @@ Transform:
   - {fileID: 3633450785105824175}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4701831652411733372
+--- !u!81 &4501154466032112191
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100059333607863768}
+  m_Enabled: 1
+--- !u!114 &4961117510495993332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,11 +444,3 @@ MonoBehaviour:
   backgroundMusicSource: {fileID: 6421315338350729746}
   soundEffectsSource: {fileID: 9001360268357828256}
   voiceOverSource: {fileID: 3022840515618960294}
---- !u!81 &4501154466032112191
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7100059333607863768}
-  m_Enabled: 1
