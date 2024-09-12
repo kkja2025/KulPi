@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave;
@@ -83,16 +84,19 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async void LoadPlayerData()
+    public async Task LoadPlayerData()
     {
         var keysToLoad = new HashSet<string>
         {
             CLOUD_SAVE_LEVEL_KEY,
             CLOUD_SAVE_PLAYER_ID_KEY
         };
+
         try
         {
             var loadedData = await CloudSaveService.Instance.Data.Player.LoadAsync(keysToLoad);
+            Debug.Log("Data loaded successfully: " + string.Join(", ", loadedData.Keys));
+
             if (!loadedData.ContainsKey(CLOUD_SAVE_PLAYER_ID_KEY) || string.IsNullOrEmpty(loadedData[CLOUD_SAVE_PLAYER_ID_KEY]?.ToString()))
             {
                 throw new InvalidOperationException("Player ID is empty or not found in cloud save.");
@@ -104,9 +108,11 @@ public class CloudSaveManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            HandleCloudSaveException(e);
+            Debug.LogError("Error in LoadPlayerData: " + e.Message);
+            throw; 
         }
     }
+
 
     public async void UpdatePlayerData(int newLevel)
     {
@@ -157,19 +163,15 @@ public class CloudSaveManager : MonoBehaviour
         {
             case ServicesInitializationException initEx:
                 Debug.LogError("Service not initialized: " + initEx.Message);
-                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Error initializing services.", "Ok");
                 break;
             case CloudSaveValidationException validationEx:
                 Debug.LogError("Validation error: " + validationEx.Message);
-                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Error saving data.", "Ok");
                 break;
             case CloudSaveRateLimitedException rateLimitEx:
                 Debug.LogError("Rate limited: " + rateLimitEx.Message);
-                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Rate limited. Try again later.", "Ok");
                 break;
             default:
                 Debug.LogError("CloudSave error: " + e.Message);
-                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Error saving/loading data.", "Ok");
                 break;
         }
     }
