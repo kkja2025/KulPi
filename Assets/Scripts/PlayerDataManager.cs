@@ -203,6 +203,7 @@ public class PlayerDataManager : MonoBehaviour
         SaveNewGame();
         Debug.Log("New game started, previous progress deleted.");
     }
+<<<<<<< HEAD:Assets/Scripts/PlayerDataManager.cs
 
     public void WriteData()
     {
@@ -257,3 +258,6 @@ public class PlayerDataManager : MonoBehaviour
     }
 
 }
+=======
+}
+>>>>>>> 14d45a6dce77c264df08ba1c3c822d985265d767:Assets/Scripts/Firebase/PlayerDataManager.cs
