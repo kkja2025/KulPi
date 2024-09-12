@@ -4,15 +4,12 @@ using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
-using System.Threading.Tasks;
 
 public class LoginManager : MonoBehaviour
 {
     private bool initialized = false;
     private static LoginManager singleton = null;
     private FirebaseAuth auth;
-    private const int MaxRetries = 3;
-    private int retryCount = 0;
 
     public static LoginManager Singleton
     {
@@ -23,7 +20,7 @@ public class LoginManager : MonoBehaviour
                 singleton = FindFirstObjectByType<LoginManager>();
                 singleton.Initialize();
             }
-            return singleton;
+            return singleton; 
         }
     }
 
@@ -32,7 +29,7 @@ public class LoginManager : MonoBehaviour
         if (initialized) { return; }
         initialized = true;
     }
-
+    
     private void OnDestroy()
     {
         if (singleton == this)
@@ -40,7 +37,7 @@ public class LoginManager : MonoBehaviour
             singleton = null;
         }
     }
-
+    
     private void Awake()
     {
         Application.runInBackground = true;
@@ -51,66 +48,45 @@ public class LoginManager : MonoBehaviour
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
-        AttemptInitializeFirebase();
-    }
+        try
+        {   
+            var firebaseService = FirebaseService.Singleton;
+            
+            if (firebaseService == null)
+            {
+                Debug.LogError("FirebaseService singleton is null.");
+                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
+                return;
+            }
 
-    private async void AttemptInitializeFirebase()
-    {
-        retryCount = 0;
-        while (retryCount < MaxRetries)
+            auth = firebaseService.Auth;
+            
+            if (auth == null)
+            {
+                Debug.LogError("FirebaseAuth instance is null.");
+                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
+                return;
+            }
+            
+            if (auth.CurrentUser != null)
+            {
+                Debug.Log("User is signed in.");
+                AutomaticSignIn();
+            }
+            else
+            {
+                Debug.Log("User is not signed in.");
+                PanelManager.CloseAll();
+                PanelManager.GetSingleton("auth").Open();
+            }
+        }
+        catch (Exception exception)
         {
-            try
-            {
-                var firebaseService = FirebaseService.Singleton;
-                if (firebaseService == null)
-                {
-                    Debug.LogError("FirebaseService singleton is null.");
-                    retryCount++;
-                    await RetryInitialization();
-                    continue;
-                }
-
-                auth = firebaseService.Auth;
-
-                if (auth == null)
-                {
-                    Debug.LogError("FirebaseAuth instance is null.");
-                    retryCount++;
-                    await RetryInitialization();
-                    continue;
-                }
-
-                if (auth.CurrentUser != null)
-                {
-                    Debug.Log("User is signed in.");
-                    AutomaticSignIn();
-                    return;
-                }
-                else
-                {
-                    Debug.Log("User is not signed in.");
-                    PanelManager.CloseAll();
-                    PanelManager.GetSingleton("auth").Open();
-                    return;
-                }
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception);
-                retryCount++;
-
-                await RetryInitialization();
-            }
-            ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client after multiple attempts.", "Retry");
+            Debug.LogException(exception);
+            ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client.", "Retry");
         }
     }
 
-    private async Task RetryInitialization()
-    {
-        PanelManager.GetSingleton("loading").Close();
-        await Task.Delay(2000);
-        PanelManager.GetSingleton("loading").Open();
-    }
     private void AutomaticSignIn()
     {
         PanelManager.GetSingleton("loading").Open();
@@ -252,10 +228,10 @@ public class LoginManager : MonoBehaviour
 
     private void SignInConfirmAsync()
     {
-        PanelManager.CloseAll();
-        SceneManager.LoadScene("MainMenu");
+            PanelManager.CloseAll();
+            SceneManager.LoadScene("MainMenu");
     }
-
+    
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
     {
         PanelManager.Close("loading");
