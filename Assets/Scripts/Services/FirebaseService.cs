@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using Firebase;
 using Firebase.Auth;
-using Firebase.Database;
-using Firebase.Extensions;
 
 public class FirebaseService : MonoBehaviour
 {
@@ -11,10 +9,8 @@ public class FirebaseService : MonoBehaviour
     private static FirebaseService singleton = null;
     private FirebaseApp app;
     private FirebaseAuth auth;
-    private DatabaseReference reference;
 
     public FirebaseAuth Auth => auth;
-    public DatabaseReference Reference => reference;
 
     public static FirebaseService Singleton
     {
@@ -22,7 +18,7 @@ public class FirebaseService : MonoBehaviour
         {
             if (singleton == null)
             {
-                singleton = FindObjectOfType<FirebaseService>();
+                singleton = FindFirstObjectByType<FirebaseService>();
                 if (singleton != null)
                 {
                     singleton.Initialize();
@@ -58,7 +54,6 @@ public class FirebaseService : MonoBehaviour
         {
             app = FirebaseApp.DefaultInstance;
             auth = FirebaseAuth.DefaultInstance;
-            reference = FirebaseDatabase.DefaultInstance.RootReference;
             Debug.Log("Firebase initialized successfully.");
         }
         else
