@@ -23,7 +23,7 @@ public class PlayerData
 
 public class PlayerDataManager : MonoBehaviour
 {
-    
+
     private bool initialized = false;
     private static PlayerDataManager singleton = null;
     private FirebaseAuth auth;
