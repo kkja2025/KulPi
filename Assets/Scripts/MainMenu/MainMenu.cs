@@ -53,10 +53,9 @@ public class MainMenu : Panel
     private void CloseGame()
     {
         #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
-        PlayerDataManager.Singleton.ReadData();
     }
 }
