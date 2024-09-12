@@ -1,9 +1,12 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.Authentication.PlayerAccounts;
 using Firebase;
 using Firebase.Auth;
-using Firebase.Extensions;
 
 public class LoginManager : MonoBehaviour
 {
@@ -17,7 +20,7 @@ public class LoginManager : MonoBehaviour
         {
             if (singleton == null)
             {
-                singleton = FindFirstObjectByType<LoginManager>();
+                singleton = FindObjectOfType<LoginManager>();
                 singleton.Initialize();
             }
             return singleton; 
@@ -44,46 +47,88 @@ public class LoginManager : MonoBehaviour
         StartClientService();
     }
 
-    public void StartClientService()
+    public async void StartClientService()
     {
+        int maxRetries = 3;  
+        int retryDelay = 2000;  
+        int attempt = 0;
+        bool success = false;
+
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
-        try
-        {   
-            var firebaseService = FirebaseService.Singleton;
-            
-            if (firebaseService == null)
-            {
-                Debug.LogError("FirebaseService singleton is null.");
-                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
-                return;
-            }
 
-            auth = firebaseService.Auth;
-            
-            if (auth == null)
+        while (attempt < maxRetries && !success)
+        {
+            attempt++;
+            try
             {
-                Debug.LogError("FirebaseAuth instance is null.");
-                ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
-                return;
+                if (UnityServices.State != ServicesInitializationState.Initialized)
+                {
+                    Debug.Log($"Attempt {attempt}: Unity Services not initialized. Initializing...");
+                    await UnityServices.InitializeAsync();
+                    Debug.Log("Unity Services initialized.");
+                }
+
+                var firebaseService = FirebaseService.Singleton;
+                if (firebaseService == null)
+                {
+                    Debug.LogError("FirebaseService singleton is null.");
+                    if (attempt < maxRetries)
+                    {
+                        await Task.Delay(retryDelay); 
+                        continue; 
+                    }
+                    ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
+                    return;
+                }
+
+                auth = firebaseService.Auth;
+                if (auth == null)
+                {
+                    Debug.LogError("FirebaseAuth instance is null.");
+                    if (attempt < maxRetries)
+                    {
+                        await Task.Delay(retryDelay); 
+                        continue; 
+                    }
+                    ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
+                    return;
+                }
+
+                if (auth.CurrentUser != null)
+                {
+                    Debug.Log("User is signed in.");
+                    AutomaticSignIn();
+                }
+                else
+                {
+                    Debug.Log("User is not signed in.");
+                    PanelManager.CloseAll();
+                    PanelManager.GetSingleton("auth").Open();
+                }
+                
+                success = true;  
             }
-            
-            if (auth.CurrentUser != null)
+            catch (Exception exception)
             {
-                Debug.Log("User is signed in.");
-                AutomaticSignIn();
-            }
-            else
-            {
-                Debug.Log("User is not signed in.");
-                PanelManager.CloseAll();
-                PanelManager.GetSingleton("auth").Open();
+                Debug.LogException(exception);
+
+                if (attempt < maxRetries)
+                {
+                    Debug.Log($"Retrying in {retryDelay / 1000} seconds...");
+                    await Task.Delay(retryDelay);  
+                }
+                else
+                {
+                    ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize after multiple attempts.", "Retry");
+                }
             }
         }
-        catch (Exception exception)
+
+        if (!success)
         {
-            Debug.LogException(exception);
-            ShowPopUp(PopUpMenu.Action.StartService, "Failed to start client.", "Retry");
+            Debug.LogError("Failed to initialize after multiple attempts.");
+            ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize after multiple attempts.", "Retry");
         }
     }
 
@@ -93,8 +138,9 @@ public class LoginManager : MonoBehaviour
         FirebaseUser user = auth.CurrentUser;
         if (user != null)
         {
+            Debug.Log("User is already signed in: " + user.UserId);
             Debug.Log($"User is already signed in: {user.Email}");
-            SceneManager.LoadScene("MainMenu");
+            LinkFirebaseWithUnity(user);
         }
         else
         {
@@ -111,27 +157,11 @@ public class LoginManager : MonoBehaviour
         {
             await auth.SignInWithEmailAndPasswordAsync(email, password);
             Debug.Log("Signed in successfully.");
-            SignInConfirmAsync();
+            LinkFirebaseWithUnity(auth.CurrentUser);
         }
         catch (FirebaseException firebaseException)
         {
-            // Handle specific Firebase error codes
-            switch ((AuthError)firebaseException.ErrorCode)
-            {
-                case AuthError.InvalidEmail:
-                    ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
-                    break;
-                case AuthError.WrongPassword:
-                    ShowPopUp(PopUpMenu.Action.None, "Incorrect password", "OK");
-                    break;
-                case AuthError.UserNotFound:
-                    ShowPopUp(PopUpMenu.Action.None, "User not found", "OK");
-                    break;
-                default:
-                    ShowPopUp(PopUpMenu.Action.None, "Login failed. Please try again.", "OK");
-                    break;
-            }
-            Debug.Log("Firebase error during sign in: " + firebaseException.Message);
+            HandleFirebaseAuthErrors(firebaseException);
         }
         catch (Exception exception)
         {
@@ -144,40 +174,65 @@ public class LoginManager : MonoBehaviour
         }
     }
 
+    public async void LinkFirebaseWithUnity(FirebaseUser firebaseUser)
+    {
+        try
+        {
+            string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
+            Debug.Log("Successfully linked Firebase with Unity Authentication.");
+            SignInConfirmAsync();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Linking Firebase with Unity Authentication failed: " + e.Message);
+            ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity Authentication failed", "OK");
+        }
+    }
+
+    private void SignInConfirmAsync()
+    {
+        PanelManager.CloseAll();
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public async void SignUpAsync(string email, string password)
     {
         PanelManager.GetSingleton("loading").Open();
         try
         {
             var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
+
             FirebaseUser newUser = authResult.User;
+            SignUpUnityWithFirebase(newUser);
             Debug.Log("User created successfully: " + newUser.Email);
+            Debug.Log("User created successfully: " + newUser.UserId);
             ShowPopUp(PopUpMenu.Action.None, "User created successfully", "OK");
         }
         catch (FirebaseException firebaseException)
         {
-            switch ((AuthError)firebaseException.ErrorCode)
-            {
-                case AuthError.EmailAlreadyInUse:
-                    ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
-                    break;
-                case AuthError.InvalidEmail:
-                    ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
-                    break;
-                default:
-                    ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
-                    break;
-            }
             Debug.Log("Firebase error during user creation: " + firebaseException.Message);
+            ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
         }
         catch (Exception exception)
         {
             Debug.Log("Error during user creation: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Error during user creation", "OK");
         }
-        finally
+    }
+
+    public async void SignUpUnityWithFirebase(FirebaseUser firebaseUser)
+    {
+        try
         {
-            PanelManager.Close("loading");
+            string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
+            Debug.Log("Successfully linked Firebase account to Unity.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Linking Firebase with Unity failed: " + e.Message);
+            ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity failed", "OK");
         }
     }
 
@@ -200,36 +255,6 @@ public class LoginManager : MonoBehaviour
             Debug.Log("Error during password reset: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
         }
-        finally
-        {
-            PanelManager.Close("loading");
-        }
-    }
-
-    public void SignOutUser()
-    {
-        PanelManager.GetSingleton("loading").Open();
-        try
-        {
-            if (auth.CurrentUser != null)
-            {
-                auth.SignOut();
-                Debug.Log("Firebase user signed out.");
-            }
-
-            PanelManager.CloseAll();
-            SceneManager.LoadScene("Login");
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Error during logout: {ex}");
-        }
-    }
-
-    private void SignInConfirmAsync()
-    {
-            PanelManager.CloseAll();
-            SceneManager.LoadScene("MainMenu");
     }
     
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
@@ -237,5 +262,25 @@ public class LoginManager : MonoBehaviour
         PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
+    }
+
+    private void HandleFirebaseAuthErrors(FirebaseException firebaseException)
+    {
+        switch ((AuthError)firebaseException.ErrorCode)
+        {
+            case AuthError.InvalidEmail:
+                ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
+                break;
+            case AuthError.WrongPassword:
+                ShowPopUp(PopUpMenu.Action.None, "Incorrect password", "OK");
+                break;
+            case AuthError.UserNotFound:
+                ShowPopUp(PopUpMenu.Action.None, "User not found", "OK");
+                break;
+            default:
+                ShowPopUp(PopUpMenu.Action.None, "Login failed. Please try again.", "OK");
+                break;
+        }
+        Debug.Log("Firebase error during sign in: " + firebaseException.Message);
     }
 }

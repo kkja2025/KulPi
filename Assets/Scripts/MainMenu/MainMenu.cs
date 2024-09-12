@@ -57,5 +57,6 @@ public class MainMenu : Panel
         #else
             Application.Quit();
         #endif
+        PlayerDataManager.Singleton.ReadData();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase.Auth;
 using Firebase.Database;
+using Firebase.Extensions;
 
 [Serializable]
 public class PlayerData
@@ -18,6 +19,19 @@ public class PlayerData
         this.level = level;
         this.score = score;
         this.inventory = inventory;
+    }
+}
+
+[System.Serializable]
+public class User
+{
+    public string name;
+    public int age;
+
+    public User(string name, int age)
+    {
+        this.name = name;
+        this.age = age;
     }
 }
 
@@ -189,4 +203,57 @@ public class PlayerDataManager : MonoBehaviour
         SaveNewGame();
         Debug.Log("New game started, previous progress deleted.");
     }
+
+    public void WriteData()
+    {
+        string userId = "testUser"; // Hardcoded user ID
+
+        // Create hardcoded user data
+        User user = new User("John Doe", 25);
+
+        // Write the data to the database
+        string json = JsonUtility.ToJson(user);
+        databaseReference.Child("users").Child(userId).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                Debug.Log("Data written successfully.");
+                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Data written: Name = John Doe, Age = 25", "OK");
+            }
+            else
+            {
+                Debug.LogError("Failed to write data: " + task.Exception);
+                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Failed to write data.", "OK");
+            }
+        });
+    }
+
+    // Method to read data from the database
+    public void ReadData()
+    {
+        string userId = "testUser"; // Hardcoded user ID
+
+        databaseReference.Child("users").Child(userId).GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                if (snapshot.Exists)
+                {
+                    User user = JsonUtility.FromJson<User>(snapshot.GetRawJsonValue());
+                    MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Name: " + user.name + "\nAge: " + user.age, "OK");
+                }
+                else
+                {
+                    MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "No data found for user: " + userId, "OK");
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to read data: " + task.Exception);
+                MainMenuManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Failed to read data.", "OK");
+            }
+        });
+    }
+
 }

@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
-using Firebase.Database;
+using Unity.Services.Authentication;
 
 public class MainMenuManager : MonoBehaviour
 {
     private bool initialized = false;
-    private DatabaseReference reference;
     private static MainMenuManager singleton = null;
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     public static MainMenuManager Singleton
     {
@@ -49,72 +50,87 @@ public class MainMenuManager : MonoBehaviour
         PanelManager.GetSingleton("loading").Open();
         try
         {
-            reference = FirebaseService.Singleton.Reference;
-            if (reference != null)
+            var firebaseService = FirebaseService.Singleton;
+            auth = firebaseService.Auth;
+            FirebaseUser user = auth.CurrentUser;
+            if (user != null)
             {
-                Debug.Log("Connected to the database.");
-                PanelManager.GetSingleton("loading").Close();
+                Debug.Log("User is already signed in: " + user.UserId);
+                Debug.Log($"User is already signed in: {user.Email}");
+            } else
+            {
+                Debug.Log("User is not signed in.");
+            }
+            if (auth.CurrentUser == null)
+            {
+                Debug.Log("User is not signed in.");
+                PanelManager.CloseAll();
+                SceneManager.LoadScene("Login");
+            }
+            else
+            {
+                PanelManager.CloseAll();
                 PanelManager.GetSingleton("main").Open();
             }
         }
         catch (Exception exception)
         {
-            Debug.LogError("Error connecting to Firebase: " + exception);
-            PanelManager.GetSingleton("loading").Close();
+            Debug.LogError($"Failed to start client service: {exception.Message}");
+            ShowPopUp(PopUpMenu.Action.None, "Failed to start client service.", "Retry");
+            SceneManager.LoadScene("Login");
         }
     }
 
     public void SignOut()
     {
-        PanelManager.GetSingleton("loading").Open();
-        var auth = FirebaseAuth.DefaultInstance;
+        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
         if (auth.CurrentUser != null)
         {
             auth.SignOut();
-            Debug.Log("User signed out.");
-            SceneManager.LoadScene("Login");
+            Debug.Log("User signed out from Firebase.");
         }
+        else
+        {
+            Debug.Log("No user is signed in to Firebase.");
+        }
+
+        if (AuthenticationService.Instance.IsSignedIn)
+        {
+            AuthenticationService.Instance.SignOut();
+            Debug.Log("User signed out from Unity Services.");
+        }
+        else
+        {
+            Debug.Log("No user is signed in to Unity Services.");
+        }
+
+        PanelManager.CloseAll();
+        SceneManager.LoadScene("Login");
     }
 
-    public async void LoadGame()
+    public void LoadGame()
     {
         try
         {
-            bool dataExists = await PlayerDataManager.Singleton.CheckForSaveDataAsync();
-            if (dataExists)
-            {
-                Debug.Log("Save data found. Loading game...");
-                PlayerData playerData = await PlayerDataManager.Singleton.LoadPlayerDataAsync();
-                if (playerData != null)
-                {
-                    Debug.Log($"Loaded Player Data - Level: {playerData.level}, Score: {playerData.score}");
-                    PanelManager.GetSingleton("loading").Open();
-                    SceneManager.LoadScene("GameScene");
-                }
-                else
-                {
-                    Debug.LogError("Failed to load player data.");
-                    ShowPopUp(PopUpMenu.Action.None, "Failed to load player data. Please try again.", "OK");
-                }
-            }
-            else
-            {
-                Debug.Log("No save data found. Please start a new game.");
-                ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "OK");
-            }
+            CloudSaveManager.Singleton.LoadPlayerData();
+            Debug.Log("Player data loaded successfully.");
+            // PanelManager.GetSingleton("loading").Open();
+            // SceneManager.LoadScene("GameScene");
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Debug.LogError("Error during LoadGame: " + ex.Message);
-            ShowPopUp(PopUpMenu.Action.None, "An error occurred while loading the game. Please try again.", "OK");
+            Debug.Log("Error loading player data: " + e.Message);
+            ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "Ok");
         }
     }
     public void NewGame()
     {
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
-        PlayerDataManager.Singleton.NewGame();
-        SceneManager.LoadScene("GameScene");
+        FirebaseUser user = auth.CurrentUser;
+        CloudSaveManager.Singleton.DeletePlayerData();
+        CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
+        // PanelManager.CloseAll();
+        // PanelManager.GetSingleton("loading").Open();
+        // SceneManager.LoadScene("GameScene");
     }
 
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
