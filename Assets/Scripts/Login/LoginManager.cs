@@ -205,9 +205,6 @@ public class LoginManager : MonoBehaviour
 
             FirebaseUser newUser = authResult.User;
             SignUpUnityWithFirebase(newUser);
-            Debug.Log("User created successfully: " + newUser.Email);
-            Debug.Log("User created successfully: " + newUser.UserId);
-            ShowPopUp(PopUpMenu.Action.None, "User created successfully", "OK");
         }
         catch (FirebaseException firebaseException)
         {
@@ -228,6 +225,7 @@ public class LoginManager : MonoBehaviour
             string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
             Debug.Log("Successfully linked Firebase account to Unity.");
+            SceneManager.LoadScene("MainMenu");
         }
         catch (Exception e)
         {
