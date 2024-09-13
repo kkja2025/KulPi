@@ -61,6 +61,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        LoadSoundSettings();
         if (scene.name == "Login" || scene.name == "MainMenu")
         {
             PlayBackgroundMusic("bgm1");
@@ -75,7 +76,7 @@ public class AudioManager : MonoBehaviour
     {
         if (currentMusicClipName == clipName && backgroundMusicSource.isPlaying)
         {
-            return; // Music is already playing
+            return; 
         }
 
         AudioClip clip = Resources.Load<AudioClip>("Sound/BGM/" + clipName);
@@ -85,7 +86,6 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Crossfade music if something is already playing
         if (backgroundMusicSource.isPlaying)
         {
             StartCoroutine(CrossfadeMusic(clip, fadeDuration));
@@ -102,7 +102,6 @@ public class AudioManager : MonoBehaviour
     {
         float startVolume = backgroundMusicSource.volume;
 
-        // Fade out the current music
         while (backgroundMusicSource.volume > 0)
         {
             backgroundMusicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
@@ -113,7 +112,6 @@ public class AudioManager : MonoBehaviour
         backgroundMusicSource.clip = newClip;
         backgroundMusicSource.Play();
 
-        // Fade in the new music
         while (backgroundMusicSource.volume < startVolume)
         {
             backgroundMusicSource.volume += startVolume * Time.deltaTime / fadeDuration;
@@ -121,12 +119,11 @@ public class AudioManager : MonoBehaviour
         }
 
         backgroundMusicSource.volume = startVolume;
-        currentMusicClipName = newClip.name; // Update the current clip name
+        currentMusicClipName = newClip.name; 
     }
 
     public void PlaySoundEffect(string clipName)
     {
-        // Load the sound effect from Resources folder
         AudioClip clip = Resources.Load<AudioClip>("Sound/SFX/" + clipName);
 
         if (clip == null)
@@ -135,13 +132,11 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Play the sound effect once
         soundEffectsSource.PlayOneShot(clip);
     }
 
     public void PlayVoiceOver(string clipName)
     {
-        // Load the voice over from Resources folder
         AudioClip clip = Resources.Load<AudioClip>("Sound/VoiceOver/" + clipName);
 
         if (clip == null)
@@ -150,26 +145,33 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Stop the current voice over if playing
         if (voiceOverSource.isPlaying)
         {
             voiceOverSource.Stop();
         }
 
-        // Play the new voice over clip
         voiceOverSource.clip = clip;
         voiceOverSource.Play();
     }
 
     private float MapVolumeToDb(int volume)
     {
-        volume = Mathf.Clamp(volume, 0, 10);
-        if (volume == 0)
+        volume = Mathf.Clamp(volume, 0, 4);
+
+        switch (volume)
         {
-            return -80f;
-        } else
-        {
-            return Mathf.Lerp(-80f, 0f, volume / 10f);
+            case 0:
+                return -80f;
+            case 1:
+                return Mathf.Lerp(-80f, 0f, 0.25f);
+            case 2: 
+                return Mathf.Lerp(-80f, 0f, 0.5f);
+            case 3: 
+                return Mathf.Lerp(-80f, 0f, 0.75f);
+            case 4: 
+                return 0f;
+            default:
+                return -80f; 
         }
     }
 
@@ -195,5 +197,25 @@ public class AudioManager : MonoBehaviour
     {
         float volumeDb = MapVolumeToDb(volume);
         masterMixer.SetFloat("VoiceOver", volumeDb); 
+    }
+
+    public void LoadSoundSettings()
+    {
+        try 
+        {
+            int masterVolume = PlayerPrefs.GetInt("MasterVolume", 3);
+            int bgmVolume = PlayerPrefs.GetInt("BackgroundMusicVolume", 3);
+            int sfxVolume = PlayerPrefs.GetInt("SoundEffectsVolume", 3);
+            int voVolume = PlayerPrefs.GetInt("VoiceOverVolume", 3);
+
+            SetMasterVolume(masterVolume);
+            SetBackgroundMusicVolume(bgmVolume);
+            SetSoundEffectsVolume(sfxVolume);
+            SetVoiceOverVolume(voVolume);
+        }
+        catch (PlayerPrefsException e)
+        {
+            Debug.LogError("Failed to load sound settings." + e.Message);
+        }
     }
 }

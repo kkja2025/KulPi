@@ -11,8 +11,7 @@ public class VolumeControlMenu : Panel
     [SerializeField] private TMP_InputField VolumeInputField = null;
     [SerializeField] private string volumeType;
     private const int minVolume = 0;
-    private const int maxVolume = 10;
-    private const int defaultVolume = 8;
+    private const int maxVolume = 4;
 
     public override void Initialize()
     {
@@ -26,9 +25,55 @@ public class VolumeControlMenu : Panel
         base.Initialize();
     }
 
+    private void ApplyVolumeChange(int volume)
+    {
+        switch (volumeType)
+        {
+            case "Master":
+                AudioManager.Singleton.SetMasterVolume(volume);
+                PlayerPrefs.SetInt("MasterVolume", volume);
+                PlayerPrefs.Save();
+                break;
+            case "BackgroundMusic":
+                AudioManager.Singleton.SetBackgroundMusicVolume(volume);
+                PlayerPrefs.SetInt("BackgroundMusicVolume", volume);
+                PlayerPrefs.Save();
+                break;
+            case "SoundEffects":
+                AudioManager.Singleton.SetSoundEffectsVolume(volume);
+                PlayerPrefs.SetInt("SoundEffectsVolume", volume);
+                PlayerPrefs.Save();
+                break;
+            case "VoiceOver":
+                AudioManager.Singleton.SetVoiceOverVolume(volume);
+                PlayerPrefs.SetInt("VoiceOverVolume", volume);
+                PlayerPrefs.Save();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private int ApplyDefaultVolume(string volumeType)
+    {
+        switch (volumeType)
+        {
+            case "Master":
+                return PlayerPrefs.GetInt("MasterVolume");
+            case "BackgroundMusic":
+                return PlayerPrefs.GetInt("BackgroundMusicVolume");
+            case "SoundEffects":
+                return PlayerPrefs.GetInt("SoundEffectsVolume");
+            case "VoiceOver":
+                return PlayerPrefs.GetInt("VoiceOverVolume");
+            default:
+                return 3;
+        }
+    }
+
     public override void Open()
     {
-        VolumeInputField.text = defaultVolume.ToString();
+        VolumeInputField.text = ApplyDefaultVolume(volumeType).ToString();
         base.Open();
     }
 
@@ -55,26 +100,6 @@ public class VolumeControlMenu : Panel
             volume = Mathf.Clamp(volume + delta, minVolume, maxVolume);
             inputField.text = volume.ToString();
             ApplyVolumeChange(volume);
-        }
-    }
-
-    private void ApplyVolumeChange(int volume)
-    {
-        if (volumeType == "Master")
-        {
-            AudioManager.Singleton.SetMasterVolume(volume);
-        }
-        else if (volumeType == "BackgroundMusic")
-        {
-            AudioManager.Singleton.SetBackgroundMusicVolume(volume);
-        }
-        else if (volumeType == "SoundEffects")
-        {
-            AudioManager.Singleton.SetSoundEffectsVolume(volume);
-        }
-        else if (volumeType == "VoiceOver")
-        {
-            AudioManager.Singleton.SetVoiceOverVolume(volume);
         }
     }
 }
