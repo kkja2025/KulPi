@@ -3,11 +3,13 @@ name: Test and Build on Push
 on:
   push:
     branches:
-      - '**'
+        - main
+        - dev 
 
 jobs:
-  setup-firebase-sdk:
+  test:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -16,68 +18,15 @@ jobs:
 
     - name: Clean repository
       run: |
-        git clean -fdx
+          git clean -fdx
 
-    - name: Download Firebase SDK
+    - name: Set up Firebase Authentication
+      env:
+        FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
       run: |
-        FIREBASE_URL="https://firebase.google.com/download/unity"
-        DESTINATION="firebase-unity-sdk.zip"
-        
-        # Download the Firebase SDK zip file
-        curl -L -o ${DESTINATION} ${FIREBASE_URL}
-        
-        # Check if the file was downloaded
-        if [ ! -f ${DESTINATION} ]; then
-          echo "Download failed or file does not exist"
-          exit 1
-        fi
-        
-        # Ensure the directory exists
-        mkdir -p Assets/Firebase
-        
-        # Extract the contents
-        unzip -o ${DESTINATION} -d Assets/Firebase
-        
-        # Check if unzip was successful
-        if [ $? -ne 0 ]; then
-          echo "Unzip failed"
-          exit 1
-        fi
-
-    - name: Verify Firebase SDK extraction
-      run: |
-        ls -R Assets/Firebase
-
-  test:
-    runs-on: ubuntu-latest
-    needs: setup-firebase-sdk
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        lfs: true
-
-    - name: Find Unity Executable
-      run: |
-        UNITY_PATH=$(find / -name "Unity" -type f 2>/dev/null | grep -E "Unity$" | head -n 1)
-        echo "Unity path found at: ${UNITY_PATH}"
-        echo "UNITY_PATH=${UNITY_PATH}" >> $GITHUB_ENV
-
-    - name: Debug Unity Path
-      run: |
-        if [ -z "$UNITY_PATH" ]; then
-          echo "UNITY_PATH is not set or Unity executable not found"
-          exit 1
-        fi
-        echo "Unity executable path: $UNITY_PATH"
-
-    - name: Re-import Unity Assets (Firebase SDK)
-      run: |
-        if [ -z "$UNITY_PATH" ]; then
-          echo "Unity executable not found"
-          exit 1
-        fi
-        "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
+        echo $FIREBASE_SERVICE_ACCOUNT > firebase-service-account.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase-service-account.json
+        # Optionally, initialize Firebase Auth here if needed for tests
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
@@ -86,7 +35,7 @@ jobs:
         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
       with:
-        projectPath: . 
+        projectPath: .
         unityVersion: '2022.3.31f1'
         testMode: All
         artifactsPath: artifacts
@@ -101,24 +50,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: test
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         lfs: true
 
-    - name: Re-import Unity Assets (Firebase SDK)
-      run: |
-        if [ -z "$UNITY_PATH" ]; then
-          echo "Unity executable not found"
-          exit 1
-        fi
-        "$UNITY_PATH" -quit -batchmode -projectPath . -importPackage Assets/Firebase
-
     - name: Build Unity Project for Android
       uses: game-ci/unity-builder@v4
       with:
-        projectPath: . 
+        projectPath: .
         unityVersion: '2022.3.31f1'
         targetPlatform: Android
         buildName: AndroidBuild
