@@ -47,6 +47,17 @@ public class CloudSaveManager : MonoBehaviour
     private void Awake()
     {
         Application.runInBackground = true;
+        if (singleton != null && singleton != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            singleton = this;
+            DontDestroyOnLoad(gameObject);
+            
+        }
         StartClientService();
     }
 
