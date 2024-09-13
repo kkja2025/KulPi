@@ -28,10 +28,10 @@ jobs:
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase-service-account.json
         # Optionally, initialize Firebase Auth here if needed for tests
 
-        - name: Download Firebase SDK
-        run: |
-          wget https://firebase.google.com/download/unity -O firebase-unity-sdk.zip
-          unzip firebase-unity-sdk.zip -d Assets/Firebase      
+    - name: Download Firebase SDK
+      run: |
+        wget https://firebase.google.com/download/unity -O firebase-unity-sdk.zip
+        unzip firebase-unity-sdk.zip -d Assets/Firebase      
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
