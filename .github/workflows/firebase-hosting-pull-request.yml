@@ -22,7 +22,7 @@ jobs:
       - name: Download Firebase SDK
         run: |
           git clone --depth 1 https://github.com/firebase/quickstart-unity.git
-          mk dir Assets/Firebase
+          mkdir Assets/Firebase
           cp -r quickstart-unity/testapp/Assets/Firebase Assets/Firebase
 
       - name: Run Tests

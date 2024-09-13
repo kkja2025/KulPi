@@ -31,7 +31,7 @@ jobs:
     - name: Download Firebase SDK
       run: |
         wget https://firebase.google.com/download/unity -O firebase-unity-sdk.zip
-        mk dir Assets/Firebase
+        mkdir Assets/Firebase
         unzip firebase-unity-sdk.zip -d Assets/Firebase      
 
     - name: Run Unity Package Tests
