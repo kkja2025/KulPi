@@ -3,8 +3,8 @@ name: Test and Build on Push
 on:
   push:
     branches:
-        - master
-        - dev 
+      - master
+      - dev 
 
 jobs:
   test:
@@ -18,7 +18,7 @@ jobs:
 
     - name: Clean repository
       run: |
-          git clean -fdx
+        git clean -fdx
 
     - name: Set up Firebase Authentication
       env:
@@ -27,6 +27,11 @@ jobs:
         echo $FIREBASE_SERVICE_ACCOUNT > firebase-service-account.json
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase-service-account.json
         # Optionally, initialize Firebase Auth here if needed for tests
+
+    - name: Download Firebase SDK
+      run: |
+        git clone --depth 1 https://github.com/firebase/quickstart-unity.git
+        cp -r quickstart-unity/testapp/Assets/Firebase Assets/Firebase
 
     - name: Run Unity Package Tests
       uses: game-ci/unity-test-runner@v4
