@@ -17,8 +17,7 @@ jobs:
         lfs: true
 
     - name: Clean repository
-      run: |
-        git clean -fdx
+      run: git clean -fdx
 
     - name: Set up Firebase Authentication
       env:
@@ -31,7 +30,7 @@ jobs:
     - name: Download Firebase SDK
       run: |
         wget https://firebase.google.com/download/unity -O firebase-unity-sdk.zip
-        mkdir Assets/Firebase
+        mkdir -p Assets/Firebase
         unzip firebase-unity-sdk.zip -d Assets/Firebase      
 
     - name: Run Unity Test Runner
