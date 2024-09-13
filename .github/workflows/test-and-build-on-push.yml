@@ -31,6 +31,7 @@ jobs:
     - name: Download Firebase SDK
       run: |
         wget https://firebase.google.com/download/unity -O firebase-unity-sdk.zip
+        mk dir Assets/Firebase
         unzip firebase-unity-sdk.zip -d Assets/Firebase      
 
     - name: Run Unity Package Tests
@@ -41,7 +42,7 @@ jobs:
         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
       with:
         projectPath: .
-        unityVersion: '2022.3.31f1'
+        unityVersion: '2022.3.46f1'
         testMode: All
         artifactsPath: artifacts
 
@@ -66,7 +67,7 @@ jobs:
       uses: game-ci/unity-builder@v4
       with:
         projectPath: .
-        unityVersion: '2022.3.31f1'
+        unityVersion: '2022.3.46f1'
         targetPlatform: Android
         buildName: AndroidBuild
       env:
