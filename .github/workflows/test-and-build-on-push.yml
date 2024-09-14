@@ -19,16 +19,20 @@ jobs:
     - name: Cache Unity Library
       uses: actions/cache@v3
       with:
-        path: |
-          Library
-        key: ${{ runner.os }}-unity-library-${{ hashFiles('**/Packages/manifest.json') }}
+        path: Library
+        key: ${{ runner.os }}-unity-library-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-unity-library-
 
+    - name: Restore Unity Library
+      run: |
+        if [ ! -d "Library" ]; then
+          echo "Library folder missing. Creating..."
+          mkdir Library
+        fi
+
     - name: Clean repository
-      run: 
-        git clean -fdx
-        git checkout -- Library
+      run: git clean -fdx
 
     - name: Set up Firebase Authentication
       env:
@@ -50,6 +54,7 @@ jobs:
         unityVersion: '2022.3.31f1'
         targetPlatform: Android
         buildName: AndroidBuild
+        versioning: None
       env:
         UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
