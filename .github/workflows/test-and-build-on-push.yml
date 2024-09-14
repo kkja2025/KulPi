@@ -16,8 +16,19 @@ jobs:
       with:
         lfs: true
 
+    - name: Cache Unity Library
+      uses: actions/cache@v3
+      with:
+        path: |
+          Library
+        key: ${{ runner.os }}-unity-library-${{ hashFiles('**/Packages/manifest.json') }}
+        restore-keys: |
+          ${{ runner.os }}-unity-library-
+
     - name: Clean repository
-      run: git clean -fdx
+      run: 
+        git clean -fdx
+        git checkout -- Library
 
     - name: Set up Firebase Authentication
       env:
@@ -25,7 +36,6 @@ jobs:
       run: |
         echo $FIREBASE_SERVICE_ACCOUNT > firebase-service-account.json
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/firebase-service-account.json
-        # Optionally, initialize Firebase Auth here if needed
 
     - name: Download Firebase SDK
       run: |
