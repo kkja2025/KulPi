@@ -2,57 +2,62 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class EncyclopediaMenu : MonoBehaviour
+public class EncyclopediaMenu : Panel
 {
-    public Button encyclopediaButton;
-    public GameObject encyclopediaPanel;
-    public Button figuresButton;
-    public Button eventsButton;
-    public Button practicesButton;
-    public Button mythologyButton;
-    public Button backButton;
+    [SerializeField] private Button figuresButton = null;
+    [SerializeField] private Button eventsButton = null;
+    [SerializeField] private Button practicesButton = null;
+    [SerializeField] private Button mythologyButton = null;
+    [SerializeField] private Button backButton = null;
 
-    void Start()
+    public override void Initialize()
     {
-        encyclopediaPanel.SetActive(false);
+        if (IsInitialized)
+        {
+            return;
+        }
+        figuresButton.onClick.AddListener(OpenFigures);
+        eventsButton.onClick.AddListener(OpenEvents);
+        practicesButton.onClick.AddListener(OpenPractices);
+        mythologyButton.onClick.AddListener(OpenMythology);
+        backButton.onClick.AddListener(ReturnToGame);
 
-        encyclopediaButton.onClick.AddListener(ShowEncyclopediaPanel);
-        figuresButton.onClick.AddListener(OnFiguresButtonClicked);
-        eventsButton.onClick.AddListener(OnEventsButtonClicked);
-        practicesButton.onClick.AddListener(OnPracticesButtonClicked);
-        mythologyButton.onClick.AddListener(OnMythologyButtonClicked);
-        backButton.onClick.AddListener(OnBackButtonClicked);
+        base.Initialize();
     }
 
-    void ShowEncyclopediaPanel()
+    public override void Open()
     {
-        encyclopediaPanel.SetActive(true);
-        Debug.Log("Encyclopedia panel is now visible");
+        base.Open();
     }
 
-    void OnFiguresButtonClicked()
+    private void OpenFigures()
     {
-        Debug.Log("Figures button clicked");
+        PanelManager.GetSingleton("encyclopediapanels").Close();
+        PanelManager.GetSingleton("figures").Open();
     }
 
-    void OnEventsButtonClicked()
+    private void OpenEvents()
     {
-        Debug.Log("Events button clicked");
+        PanelManager.GetSingleton("encyclopediapanels").Close();
+        PanelManager.GetSingleton("events").Open();
     }
 
-    void OnPracticesButtonClicked()
+    private void OpenPractices()
     {
-        Debug.Log("Practices & Traditions button clicked");
+        PanelManager.GetSingleton("encyclopediapanels").Close();
+        PanelManager.GetSingleton("practices").Open();
     }
 
-    void OnMythologyButtonClicked()
+    private void OpenMythology()
     {
-        Debug.Log("Mythology & Folklore button clicked");
+        PanelManager.GetSingleton("encyclopediapanels").Close();
+        PanelManager.GetSingleton("mythology").Open();
     }
 
-    void OnBackButtonClicked()
+    private void ReturnToGame()
     {
-        Debug.Log("Back button clicked, returning to the game");
-        encyclopediaPanel.SetActive(false);
+        PanelManager.GetSingleton("encyclopedia").Close();
     }
+
+
 }
