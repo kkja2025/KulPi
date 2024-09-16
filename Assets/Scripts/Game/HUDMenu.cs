@@ -1,18 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class HUDMenu : MonoBehaviour
+public class HUDMenu : Panel
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button pauseButton = null;
+    [SerializeField] private Button inventoryButton = null;
+    [SerializeField] private Button encyclopediaButton = null;
+
+    public override void Initialize()
     {
-        
+        if (IsInitialized)
+        {
+            return;
+        }
+        pauseButton.onClick.AddListener(OpenPause);
+        inventoryButton.onClick.AddListener(OpenInventory);
+        encyclopediaButton.onClick.AddListener(OpenEncyclopedia);
+        base.Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Open()
     {
-        
+        base.Open();
+    }
+
+    private void OpenPause()
+    {
+        PanelManager.GetSingleton("pause").Open();
+    }
+
+    private void OpenInventory()
+    {
+        PanelManager.GetSingleton("inventory").Open();
+    }
+
+    private void OpenEncyclopedia()
+    {
+        PanelManager.GetSingleton("encyclopedia").Open();
     }
 }

@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     private void StartClientService()
     {
         PanelManager.CloseAll();
+        PanelManager.GetSingleton("hud").Open();
     }
 
     public void ReturnToMainMenu()

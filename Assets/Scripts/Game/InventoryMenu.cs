@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class InventoryMenu : MonoBehaviour
+public class InventoryMenu : Panel
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button closeButton = null;
+
+    public override void Initialize()
     {
-        
+        if (IsInitialized)
+        {
+            return;
+        }
+        closeButton.onClick.AddListener(CloseInventory);
+        base.Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Open()
     {
-        
+        base.Open();
     }
+
+    private void CloseInventory()
+    {
+        PanelManager.GetSingleton("inventory").Close();
+    }
+
 }
