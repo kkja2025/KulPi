@@ -32,8 +32,8 @@ public class HUDMenu : Panel
     private void OpenPause()
     {
         PanelManager.GetSingleton("pause").Open();
-        InventoryManager.Singleton.RemoveItem("Encyclopedia Item");
-        InventoryManager.Singleton.RemoveItem("Pause Item");
+        // InventoryManager.Singleton.RemoveItem("Encyclopedia Item");
+        // InventoryManager.Singleton.RemoveItem("Pause Item");
     }
 
     private void OpenInventory()

@@ -57,11 +57,10 @@ public class EncyclopediaManager : MonoBehaviour
         
     }
 
-    public async void SaveEncyclopediaEntryAsync(string key)
+    public async Task SaveEncyclopediaEntryAsync(string key)
     {
         try
         {   
-            await LoadEncyclopediaEntriesAsync(key);
             string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
             var data = new Dictionary<string, object> { { CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, jsonEncyclopedia } };
 
@@ -174,10 +173,10 @@ public class EncyclopediaManager : MonoBehaviour
         }
     }
 
-    public void AddItem(EncyclopediaItem item)
+    public async void AddItem(EncyclopediaItem item)
     {
         encyclopediaList.Add(item);
         Debug.Log(item.itemTitle + " added to EncyclopediaList.");
-        SaveEncyclopediaEntryAsync(item.itemCategory);
+        await SaveEncyclopediaEntryAsync(item.itemCategory);
     }
 }

@@ -10,10 +10,11 @@ public class EncyclopediaMenu : Panel
     [SerializeField] private Button practicesButton = null;
     [SerializeField] private Button mythologyButton = null;
     [SerializeField] private Button backButton = null;
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = "encyclopedia_figures";
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY = "encyclopedia_events";
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY = "encyclopedia_practices_and_traditions";
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY = "encyclopedia_mythology_and_folklore";
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
+
 
     public override void Initialize()
     {
@@ -39,17 +40,11 @@ public class EncyclopediaMenu : Panel
     {
         try
         {
-            // Await the asynchronous call to ensure it completes before proceeding
             await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
-            
             Debug.Log("Open Figures");
-
-            // Close other panels
             PanelManager.GetSingleton("events").Close();
             // PanelManager.GetSingleton("practices").Close();
             // PanelManager.GetSingleton("mythology").Close();
-
-            // Open the figures panel
             PanelManager.GetSingleton("figures").Open();
         }
         catch (Exception e)
