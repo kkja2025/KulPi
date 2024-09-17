@@ -8,7 +8,6 @@ public class InventoryMenu : Panel
     [SerializeField] private RectTransform inventoryContent = null;
     [SerializeField] private GameObject inventoryItemPrefab = null;
 
-
     public override void Initialize()
     {
         if (IsInitialized)
@@ -22,6 +21,7 @@ public class InventoryMenu : Panel
     public override void Open()
     {
         base.Open();
+        LoadInventoryItems();
     }
 
     private void CloseInventory()
@@ -31,25 +31,34 @@ public class InventoryMenu : Panel
 
     private void LoadInventoryItems()
     {
-        GameObject[] items = inventoryContent.GetComponentsInChildren<GameObject>();
-        if (items != null)
+        foreach (Transform child in inventoryContent)
         {
-            for (int i = 0; i < items.Length; i++)
-            {
-                Destroy(items[i].gameObject);
-            }
+            Destroy(child.gameObject);
         }
 
+        var items = InventoryManager.Singleton.inventory;
+
+        foreach (var item in items)
+        {
+            AddInventoryItem(item);
+        }
     }
 
-    private void AddInventoryItem(string itemName)
+    private void AddInventoryItem(InventoryItem item)
     {
         GameObject newItem = Instantiate(inventoryItemPrefab, inventoryContent);
-        
+
         TMP_Text itemText = newItem.GetComponentInChildren<TMP_Text>();
+        Image itemIconImage = newItem.GetComponentInChildren<Image>();
+
         if (itemText != null)
         {
-            itemText.text = itemName;
+            itemText.text = item.itemName;
+        }
+
+        if (itemIconImage != null)
+        {
+            itemIconImage.sprite = item.itemIcon;
         }
     }
 }
