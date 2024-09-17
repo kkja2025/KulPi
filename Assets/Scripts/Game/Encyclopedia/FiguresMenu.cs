@@ -4,10 +4,10 @@ using TMPro;
 
 public class FiguresMenu : Panel
 {
-    [SerializeField] private RectTransform figuresContent = null; // Similar to inventoryContent
-    [SerializeField] private GameObject figuresItemPrefab = null; // Prefab for displaying each encyclopedia item
-    [SerializeField] private RectTransform figuresButtonContent = null; // Content for chapters
-    [SerializeField] private GameObject figuresButtonPrefab = null; // Prefab for chapter buttons
+    [SerializeField] private RectTransform figuresContent = null;
+    [SerializeField] private GameObject figuresItemPrefab = null;
+    [SerializeField] private RectTransform figuresButtonContent = null; 
+    [SerializeField] private GameObject figuresButtonPrefab = null;
 
     private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = "encyclopedia_figures";
 
@@ -27,14 +27,14 @@ public class FiguresMenu : Panel
         LoadChapters();
     }
 
-    private void LoadChapters()
+    private async void LoadChapters()
     {
         foreach (Transform child in figuresButtonContent)
         {
             Destroy(child.gameObject);
         }
         
-        EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
         var items = EncyclopediaManager.Singleton.encyclopediaList;
 
         foreach (var item in items)
@@ -56,11 +56,11 @@ public class FiguresMenu : Panel
         Button button = newFiguresButton.GetComponent<Button>();
         if (button != null)
         {
-            button.onClick.AddListener(() => LoadFiguresInformation(item));
+            button.onClick.AddListener(() => LoadFigureInformation(item));
         }
     }
 
-    private void LoadFiguresInformation(EncyclopediaItem item)
+    private void LoadFigureInformation(EncyclopediaItem item)
     {
         foreach (Transform child in figuresContent)
         {

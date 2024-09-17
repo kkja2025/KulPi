@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.CloudSave;
 
@@ -60,7 +61,7 @@ public class EncyclopediaManager : MonoBehaviour
     {
         try
         {   
-            LoadEncyclopediaEntriesAsync(key);
+            await LoadEncyclopediaEntriesAsync(key);
             string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
             var data = new Dictionary<string, object> { { CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, jsonEncyclopedia } };
 
@@ -91,7 +92,7 @@ public class EncyclopediaManager : MonoBehaviour
         }
     }
 
-    public async void LoadEncyclopediaEntriesAsync(string key)
+    public async Task LoadEncyclopediaEntriesAsync(string key)
     {
         try
         {

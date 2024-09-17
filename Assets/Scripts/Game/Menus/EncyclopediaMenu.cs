@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -34,43 +35,55 @@ public class EncyclopediaMenu : Panel
         base.Open();
     }
 
-    private void OpenFigures()
+    private async void OpenFigures()
     {
-        EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
-        PanelManager.GetSingleton("encyclopediapanels").Close();
-        // PanelManager.GetSingleton("events").Close();
-        // PanelManager.GetSingleton("practices").Close();
-        // PanelManager.GetSingleton("mythology").Close();
-        PanelManager.GetSingleton("figures").Open();
+        try
+        {
+            // Await the asynchronous call to ensure it completes before proceeding
+            await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
+            
+            Debug.Log("Open Figures");
+
+            // Close other panels
+            PanelManager.GetSingleton("events").Close();
+            // PanelManager.GetSingleton("practices").Close();
+            // PanelManager.GetSingleton("mythology").Close();
+
+            // Open the figures panel
+            PanelManager.GetSingleton("figures").Open();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Failed to open figures: " + e.Message);
+        }
     }
 
-    private void OpenEvents()
+
+    private async void OpenEvents()
     {
-        EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
-        PanelManager.GetSingleton("encyclopediapanels").Close();
-        // PanelManager.GetSingleton("figures").Close();
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
+        Debug.Log("Open Events");
+        PanelManager.GetSingleton("figures").Close();
         // PanelManager.GetSingleton("practices").Close();
         // PanelManager.GetSingleton("mythology").Close();
         PanelManager.GetSingleton("events").Open();
     }
 
-    private void OpenPractices()
+    private async void OpenPractices()
     {
-        EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
-        PanelManager.GetSingleton("encyclopediapanels").Close();
-        // PanelManager.GetSingleton("figures").Close();
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
+        PanelManager.GetSingleton("figures").Close();
         // PanelManager.GetSingleton("mythology").Close();
-        // PanelManager.GetSingleton("events").Close();
+        PanelManager.GetSingleton("events").Close();
         PanelManager.GetSingleton("practices").Open();
     }
 
-    private void OpenMythology()
+    private async void OpenMythology()
     {
-        EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
-        PanelManager.GetSingleton("encyclopediapanels").Close();
-        // PanelManager.GetSingleton("figures").Close();
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
+        PanelManager.GetSingleton("figures").Close();
         // PanelManager.GetSingleton("practices").Close();
-        // PanelManager.GetSingleton("events").Close();
+        PanelManager.GetSingleton("events").Close();
         PanelManager.GetSingleton("mythology").Open();
     }
 

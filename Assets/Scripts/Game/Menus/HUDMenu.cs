@@ -40,15 +40,15 @@ public class HUDMenu : Panel
     {
         PanelManager.GetSingleton("inventory").Open();
         EncyclopediaItem diwataItem = EncyclopediaItem.Figures_Chapter1_Diwata();
-        EncyclopediaItem diwataItem2 = EncyclopediaItem.Figures_Chapter1_Diwata();
         EncyclopediaManager.Singleton.AddItem(diwataItem);
+        EncyclopediaItem sacredGrove = EncyclopediaItem.Events_Chapter1_Sacred_Grove();
+        EncyclopediaManager.Singleton.AddItem(sacredGrove);
     }
 
     private void OpenEncyclopedia()
     {
         PanelManager.GetSingleton("encyclopedia").Open();
-        PanelManager.GetSingleton("encyclopediapanels").Open();
-        InventoryManager.Singleton.AddItem("Pause Item", PauseButton);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
+        // InventoryManager.Singleton.AddItem("Pause Item", PauseButton);
+        // InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
     }
 }
