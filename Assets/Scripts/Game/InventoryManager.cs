@@ -6,7 +6,8 @@ using Unity.Services.CloudSave;
 
 [System.Serializable]
 public class InventoryItem
-{    public string itemName;
+{
+    public string itemName;
 
     public InventoryItem(string name)
     {
@@ -17,7 +18,7 @@ public class InventoryItem
 [System.Serializable]
 public class InventoryItemList
 {
-    public List<InventoryItem> items;
+    public List<InventoryItem> items = null;
 }
 
 public class InventoryManager : MonoBehaviour
@@ -63,6 +64,7 @@ public class InventoryManager : MonoBehaviour
     {
         LoadInventoryAsync();
     }
+
     public void AddItem(string itemName)
     {
         InventoryItem item = new InventoryItem(itemName);
@@ -90,8 +92,15 @@ public class InventoryManager : MonoBehaviour
 
     public void GetInventory()
     {
-        string itemNames = string.Join(", ", inventory.Select(item => item.itemName));
-        Debug.Log("Inventory Items: " + itemNames);
+        if (inventory != null && inventory.Count > 0)
+        {
+            string itemNames = string.Join(", ", inventory.Select(item => item.itemName));
+            Debug.Log("Inventory Items: " + itemNames);
+        }
+        else
+        {
+            Debug.Log("Inventory is empty.");
+        }
     }
 
     private async void SaveInventoryAsync()
@@ -109,36 +118,38 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
     private async void LoadInventoryAsync()
     {
         try
         {
             var inventoryData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_INVENTORY_KEY });
-            
+
             if (inventoryData.TryGetValue(CLOUD_SAVE_INVENTORY_KEY, out var inventoryJson))
             {
                 string json = inventoryJson.Value.GetAsString();
-                
-                List<InventoryItem> loadedInventory = JsonUtility.FromJson<InventoryItemList>(json)?.items;
+                var loadedInventory = JsonUtility.FromJson<InventoryItemList>(json)?.items;
 
-                if (loadedInventory != null)
+                if (loadedInventory != null && loadedInventory.Count > 0)
                 {
                     inventory = loadedInventory;
+                    Debug.Log("Inventory loaded successfully.");
                 }
                 else
                 {
-                    Debug.LogError("Failed to parse JSON into InventoryItem list.");
+                    Debug.Log("Inventory is empty.");
+                    inventory = new List<InventoryItem>();
                 }
             }
             else
             {
-                Debug.LogWarning("No inventory found in Cloud Save.");
+                Debug.LogWarning("No inventory found in Cloud Save, initializing a new inventory.");
+                inventory = new List<InventoryItem>();
             }
         }
         catch (Exception e)
         {
             Debug.LogError("Failed to load inventory: " + e.Message);
+            inventory = new List<InventoryItem>();
         }
     }
 }
