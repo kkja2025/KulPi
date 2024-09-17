@@ -38,7 +38,6 @@ public class HUDMenu : Panel
 
     private void OpenInventory()
     {
-        InventoryManager.Singleton.GetInventory();
         PanelManager.GetSingleton("inventory").Open();
     }
 
