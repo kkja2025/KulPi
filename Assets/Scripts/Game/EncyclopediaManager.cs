@@ -1,27 +1,7 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.CloudSave;
-
-[System.Serializable]
-public class EncyclopediaItem
-{
-    public string itemChapter;
-    public string itemTitle;
-    public Sprite itemIcon;
-    public string itemDescription;
-    public string itemCategory;
-
-    public EncyclopediaItem(string chapter, string title, Sprite icon, string description, string category)
-    {
-        itemChapter = chapter;
-        itemTitle = title;
-        itemIcon = icon;
-        itemDescription = description;
-        itemCategory = category;
-    }
-}
 
 [System.Serializable]
 public class EncyclopediaItemList
@@ -34,10 +14,10 @@ public class EncyclopediaManager : MonoBehaviour
     private bool initialized = false;
     private static EncyclopediaManager singleton = null;
     public List<EncyclopediaItem> encyclopediaList = null;
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = "encyclopedia_figures";
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY = "encyclopedia_events";
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY = "encyclopedia_practices_and_traditions";
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY = "encyclopedia_mythology_and_folklore";
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
     
     public static EncyclopediaManager Singleton
     {
@@ -76,10 +56,11 @@ public class EncyclopediaManager : MonoBehaviour
         
     }
 
-    private async void SaveEncyclopediaEntryAsync(string key)
+    public async void SaveEncyclopediaEntryAsync(string key)
     {
         try
-        {
+        {   
+            LoadEncyclopediaEntriesAsync(key);
             string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
             var data = new Dictionary<string, object> { { CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, jsonEncyclopedia } };
 
@@ -110,7 +91,7 @@ public class EncyclopediaManager : MonoBehaviour
         }
     }
 
-    private async void LoadEncyclopediaEntriesAsync(string key)
+    public async void LoadEncyclopediaEntriesAsync(string key)
     {
         try
         {
@@ -190,5 +171,12 @@ public class EncyclopediaManager : MonoBehaviour
             Debug.LogError("Failed to load encyclopedia entries: " + e.Message);
             encyclopediaList = new List<EncyclopediaItem>();
         }
+    }
+
+    public void AddItem(EncyclopediaItem item)
+    {
+        encyclopediaList.Add(item);
+        Debug.Log(item.itemTitle + " added to EncyclopediaList.");
+        SaveEncyclopediaEntryAsync(item.itemCategory);
     }
 }
