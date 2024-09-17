@@ -39,35 +39,16 @@ public class HUDMenu : Panel
     private void OpenInventory()
     {
         PanelManager.GetSingleton("inventory").Open();
+        EncyclopediaItem diwataItem = EncyclopediaItem.Figures_Chapter1_Diwata();
+        EncyclopediaItem diwataItem2 = EncyclopediaItem.Figures_Chapter1_Diwata();
+        EncyclopediaManager.Singleton.AddItem(diwataItem);
     }
 
     private void OpenEncyclopedia()
     {
         PanelManager.GetSingleton("encyclopedia").Open();
+        PanelManager.GetSingleton("encyclopediapanels").Open();
         InventoryManager.Singleton.AddItem("Pause Item", PauseButton);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
-        InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
         InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
     }
 }
