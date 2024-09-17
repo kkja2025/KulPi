@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         controls = new PlayerInput();
         controls.Enable();
 
-        controls.Land.Move.performed += ctx => 
+        controls.Land.Move.performed += ctx =>
         {
             direction = ctx.ReadValue<float>();
         };
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             state = State.idle;
-    } 
+        }
 
         if (rb.velocity.y > 0.1f)
         {
@@ -95,12 +95,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Jump()
-    {     
+    {
         if (isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-            
+
     }
 
 
@@ -112,6 +112,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnDisable()
     {
         controls.Disable();
-    } 
+    }
 }
 
