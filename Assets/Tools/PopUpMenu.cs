@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -13,7 +14,9 @@ public class PopUpMenu : Panel
 
     public enum Action
     {
-        None = 0, StartService = 1, OpenAuthMenu = 2
+        None = 0, 
+        StartService = 1, 
+        OpenAuthMenu = 2
     }
     
     private Action action = Action.None;
