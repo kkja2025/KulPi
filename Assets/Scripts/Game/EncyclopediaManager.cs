@@ -173,7 +173,7 @@ public class EncyclopediaManager : MonoBehaviour
         }
     }
 
-    public async void AddItem(EncyclopediaItem item)
+    public async Task AddItem(EncyclopediaItem item)
     {
         await LoadEncyclopediaEntriesAsync(item.itemCategory);
         encyclopediaList.Add(item);
