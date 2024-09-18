@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -6,7 +7,7 @@ public class EncyclopediaPanel : Panel
 {
     [SerializeField] private RectTransform menuContent = null;
     [SerializeField] private GameObject menuItemPrefab = null;
-    [SerializeField] private RectTransform buttonContent = null; 
+    [SerializeField] private RectTransform buttonContent = null;
     [SerializeField] private GameObject buttonPrefab = null;
     [SerializeField] private string keyType;
     private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
@@ -55,42 +56,99 @@ public class EncyclopediaPanel : Panel
                 return;
         }
 
-        var items = EncyclopediaManager.Singleton.encyclopediaList;
+        var chapters = EncyclopediaManager.Singleton.encyclopediaList.Select(item => item.itemChapter).Distinct().ToList();
 
-        foreach (var item in items)
+        foreach (var chapter in chapters)
         {
-            AddEntryButton(item);
+            AddChapterButton(chapter);
         }
     }
-
-    private void AddEntryButton(EncyclopediaItem item)
+    private void AddChapterButton(string chapter)
     {
         GameObject newButton = Instantiate(buttonPrefab, buttonContent);
         TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
 
         if (buttonText != null)
         {
-            buttonText.text = item.itemChapter;
+            buttonText.text = chapter;
         }
 
         Button button = newButton.GetComponent<Button>();
         if (button != null)
         {
-            button.onClick.AddListener(() => LoadEntryData(item));
+            button.onClick.AddListener(() => LoadEntryListTitles(chapter));
         }
     }
 
-    private void LoadEntryData(EncyclopediaItem item)
+    private void LoadEntryListTitles(string chapter)
+    {
+        foreach (Transform child in buttonContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        AddBackButton(chapter);
+        var titlesInChapter = EncyclopediaManager.Singleton.encyclopediaList
+            .Where(x => x.itemChapter == chapter) 
+            .Select(x => x.itemTitle)             
+            .ToList();
+
+        foreach (var title in titlesInChapter)
+        {
+            AddTitleButton(title);
+        }
+    }
+
+    private void AddBackButton(string chapter)
+    {
+        GameObject backButton = Instantiate(buttonPrefab, buttonContent);
+        TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
+
+        if (buttonText != null)
+        {
+            buttonText.text = chapter;
+        }
+
+        Button button = backButton.GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.AddListener(() => LoadEntryList(keyType));
+        }
+    }
+
+    private void AddTitleButton(string title)
+    {
+        GameObject newButton = Instantiate(buttonPrefab, buttonContent);
+        TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
+
+        if (buttonText != null)
+        {
+            buttonText.text = title;
+        }
+
+        Button button = newButton.GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.AddListener(() => LoadEntryDataByTitle(title));
+        }
+    }
+
+    private void LoadEntryDataByTitle(string title)
     {
         foreach (Transform child in menuContent)
         {
             Destroy(child.gameObject);
         }
 
-        AddMenuItem(item);
+        var selectedItem = EncyclopediaManager.Singleton.encyclopediaList.FirstOrDefault(x => x.itemTitle == title);
+
+        if (selectedItem != null)
+        {
+            LoadEntryData(selectedItem);
+        }
     }
 
-    private void AddMenuItem(EncyclopediaItem item)
+    private void LoadEntryData(EncyclopediaItem item)
     {
         GameObject newItem = Instantiate(menuItemPrefab, menuContent);
 
