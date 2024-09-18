@@ -41,10 +41,9 @@ public class EncyclopediaMenu : Panel
         try
         {
             await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
-            Debug.Log("Open Figures");
             PanelManager.GetSingleton("events").Close();
-            // PanelManager.GetSingleton("practices").Close();
-            // PanelManager.GetSingleton("mythology").Close();
+            PanelManager.GetSingleton("practices").Close();
+            PanelManager.GetSingleton("mythology").Close();
             PanelManager.GetSingleton("figures").Open();
         }
         catch (Exception e)
@@ -57,10 +56,9 @@ public class EncyclopediaMenu : Panel
     private async void OpenEvents()
     {
         await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
-        Debug.Log("Open Events");
         PanelManager.GetSingleton("figures").Close();
-        // PanelManager.GetSingleton("practices").Close();
-        // PanelManager.GetSingleton("mythology").Close();
+        PanelManager.GetSingleton("practices").Close();
+        PanelManager.GetSingleton("mythology").Close();
         PanelManager.GetSingleton("events").Open();
     }
 
@@ -68,7 +66,7 @@ public class EncyclopediaMenu : Panel
     {
         await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
         PanelManager.GetSingleton("figures").Close();
-        // PanelManager.GetSingleton("mythology").Close();
+        PanelManager.GetSingleton("mythology").Close();
         PanelManager.GetSingleton("events").Close();
         PanelManager.GetSingleton("practices").Open();
     }
@@ -77,13 +75,17 @@ public class EncyclopediaMenu : Panel
     {
         await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
         PanelManager.GetSingleton("figures").Close();
-        // PanelManager.GetSingleton("practices").Close();
+        PanelManager.GetSingleton("practices").Close();
         PanelManager.GetSingleton("events").Close();
         PanelManager.GetSingleton("mythology").Open();
     }
 
     private void ReturnToGame()
     {
+        PanelManager.GetSingleton("figures").Close();
+        PanelManager.GetSingleton("practices").Close();
+        PanelManager.GetSingleton("events").Close();
+        PanelManager.GetSingleton("mythology").Close();
         PanelManager.GetSingleton("encyclopedia").Close();
     }
 }

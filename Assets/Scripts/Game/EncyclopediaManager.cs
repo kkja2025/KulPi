@@ -62,7 +62,7 @@ public class EncyclopediaManager : MonoBehaviour
         try
         {   
             string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
-            var data = new Dictionary<string, object> { { CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, jsonEncyclopedia } };
+            var data = new Dictionary<string, object> { { key, jsonEncyclopedia } };
 
             switch (key)
             {
@@ -175,6 +175,7 @@ public class EncyclopediaManager : MonoBehaviour
 
     public async void AddItem(EncyclopediaItem item)
     {
+        await LoadEncyclopediaEntriesAsync(item.itemCategory);
         encyclopediaList.Add(item);
         Debug.Log(item.itemTitle + " added to EncyclopediaList.");
         await SaveEncyclopediaEntryAsync(item.itemCategory);

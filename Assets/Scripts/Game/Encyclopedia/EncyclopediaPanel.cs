@@ -94,23 +94,24 @@ public class EncyclopediaPanel : Panel
     {
         GameObject newItem = Instantiate(menuItemPrefab, menuContent);
 
-        TMP_Text itemTitleText = newItem.GetComponentInChildren<TMP_Text>();
+        TMP_Text[] textComponents = newItem.GetComponentsInChildren<TMP_Text>();
         Image itemIconImage = newItem.GetComponentInChildren<Image>();
-        TMP_Text itemDescriptionText = newItem.GetComponentInChildren<TMP_Text>();
 
-        if (itemTitleText != null)
+        foreach (var text in textComponents)
         {
-            itemTitleText.text = item.itemTitle;
+            if (text.name == "Title")
+            {
+                text.text = item.itemTitle;
+            }
+            else if (text.name == "Description")
+            {
+                text.text = item.itemDescription;
+            }
         }
 
         if (itemIconImage != null)
         {
             itemIconImage.sprite = item.itemIcon;
-        }
-
-        if (itemDescriptionText != null)
-        {
-            itemDescriptionText.text = item.itemDescription;
         }
     }
 }
