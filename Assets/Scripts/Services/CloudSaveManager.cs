@@ -70,7 +70,7 @@ public class CloudSaveManager : MonoBehaviour
         auth = firebaseService.Auth;
     }
 
-    public async void SavePlayerData(int level, string playerID)
+    public async Task SavePlayerData(int level, string playerID)
     {
         var data = new Dictionary<string, object>
         {
@@ -90,7 +90,7 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async void LoadPlayerData()
+    public async Task LoadPlayerData()
     {
         var keysToLoad = new HashSet<string>
         {
@@ -119,7 +119,7 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async void UpdatePlayerData(int newLevel)
+    public async Task UpdatePlayerData(int newLevel)
     {
         try
         {
@@ -144,7 +144,7 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async void DeletePlayerData()
+    public async Task DeletePlayerData()
     {
         try
         {

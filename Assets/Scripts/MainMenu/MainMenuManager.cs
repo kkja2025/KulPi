@@ -108,11 +108,11 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("Login");
     }
 
-    public void LoadGame()
+    public async void LoadGame()
     {
         try
         {
-            CloudSaveManager.Singleton.LoadPlayerData();
+            await CloudSaveManager.Singleton.LoadPlayerData();
             
             Debug.Log("Player data loaded successfully.");
             PanelManager.GetSingleton("loading").Open();
