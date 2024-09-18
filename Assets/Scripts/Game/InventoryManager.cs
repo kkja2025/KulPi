@@ -138,6 +138,7 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.LogError("Failed to load inventory: " + e.Message);
             inventory = new List<InventoryItem>();
+            GameManager.Singleton.ReturnToMainMenu();
         }
     }
 }

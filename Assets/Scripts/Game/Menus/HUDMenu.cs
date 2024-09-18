@@ -38,6 +38,8 @@ public class HUDMenu : Panel
     
         InventoryManager.Singleton.AddItem("Pause Item", PauseButton);
         InventoryManager.Singleton.AddItem("Encyclopedia Item", Encyclopedia);
+        Sprite icon = Resources.Load<Sprite>("Icons/Encyclopedia/SacredGrove");
+        InventoryManager.Singleton.AddItem("Sacred Grove", icon);
         // InventoryManager.Singleton.RemoveItem("Encyclopedia Item");
         // InventoryManager.Singleton.RemoveItem("Pause Item");
     }
