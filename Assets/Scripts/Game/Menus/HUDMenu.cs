@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,6 +16,7 @@ public class HUDMenu : Panel
         {
             return;
         }
+        pauseButton.onClick.AddListener(OpenPause);
         inventoryButton.onClick.AddListener(OpenInventory);
         encyclopediaButton.onClick.AddListener(OpenEncyclopedia);
         base.Initialize();
@@ -35,5 +38,11 @@ public class HUDMenu : Panel
     private void OpenEncyclopedia()
     {
         PanelManager.GetSingleton("encyclopedia").Open();    
+    }
+
+    private void OpenPause()
+    {
+        Time.timeScale = 0;
+        PanelManager.GetSingleton("pause").Open();
     }
 }

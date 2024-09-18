@@ -66,7 +66,7 @@ public class AudioManager : MonoBehaviour
         {
             PlayBackgroundMusic("bgm1");
         }
-        else if (scene.name == "Game")
+        else if (scene.name == "Chapter1")
         {
             PlayBackgroundMusic("bgm3");
         }
