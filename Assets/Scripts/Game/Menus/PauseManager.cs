@@ -26,4 +26,14 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void Settings()
+    {
+        PanelManager.GetSingleton("pause").Close();
+        PanelManager.GetSingleton("settings").Open();
+        PanelManager.GetSingleton("volumemaster").Open();
+        PanelManager.GetSingleton("volumebgm").Open();
+        PanelManager.GetSingleton("volumesfx").Open();
+        PanelManager.GetSingleton("volumevoice").Open();
+    }
 }
