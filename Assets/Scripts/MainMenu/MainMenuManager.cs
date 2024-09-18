@@ -116,7 +116,7 @@ public class MainMenuManager : MonoBehaviour
             
             Debug.Log("Player data loaded successfully.");
             PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Chapter1");
         }
         catch (Exception e)
         {
@@ -131,7 +131,7 @@ public class MainMenuManager : MonoBehaviour
         CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
         PanelManager.CloseAll();
         PanelManager.GetSingleton("loading").Open();
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Chapter1");
     }
 
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
