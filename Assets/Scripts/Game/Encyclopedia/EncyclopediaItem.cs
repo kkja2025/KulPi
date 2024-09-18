@@ -24,6 +24,7 @@ public class EncyclopediaItem
         itemCategory = category;
     }
 
+    // Figures
     public static EncyclopediaItem Figures_Chapter1_Diwata()
     {   
         string chapter = "Chapter 1: 'The Tainted Paradise'";
@@ -35,6 +36,7 @@ public class EncyclopediaItem
         return new EncyclopediaItem(chapter, title, icon, description, category);
     }
 
+    // Events
     public static EncyclopediaItem Events_Chapter1_Sacred_Grove()
     {   
         string chapter = "Chapter 1: 'The Tainted Paradise'";
@@ -42,6 +44,30 @@ public class EncyclopediaItem
         Sprite icon = Resources.Load<Sprite>("Icons/Encyclopedia/SacredGrove");
         string description = "     The devastation of Sugbu’s once-thriving environment, brought about by the actions of the Sakim, mirrors the real-world environmental degradation faced in many regions. The air is filled with toxins, the waters are polluted, and the Sacred Grove is blighted. This event highlights how the imbalance between humanity and nature can lead to catastrophic consequences, affecting not just the land but the very spirits tied to it."; 
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+
+        return new EncyclopediaItem(chapter, title, icon, description, category);
+    }
+
+    // Practices and Traditions
+    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Name()   // Change Name to the actual name of the entry
+    {   
+        string chapter = "Chapter 1: 'The Tainted Paradise'";
+        string title = "";
+        Sprite icon = Resources.Load<Sprite>("Icons/Encyclopedia/IconHere"); // Change IconHere to the actual icon
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+
+        return new EncyclopediaItem(chapter, title, icon, description, category);
+    }
+
+    // Mythology and Folklore
+    public static EncyclopediaItem MythologyAndFolklore_Chapter1_Name() // Change Name to the actual name of the entry
+    {   
+        string chapter = "Chapter 1: 'The Tainted Paradise'";
+        string title = "";
+        Sprite icon = Resources.Load<Sprite>("Icons/Encyclopedia/IconHere"); // Change IconHere to the actual icon
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
 
         return new EncyclopediaItem(chapter, title, icon, description, category);
     }
