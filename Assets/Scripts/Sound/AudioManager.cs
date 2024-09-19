@@ -219,7 +219,16 @@ public class AudioManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Sound settings found, loading values");
+                int masterVolume = PlayerPrefs.GetInt("MasterVolume");
+                int backgroundMusicVolume = PlayerPrefs.GetInt("BackgroundMusicVolume");
+                int soundEffectsVolume = PlayerPrefs.GetInt("SoundEffectsVolume");
+                int voiceOverVolume = PlayerPrefs.GetInt("VoiceOverVolume");
+
+                SetMasterVolume(masterVolume);
+                SetBackgroundMusicVolume(backgroundMusicVolume);
+                SetSoundEffectsVolume(soundEffectsVolume);
+                SetVoiceOverVolume(voiceOverVolume);
+                Debug.Log("Sound settings found.");
             }
         }
         catch (PlayerPrefsException e)
