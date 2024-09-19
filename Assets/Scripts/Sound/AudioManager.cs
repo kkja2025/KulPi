@@ -66,7 +66,7 @@ public class AudioManager : MonoBehaviour
         {
             PlayBackgroundMusic("bgm1");
         }
-        else if (scene.name == "GameScene")
+        else if (scene.name == "Chapter1")
         {
             PlayBackgroundMusic("bgm3");
         }
@@ -203,15 +203,33 @@ public class AudioManager : MonoBehaviour
     {
         try 
         {
-            int masterVolume = PlayerPrefs.GetInt("MasterVolume", 3);
-            int bgmVolume = PlayerPrefs.GetInt("BackgroundMusicVolume", 3);
-            int sfxVolume = PlayerPrefs.GetInt("SoundEffectsVolume", 3);
-            int voVolume = PlayerPrefs.GetInt("VoiceOverVolume", 3);
+            if (!PlayerPrefs.HasKey("MasterVolume"))
+            {
+                PlayerPrefs.SetInt("MasterVolume", 4);
+                PlayerPrefs.SetInt("BackgroundMusicVolume", 4);
+                PlayerPrefs.SetInt("SoundEffectsVolume", 4);
+                PlayerPrefs.SetInt("VoiceOverVolume", 4);
 
-            SetMasterVolume(masterVolume);
-            SetBackgroundMusicVolume(bgmVolume);
-            SetSoundEffectsVolume(sfxVolume);
-            SetVoiceOverVolume(voVolume);
+                SetMasterVolume(4);
+                SetBackgroundMusicVolume(4);
+                SetSoundEffectsVolume(4);
+                SetVoiceOverVolume(4);
+
+                Debug.Log("Sound settings keys not found, using default value.");
+            }
+            else
+            {
+                int masterVolume = PlayerPrefs.GetInt("MasterVolume");
+                int backgroundMusicVolume = PlayerPrefs.GetInt("BackgroundMusicVolume");
+                int soundEffectsVolume = PlayerPrefs.GetInt("SoundEffectsVolume");
+                int voiceOverVolume = PlayerPrefs.GetInt("VoiceOverVolume");
+
+                SetMasterVolume(masterVolume);
+                SetBackgroundMusicVolume(backgroundMusicVolume);
+                SetSoundEffectsVolume(soundEffectsVolume);
+                SetVoiceOverVolume(voiceOverVolume);
+                Debug.Log("Sound settings found.");
+            }
         }
         catch (PlayerPrefsException e)
         {

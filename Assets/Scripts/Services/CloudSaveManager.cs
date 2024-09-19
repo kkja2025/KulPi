@@ -1,20 +1,29 @@
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Unity.Services.Authentication;
+using System.Threading.Tasks;
 using Unity.Services.CloudSave;
 using Unity.Services.CloudSave.Models;
 using Unity.Services.Core;
 using UnityEngine;
-using Firebase.Auth;
+
+[System.Serializable]
+public class PlayerData
+{
+    public int level;
+    public string playerID;
+
+    public PlayerData(int level, string playerID)
+    {
+        this.level = level;
+        this.playerID = playerID;
+    }
+}
 
 public class CloudSaveManager : MonoBehaviour
 {
     private bool initialized = false;
     private static CloudSaveManager singleton = null;
-    private FirebaseAuth auth;
-    private const string CLOUD_SAVE_PLAYER_ID_KEY = "player_id";
-    private const string CLOUD_SAVE_LEVEL_KEY = "level";
+    private const string CLOUD_SAVE_PLAYER_DATA_KEY = "player_data";
 
     public static CloudSaveManager Singleton
     {
@@ -56,7 +65,6 @@ public class CloudSaveManager : MonoBehaviour
         {
             singleton = this;
             DontDestroyOnLoad(gameObject);
-            
         }
         StartClientService();
     }
@@ -65,109 +73,54 @@ public class CloudSaveManager : MonoBehaviour
     {
         if (UnityServices.State != ServicesInitializationState.Initialized)
         {
-            Debug.Log("Unity Services not initialized. Initializing...");
             await UnityServices.InitializeAsync();
-            Debug.Log("Unity Services initialized.");
         }
-        var firebaseService = FirebaseService.Singleton;
-        auth = firebaseService.Auth;
     }
 
-    public async void SavePlayerData(int level, string playerID)
+    public async Task SavePlayerData(int level, string playerID)
     {
-        var data = new Dictionary<string, object>
-        {
-            { CLOUD_SAVE_LEVEL_KEY, level },
-            { CLOUD_SAVE_PLAYER_ID_KEY, playerID }
-        };
+        PlayerData playerData = new PlayerData(level, playerID);
+        string jsonPlayerData = JsonUtility.ToJson(playerData);
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData } };
         try
         {
-            if (auth.CurrentUser != null)
-            {
-                Debug.Log("Attempting to save data..." + auth.CurrentUser.UserId);
-                await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-                Debug.Log($"Data saved successfully: {string.Join(", ", data)}");
-            }
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
-                HandleCloudSaveException(e);
+            Debug.LogError("Error in SavePlayerData: " + e.Message);
+            HandleCloudSaveException(e);
         }
     }
 
     public async Task LoadPlayerData()
     {
-        var keysToLoad = new HashSet<string>
+        var key = new HashSet<string>
         {
-            CLOUD_SAVE_LEVEL_KEY,
-            CLOUD_SAVE_PLAYER_ID_KEY
+            CLOUD_SAVE_PLAYER_DATA_KEY
         };
 
         try
         {
-            var loadedData = await CloudSaveService.Instance.Data.Player.LoadAsync(keysToLoad);
-            Debug.Log("Data loaded successfully: " + string.Join(", ", loadedData.Keys));
+            var loadedData = await CloudSaveService.Instance.Data.Player.LoadAsync(key);
 
-            if (!loadedData.ContainsKey(CLOUD_SAVE_PLAYER_ID_KEY) || string.IsNullOrEmpty(loadedData[CLOUD_SAVE_PLAYER_ID_KEY]?.ToString()))
+            if (loadedData.ContainsKey(CLOUD_SAVE_PLAYER_DATA_KEY))
             {
-                throw new InvalidOperationException("Player ID is empty or not found in cloud save.");
-            } 
-            if (loadedData.TryGetValue(CLOUD_SAVE_PLAYER_ID_KEY, out var loadedPlayerID))
+                Debug.Log("Player data loaded: ");
+            }
+            else
             {
-                Debug.Log("Loaded saved player ID: " + loadedPlayerID);
+                Debug.LogWarning("Player data not found.");
+                throw new Exception("Player data does not exist.");
             }
         }
         catch (Exception e)
         {
             Debug.LogError("Error in LoadPlayerData: " + e.Message);
-            throw; 
+            throw;
         }
     }
-
-
-    public async void UpdatePlayerData(int newLevel)
-    {
-        try
-        {
-            var loadedData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_LEVEL_KEY });
-
-            if (loadedData.TryGetValue(CLOUD_SAVE_LEVEL_KEY, out var currentLevel))
-            {
-                Debug.Log("Updating level from " + currentLevel.Value.GetAsString() + " to " + newLevel);
-                var data = new Dictionary<string, object>
-                {
-                    { CLOUD_SAVE_LEVEL_KEY, newLevel }
-                };
-                await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-                Debug.Log("Level updated successfully.");
-            }
-            else
-            {
-                Debug.LogWarning("Level not found. Saving new level.");
-                SavePlayerData(newLevel, auth.CurrentUser.UserId);
-            }
-        }
-        catch (Exception e)
-        {
-            HandleCloudSaveException(e);
-        }
-    }
-
-    public async void DeletePlayerData()
-    {
-        try
-        {
-            await CloudSaveService.Instance.Data.Player.DeleteAsync(CLOUD_SAVE_LEVEL_KEY);
-            await CloudSaveService.Instance.Data.Player.DeleteAsync(CLOUD_SAVE_PLAYER_ID_KEY);
-            Debug.Log("Data deleted successfully.");
-        }
-        catch (Exception e)
-        {
-            HandleCloudSaveException(e);
-        }
-    }
-
-    // Handle Cloud Save exceptions
     private void HandleCloudSaveException(Exception e)
     {
         switch (e)

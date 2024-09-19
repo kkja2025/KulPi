@@ -116,7 +116,7 @@ public class MainMenuManager : MonoBehaviour
             
             Debug.Log("Player data loaded successfully.");
             PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Chapter1");
         }
         catch (Exception e)
         {
@@ -124,14 +124,20 @@ public class MainMenuManager : MonoBehaviour
             ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "Ok");
         }
     }
-    public void NewGame()
+    public async void NewGame()
     {
         FirebaseUser user = auth.CurrentUser;
-        CloudSaveManager.Singleton.DeletePlayerData();
-        CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
-        SceneManager.LoadScene("GameScene");
+        try
+        {
+            await CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("loading").Open();
+            SceneManager.LoadScene("Chapter1");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error saving player data: " + e.Message);
+        }
     }
 
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
