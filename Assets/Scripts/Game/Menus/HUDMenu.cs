@@ -45,4 +45,5 @@ public class HUDMenu : Panel
         Time.timeScale = 0;
         PanelManager.GetSingleton("pause").Open();
     }
+
 }
