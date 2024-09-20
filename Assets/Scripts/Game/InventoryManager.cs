@@ -6,13 +6,20 @@ using Unity.Services.CloudSave;
 [System.Serializable]
 public class InventoryItem
 {
+    public string itemID;
     public string itemName;
     public Sprite itemIcon;
 
-    public InventoryItem(string name, Sprite icon)
+    // Constructor
+    public InventoryItem(string id, string name)
     {
+        itemID = id;
         itemName = name;
-        itemIcon = icon;
+        itemIcon = null;
+    }
+    public void SetSprite(Sprite sprite)
+    {
+        itemIcon = sprite;
     }
 }
 
@@ -66,9 +73,9 @@ public class InventoryManager : MonoBehaviour
         LoadInventoryAsync();
     }
 
-    public void AddItem(string itemName, Sprite itemIcon)
+    public void AddItem(string itemID, string itemName)
     {
-        InventoryItem item = new InventoryItem(itemName, itemIcon);
+        InventoryItem item = new InventoryItem(itemID, itemName);
         inventory.Add(item);
         Debug.Log(itemName + " added to inventory.");
         SaveInventoryAsync();

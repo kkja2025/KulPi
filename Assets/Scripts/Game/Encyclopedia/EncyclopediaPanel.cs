@@ -167,8 +167,10 @@ public class EncyclopediaPanel : Panel
             }
         }
 
+        Sprite icon = Resources.Load<Sprite>($"Icons/Encyclopedia/{item.itemID}");
+        item.SetSprite(icon);
         if (itemIconImage != null)
-        {
+        {   
             itemIconImage.sprite = item.itemIcon;
         }
     }

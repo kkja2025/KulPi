@@ -40,6 +40,8 @@ public class InventoryMenu : Panel
 
         foreach (var item in items)
         {
+            Sprite icon = Resources.Load<Sprite>($"Icons/Inventory/{item.itemID}");
+            item.SetSprite(icon);
             AddInventoryItem(item);
         }
     }

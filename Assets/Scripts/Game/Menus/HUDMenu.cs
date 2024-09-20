@@ -29,10 +29,9 @@ public class HUDMenu : Panel
 
     private void OpenInventory()
     {
-        PanelManager.GetSingleton("inventory").Open();        
-        Sprite icon = Resources.Load<Sprite>("Icons/Encyclopedia/SacredGrove");
-        InventoryManager.Singleton.AddItem("Sacred Grove", icon);
-        // InventoryManager.Singleton.RemoveItem("Sacred Grove");
+        PanelManager.GetSingleton("inventory").Open();
+        InventoryManager.Singleton.AddItem("UI_Weirdletter_12", "Letter");
+        InventoryManager.Singleton.RemoveItem("Sacred Grove");
     }
 
     private void OpenEncyclopedia()
@@ -44,26 +43,26 @@ public class HUDMenu : Panel
     {
         Time.timeScale = 0;
         PanelManager.GetSingleton("pause").Open();
-        // EncyclopediaItem diwataItem = EncyclopediaItem.Figures_Chapter1_Diwata();
-        // await EncyclopediaManager.Singleton.AddItem(diwataItem);
+        EncyclopediaItem diwataItem = EncyclopediaItem.Figures_Chapter1_Diwata();
+        await EncyclopediaManager.Singleton.AddItem(diwataItem);
 
-        // EncyclopediaItem sacredGrove = EncyclopediaItem.Events_Chapter1_Sacred_Grove();
-        // await EncyclopediaManager.Singleton.AddItem(sacredGrove);
+        EncyclopediaItem sacredGrove = EncyclopediaItem.Events_Chapter1_Sacred_Grove();
+        await EncyclopediaManager.Singleton.AddItem(sacredGrove);
 
-        // EncyclopediaItem cursedLandOfSugbu = EncyclopediaItem.Events_Chapter1_Cursed_Land_of_Sugbu();
-        // await EncyclopediaManager.Singleton.AddItem(cursedLandOfSugbu);
+        EncyclopediaItem cursedLandOfSugbu = EncyclopediaItem.Events_Chapter1_Cursed_Land_of_Sugbu();
+        await EncyclopediaManager.Singleton.AddItem(cursedLandOfSugbu);
 
-        // EncyclopediaItem filipinoMedicine = EncyclopediaItem.PracticesAndTraditions_Chapter1_Traditional_Filipino_Medicine();
-        // await EncyclopediaManager.Singleton.AddItem(filipinoMedicine);
+        EncyclopediaItem filipinoMedicine = EncyclopediaItem.PracticesAndTraditions_Chapter1_Traditional_Filipino_Medicine();
+        await EncyclopediaManager.Singleton.AddItem(filipinoMedicine);
 
-        // EncyclopediaItem powersAndFilipinoSpirituality = EncyclopediaItem.PracticesAndTraditions_Chapter1_Powers_and_Filipino_Spirituality();
-        // await EncyclopediaManager.Singleton.AddItem(powersAndFilipinoSpirituality);
+        EncyclopediaItem powersAndFilipinoSpirituality = EncyclopediaItem.PracticesAndTraditions_Chapter1_Powers_and_Filipino_Spirituality();
+        await EncyclopediaManager.Singleton.AddItem(powersAndFilipinoSpirituality);
 
-        // EncyclopediaItem tikbalang = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Tikbalang();
-        // await EncyclopediaManager.Singleton.AddItem(tikbalang);
+        EncyclopediaItem tikbalang = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Tikbalang();
+        await EncyclopediaManager.Singleton.AddItem(tikbalang);
 
-        // EncyclopediaItem sigbin = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin();
-        // await EncyclopediaManager.Singleton.AddItem(sigbin);
+        EncyclopediaItem sigbin = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin();
+        await EncyclopediaManager.Singleton.AddItem(sigbin);
     }
 
 }
