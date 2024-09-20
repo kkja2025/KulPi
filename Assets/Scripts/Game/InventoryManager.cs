@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.CloudSave;
@@ -92,19 +91,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void GetInventory()
-    {
-        if (inventory != null && inventory.Count > 0)
-        {
-            string itemNames = string.Join(", ", inventory.Select(item => item.itemName));
-            Debug.Log("Inventory Items: " + itemNames);
-        }
-        else
-        {
-            Debug.Log("Inventory is empty.");
-        }
-    }
-
     private async void SaveInventoryAsync()
     {
         try
@@ -152,6 +138,7 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.LogError("Failed to load inventory: " + e.Message);
             inventory = new List<InventoryItem>();
+            GameManager.Singleton.ReturnToMainMenu();
         }
     }
 }

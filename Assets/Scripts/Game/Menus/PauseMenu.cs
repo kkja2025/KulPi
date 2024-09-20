@@ -28,6 +28,7 @@ public class PauseMenu : Panel
     private void Resume()
     {
         PanelManager.GetSingleton("pause").Close();
+        Time.timeScale = 1;
     }
 
     private void OpenSettings()
@@ -42,6 +43,7 @@ public class PauseMenu : Panel
 
     private void ReturnMainMenu()
     {
+        Time.timeScale = 1;
         GameManager.Singleton.ReturnToMainMenu();
     }
 }
