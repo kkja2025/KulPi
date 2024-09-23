@@ -1,18 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CutsceneMenu : Panel
 {
-    [SerializeField] private Button prevButton1 = null;
-    [SerializeField] private Button nextButton1 = null;
-    [SerializeField] private Button prevButton2 = null;
-    [SerializeField] private Button nextButton2 = null;
-    [SerializeField] private Button prevButton3 = null;
-    [SerializeField] private Button nextButton3 = null;
-    [SerializeField] private Button prevButton4 = null;
-    [SerializeField] private Button nextButton4 = null;
+    [SerializeField] private Button buttonNext = null;
+    [SerializeField] private GameObject[] cutscenePanels = null;
+
+    private int currentCutsceneIndex = 0;
 
     public override void Initialize()
     {
@@ -21,14 +17,20 @@ public class CutsceneMenu : Panel
             return;
         }
 
-        prevButton1.onClick.AddListener(Main);
-        nextButton1.onClick.AddListener(Scene2);
-        prevButton2.onClick.AddListener(Scene1);
-        nextButton2.onClick.AddListener(Scene3);
-        prevButton3.onClick.AddListener(Scene2);
-        nextButton3.onClick.AddListener(Scene4);
-        prevButton4.onClick.AddListener(Scene3);
-        nextButton4.onClick.AddListener(StartGame);
+        if (buttonNext == null)
+        {
+            Debug.LogError("buttonNext is not assigned in the Inspector.");
+            return;
+        }
+
+        if (cutscenePanels == null || cutscenePanels.Length == 0)
+        {
+            Debug.LogError("cutscenePanels array is either null or empty.");
+            return;
+        }
+
+        UpdateCutscene();
+        buttonNext.onClick.AddListener(NextCutscene);
         base.Initialize();
     }
 
@@ -37,39 +39,41 @@ public class CutsceneMenu : Panel
         base.Open();
     }
 
-    private void Main()
+    private void UpdateCutscene()
     {
-        PanelManager.GetSingleton("main").Open();
-        PanelManager.GetSingleton("scene1").Close();
+        if (cutscenePanels == null)
+        {
+            Debug.LogError("cutscenePanels is null.");
+            return;
+        }
+
+        for (int i = 0; i < cutscenePanels.Length; i++)
+        {
+            cutscenePanels[i].SetActive(false);
+        }
+
+        if (cutscenePanels.Length > 0)
+        {
+            cutscenePanels[currentCutsceneIndex].SetActive(true);
+        }
     }
 
-    private void Scene1()
+    private void NextCutscene()
     {
-        PanelManager.GetSingleton("main").Close();
-        PanelManager.GetSingleton("scene2").Close();
-        PanelManager.GetSingleton("scene1").Open();
-    }
-
-    private void Scene2()
-    {
-        PanelManager.GetSingleton("scene1").Close();
-        PanelManager.GetSingleton("scene2").Open();
-    }
-
-    private void Scene3()
-    {
-        PanelManager.GetSingleton("scene2").Close();
-        PanelManager.GetSingleton("scene3").Open();
-    }
-
-    private void Scene4()
-    {
-        PanelManager.GetSingleton("scene3").Close();
-        PanelManager.GetSingleton("scene4").Open();
+        if (currentCutsceneIndex < cutscenePanels.Length - 1)
+        {
+            currentCutsceneIndex++;
+            UpdateCutscene();
+        }
+        else
+        {
+            StartGame();
+        }
     }
 
     private void StartGame()
     {
-        MainMenuManager.Singleton.LoadGame();
+        PanelManager.CloseAll();
+        SceneManager.LoadScene("Chapter1");
     }
 }
