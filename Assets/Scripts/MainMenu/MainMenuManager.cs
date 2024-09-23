@@ -57,7 +57,8 @@ public class MainMenuManager : MonoBehaviour
             {
                 Debug.Log("User is already signed in: " + user.UserId);
                 Debug.Log($"User is already signed in: {user.Email}");
-            } else
+            }
+            else
             {
                 Debug.Log("User is not signed in.");
             }
@@ -113,10 +114,9 @@ public class MainMenuManager : MonoBehaviour
         try
         {
             await CloudSaveManager.Singleton.LoadPlayerData();
-            
+
             Debug.Log("Player data loaded successfully.");
-            PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("Chapter1");
+            PanelManager.GetSingleton("cutscene").Open();
         }
         catch (Exception e)
         {
@@ -131,8 +131,7 @@ public class MainMenuManager : MonoBehaviour
         {
             await CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
             PanelManager.CloseAll();
-            PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("Chapter1");
+            PanelManager.GetSingleton("cutscene").Open();
         }
         catch (Exception e)
         {
