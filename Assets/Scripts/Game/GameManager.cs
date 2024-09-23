@@ -50,10 +50,37 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
+    public async void UnlockEncyclopediaItem(string id)
     {
-        PanelManager.Close("loading");
-        PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
-        panel.Open(action, text, button);
+        EncyclopediaItem item = null;
+        switch (id)
+        {
+            case "Diwata":
+                item = EncyclopediaItem.Figures_Chapter1_Diwata();
+                break;
+            case "SacredGrove":
+                item = EncyclopediaItem.Events_Chapter1_Sacred_Grove();
+                break;
+            case "CursedLandOfSugbu":
+                item = EncyclopediaItem.Events_Chapter1_Cursed_Land_of_Sugbu();
+                break;
+            case "TraditionalFilipinoMedicine":
+                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Traditional_Filipino_Medicine();
+                break;
+            case "PowersAndFilipinoSpirituality":
+                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Powers_and_Filipino_Spirituality();
+                break;
+            case "Tikbalang":
+                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Tikbalang();
+                break;
+            case "Sigbin":
+                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin();
+                break;
+            default:
+                Debug.LogWarning("Invalid encyclopedia id provided.");
+                return;
+        }
+        await EncyclopediaManager.Singleton.AddItem(item);
+        PanelManager.GetSingleton("unlock").Open();
     }
 }

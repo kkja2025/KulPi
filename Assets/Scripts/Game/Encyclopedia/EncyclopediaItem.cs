@@ -57,7 +57,7 @@ public class EncyclopediaItem
 
     public static EncyclopediaItem Events_Chapter1_Cursed_Land_of_Sugbu()
     {
-        string id = "CursedLand";
+        string id = "CursedLandOfSugbu";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
         string title = "Cursed Land of Sugbu";
         string description = "     This marks the beginning of Lakan’s journey to restore balance to the island. The corruption of the land has caused suffering among the people, and the once-harmonious relationship between the villagers and nature has been severed. By purifying the Sacred Grove and confronting the Diwata, Lakan will restore Sugbu to its former state of peace and prosperity.";
@@ -69,7 +69,7 @@ public class EncyclopediaItem
     // Practices and Traditions
     public static EncyclopediaItem PracticesAndTraditions_Chapter1_Traditional_Filipino_Medicine()
     {
-        string id = "FilipinoMedicine";
+        string id = "TraditionalFilipinoMedicine";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
         string title = "Traditional Filipino Medicine";
         string description = "     Herbal medicine, an integral part of Filipino healing traditions, involves the use of plants and natural remedies. Healers like the Babaylan were often relied upon to treat both physical and spiritual ailments. The tradition where the power of nature and the deep knowledge of the land are essential to curing illnesses.";
@@ -80,7 +80,7 @@ public class EncyclopediaItem
 
     public static EncyclopediaItem PracticesAndTraditions_Chapter1_Powers_and_Filipino_Spirituality()
     {
-        string id = "Powers";
+        string id = "PowersAndFilipinoSpirituality";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
         string title = "Powers and Filipino Spirituality";
         string description = "     In Filipino spirituality, the elements—earth, water, fire, and wind—are sacred and essential to maintaining balance in the world. These elemental powers, granted to Lakan through the Bantayog ng Panahon, represent the ancient connection between humans and nature. These powers can be used to purify the land, cleanse water sources, and defeat corrupted creatures.";
