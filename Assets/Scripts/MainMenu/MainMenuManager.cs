@@ -129,7 +129,7 @@ public class MainMenuManager : MonoBehaviour
         FirebaseUser user = auth.CurrentUser;
         try
         {
-            await CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
+            await CloudSaveManager.Singleton.SaveNewPlayerData(1, user.UserId);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("cutscene").Open();
         }

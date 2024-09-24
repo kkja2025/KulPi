@@ -46,7 +46,7 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             
         }
-
+        backgroundMusicSource.ignoreListenerPause = true;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -64,11 +64,15 @@ public class AudioManager : MonoBehaviour
         LoadSoundSettings();
         if (scene.name == "Login" || scene.name == "MainMenu")
         {
-            PlayBackgroundMusic("bgm1");
+            PlayBackgroundMusic("Main_Theme");
         }
         else if (scene.name == "Chapter1")
         {
-            PlayBackgroundMusic("bgm3");
+            PlayBackgroundMusic("Forest");
+        } 
+        else if (scene.name == "Chapter1Boss")
+        {
+            PlayBackgroundMusic("Battle_Diwata");
         }
     }
 

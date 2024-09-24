@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HUDMenu : Panel
 {
@@ -30,8 +31,9 @@ public class HUDMenu : Panel
     private void OpenInventory()
     {
         PanelManager.GetSingleton("inventory").Open();
-        InventoryManager.Singleton.AddItem("UI_Weirdletter_12", "Letter");
-        InventoryManager.Singleton.RemoveItem("Sacred Grove");
+        // InventoryManager.Singleton.AddItem("UI_Weirdletter_12", "Letter");
+        // InventoryManager.Singleton.RemoveItem("Sacred Grove");
+        SceneManager.LoadScene("Chapter1Boss");
     }
 
     private void OpenEncyclopedia()
@@ -43,8 +45,6 @@ public class HUDMenu : Panel
     {
         Time.timeScale = 0;
         PanelManager.GetSingleton("pause").Open();
-
-        GameManager.Singleton.UnlockEncyclopediaItem("Diwata");
     }
 
 }

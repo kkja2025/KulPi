@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,10 +32,23 @@ public class GameManager : MonoBehaviour
     {
         if (initialized) return;
         initialized = true;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Awake()
     {
+        if (singleton != null && singleton != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            singleton = this;
+            DontDestroyOnLoad(gameObject);
+            
+        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Application.runInBackground = true;
         StartClientService();
     }
@@ -43,6 +57,23 @@ public class GameManager : MonoBehaviour
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("hud").Open();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu" || scene.name == "Login")
+        {
+            Destroy(gameObject);
+
+        }
+    }
+    private void OnDestroy()
+    {
+        if (singleton == this)
+        {
+            singleton = null;
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ReturnToMainMenu()
@@ -81,6 +112,5 @@ public class GameManager : MonoBehaviour
                 return;
         }
         await EncyclopediaManager.Singleton.AddItem(item);
-        PanelManager.GetSingleton("unlock").Open();
     }
 }

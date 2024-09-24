@@ -94,6 +94,31 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
+    public async Task SaveNewPlayerData(int level, string playerID)
+    {
+        PlayerData playerData = new PlayerData(level, playerID);
+        string jsonPlayerData = JsonUtility.ToJson(playerData);
+        var data = new Dictionary<string, object> 
+        { 
+            { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
+            { "inventory", "{}" },
+            { "encyclopedia_figures", "{}" },
+            { "encyclopedia_events", "{}" },
+            { "encyclopedia_practices_and_traditions", "{}" },
+            { "encyclopedia_mythology_and_folklore", "{}" }   
+        };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+            Debug.Log("Data saved successfully.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SavePlayerData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
     public async Task LoadPlayerData()
     {
         var key = new HashSet<string>

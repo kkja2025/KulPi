@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.CloudSave;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class EncyclopediaItemList
@@ -49,12 +50,6 @@ public class EncyclopediaManager : MonoBehaviour
     private void Awake()
     {
         Application.runInBackground = true;
-        StartClientService();
-    }
-
-    private void StartClientService()
-    {
-        
     }
 
     public async Task SaveEncyclopediaEntryAsync(string key)
@@ -179,5 +174,6 @@ public class EncyclopediaManager : MonoBehaviour
         encyclopediaList.Add(item);
         Debug.Log(item.itemTitle + " added to EncyclopediaList.");
         await SaveEncyclopediaEntryAsync(item.itemCategory);
+        PanelManager.GetSingleton("unlock").Open();
     }
 }
