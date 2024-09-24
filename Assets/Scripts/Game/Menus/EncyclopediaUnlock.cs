@@ -6,8 +6,8 @@ using TMPro;
 
 public class EncyclopediaUnlock : Panel
 {
-    [SerializeField] private RectTransform itemContent = null;
-    [SerializeField] private GameObject itemPrefab = null;
+    [SerializeField] protected RectTransform itemContent = null;
+    [SerializeField] protected GameObject itemPrefab = null;
     [SerializeField] private Button backButton = null;
 
     public override void Initialize()
@@ -32,7 +32,7 @@ public class EncyclopediaUnlock : Panel
         PanelManager.GetSingleton("unlock").Close();
     }
 
-    public void LoadEntryData()
+    public virtual void LoadEntryData()
     {
         var item = EncyclopediaManager.Singleton.encyclopediaList.Last();
         foreach (Transform child in itemContent)

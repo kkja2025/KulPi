@@ -174,5 +174,6 @@ public class EncyclopediaManager : MonoBehaviour
         encyclopediaList.Add(item);
         Debug.Log(item.itemTitle + " added to EncyclopediaList.");
         await SaveEncyclopediaEntryAsync(item.itemCategory);
+        PanelManager.GetSingleton("unlock").Open();
     }
 }

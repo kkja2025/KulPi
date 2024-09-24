@@ -112,6 +112,5 @@ public class GameManager : MonoBehaviour
                 return;
         }
         await EncyclopediaManager.Singleton.AddItem(item);
-        PanelManager.GetSingleton("unlock").Open();
     }
 }

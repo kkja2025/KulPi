@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class BattleManager : MonoBehaviour
 {
     private bool initialized = false;
+    private bool isTimerRunning = false;
     private static BattleManager singleton = null;
     [SerializeField] public GameObject ultimateButton;
     private int ultimateUses = 0;
@@ -52,17 +54,15 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        boss = FindObjectOfType<Boss>();
         StartClientService();
     }
 
     void Update()
     {
-        if (boss != null && boss.health > 0)
+        if (isTimerRunning) 
         {
             elapsedTime += Time.deltaTime; 
-            UpdateTimerDisplay(); 
+            UpdateTimerDisplay();
         }
     }
 
@@ -75,6 +75,7 @@ public class BattleManager : MonoBehaviour
             if (game == null)
             {
                 Debug.Log("Game Manager not found! Returning to Main Menu.");
+                Time.timeScale = 1f;
                 SceneManager.LoadScene("MainMenu");
                 return;
             }
@@ -82,6 +83,7 @@ public class BattleManager : MonoBehaviour
         {
             PanelManager.CloseAll();
             PanelManager.GetSingleton("hud").Open();
+            PanelManager.GetSingleton("tutorial").Open();
         }
     }
 
@@ -97,6 +99,14 @@ public class BattleManager : MonoBehaviour
     public void ShowUltimateButton()
     {
         ultimateButton.SetActive(true);
+    }
+
+    public void StartBattle()
+    {
+        bossObject.SetActive(true);
+        minionsObject.SetActive(true);
+        boss = bossObject.GetComponent<Boss>();
+        isTimerRunning = true;
     }
 
     public void UseUltimate()
