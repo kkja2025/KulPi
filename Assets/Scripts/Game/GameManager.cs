@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
-    private bool isDestroyed = false;
     private static GameManager singleton = null;
 
     public static GameManager Singleton
@@ -35,21 +34,20 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
-    {
-        if (!isDestroyed && SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            isDestroyed = true;
-            Destroy(gameObject);
-        } else if (isDestroyed && SceneManager.GetActiveScene().name == "Login")
-        {
-            isDestroyed = true;
-            Destroy(gameObject);
-        }
-    }
-
     private void Awake()
     {
+        if (singleton != null && singleton != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            singleton = this;
+            DontDestroyOnLoad(gameObject);
+            
+        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Application.runInBackground = true;
         StartClientService();
     }
@@ -58,6 +56,24 @@ public class GameManager : MonoBehaviour
     {
         PanelManager.CloseAll();
         PanelManager.GetSingleton("hud").Open();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu" || scene.name == "Login")
+        {
+            Destroy(gameObject);
+
+            // SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (singleton == this)
+        {
+            singleton = null;
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ReturnToMainMenu()
