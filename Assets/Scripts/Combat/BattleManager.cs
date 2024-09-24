@@ -128,6 +128,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Boss destroyed!");
         Destroy(bossObject);
         Destroy(minionsObject);
+        PanelManager.GetSingleton("hud").Close();
         WinMenu winMenu = PanelManager.GetSingleton("win") as WinMenu;
         if (winMenu != null)
         {
