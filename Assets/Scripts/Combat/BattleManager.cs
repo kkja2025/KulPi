@@ -54,8 +54,7 @@ public class BattleManager : MonoBehaviour
         }
         
         boss = FindObjectOfType<Boss>();
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("hud").Open();
+        StartClientService();
     }
 
     void Update()
@@ -64,6 +63,25 @@ public class BattleManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime; 
             UpdateTimerDisplay(); 
+        }
+    }
+
+    private void StartClientService()
+    {
+        var game = GameManager.Singleton;
+        if (game == null)
+        {
+            game = FindObjectOfType<GameManager>();
+            if (game == null)
+            {
+                Debug.Log("Game Manager not found! Returning to Main Menu.");
+                SceneManager.LoadScene("MainMenu");
+                return;
+            }
+        } else
+        {
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("hud").Open();
         }
     }
 
