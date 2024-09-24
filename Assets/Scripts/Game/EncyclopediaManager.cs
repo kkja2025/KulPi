@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.CloudSave;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class EncyclopediaItemList
@@ -13,6 +14,7 @@ public class EncyclopediaItemList
 public class EncyclopediaManager : MonoBehaviour
 {
     private bool initialized = false;
+    private bool isDestroyed = false;
     private static EncyclopediaManager singleton = null;
     public List<EncyclopediaItem> encyclopediaList = null;
     private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
@@ -44,6 +46,20 @@ public class EncyclopediaManager : MonoBehaviour
     {
         if (initialized) return;
         initialized = true;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (!isDestroyed && SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            isDestroyed = true;
+            Destroy(gameObject);
+        } else if (isDestroyed && SceneManager.GetActiveScene().name == "Login")
+        {
+            isDestroyed = true;
+            Destroy(gameObject);
+        }
     }
 
     private void Awake()

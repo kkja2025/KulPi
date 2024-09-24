@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
+    private bool isDestroyed = false;
     private static GameManager singleton = null;
 
     public static GameManager Singleton
@@ -31,6 +32,20 @@ public class GameManager : MonoBehaviour
     {
         if (initialized) return;
         initialized = true;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (!isDestroyed && SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            isDestroyed = true;
+            Destroy(gameObject);
+        } else if (isDestroyed && SceneManager.GetActiveScene().name == "Login")
+        {
+            isDestroyed = true;
+            Destroy(gameObject);
+        }
     }
 
     private void Awake()

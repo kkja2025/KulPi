@@ -26,7 +26,7 @@ public class EncyclopediaUnlock : Panel
         LoadEntryData();
     }
 
-    public void Back()
+    public virtual void Back()
     {
         Debug.Log("CloseUnlock");
         PanelManager.GetSingleton("unlock").Close();

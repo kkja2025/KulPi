@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Services.CloudSave;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class InventoryItem
@@ -32,6 +33,7 @@ public class InventoryItemList
 public class InventoryManager : MonoBehaviour
 {
     private bool initialized = false;
+    private bool isDestroyed = false;
     private static InventoryManager singleton = null;
     public List<InventoryItem> inventory = null;
     private const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
@@ -60,6 +62,20 @@ public class InventoryManager : MonoBehaviour
     {
         if (initialized) return;
         initialized = true;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (!isDestroyed && SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            isDestroyed = true;
+            Destroy(gameObject);
+        } else if (isDestroyed && SceneManager.GetActiveScene().name == "Login")
+        {
+            isDestroyed = true;
+            Destroy(gameObject);
+        }
     }
 
     private void Awake()

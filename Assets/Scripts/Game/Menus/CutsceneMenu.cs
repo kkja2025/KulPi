@@ -74,6 +74,7 @@ public class CutsceneMenu : Panel
     private void StartGame()
     {
         PanelManager.CloseAll();
+        PanelManager.GetSingleton("loading").Open();
         SceneManager.LoadScene("Chapter1");
     }
 }
