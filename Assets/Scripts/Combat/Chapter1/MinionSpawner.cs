@@ -7,19 +7,16 @@ public class MinionSpawner : MonoBehaviour
     [SerializeField] private GameObject minionButtonPrefab1 = null;     
     [SerializeField] private GameObject minionButtonPrefab2 = null;
     [SerializeField] private RectTransform minionParent = null;
-    [SerializeField] private int minionsToDestroy;
     [SerializeField] private int minionsPerWave;
     [SerializeField] private float spawnInterval;    
-    private List<GameObject> currentMinions = new List<GameObject>();
+    protected List<GameObject> currentMinions = new List<GameObject>();
 
-    private int minionsDestroyed = 0;
-
-    void Start()
+    private void Start()
     {
         InvokeRepeating(nameof(SpawnMinions), 0f, spawnInterval);
     }
 
-    void SpawnMinions()
+    private void SpawnMinions()
     {
         
         DespawnPreviousMinions();
@@ -73,7 +70,7 @@ public class MinionSpawner : MonoBehaviour
         }
     }
 
-    void DespawnPreviousMinions()
+    private void DespawnPreviousMinions()
     {
         foreach (GameObject minion in currentMinions)
         {
@@ -82,15 +79,9 @@ public class MinionSpawner : MonoBehaviour
         currentMinions.Clear();
     }
 
-    void OnMinionButtonClicked(GameObject minionButton)
+    public virtual void OnMinionButtonClicked(GameObject minionButton)
     {
         Destroy(minionButton);
         currentMinions.Remove(minionButton); 
-
-        minionsDestroyed++;
-        if (minionsDestroyed % minionsToDestroy == 0)
-        {
-            BattleManager.Singleton.ShowUltimateButton();
-        }
     }
 }

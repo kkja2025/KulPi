@@ -8,14 +8,10 @@ using UnityEngine.SceneManagement;
 public class BattleManager : MonoBehaviour
 {
     private bool initialized = false;
-    private bool isTimerRunning = false;
+    protected bool isTimerRunning = false;
     private static BattleManager singleton = null;
-    [SerializeField] public GameObject ultimateButton;
-    private int ultimateUses = 0;
-    private Boss boss;
-    public GameObject bossObject;
     public GameObject minionsObject;
-    private float elapsedTime = 0f;
+    protected float elapsedTime = 0f;
     [SerializeField] public TMP_Text timerText;
 
     public static BattleManager Singleton
@@ -38,7 +34,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void Initialize()
+    protected void Initialize()
     {
         if (initialized) return;
         initialized = true;
@@ -96,40 +92,17 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void ShowUltimateButton()
+    public virtual void StartBattle()
     {
-        ultimateButton.SetActive(true);
-    }
-
-    public void StartBattle()
-    {
-        bossObject.SetActive(true);
         minionsObject.SetActive(true);
-        boss = bossObject.GetComponent<Boss>();
         isTimerRunning = true;
     }
 
-    public void UseUltimate()
+    public virtual void Defeated()
     {
-        ultimateButton.SetActive(false);
-        ultimateUses++;
-
-        boss.TakeUltimateDamage();
-        Debug.Log("Ultimate used! Ultimate uses: " + ultimateUses);
-
-        if (ultimateUses >= 5)
-        {
-            Debug.Log("Boss defeated!");
-        }
-    }
-
-    public void Defeated()
-    {
-        Debug.Log("Boss destroyed!");
-        Destroy(bossObject);
         Destroy(minionsObject);
         PanelManager.GetSingleton("hud").Close();
-        LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
+        // LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         WinMenu winMenu = PanelManager.GetSingleton("win") as WinMenu;
         if (winMenu != null)
         {

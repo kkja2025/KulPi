@@ -6,8 +6,7 @@ using TMPro;
 
 public class HUDCombatMenu : Panel
 {
-    [SerializeField] private Button ultimateButton = null;
-    [SerializeField] private Button pauseButton = null;
+    [SerializeField] protected Button pauseButton = null;
 
     public override void Initialize()
     {
@@ -15,7 +14,6 @@ public class HUDCombatMenu : Panel
         {
             return;
         }
-        ultimateButton.onClick.AddListener(UseUltimate);
         pauseButton.onClick.AddListener(OpenPause);
         base.Initialize();
     }
@@ -24,12 +22,8 @@ public class HUDCombatMenu : Panel
     {
         base.Open();
     }
-    public void UseUltimate()
-    {
-        BattleManager.Singleton.UseUltimate();
-    }
-
-    private void OpenPause()
+    
+    protected void OpenPause()
     {
         Time.timeScale = 0;
         PanelManager.GetSingleton("pause").Open();
