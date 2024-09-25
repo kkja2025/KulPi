@@ -35,12 +35,12 @@ public class EncyclopediaUnlock : Panel
         }
     }
 
-    public virtual void ActionButton()
+    public void ActionButton()
     {
         PanelManager.GetSingleton("unlock").Close();
     }
 
-    public virtual void LoadEntryData(EncyclopediaItem item)
+    public void LoadEntryData(EncyclopediaItem item)
     {
         foreach (Transform child in itemContent)
         {
