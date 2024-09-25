@@ -5,10 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class DiwataBattleManager : BattleManager
+public class DiwataBattleManager : SigbinTikbalangBattleManager
 {
     [SerializeField] public GameObject ultimateButton;
-    private int ultimateUses = 0;
     private BossDiwata boss;
     public GameObject bossObject;
     private static DiwataBattleManager singleton = null;
@@ -42,22 +41,18 @@ public class DiwataBattleManager : BattleManager
     {
         bossObject.SetActive(true);
         minionsObject.SetActive(true);
+        UpdateSigbinCount(0);
+        UpdateTikbalangCount(0);
         boss = bossObject.GetComponent<BossDiwata>();
         isTimerRunning = true;
     }
 
     public void UseUltimate()
     {
+        BossDiwataMinionSpawner minionSpawner = minionsObject.GetComponent<BossDiwataMinionSpawner>();
         ultimateButton.SetActive(false);
-        ultimateUses++;
-
         boss.TakeUltimateDamage();
-        Debug.Log("Ultimate used! Ultimate uses: " + ultimateUses);
-
-        if (ultimateUses >= 5)
-        {
-            Debug.Log("Boss defeated!");
-        }
+        minionSpawner.ResetCounters();
     }
 
     public override void Defeated()
