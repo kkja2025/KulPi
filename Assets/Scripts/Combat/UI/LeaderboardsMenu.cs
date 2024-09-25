@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using TMPro;S
 
 public class LeaderboardsMenu : Panel
 {
@@ -39,34 +39,40 @@ public class LeaderboardsMenu : Panel
             Destroy(child.gameObject);
         }
         var items = LeaderboardManager.Singleton.leaderboard;
+        Debug.Log("Leaderboard items: " + items.Count);
 
         foreach (var item in items)
         {
-            GameObject newItem = Instantiate(leaderboardItemPrefab, leaderboardContent);
+            AddLeaderboardItem(item);
+        }
+    }
 
-            TMP_Text[] textComponents = newItem.GetComponentsInChildren<TMP_Text>();
+    private void AddLeaderboardItem (LeaderboardItem item)
+    {
+        GameObject newItem = Instantiate(leaderboardItemPrefab, leaderboardContent);
 
-            foreach (var text in textComponents)
+        TMP_Text[] textComponents = newItem.GetComponentsInChildren<TMP_Text>();
+
+        foreach (var text in textComponents)
+        {
+            if (text.name == "TextRank")
             {
-                if (text.name == "TextRank")
-                {
-                    int playerRank = int.Parse(item.playerRank);
-                    playerRank += 1;
-                    text.text = playerRank.ToString();
-                }
-                else if (text.name == "TextPlayerName")
-                {
-                    text.text = item.playerName;
-                }
-                else if (text.name == "TextScore")
-                {
-                    int totalMilliseconds = int.Parse(item.playerScore);
-                    int totalSeconds = totalMilliseconds / 1000; 
-                    int minutes = totalSeconds / 60; 
-                    int seconds = totalSeconds % 60;
-                    string formattedTime = string.Format("{0:D2}:{1:D2}", minutes, seconds);
-                    text.text = formattedTime;
-                }
+                int playerRank = int.Parse(item.playerRank);
+                playerRank += 1;
+                text.text = playerRank.ToString();
+            }
+            else if (text.name == "TextPlayerName")
+            {
+                text.text = item.playerName;
+            }
+            else if (text.name == "TextTime")
+            {
+                int totalMilliseconds = int.Parse(item.playerScore);
+                int totalSeconds = totalMilliseconds / 1000; 
+                int minutes = totalSeconds / 60; 
+                int seconds = totalSeconds % 60;
+                string formattedTime = string.Format("{0:D2}:{1:D2}", minutes, seconds);
+                text.text = formattedTime;
             }
         }
     }
