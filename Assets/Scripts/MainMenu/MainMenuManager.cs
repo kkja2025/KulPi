@@ -116,7 +116,7 @@ public class MainMenuManager : MonoBehaviour
             await CloudSaveManager.Singleton.LoadPlayerData();
 
             Debug.Log("Player data loaded successfully.");
-            PanelManager.GetSingleton("cutscene").Open();
+            SceneManager.LoadScene("Chapter1");
         }
         catch (Exception e)
         {

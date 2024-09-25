@@ -70,7 +70,11 @@ public class AudioManager : MonoBehaviour
         {
             PlayBackgroundMusic("Forest");
         } 
-        else if (scene.name == "Chapter1Boss")
+        else if (scene.name == "Chapter1BossDiwata")
+        {
+            PlayBackgroundMusic("Battle_Diwata");
+        }
+        else if (scene.name == "Chapter1SigbinTikbalang")
         {
             PlayBackgroundMusic("Battle_Diwata");
         }
