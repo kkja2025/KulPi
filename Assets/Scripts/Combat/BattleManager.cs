@@ -103,11 +103,11 @@ public class BattleManager : MonoBehaviour
         Destroy(minionsObject);
         PanelManager.GetSingleton("hud").Close();
         // LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
-        WinMenu winMenu = PanelManager.GetSingleton("win") as WinMenu;
-        if (winMenu != null)
+        VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenu;
+        if (victoryMenu != null)
         {
-            winMenu.SetTimerText(timerText.text);
-            winMenu.Open();
+            victoryMenu.SetTimerText(timerText.text);
+            victoryMenu.Open();
         }
     }
 }

@@ -44,6 +44,10 @@ public class EncyclopediaUnlock : Panel
             case "unlock":
                 PanelManager.GetSingleton(actionButtonNavigation).Close();
                 break;
+            case "unlocktikbalang":
+                PanelManager.GetSingleton(id).Close();
+                GameManager.Singleton.UnlockEncyclopediaItem("Tikbalang", "unlocktikbalang");
+                break;
             case "chapter1":
                 SceneManager.LoadScene("Chapter1");
                 break;

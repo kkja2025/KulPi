@@ -30,8 +30,7 @@ public class LeaderboardsMenu : Panel
     private void Back()
     {
         PanelManager.GetSingleton("leaderboard").Close();
-        // PanelManager.GetSingleton("win").Open();
-        SceneManager.LoadScene("Chapter1");
+        PanelManager.GetSingleton("victory").Open();
     }
 
     private void LoadLeaderboardItems()

@@ -106,4 +106,38 @@ public class LeaderboardManager : MonoBehaviour
             Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
         }
     }
+
+    public async void SubmitTimeSigbinTikbalangChapter1(long timeInMilliseconds)
+    {
+        try
+        {
+            string leaderboardId = "sigbin_tikbalang_battle_leaderboard";
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardId, timeInMilliseconds);
+            Debug.Log("Best time submitted successfully!");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to submit time: {e.Message}");
+        }
+    }
+
+    public async Task DisplaySigbinTikbalangChapter1Leaderboard()
+    {
+        try
+        {
+            string leaderboardId = "sigbin_tikbalang_battle_leaderboard";
+            var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId);
+            leaderboard = new List<LeaderboardItem>();
+            foreach (var leaderboardEntry in leaderboardEntries.Results)
+            {
+                LeaderboardItem item = new LeaderboardItem(leaderboardEntry.PlayerName, leaderboardEntry.Score.ToString(), leaderboardEntry.Rank.ToString());
+                leaderboard.Add(item);
+            }
+        }
+        catch (Exception e)
+        {
+            leaderboard = new List<LeaderboardItem>();
+            Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
+        }
+    }
 }
