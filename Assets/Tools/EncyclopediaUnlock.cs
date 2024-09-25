@@ -8,7 +8,8 @@ public class EncyclopediaUnlock : Panel
 {
     [SerializeField] protected RectTransform itemContent = null;
     [SerializeField] protected GameObject itemPrefab = null;
-    [SerializeField] private Button backButton = null;
+    [SerializeField] private Button actionButton = null;
+    private EncyclopediaItem encyclopediaItem = null;
 
     public override void Initialize()
     {
@@ -16,25 +17,23 @@ public class EncyclopediaUnlock : Panel
         {
             return;
         }
-        backButton.onClick.AddListener(Back);
+        actionButton.onClick.AddListener(ActionButton);
         base.Initialize();
     }
 
     public override void Open()
     {
         base.Open();
-        LoadEntryData();
+        LoadEntryData(encyclopediaItem);
     }
 
-    public virtual void Back()
+    public virtual void ActionButton()
     {
-        Debug.Log("CloseUnlock");
         PanelManager.GetSingleton("unlock").Close();
     }
 
-    public virtual void LoadEntryData()
+    public virtual void LoadEntryData(EncyclopediaItem item)
     {
-        var item = EncyclopediaManager.Singleton.encyclopediaList.Last();
         foreach (Transform child in itemContent)
         {
             Destroy(child.gameObject);
