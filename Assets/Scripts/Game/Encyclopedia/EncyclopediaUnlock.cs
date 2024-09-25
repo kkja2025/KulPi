@@ -3,12 +3,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EncyclopediaUnlock : Panel
 {
     [SerializeField] private RectTransform itemContent = null;
     [SerializeField] private GameObject itemPrefab = null;
     [SerializeField] private Button actionButton = null;
+    [SerializeField] private string actionButtonNavigation = "unlock";
     private EncyclopediaItem encyclopediaItem = null;
 
     public override void Initialize()
@@ -37,7 +39,20 @@ public class EncyclopediaUnlock : Panel
 
     public void ActionButton()
     {
-        PanelManager.GetSingleton("unlock").Close();
+        switch (actionButtonNavigation)
+        {
+            case "unlock":
+                PanelManager.GetSingleton(actionButtonNavigation).Close();
+                break;
+            case "chapter1":
+                SceneManager.LoadScene("Chapter1");
+                break;
+            case "chapter2":
+                SceneManager.LoadScene("Chapter2");
+                break;
+            default:
+                break;
+        }
     }
 
     public void LoadEntryData(EncyclopediaItem item)

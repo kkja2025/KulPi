@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
@@ -86,7 +87,7 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
-    public async void DisplayBossChapter1Leaderboard()
+    public async Task DisplayBossChapter1Leaderboard()
     {
         try
         {
@@ -101,6 +102,7 @@ public class LeaderboardManager : MonoBehaviour
         }
         catch (Exception e)
         {
+            leaderboard = new List<LeaderboardItem>();
             Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
         }
     }
