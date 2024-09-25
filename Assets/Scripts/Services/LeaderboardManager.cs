@@ -93,11 +93,10 @@ public class LeaderboardManager : MonoBehaviour
         {
             string leaderboardId = "diwata_battle_leaderboard";
             var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId);
-            Debug.Log(leaderboardEntries.Results.Count.ToString());
+            leaderboard = new List<LeaderboardItem>();
             foreach (var leaderboardEntry in leaderboardEntries.Results)
             {
                 LeaderboardItem item = new LeaderboardItem(leaderboardEntry.PlayerName, leaderboardEntry.Score.ToString(), leaderboardEntry.Rank.ToString());
-                leaderboard = new List<LeaderboardItem>();
                 leaderboard.Add(item);
             }
         }

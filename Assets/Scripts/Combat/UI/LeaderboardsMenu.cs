@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;S
+using TMPro;
 
 public class LeaderboardsMenu : Panel
 {
@@ -39,7 +39,6 @@ public class LeaderboardsMenu : Panel
             Destroy(child.gameObject);
         }
         var items = LeaderboardManager.Singleton.leaderboard;
-        Debug.Log("Leaderboard items: " + items.Count);
 
         foreach (var item in items)
         {
