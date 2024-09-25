@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class MinionSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject minionButtonPrefab1 = null;     
-    [SerializeField] private GameObject minionButtonPrefab2 = null;
+    [SerializeField] protected GameObject minionButtonPrefab1 = null;     
+    [SerializeField] protected GameObject minionButtonPrefab2 = null;
     [SerializeField] private RectTransform minionParent = null;
     [SerializeField] private int minionsPerWave;
     [SerializeField] private float spawnInterval;    
@@ -60,6 +60,15 @@ public class MinionSpawner : MonoBehaviour
             GameObject minionButtonPrefab = Random.value > 0.5f ? minionButtonPrefab1 : minionButtonPrefab2;
             
             GameObject minionButton = Instantiate(minionButtonPrefab, minionParent);
+            if (minionButtonPrefab == minionButtonPrefab1)
+            {
+                minionButton.name = "MinionType1";
+            }
+            else
+            {
+                minionButton.name = "MinionType2";
+            }
+
             minionButton.GetComponent<RectTransform>().anchoredPosition = randomPosition;
 
             Button buttonComponent = minionButton.GetComponent<Button>();

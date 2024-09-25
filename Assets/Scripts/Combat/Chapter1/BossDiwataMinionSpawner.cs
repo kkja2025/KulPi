@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossMinionSpawner : MinionSpawner
+public class BossDiwataMinionSpawner : MinionSpawner
 {
     [SerializeField] private int minionsToDestroy;  
     private int minionsDestroyed = 0;

@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
 
+        } else if (scene.name == "Chapter1")
+        {
+            StartClientService();
         }
     }
     private void OnDestroy()
