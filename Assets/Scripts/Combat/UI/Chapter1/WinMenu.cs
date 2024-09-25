@@ -34,10 +34,12 @@ public class WinMenu : Panel
         }
     }
 
-    public void ShowLeaderboards()
+    public async void ShowLeaderboards()
     {
        PanelManager.GetSingleton("win").Close();
-       PanelManager.GetSingleton("leaderboards").Open();
+       await LeaderboardManager.Singleton.DisplayBossChapter1Leaderboard();
+       PanelManager.GetSingleton("leaderboard").Open();
+
     }
 
     private void Next()

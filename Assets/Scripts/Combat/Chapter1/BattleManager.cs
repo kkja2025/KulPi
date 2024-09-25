@@ -129,6 +129,7 @@ public class BattleManager : MonoBehaviour
         Destroy(bossObject);
         Destroy(minionsObject);
         PanelManager.GetSingleton("hud").Close();
+        LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         WinMenu winMenu = PanelManager.GetSingleton("win") as WinMenu;
         if (winMenu != null)
         {
