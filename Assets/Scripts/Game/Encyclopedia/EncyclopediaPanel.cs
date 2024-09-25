@@ -88,9 +88,10 @@ public class EncyclopediaPanel : Panel
         }
 
         AddBackButton(chapter);
-        var titlesInChapter = EncyclopediaManager.Singleton.encyclopediaList.Select(item => item.itemTitle).Distinct().ToList()
+        var titlesInChapter = EncyclopediaManager.Singleton.encyclopediaList
             .Where(x => x.itemChapter == chapter) 
-            .Select(x => x.itemTitle)             
+            .Select(x => x.itemTitle)
+            .Distinct()             
             .ToList();
 
         foreach (var title in titlesInChapter)
