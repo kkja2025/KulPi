@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LeaderboardsMenu : Panel
 {
@@ -29,7 +30,8 @@ public class LeaderboardsMenu : Panel
     private void Back()
     {
         PanelManager.GetSingleton("leaderboard").Close();
-        PanelManager.GetSingleton("win").Open();
+        // PanelManager.GetSingleton("win").Open();
+        SceneManager.LoadScene("Chapter1");
     }
 
     private void LoadLeaderboardItems()
