@@ -29,7 +29,7 @@ public class EncyclopediaUnlock : Panel
 
     public void SetEncyclopediaItem(EncyclopediaItem item)
     {
-        if (itemitem != null)
+        if (item != null)
         {
             encyclopediaItem = item;
         }
