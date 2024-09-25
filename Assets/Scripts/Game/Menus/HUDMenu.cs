@@ -11,10 +11,6 @@ public class HUDMenu : Panel
     [SerializeField] private Button inventoryButton = null;
     [SerializeField] private Button encyclopediaButton = null;
 
-    private void Start()
-    {
-        Open();  // Display the HUD menu when the scene starts
-    }
     public override void Initialize()
     {
         if (IsInitialized)
@@ -37,6 +33,7 @@ public class HUDMenu : Panel
         PanelManager.GetSingleton("inventory").Open();
         // InventoryManager.Singleton.AddItem("UI_Weirdletter_12", "Letter");
         // InventoryManager.Singleton.RemoveItem("Sacred Grove");
+        // SceneManager.LoadScene("Chapter1SigbinTikbalang");
         SceneManager.LoadScene("Chapter1BossDiwata");
     }
 
