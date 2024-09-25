@@ -33,7 +33,7 @@ public class HUDMenu : Panel
         PanelManager.GetSingleton("inventory").Open();
         // InventoryManager.Singleton.AddItem("UI_Weirdletter_12", "Letter");
         // InventoryManager.Singleton.RemoveItem("Sacred Grove");
-        SceneManager.LoadScene("Chapter1Boss");
+        SceneManager.LoadScene("Chapter1SigbinTikbalang");
     }
 
     private void OpenEncyclopedia()
