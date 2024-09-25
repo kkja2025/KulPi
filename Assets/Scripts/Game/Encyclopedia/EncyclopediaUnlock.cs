@@ -6,8 +6,8 @@ using TMPro;
 
 public class EncyclopediaUnlock : Panel
 {
-    [SerializeField] protected RectTransform itemContent = null;
-    [SerializeField] protected GameObject itemPrefab = null;
+    [SerializeField] private RectTransform itemContent = null;
+    [SerializeField] private GameObject itemPrefab = null;
     [SerializeField] private Button actionButton = null;
     private EncyclopediaItem encyclopediaItem = null;
 

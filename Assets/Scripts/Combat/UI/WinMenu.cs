@@ -43,6 +43,6 @@ public class WinMenu : Panel
     private void Next()
     {
         PanelManager.GetSingleton("win").Close();
-        GameManager.Singleton.UnlockEncyclopediaItem("Diwata");
+        GameManager.Singleton.UnlockEncyclopediaItem("Diwata", "unlock");
     }
 }

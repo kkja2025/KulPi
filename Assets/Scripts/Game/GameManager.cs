@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public async void UnlockEncyclopediaItem(string id)
+    public async void UnlockEncyclopediaItem(string id, string panel)
     {
         EncyclopediaItem item = null;
         switch (id)
@@ -111,10 +111,10 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("Invalid encyclopedia id provided.");
                 return;
         }
-        EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton("unlock") as EncyclopediaUnlock;
+        EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
         if (encyclopediaUnlockEntry != null)
         {
-            encyclopediaUnlockEntry.SetEncyclopediaItem();
+            encyclopediaUnlockEntry.SetEncyclopediaItem(item);
             encyclopediaUnlockEntry.Open();
         }
         await EncyclopediaManager.Singleton.AddItem(item);
