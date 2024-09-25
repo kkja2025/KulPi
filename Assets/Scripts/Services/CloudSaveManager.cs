@@ -101,11 +101,11 @@ public class CloudSaveManager : MonoBehaviour
         var data = new Dictionary<string, object> 
         { 
             { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
-            { "inventory", "{}" },
-            { "encyclopedia_figures", "{}" },
-            { "encyclopedia_events", "{}" },
-            { "encyclopedia_practices_and_traditions", "{}" },
-            { "encyclopedia_mythology_and_folklore", "{}" }   
+            { InventoryManager.CLOUD_SAVE_INVENTORY_KEY, "{}" },
+            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, "{}" },
+            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY, "{}" },
+            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY, "{}" },
+            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY, "{}" }   
         };
         try
         {

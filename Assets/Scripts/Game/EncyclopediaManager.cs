@@ -16,10 +16,6 @@ public class EncyclopediaManager : MonoBehaviour
     private bool initialized = false;
     private static EncyclopediaManager singleton = null;
     public List<EncyclopediaItem> encyclopediaList = null;
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
-    private const string CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
     
     public static EncyclopediaManager Singleton
     {
@@ -61,17 +57,17 @@ public class EncyclopediaManager : MonoBehaviour
 
             switch (key)
             {
-                case CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
-                    data[CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY] = jsonEncyclopedia;
+                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
+                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY] = jsonEncyclopedia;
                     break;
-                case CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
-                    data[CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY] = jsonEncyclopedia;
+                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
+                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY] = jsonEncyclopedia;
                     break;
-                case CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
-                    data[CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY] = jsonEncyclopedia;
+                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
+                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY] = jsonEncyclopedia;
                     break;
-                case CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
-                    data[CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY] = jsonEncyclopedia;
+                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
+                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY] = jsonEncyclopedia;
                     break;
                 default:
                     Debug.LogWarning("Invalid encyclopedia key: " + key);
@@ -101,7 +97,7 @@ public class EncyclopediaManager : MonoBehaviour
 
                 switch (key)
                 {
-                    case CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
+                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
                         if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
                         {
                             encyclopediaList = loadedEncyclopediaList;
@@ -113,7 +109,7 @@ public class EncyclopediaManager : MonoBehaviour
                             encyclopediaList = new List<EncyclopediaItem>();
                         }
                         break;
-                    case CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
+                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
                         if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
                         {
                             encyclopediaList = loadedEncyclopediaList;
@@ -125,7 +121,7 @@ public class EncyclopediaManager : MonoBehaviour
                             encyclopediaList = new List<EncyclopediaItem>();
                         }
                         break;
-                    case CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
+                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
                         if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
                         {
                             encyclopediaList = loadedEncyclopediaList;
@@ -137,7 +133,7 @@ public class EncyclopediaManager : MonoBehaviour
                             encyclopediaList = new List<EncyclopediaItem>();
                         }
                         break;
-                    case CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
+                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
                         if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
                         {
                             encyclopediaList = loadedEncyclopediaList;

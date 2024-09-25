@@ -35,7 +35,7 @@ public class InventoryManager : MonoBehaviour
     private bool initialized = false;
     private static InventoryManager singleton = null;
     public List<InventoryItem> inventory = null;
-    private const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
+    public const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
     
     public static InventoryManager Singleton
     {
