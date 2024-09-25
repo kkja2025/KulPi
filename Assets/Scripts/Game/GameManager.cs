@@ -111,6 +111,12 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("Invalid encyclopedia id provided.");
                 return;
         }
+        EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton("unlock") as EncyclopediaUnlock;
+        if (encyclopediaUnlockEntry != null)
+        {
+            encyclopediaUnlockEntry.SetEncyclopediaItem();
+            encyclopediaUnlockEntry.Open();
+        }
         await EncyclopediaManager.Singleton.AddItem(item);
     }
 }

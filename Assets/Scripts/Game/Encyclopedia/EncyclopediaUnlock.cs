@@ -27,6 +27,14 @@ public class EncyclopediaUnlock : Panel
         LoadEntryData(encyclopediaItem);
     }
 
+    public void SetEncyclopediaItem(EncyclopediaItem item)
+    {
+        if (itemitem != null)
+        {
+            encyclopediaItem = item;
+        }
+    }
+
     public virtual void ActionButton()
     {
         PanelManager.GetSingleton("unlock").Close();

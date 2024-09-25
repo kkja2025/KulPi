@@ -44,6 +44,5 @@ public class WinMenu : Panel
     {
         PanelManager.GetSingleton("win").Close();
         GameManager.Singleton.UnlockEncyclopediaItem("Diwata");
-        PanelManager.GetSingleton("unlock").Open();
     }
 }
