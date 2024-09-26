@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2130194153537897901}
   - component: {fileID: 5886324238724335236}
   - component: {fileID: 2540139396617505402}
+  - component: {fileID: 8529811164298179474}
   m_Layer: 5
   m_Name: ButtonPause
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8529811164298179474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072569905619931638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3693f7ff5cd1440a223e73638a1732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 19d4a15d11f7bf548a3ffd95f0e07105, type: 3}
 --- !u!1 &4039266391530132342
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +984,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7469374136085769260, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 450dcc695666bba43b1cc1fdc5f19100, type: 3}
     - target: {fileID: 7787688091821232925, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1099,6 +1117,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7469374136085769260, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e903302e5868cd498be48a9f73ab405, type: 3}
     - target: {fileID: 7787688091821232925, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
       propertyPath: m_Sprite
       value: 
