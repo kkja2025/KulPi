@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Cinemachine.Utility;
 
 public class DiwataBattleManager : SigbinTikbalangBattleManager
 {
@@ -49,6 +50,7 @@ public class DiwataBattleManager : SigbinTikbalangBattleManager
 
     public void UseUltimate()
     {
+        Debug.Log("Ultimate used!");
         BossDiwataMinionSpawner minionSpawner = minionsObject.GetComponent<BossDiwataMinionSpawner>();
         ultimateButton.SetActive(false);
         boss.TakeUltimateDamage();

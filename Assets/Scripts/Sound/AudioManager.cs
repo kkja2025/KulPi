@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer masterMixer;
-    [SerializeField] private AudioSource backgroundMusicSource = null;
-    [SerializeField] private AudioSource soundEffectsSource = null;
-    [SerializeField] private AudioSource voiceOverSource = null;
+    [SerializeField] public AudioSource backgroundMusicSource = null;
+    [SerializeField] public AudioSource soundEffectsSource = null;
+    [SerializeField] public AudioSource voiceOverSource = null;
     private bool initialized = false;
     private static AudioManager singleton = null;
     private string currentMusicClipName = "";
@@ -132,6 +133,22 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundEffect(string clipName)
     {
+        AudioClip clip = Resources.Load<AudioClip>("Sound/SFX/" + clipName);
+
+        if (clip == null)
+        {
+            Debug.LogError($"AudioClip {clipName} not found in Resources/Sound/SFX/!");
+            return;
+        }
+
+        soundEffectsSource.PlayOneShot(clip);
+    }
+
+    public void PlaySwordSoundEffect(int clickCount)
+    {
+        List<string> soundClipNames = new List<string> { "sword_swing_1", "sword_swing_2", "sword_swing_3", "sword_swing_4", "sword_swing_5" };
+
+        string clipName = soundClipNames[clickCount % soundClipNames.Count];
         AudioClip clip = Resources.Load<AudioClip>("Sound/SFX/" + clipName);
 
         if (clip == null)

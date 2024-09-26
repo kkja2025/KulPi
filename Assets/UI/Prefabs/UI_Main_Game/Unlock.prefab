@@ -219,7 +219,8 @@ MonoBehaviour:
   container: {fileID: 6875765830014515858}
   itemContent: {fileID: 8042344356053536257}
   itemPrefab: {fileID: 7775069549890133143, guid: 8c28cdcffd91af242a0557033c18cefb, type: 3}
-  backButton: {fileID: 3409652887748657797}
+  actionButton: {fileID: 0}
+  actionButtonNavigation: unlock
 --- !u!1 &6976692159015225903
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +396,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7469374136085769260, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 512f6f5dda9bd1343a1237443c8feb09, type: 3}
     - target: {fileID: 7787688091821232925, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -419,17 +424,6 @@ PrefabInstance:
       addedObject: {fileID: 7672995525913061738}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
---- !u!114 &3409652887748657797 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4634443634733738546, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}
-  m_PrefabInstance: {fileID: 7998776470442551479}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6299043121670096442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4065605366756978317, guid: 31acf35d48e2b3f4099254356a08f02c, type: 3}

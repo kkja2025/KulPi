@@ -6,6 +6,8 @@ public class BossDiwataMinionSpawner : SigbinTikbalangMinionSpawner
 {
     public override void OnMinionButtonClicked(GameObject minionButton)
     {
+        AudioManager.Singleton.PlaySwordSoundEffect(clickCount);
+        clickCount++;
         Destroy(minionButton);
         currentMinions.Remove(minionButton);
 
