@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEditor.Rendering.LookDev;
 
 public class AudioManager : MonoBehaviour
 {
@@ -132,6 +134,22 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundEffect(string clipName)
     {
+        AudioClip clip = Resources.Load<AudioClip>("Sound/SFX/" + clipName);
+
+        if (clip == null)
+        {
+            Debug.LogError($"AudioClip {clipName} not found in Resources/Sound/SFX/!");
+            return;
+        }
+
+        soundEffectsSource.PlayOneShot(clip);
+    }
+
+    public void PlaySwordSoundEffect(int clickCount)
+    {
+        List<string> soundClipNames = new List<string> { "sword_swing_1", "sword_swing_2", "sword_swing_3", "sword_swing_4", "sword_swing_5" };
+
+        string clipName = soundClipNames[clickCount % soundClipNames.Count];
         AudioClip clip = Resources.Load<AudioClip>("Sound/SFX/" + clipName);
 
         if (clip == null)

@@ -49,6 +49,7 @@ public class DiwataBattleManager : SigbinTikbalangBattleManager
 
     public void UseUltimate()
     {
+        AudioManager.Singleton.PlaySoundEffect("Ultimate");
         BossDiwataMinionSpawner minionSpawner = minionsObject.GetComponent<BossDiwataMinionSpawner>();
         ultimateButton.SetActive(false);
         boss.TakeUltimateDamage();

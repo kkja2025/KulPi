@@ -8,7 +8,8 @@ public class MinionSpawner : MonoBehaviour
     [SerializeField] protected GameObject minionButtonPrefab2 = null;
     [SerializeField] private RectTransform minionParent = null;
     [SerializeField] private int minionsPerWave;
-    [SerializeField] private float spawnInterval;    
+    [SerializeField] private float spawnInterval;
+    protected int clickCount = 0;    
     protected List<GameObject> currentMinions = new List<GameObject>();
 
     private void Start()
@@ -90,6 +91,8 @@ public class MinionSpawner : MonoBehaviour
 
     public virtual void OnMinionButtonClicked(GameObject minionButton)
     {
+        AudioManager.Singleton.PlaySwordSoundEffect(clickCount);
+        clickCount++;
         Destroy(minionButton);
         currentMinions.Remove(minionButton); 
     }
