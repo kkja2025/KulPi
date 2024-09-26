@@ -8,9 +8,9 @@ using UnityEditor.Rendering.LookDev;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer masterMixer;
-    [SerializeField] private AudioSource backgroundMusicSource = null;
-    [SerializeField] private AudioSource soundEffectsSource = null;
-    [SerializeField] private AudioSource voiceOverSource = null;
+    [SerializeField] public AudioSource backgroundMusicSource = null;
+    [SerializeField] public AudioSource soundEffectsSource = null;
+    [SerializeField] public AudioSource voiceOverSource = null;
     private bool initialized = false;
     private static AudioManager singleton = null;
     private string currentMusicClipName = "";
