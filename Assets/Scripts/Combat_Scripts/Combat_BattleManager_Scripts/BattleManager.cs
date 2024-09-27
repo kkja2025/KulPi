@@ -10,7 +10,7 @@ public class BattleManager : MonoBehaviour
     private bool initialized = false;
     protected bool isTimerRunning = false;
     private static BattleManager singleton = null;
-    public GameObject minionsObject;
+    public GameObject spawnsObject;
     protected float elapsedTime = 0f;
     [SerializeField] public TMP_Text timerText;
 
@@ -94,13 +94,13 @@ public class BattleManager : MonoBehaviour
 
     public virtual void StartBattle()
     {
-        minionsObject.SetActive(true);
+        spawnsObject.SetActive(true);
         isTimerRunning = true;
     }
 
     public virtual void Defeated()
     {
-        Destroy(minionsObject);
+        Destroy(spawnsObject);
         PanelManager.GetSingleton("hud").Close();
         // LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenu;
