@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class DialogueUI : MonoBehaviour
 {
     public static DialogueUI Instance;
     public GameObject dialoguePanel;
-    public Text characterNameText;
-    public Text dialogueText;
+    public TMP_Text characterNameText;
+    public TMP_Text dialogueText;
 
     private void Awake()
     {
@@ -26,6 +26,8 @@ public class DialogueUI : MonoBehaviour
         dialoguePanel.SetActive(true);
         characterNameText.text = characterName;
         dialogueText.text = dialogue;
+
+        Debug.Log("Showing Dialogue: " + characterName + ": " + dialogue);
     }
 
     public void HideDialogue()
