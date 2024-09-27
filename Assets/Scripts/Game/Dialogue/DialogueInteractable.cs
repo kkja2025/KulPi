@@ -5,11 +5,16 @@ using UnityEngine.InputSystem;
 public class DialogueInteractable : MonoBehaviour
 {
     public string characterName;
-    public List<string> dialogueLines;
-    public string playerResponse;
+    public List<string> lakanDialogueLines;
+    public List<string> characterDialogueLines;
 
-    private int currentDialogueIndex = 0;
+    public bool doesCharacterStartFirst = false;
+
+    private int lakanDialogueIndex = 0;
+    private int characterDialogueIndex = 0;
     private bool isPlayerInRange = false;
+    private bool isLakanTurn = true;
+    private bool conversationComplete = false;
     private SpriteRenderer spriteRenderer;
     public Sprite normalSprite;
     public Sprite highlightedSprite;
@@ -25,6 +30,8 @@ public class DialogueInteractable : MonoBehaviour
     {
         controls.Enable();
         controls.Land.Interact.performed += OnInteract;
+
+        isLakanTurn = !doesCharacterStartFirst;
     }
 
     void OnDisable()
@@ -35,7 +42,7 @@ public class DialogueInteractable : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if (isPlayerInRange)
+        if (isPlayerInRange && !conversationComplete)
         {
             Interact();
         }
@@ -43,22 +50,31 @@ public class DialogueInteractable : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Interacting with " + characterName);
-        if (currentDialogueIndex < dialogueLines.Count)
+        if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
-            DialogueUI.Instance.ShowDialogue(characterName, dialogueLines[currentDialogueIndex]);
-            currentDialogueIndex++;
+            conversationComplete = true;
+            DialogueUI.Instance.HideDialogue();
+            return;
+        }
+
+        if (isLakanTurn)
+        {
+            if (lakanDialogueIndex < lakanDialogueLines.Count)
+            {
+                DialogueUI.Instance.ShowDialogue("Lakan", lakanDialogueLines[lakanDialogueIndex]);
+                lakanDialogueIndex++;
+            }
         }
         else
         {
-            DialogueUI.Instance.ShowDialogue("Lakan", playerResponse);
-            ResetDialogue();
+            if (characterDialogueIndex < characterDialogueLines.Count)
+            {
+                DialogueUI.Instance.ShowDialogue(characterName, characterDialogueLines[characterDialogueIndex]);
+                characterDialogueIndex++;
+            }
         }
-    }
 
-    private void ResetDialogue()
-    {
-        currentDialogueIndex = 0; 
+        isLakanTurn = !isLakanTurn;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -67,7 +83,11 @@ public class DialogueInteractable : MonoBehaviour
         {
             isPlayerInRange = true;
             Debug.Log("Player in range");
-            HighlightObject(true);
+
+            if (!conversationComplete)
+            {
+                HighlightObject(true);
+            }
         }
     }
 
