@@ -21,7 +21,7 @@ public class DialogueInteractable : MonoBehaviour
     private PlayerInput controls;
     private PlayerMovement playerMovement;
 
-    public GameObject dialogueIcon; // Reference to the dialogue icon GameObject
+    public GameObject dialogueIcon;
 
     void Awake()
     {
@@ -29,10 +29,9 @@ public class DialogueInteractable : MonoBehaviour
         controls = new PlayerInput();
         playerMovement = FindObjectOfType<PlayerMovement>();
 
-        // Ensure the dialogue icon is visible by default
         if (dialogueIcon != null)
         {
-            dialogueIcon.SetActive(true); // Set to true by default
+            dialogueIcon.SetActive(true);
         }
     }
 
@@ -60,31 +59,26 @@ public class DialogueInteractable : MonoBehaviour
 
     public void Interact()
     {
-        // Disable player movement while interacting
         if (playerMovement != null)
         {
             playerMovement.enabled = false;
         }
 
-        // Hide the dialogue icon when the interaction starts
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(false);
         }
 
-        // Check if the conversation is complete
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
             conversationComplete = true;
             DialogueUI.Instance.HideDialogue();
 
-            // Re-enable player movement after conversation
             if (playerMovement != null)
             {
                 playerMovement.enabled = true;
             }
 
-            // Show the dialogue icon again after conversation
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(true);
@@ -93,7 +87,6 @@ public class DialogueInteractable : MonoBehaviour
             return;
         }
 
-        // Show dialogue for Lakan or the character
         if (isLakanTurn)
         {
             if (lakanDialogueIndex < lakanDialogueLines.Count)
@@ -111,7 +104,6 @@ public class DialogueInteractable : MonoBehaviour
             }
         }
 
-        // Toggle the turn
         isLakanTurn = !isLakanTurn;
     }
 
@@ -125,7 +117,6 @@ public class DialogueInteractable : MonoBehaviour
             if (!conversationComplete)
             {
                 HighlightObject(true);
-                // Show the dialogue icon when the player is in range
                 if (dialogueIcon != null)
                 {
                     dialogueIcon.SetActive(true);
@@ -142,7 +133,6 @@ public class DialogueInteractable : MonoBehaviour
             Debug.Log("Player out of range");
             HighlightObject(false);
 
-            // Hide the dialogue icon when the player leaves the range, but not if conversation is ongoing
             if (dialogueIcon != null && !conversationComplete)
             {
                 dialogueIcon.SetActive(false);
