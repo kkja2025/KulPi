@@ -2,35 +2,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SigbinTikbalangMinionSpawner : MinionSpawner
+public class SpawnerSigbinTikbalang : Spawner
 {
     [SerializeField] protected int destroyThreshold = 5;
-    protected int minion1DestroyedCount = 0;
-    protected int minion2DestroyedCount = 0;
+    protected int spawn1DestroyedCount = 0;
+    protected int spawn2DestroyedCount = 0;
 
-    public override void OnMinionButtonClicked(GameObject minionButton)
+    public override void OnButtonClicked(GameObject spawnButton)
     {
         AudioManager.Singleton.PlaySwordSoundEffect(clickCount);
         clickCount++;
-        Destroy(minionButton);
-        currentMinions.Remove(minionButton);
+        Destroy(spawnButton);
+        currentSpawns.Remove(spawnButton);
 
-        if (minionButton.name == "MinionType1")
+        if (spawnButton.name == "SpawnType1")
         {
-            minion1DestroyedCount++;
-            SigbinTikbalangBattleManager.Singleton.UpdateSigbinCount(minion1DestroyedCount);
+            spawn1DestroyedCount++;
+            BattleManagerSigbinTikbalang.Singleton.UpdateSigbinCount(spawn1DestroyedCount);
         }
-        else if (minionButton.name == "MinionType2")
+        else if (spawnButton.name == "SpawnType2")
         {
-            minion2DestroyedCount++;
-            SigbinTikbalangBattleManager.Singleton.UpdateTikbalangCount(minion2DestroyedCount);
+            spawn2DestroyedCount++;
+            BattleManagerSigbinTikbalang.Singleton.UpdateTikbalangCount(spawn2DestroyedCount);
         }
 
-        base.OnMinionButtonClicked(minionButton);
+        base.OnButtonClicked(spawnButton);
 
-        if (minion1DestroyedCount >= destroyThreshold && minion2DestroyedCount >= destroyThreshold)
+        if (spawn1DestroyedCount >= destroyThreshold && spawn2DestroyedCount >= destroyThreshold)
         {
-            SigbinTikbalangBattleManager.Singleton.Defeated();
+            BattleManagerSigbinTikbalang.Singleton.Defeated();
         }
     }
 }

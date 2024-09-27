@@ -2,37 +2,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossDiwataMinionSpawner : SigbinTikbalangMinionSpawner
+public class SpawnerBossDiwata : SpawnerSigbinTikbalang
 {
-    public override void OnMinionButtonClicked(GameObject minionButton)
+    public override void OnButtonClicked(GameObject spawnButton)
     {
         AudioManager.Singleton.PlaySwordSoundEffect(clickCount);
         clickCount++;
-        Destroy(minionButton);
-        currentMinions.Remove(minionButton);
+        Destroy(spawnButton);
+        currentSpawns.Remove(spawnButton);
 
-        if (minionButton.name == "MinionType1")
+        if (spawnButton.name == "SpawnType1")
         {
-            minion1DestroyedCount++;
-            DiwataBattleManager.Singleton.UpdateSigbinCount(minion1DestroyedCount);
+            spawn1DestroyedCount++;
+            BattleManagerDiwata.Singleton.UpdateSigbinCount(spawn1DestroyedCount);
         }
-        else if (minionButton.name == "MinionType2")
+        else if (spawnButton.name == "SpawnType2")
         {
-            minion2DestroyedCount++;
-            DiwataBattleManager.Singleton.UpdateTikbalangCount(minion2DestroyedCount);
+            spawn2DestroyedCount++;
+            BattleManagerDiwata.Singleton.UpdateTikbalangCount(spawn2DestroyedCount);
         }
 
-        if (minion1DestroyedCount >= destroyThreshold && minion2DestroyedCount >= destroyThreshold)
+        if (spawn1DestroyedCount >= destroyThreshold && spawn2DestroyedCount >= destroyThreshold)
         {
-            DiwataBattleManager.Singleton.ShowUltimateButton();
+            BattleManagerDiwata.Singleton.ShowUltimateButton();
         }
     }
 
     public void ResetCounters()
     {
-        minion1DestroyedCount = 0;
-        minion2DestroyedCount = 0;
-        DiwataBattleManager.Singleton.UpdateSigbinCount(0);
-        DiwataBattleManager.Singleton.UpdateTikbalangCount(0);
+        spawn1DestroyedCount = 0;
+        spawn2DestroyedCount = 0;
+        BattleManagerDiwata.Singleton.UpdateSigbinCount(0);
+        BattleManagerDiwata.Singleton.UpdateTikbalangCount(0);
     }
 }

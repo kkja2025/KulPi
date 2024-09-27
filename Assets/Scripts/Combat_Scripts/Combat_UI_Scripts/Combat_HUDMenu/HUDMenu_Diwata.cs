@@ -25,6 +25,6 @@ public class HUDBossCombatMenu : HUDCombatMenu
     }
     public void UseUltimate()
     {
-        DiwataBattleManager.Singleton.UseUltimate();
+        BattleManagerDiwata.Singleton.UseUltimate();
     }
 }

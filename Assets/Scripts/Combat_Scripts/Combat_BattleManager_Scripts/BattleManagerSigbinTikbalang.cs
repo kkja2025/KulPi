@@ -5,29 +5,29 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class SigbinTikbalangBattleManager : BattleManager
+public class BattleManagerSigbinTikbalang : BattleManager
 {
     [SerializeField] public TMP_Text sigbinCountText;
     [SerializeField] public TMP_Text tikbalangCountText;
-    private static SigbinTikbalangBattleManager singleton = null;
+    private static BattleManagerSigbinTikbalang singleton = null;
 
-    public static new SigbinTikbalangBattleManager Singleton
+    public static new BattleManagerSigbinTikbalang Singleton
     {
         get
         {
             if (singleton == null)
             {
-                singleton = FindObjectOfType<SigbinTikbalangBattleManager>();
+                singleton = FindObjectOfType<BattleManagerSigbinTikbalang>();
                 if (singleton != null)
                 {
                     singleton.Initialize();
                 }
                 else
                 {
-                    Debug.LogError("SigbinTikbalangBattleManager not found in the scene!");
+                    Debug.LogError("BattleManagerSigbinTikbalang not found in the scene!");
                 }
             }
-            return (SigbinTikbalangBattleManager)singleton;
+            return (BattleManagerSigbinTikbalang)singleton;
         }
     }
 
@@ -49,7 +49,7 @@ public class SigbinTikbalangBattleManager : BattleManager
 
     public override void StartBattle()
     {
-        minionsObject.SetActive(true);
+        spawnsObject.SetActive(true);
         UpdateSigbinCount(0);
         UpdateTikbalangCount(0);
         isTimerRunning = true;
@@ -57,7 +57,7 @@ public class SigbinTikbalangBattleManager : BattleManager
 
     public override void Defeated()
     {
-        Destroy(minionsObject);
+        Destroy(spawnsObject);
         PanelManager.GetSingleton("hud").Close();
         LeaderboardManager.Singleton.SubmitTimeSigbinTikbalangChapter1((long)(elapsedTime * 1000));
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as SigbinTikbalangVictoryMenu;
