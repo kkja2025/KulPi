@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using TMPro;
 
-public class BossDiwata : MonoBehaviour
+public class Boss : MonoBehaviour
 {
     [SerializeField] public TMP_Text healthText;
     public int health; 
-    public BossDiwata(int hp)
+    public Boss(int hp)
     {
         health = hp;
     }
@@ -24,7 +24,7 @@ public class BossDiwata : MonoBehaviour
         Debug.Log("Boss health: " + health);
         if (health <= 0)
         {
-            DiwataBattleManager.Singleton.Defeated();
+            BattleManagerDiwata.Singleton.Defeated();
         }
     }
 

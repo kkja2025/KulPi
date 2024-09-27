@@ -2,31 +2,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MinionSpawner : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
-    [SerializeField] protected GameObject minionButtonPrefab1 = null;     
-    [SerializeField] protected GameObject minionButtonPrefab2 = null;
-    [SerializeField] private RectTransform minionParent = null;
-    [SerializeField] private int minionsPerWave;
+    [SerializeField] protected GameObject spawnButtonPrefab1 = null;     
+    [SerializeField] protected GameObject spawnButtonPrefab2 = null;
+    [SerializeField] private RectTransform spawnParent = null;
+    [SerializeField] private int spawnPerWave;
     [SerializeField] private float spawnInterval;
     protected int clickCount = 0;    
-    protected List<GameObject> currentMinions = new List<GameObject>();
+    protected List<GameObject> currentSpawns = new List<GameObject>();
 
     private void Start()
     {
-        InvokeRepeating(nameof(SpawnMinions), 0f, spawnInterval);
+        InvokeRepeating(nameof(Spawn), 0f, spawnInterval);
     }
 
-    private void SpawnMinions()
+    private void Spawn()
     {
         
-        DespawnPreviousMinions();
+        DespawnPrevious();
 
         float minSpacing = 100f;
 
         List<Vector2> spawnedPositions = new List<Vector2>();
 
-        RectTransform parentRect = minionParent.GetComponent<RectTransform>();
+        RectTransform parentRect = spawnParent.GetComponent<RectTransform>();
         Vector2 parentSize = parentRect.rect.size;
 
         float minX = -parentSize.x / 2;
@@ -34,7 +34,7 @@ public class MinionSpawner : MonoBehaviour
         float minY = -parentSize.y / 2; 
         float maxY = parentSize.y / 2;
 
-        for (int i = 0; i < minionsPerWave; i++)
+        for (int i = 0; i < spawnPerWave; i++)
         {
             Vector2 randomPosition;
             bool validPosition;
@@ -58,42 +58,42 @@ public class MinionSpawner : MonoBehaviour
 
             } while (!validPosition); 
 
-            GameObject minionButtonPrefab = Random.value > 0.5f ? minionButtonPrefab1 : minionButtonPrefab2;
+            GameObject spawnButtonPrefab = Random.value > 0.5f ? spawnButtonPrefab1 : spawnButtonPrefab2;
             
-            GameObject minionButton = Instantiate(minionButtonPrefab, minionParent);
-            if (minionButtonPrefab == minionButtonPrefab1)
+            GameObject spawnButton = Instantiate(spawnButtonPrefab, spawnParent);
+            if (spawnButtonPrefab == spawnButtonPrefab1)
             {
-                minionButton.name = "MinionType1";
+                spawnButton.name = "SpawnType1";
             }
             else
             {
-                minionButton.name = "MinionType2";
+                spawnButton.name = "SpawnType2";
             }
 
-            minionButton.GetComponent<RectTransform>().anchoredPosition = randomPosition;
+            spawnButton.GetComponent<RectTransform>().anchoredPosition = randomPosition;
 
-            Button buttonComponent = minionButton.GetComponent<Button>();
-            buttonComponent.onClick.AddListener(() => OnMinionButtonClicked(minionButton));
+            Button buttonComponent = spawnButton.GetComponent<Button>();
+            buttonComponent.onClick.AddListener(() => OnButtonClicked(spawnButton));
 
             spawnedPositions.Add(randomPosition);
-            currentMinions.Add(minionButton);
+            currentSpawns.Add(spawnButton);
         }
     }
 
-    private void DespawnPreviousMinions()
+    private void DespawnPrevious()
     {
-        foreach (GameObject minion in currentMinions)
+        foreach (GameObject spawn in currentSpawns)
         {
-            Destroy(minion);
+            Destroy(spawn);
         }
-        currentMinions.Clear();
+        currentSpawns.Clear();
     }
 
-    public virtual void OnMinionButtonClicked(GameObject minionButton)
+    public virtual void OnButtonClicked(GameObject spawnButton)
     {
         AudioManager.Singleton.PlaySwordSoundEffect(clickCount);
         clickCount++;
-        Destroy(minionButton);
-        currentMinions.Remove(minionButton); 
+        Destroy(spawnButton);
+        currentSpawns.Remove(spawnButton); 
     }
 }
