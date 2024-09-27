@@ -21,11 +21,18 @@ public class DialogueInteractable : MonoBehaviour
     private PlayerInput controls;
     private PlayerMovement playerMovement;
 
+    public GameObject dialogueIcon;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         controls = new PlayerInput();
         playerMovement = FindObjectOfType<PlayerMovement>();
+
+        if (dialogueIcon != null)
+        {
+            dialogueIcon.SetActive(true);
+        }
     }
 
     void OnEnable()
@@ -57,6 +64,11 @@ public class DialogueInteractable : MonoBehaviour
             playerMovement.enabled = false;
         }
 
+        if (dialogueIcon != null)
+        {
+            dialogueIcon.SetActive(false);
+        }
+
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
             conversationComplete = true;
@@ -65,6 +77,11 @@ public class DialogueInteractable : MonoBehaviour
             if (playerMovement != null)
             {
                 playerMovement.enabled = true;
+            }
+
+            if (dialogueIcon != null)
+            {
+                dialogueIcon.SetActive(true);
             }
 
             return;
@@ -100,6 +117,10 @@ public class DialogueInteractable : MonoBehaviour
             if (!conversationComplete)
             {
                 HighlightObject(true);
+                if (dialogueIcon != null)
+                {
+                    dialogueIcon.SetActive(true);
+                }
             }
         }
     }
@@ -111,6 +132,11 @@ public class DialogueInteractable : MonoBehaviour
             isPlayerInRange = false;
             Debug.Log("Player out of range");
             HighlightObject(false);
+
+            if (dialogueIcon != null && !conversationComplete)
+            {
+                dialogueIcon.SetActive(false);
+            }
         }
     }
 
