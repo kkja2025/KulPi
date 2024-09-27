@@ -7,6 +7,7 @@ using TMPro;
 public class HUDCombatMenu : Panel
 {
     [SerializeField] protected Button pauseButton = null;
+    [SerializeField] protected Button tutorialButton = null;
 
     public override void Initialize()
     {
@@ -14,6 +15,7 @@ public class HUDCombatMenu : Panel
         {
             return;
         }
+        tutorialButton.onClick.AddListener(OpenTutorial);
         pauseButton.onClick.AddListener(OpenPause);
         base.Initialize();
     }
@@ -27,5 +29,11 @@ public class HUDCombatMenu : Panel
     {
         Time.timeScale = 0;
         PanelManager.GetSingleton("pause").Open();
+    }
+
+    protected void OpenTutorial()
+    {   
+        Time.timeScale = 0;
+        PanelManager.GetSingleton("tutorial").Open();
     }
 }

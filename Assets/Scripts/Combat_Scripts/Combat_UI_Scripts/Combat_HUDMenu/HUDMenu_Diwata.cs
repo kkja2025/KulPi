@@ -16,6 +16,7 @@ public class HUDBossCombatMenu : HUDCombatMenu
         }
         ultimateButton.onClick.AddListener(UseUltimate);
         pauseButton.onClick.AddListener(OpenPause);
+        tutorialButton.onClick.AddListener(OpenTutorial);
         base.Initialize();
     }
 

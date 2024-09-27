@@ -26,6 +26,11 @@ public class TutorialMenu : Panel
     private void StartBattle()
     {
         PanelManager.GetSingleton("tutorial").Close();
-        BattleManager.Singleton.StartBattle();
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        } else {
+            BattleManager.Singleton.StartBattle();
+        }
     }
 }
