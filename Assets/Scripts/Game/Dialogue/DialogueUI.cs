@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 
 public class DialogueUI : MonoBehaviour
 {
@@ -26,6 +26,8 @@ public class DialogueUI : MonoBehaviour
         dialoguePanel.SetActive(true);
         characterNameText.text = characterName;
         dialogueText.text = dialogue;
+
+        Debug.Log("Showing Dialogue: " + characterName + ": " + dialogue);
     }
 
     public void HideDialogue()
