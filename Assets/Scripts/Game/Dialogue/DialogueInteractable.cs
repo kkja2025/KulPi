@@ -19,11 +19,13 @@ public class DialogueInteractable : MonoBehaviour
     public Sprite normalSprite;
     public Sprite highlightedSprite;
     private PlayerInput controls;
+    private PlayerMovement playerMovement;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         controls = new PlayerInput();
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     void OnEnable()
@@ -50,10 +52,21 @@ public class DialogueInteractable : MonoBehaviour
 
     public void Interact()
     {
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
             conversationComplete = true;
             DialogueUI.Instance.HideDialogue();
+
+            if (playerMovement != null)
+            {
+                playerMovement.enabled = true;
+            }
+
             return;
         }
 
