@@ -15,8 +15,8 @@ public override void Interact()
         CollectHerb();
         // Log before destroying the herb to verify if the method is called
 
-         Debug.Log("Destroying herb: " + gameObject.name);
-        Destroy(gameObject);
+        Debug.Log("Destroying herb: " + gameObject.name);
+        GameManager.Singleton.RemoveObject(gameObject);
  }
 
     // Example method to simulate adding herb to inventory

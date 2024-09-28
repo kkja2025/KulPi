@@ -12,6 +12,7 @@ public class CloudSaveManager : MonoBehaviour
     private bool initialized = false;
     private static CloudSaveManager singleton = null;
     private const string CLOUD_SAVE_PLAYER_DATA_KEY = "player_data";
+    private const string CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY = "removed_objects";
 
     public static CloudSaveManager Singleton
     {
@@ -89,6 +90,7 @@ public class CloudSaveManager : MonoBehaviour
         var data = new Dictionary<string, object> 
         { 
             { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
+            { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, "{}" },
             { InventoryManager.CLOUD_SAVE_INVENTORY_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY, "{}" },
@@ -136,6 +138,49 @@ public class CloudSaveManager : MonoBehaviour
             throw;
         }
     }
+
+    public async Task SaveRemovedObjectsData(List<string> removedObjects)
+    {
+
+        string jsonRemovedObjects = JsonUtility.ToJson(new RemovedObjectDataList { List = removedObjects });
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, jsonRemovedObjects } };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+            Debug.Log("Data saved successfully.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveRemovedObjectsData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<string>> LoadRemovedObjectsData()
+    {
+        try
+        {
+            var removedObjectsData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY });
+
+            if (removedObjectsData.TryGetValue(CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, out var removedObjectsJson))
+            {
+                string json = removedObjectsJson.Value.GetAsString();
+                var removedObjects = JsonUtility.FromJson<RemovedObjectDataList>(json).List;
+                return removedObjects;
+            }
+            else
+            {
+                Debug.LogWarning("Removed objects data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadRemovedObjectsData: " + e.Message);
+            throw;
+        }
+    }
+
     private void HandleCloudSaveException(Exception e)
     {
         switch (e)

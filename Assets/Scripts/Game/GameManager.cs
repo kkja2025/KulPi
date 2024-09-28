@@ -1,11 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using UnityEditor.ShaderGraph.Internal;
+using UnityEditor.Rendering.LookDev;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class GameManager : MonoBehaviour
     private GameObject playerInstance;
     private PlayerData playerData;
     private static GameManager singleton = null;
+    private List<string> removedObjects = new List<string>();
 
     public static GameManager Singleton
     {
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
         try
         {
             await LoadPlayerData();
+            await LoadRemovedObjects();
             await Task.Delay(2000);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("hud").Open();
@@ -127,7 +131,6 @@ public class GameManager : MonoBehaviour
         await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
     }
 
-
     public async Task LoadPlayerData()
     {
         PlayerData loadedData = await CloudSaveManager.Singleton.LoadPlayerData();
@@ -167,6 +170,35 @@ public class GameManager : MonoBehaviour
         {
             virtualCamera.Follow = playerInstance.transform;
             Debug.Log("Assigned player instance to the virtual camera's follow target.");
+        }
+    }
+
+    public async void RemoveObject(GameObject obj)
+    {
+        if (obj != null)
+        {
+            removedObjects.Add(obj.name);
+            Destroy(obj);
+            await CloudSaveManager.Singleton.SaveRemovedObjectsData(removedObjects);
+        }
+    }
+
+    private async Task LoadRemovedObjects()
+    {
+        var result = await CloudSaveManager.Singleton.LoadRemovedObjectsData();
+        if (result != null)
+        {
+            Debug.Log($"Loaded {result.Count} removed objects.");
+            removedObjects = result;
+            foreach (var objectName in removedObjects)
+            {
+                GameObject obj = GameObject.Find(objectName);
+                if (obj != null)
+                {
+                    Destroy(obj);
+                    Debug.Log($"Removed {objectName} from the scene.");
+                }
+            }
         }
     }
 
