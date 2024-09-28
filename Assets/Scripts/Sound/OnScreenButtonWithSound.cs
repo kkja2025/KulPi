@@ -1,20 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class OnScreenButtonWithSound : MonoBehaviour
+public class OnScreenButtonWithSound : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private AudioClip clickSound;
 
-    private void Start()
-    {
-        Button button = GetComponent<Button>();
-        if (button != null)
-        {
-            button.onClick.AddListener(PlaySoundEffect);
-        }
-    }
-
-    public void PlaySoundEffect()
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         AudioManager.Singleton.soundEffectsSource.PlayOneShot(clickSound);
     }
