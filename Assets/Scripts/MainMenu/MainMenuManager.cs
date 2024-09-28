@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
+using Unity.Services.Core;
 using Unity.Services.Authentication;
+using UnityEditor.Rendering.LookDev;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -126,10 +128,12 @@ public class MainMenuManager : MonoBehaviour
     }
     public async void NewGame()
     {
-        FirebaseUser user = auth.CurrentUser;
+        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
+        Debug.Log("Starting new game for player: " + playerID);
         try
         {
-            await CloudSaveManager.Singleton.SaveNewPlayerData(1, user.UserId);
+            Vector3 startingPosition = new Vector3(0, 0, 0);
+            await CloudSaveManager.Singleton.SaveNewPlayerData(1, playerID, startingPosition);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("cutscene").Open();
         }

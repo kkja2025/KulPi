@@ -6,27 +6,6 @@ using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
 using Unity.Services.Core;
 
-[System.Serializable]
-public class LeaderboardItem
-{
-    public string playerName;
-    public string playerScore;
-    public string playerRank;
-
-    public LeaderboardItem(string id, string score, string rank)
-    {
-        playerName = id;
-        playerScore = score;
-        playerRank = rank;
-    }
-}
-
-[System.Serializable]
-public class LeaderboardItemList
-{
-    public List<LeaderboardItem> items = null;
-}
-
 public class LeaderboardManager : MonoBehaviour
 {
     private bool initialized = false;
