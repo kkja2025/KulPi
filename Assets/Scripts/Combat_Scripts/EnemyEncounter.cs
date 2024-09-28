@@ -3,11 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class EnemyEncounter : MonoBehaviour
 {
-    public GameObject player; // Reference to the player object
-    public string combatSceneName; // Name of the combat scene
+    [SerializeField] private string combatSceneName;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject player = GameObject.FindWithTag("Player");
+
         if (collision.gameObject == player)
         {
             // Trigger combat encounter

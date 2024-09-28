@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -65,7 +66,8 @@ public class GameManager : MonoBehaviour
         {
             await UnityServices.InitializeAsync();
         }
-        LoadPlayerData();
+        await LoadPlayerData();
+        await Task.Delay(2000);
         PanelManager.CloseAll();
         PanelManager.GetSingleton("hud").Open();
     }
@@ -101,7 +103,7 @@ public class GameManager : MonoBehaviour
         await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
     }
 
-    public async void LoadPlayerData()
+    public async Task LoadPlayerData()
     {
         PlayerData loadedData = await CloudSaveManager.Singleton.LoadPlayerData();
 
