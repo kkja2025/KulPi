@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
+using UnityEditor.ShaderGraph.Internal;
 
 public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
     [SerializeField] private GameObject playerPrefab;
     private GameObject playerInstance;
+    private PlayerData playerData;
     private static GameManager singleton = null;
 
     public static GameManager Singleton
@@ -66,10 +68,18 @@ public class GameManager : MonoBehaviour
         {
             await UnityServices.InitializeAsync();
         }
-        await LoadPlayerData();
-        await Task.Delay(2000);
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("hud").Open();
+        try
+        {
+            await LoadPlayerData();
+            await Task.Delay(2000);
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("hud").Open();
+        }
+        catch (Exception e)
+        {
+            SceneManager.LoadScene("MainMenu");
+            Debug.LogError($"Error loading player data: {e.Message}");
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -92,7 +102,7 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public async void SavePlayerData()
+    public async Task SavePlayerData()
     {
         string playerID = AuthenticationService.Instance.PlayerInfo.Id;
         if (playerInstance == null)
@@ -103,6 +113,21 @@ public class GameManager : MonoBehaviour
         await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
     }
 
+    public async Task SavePlayerDataWithOffset(Vector3 enemyPosition)
+    {
+        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
+        if (playerInstance == null)
+        {
+            Debug.LogWarning("Player instance not found.");
+            return;
+        }
+        Vector3 directionFromEnemy = (playerInstance.transform.position - enemyPosition).normalized;
+        float offsetDistance = 5f;
+        playerInstance.transform.position += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
+        await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
+    }
+
+
     public async Task LoadPlayerData()
     {
         PlayerData loadedData = await CloudSaveManager.Singleton.LoadPlayerData();
@@ -111,6 +136,7 @@ public class GameManager : MonoBehaviour
         {
             if (loadedData != null)
             {
+                playerData = loadedData;
                 Vector3 spawnPosition = loadedData.GetPosition();
                 playerInstance.transform.position = spawnPosition;
                 Debug.Log($"Updated Player Position to: {spawnPosition}");
@@ -144,9 +170,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ReturnToMainMenu()
+    public async void ReturnToMainMenu()
     {
-        SavePlayerData();
+        await SavePlayerData();
         SceneManager.LoadScene("MainMenu");
     }
 
