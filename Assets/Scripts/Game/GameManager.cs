@@ -1,10 +1,15 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
 
 public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
+    [SerializeField] private GameObject playerPrefab;
+    private GameObject playerInstance;
     private static GameManager singleton = null;
 
     public static GameManager Singleton
@@ -52,8 +57,15 @@ public class GameManager : MonoBehaviour
         StartClientService();
     }
 
-    private void StartClientService()
+    private async void StartClientService()
     {
+        PanelManager.CloseAll();
+        PanelManager.GetSingleton("loading").Open();
+        if (UnityServices.State != ServicesInitializationState.Initialized)
+        {
+            await UnityServices.InitializeAsync();
+        }
+        LoadPlayerData();
         PanelManager.CloseAll();
         PanelManager.GetSingleton("hud").Open();
     }
@@ -78,8 +90,61 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    public async void SavePlayerData()
+    {
+        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
+        if (playerInstance == null)
+        {
+            Debug.LogWarning("Player instance not found.");
+            return;
+        }
+        await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
+    }
+
+    public async void LoadPlayerData()
+    {
+        PlayerData loadedData = await CloudSaveManager.Singleton.LoadPlayerData();
+
+        if (playerInstance != null)
+        {
+            if (loadedData != null)
+            {
+                Vector3 spawnPosition = loadedData.GetPosition();
+                playerInstance.transform.position = spawnPosition;
+                Debug.Log($"Updated Player Position to: {spawnPosition}");
+            }
+            else
+            {
+                Debug.LogWarning("No player data found to update position.");
+            }
+
+            return;
+        }
+
+        if (loadedData != null)
+        {
+            Vector3 spawnPosition = loadedData.GetPosition();
+            playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+            Debug.Log($"Loaded new Player Level: {loadedData.level}");
+            Debug.Log($"Loaded new Player Name: {loadedData.playerID}");
+            Debug.Log($"Loaded new Player Position: {spawnPosition}");
+        }
+        else
+        {
+            Debug.LogWarning("No player data found.");
+        }
+
+        CinemachineVirtualCamera virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        if (virtualCamera != null)
+        {
+            virtualCamera.Follow = playerInstance.transform;
+            Debug.Log("Assigned player instance to the virtual camera's follow target.");
+        }
+    }
+
     public void ReturnToMainMenu()
     {
+        SavePlayerData();
         SceneManager.LoadScene("MainMenu");
     }
 

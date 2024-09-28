@@ -107,7 +107,7 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async Task LoadPlayerData()
+    public async Task<PlayerData> LoadPlayerData()
     {
         var key = new HashSet<string>
         {
@@ -116,16 +116,18 @@ public class CloudSaveManager : MonoBehaviour
 
         try
         {
-            var loadedData = await CloudSaveService.Instance.Data.Player.LoadAsync(key);
+            Dictionary<string, Item>  loadedData = await CloudSaveService.Instance.Data.Player.LoadAsync(key);
 
-            if (loadedData.ContainsKey(CLOUD_SAVE_PLAYER_DATA_KEY))
+            if (loadedData.TryGetValue(CLOUD_SAVE_PLAYER_DATA_KEY, out var playerDataJson))
             {
-                Debug.Log("Player data loaded: ");
+                string json = playerDataJson.Value.GetAsString(); 
+                PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
+                return playerData;
             }
             else
             {
                 Debug.LogWarning("Player data not found.");
-                throw new Exception("Player data does not exist.");
+                return null;
             }
         }
         catch (Exception e)
