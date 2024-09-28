@@ -41,7 +41,7 @@ public class PauseMenu : Panel
         PanelManager.GetSingleton("volumevoice").Open();
     }
 
-    private void ReturnMainMenu()
+    protected virtual void ReturnMainMenu()
     {
         Time.timeScale = 1;
         GameManager.Singleton.ReturnToMainMenu();

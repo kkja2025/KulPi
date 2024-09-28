@@ -4,32 +4,6 @@ using UnityEngine;
 using Unity.Services.CloudSave;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
-public class InventoryItem
-{
-    public string itemID;
-    public string itemName;
-    public Sprite itemIcon;
-
-    // Constructor
-    public InventoryItem(string id, string name)
-    {
-        itemID = id;
-        itemName = name;
-        itemIcon = null;
-    }
-    public void SetSprite(Sprite sprite)
-    {
-        itemIcon = sprite;
-    }
-}
-
-[System.Serializable]
-public class InventoryItemList
-{
-    public List<InventoryItem> items = null;
-}
-
 public class InventoryManager : MonoBehaviour
 {
     private bool initialized = false;

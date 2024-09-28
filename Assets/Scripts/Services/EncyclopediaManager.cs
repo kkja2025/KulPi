@@ -5,12 +5,6 @@ using UnityEngine;
 using Unity.Services.CloudSave;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
-public class EncyclopediaItemList
-{
-    public List<EncyclopediaItem> items = null;
-}
-
 public class EncyclopediaManager : MonoBehaviour
 {
     private bool initialized = false;

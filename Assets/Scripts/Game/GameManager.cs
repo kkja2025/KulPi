@@ -1,10 +1,18 @@
 using System;
+using System.Threading.Tasks;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using UnityEditor.ShaderGraph.Internal;
 
 public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
+    [SerializeField] private GameObject playerPrefab;
+    private GameObject playerInstance;
+    private PlayerData playerData;
     private static GameManager singleton = null;
 
     public static GameManager Singleton
@@ -52,10 +60,26 @@ public class GameManager : MonoBehaviour
         StartClientService();
     }
 
-    private void StartClientService()
+    private async void StartClientService()
     {
         PanelManager.CloseAll();
-        PanelManager.GetSingleton("hud").Open();
+        PanelManager.GetSingleton("loading").Open();
+        if (UnityServices.State != ServicesInitializationState.Initialized)
+        {
+            await UnityServices.InitializeAsync();
+        }
+        try
+        {
+            await LoadPlayerData();
+            await Task.Delay(2000);
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("hud").Open();
+        }
+        catch (Exception e)
+        {
+            SceneManager.LoadScene("MainMenu");
+            Debug.LogError($"Error loading player data: {e.Message}");
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -78,8 +102,77 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void ReturnToMainMenu()
+    public async Task SavePlayerData()
     {
+        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
+        if (playerInstance == null)
+        {
+            Debug.LogWarning("Player instance not found.");
+            return;
+        }
+        await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
+    }
+
+    public async Task SavePlayerDataWithOffset(Vector3 enemyPosition)
+    {
+        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
+        if (playerInstance == null)
+        {
+            Debug.LogWarning("Player instance not found.");
+            return;
+        }
+        Vector3 directionFromEnemy = (playerInstance.transform.position - enemyPosition).normalized;
+        float offsetDistance = 5f;
+        playerInstance.transform.position += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
+        await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
+    }
+
+
+    public async Task LoadPlayerData()
+    {
+        PlayerData loadedData = await CloudSaveManager.Singleton.LoadPlayerData();
+
+        if (playerInstance != null)
+        {
+            if (loadedData != null)
+            {
+                playerData = loadedData;
+                Vector3 spawnPosition = loadedData.GetPosition();
+                playerInstance.transform.position = spawnPosition;
+                Debug.Log($"Updated Player Position to: {spawnPosition}");
+            }
+            else
+            {
+                Debug.LogWarning("No player data found to update position.");
+            }
+
+            return;
+        }
+
+        if (loadedData != null)
+        {
+            Vector3 spawnPosition = loadedData.GetPosition();
+            playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+            Debug.Log($"Loaded new Player Level: {loadedData.level}");
+            Debug.Log($"Loaded new Player Name: {loadedData.playerID}");
+            Debug.Log($"Loaded new Player Position: {spawnPosition}");
+        }
+        else
+        {
+            Debug.LogWarning("No player data found.");
+        }
+
+        CinemachineVirtualCamera virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        if (virtualCamera != null)
+        {
+            virtualCamera.Follow = playerInstance.transform;
+            Debug.Log("Assigned player instance to the virtual camera's follow target.");
+        }
+    }
+
+    public async void ReturnToMainMenu()
+    {
+        await SavePlayerData();
         SceneManager.LoadScene("MainMenu");
     }
 

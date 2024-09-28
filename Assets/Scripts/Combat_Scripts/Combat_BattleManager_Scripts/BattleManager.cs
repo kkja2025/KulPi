@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -62,7 +63,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void StartClientService()
+    private async void StartClientService()
     {
         var game = GameManager.Singleton;
         if (game == null)
@@ -77,6 +78,9 @@ public class BattleManager : MonoBehaviour
             }
         } else
         {
+            PanelManager.CloseAll();
+            PanelManager.GetSingleton("loading").Open();
+            await Task.Delay(2000);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("hud").Open();
             PanelManager.GetSingleton("tutorial").Open();
