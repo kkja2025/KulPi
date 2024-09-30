@@ -4,11 +4,10 @@ using UnityEngine.InputSystem;
 
 public class DialogueInteractable : MonoBehaviour
 {
-    public string characterName;
-    public List<string> lakanDialogueLines;
-    public List<string> characterDialogueLines;
-
-    public bool doesCharacterStartFirst = false;
+    [SerializeField] private string characterName;
+    [SerializeField] private List<string> lakanDialogueLines;
+    [SerializeField] private List<string> characterDialogueLines;
+    [SerializeField] private bool doesCharacterStartFirst = false;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
@@ -16,18 +15,16 @@ public class DialogueInteractable : MonoBehaviour
     private bool isLakanTurn = true;
     private bool conversationComplete = false;
     private SpriteRenderer spriteRenderer;
-    public Sprite normalSprite;
-    public Sprite highlightedSprite;
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite highlightedSprite;
     private PlayerInput controls;
-    private PlayerMovement playerMovement;
 
-    public GameObject dialogueIcon;
+    [SerializeField] private GameObject dialogueIcon;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         controls = new PlayerInput();
-        playerMovement = FindObjectOfType<PlayerMovement>();
 
         if (dialogueIcon != null)
         {
@@ -39,7 +36,6 @@ public class DialogueInteractable : MonoBehaviour
     {
         controls.Enable();
         controls.Land.Interact.performed += OnInteract;
-
         isLakanTurn = !doesCharacterStartFirst;
     }
 
@@ -53,17 +49,13 @@ public class DialogueInteractable : MonoBehaviour
     {
         if (isPlayerInRange && !conversationComplete)
         {
+            PanelManager.GetSingleton("dialogue").Open();
             Interact();
         }
     }
 
     public void Interact()
     {
-        if (playerMovement != null)
-        {
-            playerMovement.enabled = false;
-        }
-
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(false);
@@ -72,18 +64,15 @@ public class DialogueInteractable : MonoBehaviour
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
             conversationComplete = true;
-            DialogueUI.Instance.HideDialogue();
-
-            if (playerMovement != null)
-            {
-                playerMovement.enabled = true;
-            }
 
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(true);
             }
-
+            PanelManager.GetSingleton("dialogue").Close();
+            lakanDialogueIndex = 0;
+            characterDialogueIndex = 0;
+            conversationComplete = false;
             return;
         }
 
@@ -91,16 +80,25 @@ public class DialogueInteractable : MonoBehaviour
         {
             if (lakanDialogueIndex < lakanDialogueLines.Count)
             {
-                DialogueUI.Instance.ShowDialogue("Lakan", lakanDialogueLines[lakanDialogueIndex]);
-                lakanDialogueIndex++;
+                DialogueUI dialogueUI = PanelManager.GetSingleton("dialogue") as DialogueUI;
+                if (dialogueUI != null)
+                {
+                    dialogueUI.ShowDialogue("Lakan", lakanDialogueLines[lakanDialogueIndex]);
+                    lakanDialogueIndex++;
+                }
             }
         }
         else
         {
             if (characterDialogueIndex < characterDialogueLines.Count)
             {
-                DialogueUI.Instance.ShowDialogue(characterName, characterDialogueLines[characterDialogueIndex]);
-                characterDialogueIndex++;
+                DialogueUI dialogueUI = PanelManager.GetSingleton("dialogue") as DialogueUI;
+                if (dialogueUI != null)
+                {
+                    dialogueUI.ShowDialogue(characterName, characterDialogueLines[characterDialogueIndex]);
+                    dialogueUI.Open();
+                    characterDialogueIndex++;
+                }
             }
         }
 
@@ -112,7 +110,6 @@ public class DialogueInteractable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            Debug.Log("Player in range");
 
             if (!conversationComplete)
             {
@@ -130,7 +127,6 @@ public class DialogueInteractable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            Debug.Log("Player out of range");
             HighlightObject(false);
 
             if (dialogueIcon != null && !conversationComplete)
