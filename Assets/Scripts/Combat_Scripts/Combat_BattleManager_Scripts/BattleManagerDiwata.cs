@@ -62,6 +62,7 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         Debug.Log("Boss destroyed!");
         Destroy(bossObject);
         Destroy(spawnsObject);
+        DestroyEnemy();
         PanelManager.GetSingleton("hud").Close();
         LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         VictoryMenu diwataVictoryMenu = PanelManager.GetSingleton("victory") as DiwataVictoryMenu;

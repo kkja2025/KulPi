@@ -58,6 +58,7 @@ public class BattleManagerSigbinTikbalang : BattleManager
     public override void Defeated()
     {
         Destroy(spawnsObject);
+        DestroyEnemy();
         PanelManager.GetSingleton("hud").Close();
         LeaderboardManager.Singleton.SubmitTimeSigbinTikbalangChapter1((long)(elapsedTime * 1000));
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as SigbinTikbalangVictoryMenu;

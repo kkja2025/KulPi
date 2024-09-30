@@ -14,9 +14,7 @@ public override void Interact()
         // For example, you could add the herb to the player's inventory
         CollectHerb();
         // Log before destroying the herb to verify if the method is called
-
-        Debug.Log("Destroying herb: " + gameObject.name);
-        GameManager.Singleton.RemoveObject(gameObject);
+        OnObjectRemoved(gameObject);
  }
 
     // Example method to simulate adding herb to inventory

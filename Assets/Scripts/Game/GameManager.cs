@@ -8,6 +8,7 @@ using Unity.Services.Core;
 using Unity.Services.Authentication;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEditor.Rendering.LookDev;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     private GameObject playerInstance;
     private PlayerData playerData;
+    private EnemyEncounterData activeEnemy = null;
     private static GameManager singleton = null;
     private List<string> removedObjects = new List<string>();
 
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    
     private void Awake()
     {
         if (singleton != null && singleton != this)
@@ -52,12 +55,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        else
-        {
-            singleton = this;
-            DontDestroyOnLoad(gameObject);
-            
-        }
+        singleton = this;
+        DontDestroyOnLoad(gameObject);
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
         Application.runInBackground = true;
         StartClientService();
@@ -73,8 +73,8 @@ public class GameManager : MonoBehaviour
         }
         try
         {
-            await LoadPlayerData();
             await LoadRemovedObjects();
+            await LoadPlayerData();
             await Task.Delay(2000);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("hud").Open();
@@ -106,29 +106,28 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public async Task SavePlayerData()
+    public void SetActiveEnemy(EnemyEncounterData enemy)
     {
-        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
-        if (playerInstance == null)
-        {
-            Debug.LogWarning("Player instance not found.");
-            return;
-        }
-        await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
+        activeEnemy = enemy;
     }
 
-    public async Task SavePlayerDataWithOffset(Vector3 enemyPosition)
+    public EnemyEncounterData GetActiveEnemy()
     {
-        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
-        if (playerInstance == null)
-        {
-            Debug.LogWarning("Player instance not found.");
-            return;
-        }
-        Vector3 directionFromEnemy = (playerInstance.transform.position - enemyPosition).normalized;
+        return activeEnemy;
+    }
+
+    public async Task SavePlayerData()
+    {
+        await CloudSaveManager.Singleton.SavePlayerData(1, playerData.playerID, playerInstance.transform.position);
+    }
+
+    public async Task SavePlayerDataWithOffset(GameObject enemy, Vector3 playerPosition)
+    {
+        Vector3 enemyPosition = enemy.transform.position;
+        Vector3 directionFromEnemy = (playerPosition - enemyPosition).normalized;
         float offsetDistance = 5f;
-        playerInstance.transform.position += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
-        await CloudSaveManager.Singleton.SavePlayerData(1, playerID, playerInstance.transform.position);
+        playerPosition += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
+        await CloudSaveManager.Singleton.SavePlayerData(1, playerData.playerID, playerPosition);
     }
 
     public async Task LoadPlayerData()

@@ -65,17 +65,12 @@ public class BattleManager : MonoBehaviour
 
     private async void StartClientService()
     {
-        var game = GameManager.Singleton;
-        if (game == null)
+        if (GameManager.Singleton == null)
         {
-            game = FindObjectOfType<GameManager>();
-            if (game == null)
-            {
-                Debug.Log("Game Manager not found! Returning to Main Menu.");
-                Time.timeScale = 1f;
-                SceneManager.LoadScene("MainMenu");
-                return;
-            }
+            Debug.Log("Game Manager not found! Returning to Main Menu.");
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("MainMenu");
+            return;
         } else
         {
             PanelManager.CloseAll();
@@ -104,14 +99,27 @@ public class BattleManager : MonoBehaviour
 
     public virtual void Defeated()
     {
-        Destroy(spawnsObject);
+        DestroyEnemy();
         PanelManager.GetSingleton("hud").Close();
-        // LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
-        VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenu;
-        if (victoryMenu != null)
-        {
-            victoryMenu.SetTimerText(timerText.text);
-            victoryMenu.Open();
-        }
+        PanelManager.GetSingleton("victory").Open();
+    }
+
+    public void DestroyEnemy()
+    {
+        EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
+        GameObject enemy = new GameObject(enemyData.GetEnemyID());
+        GameManager.Singleton.RemoveObject(enemy);
+
+    }
+
+    public async void ExitBattle()
+    {
+        Time.timeScale = 1;
+        EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
+        GameObject enemy = new GameObject(enemyData.GetEnemyID());
+        enemy.transform.position = enemyData.GetPosition();
+        await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
+        GameManager.Singleton.SetActiveEnemy(null);
+        SceneManager.LoadScene("Chapter1");
     }
 }

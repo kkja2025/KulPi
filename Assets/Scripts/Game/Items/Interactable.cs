@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,7 +74,7 @@ public class Interactable : MonoBehaviour
 
     // Detect when the player enters the range of the interactable item
 
- private void OnTriggerEnter2D(Collider2D collision)
+ protected virtual void OnTriggerEnter2D(Collider2D collision)
 
     {
 
@@ -153,6 +154,11 @@ protected void HighlightObject(bool highlight)
 
         }
 
+    }
+
+    protected virtual void OnObjectRemoved(GameObject gameObject) {
+        GameManager.Singleton.RemoveObject(gameObject);
+        Debug.Log("Destroying object: " + gameObject.name);
     }
 
 }
