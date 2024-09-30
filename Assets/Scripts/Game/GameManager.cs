@@ -6,9 +6,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
-using UnityEditor.ShaderGraph.Internal;
-using UnityEditor.Rendering.LookDev;
 using Unity.VisualScripting;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.ShaderGraph;
+using UnityEditor.Rendering.LookDev;
+#endif
 
 public class GameManager : MonoBehaviour
 {

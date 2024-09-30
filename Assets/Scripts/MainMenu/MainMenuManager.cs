@@ -5,7 +5,9 @@ using Firebase;
 using Firebase.Auth;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
+#if UNITY_EDITOR
 using UnityEditor.Rendering.LookDev;
+#endif
 
 public class MainMenuManager : MonoBehaviour
 {
