@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
 #if UNITY_EDITOR
 using UnityEditor.Tilemaps;
 #endif
@@ -16,19 +18,34 @@ public class Interactable : MonoBehaviour
     // Reference to the SpriteRenderer component of the interactable
     protected SpriteRenderer spriteRenderer;
     // Sprites for normal and highlighted states (assign in Inspector for each interactable)
-    public Sprite normalSprite;
-    public Sprite highlightedSprite;
-    private PlayerInput controls;
+    [SerializeField] protected Sprite normalSprite;
+    [SerializeField] protected Sprite highlightedSprite;
+    protected Button interactButton;
+    protected PlayerInput controls;
 
 
 
-    void Awake()
+    private void Awake()
 
     {
+        if (interactButton == null)
+        {
+            GameObject buttonObject = GameObject.FindGameObjectWithTag("InteractButton");
+            if (buttonObject != null)
+            {
+                interactButton = buttonObject.GetComponent<Button>();
+                Debug.Log("Interact Button found and assigned automatically.");
+            }
+            // else
+            // {
+            //     interactButton = GameObject.Find("InteractButton").GetComponent<Button>();
+            // }
+        }
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         controls = new PlayerInput();
     }
-    void OnEnable()
+    protected virtual void OnEnable()
     
     {
 
@@ -38,7 +55,7 @@ public class Interactable : MonoBehaviour
 
 
 
-    void OnDisable()
+    protected virtual void OnDisable()
 
     {
 
@@ -48,7 +65,7 @@ public class Interactable : MonoBehaviour
 
     // Override this method in child classes for specific interactions
 
-    private void OnInteract(InputAction.CallbackContext context)
+    protected virtual void OnInteract(InputAction.CallbackContext context)
 
     {
 
@@ -64,7 +81,7 @@ public class Interactable : MonoBehaviour
 
 
 
-    public virtual void Interact()
+    protected virtual void Interact()
 
     {
 
@@ -86,7 +103,7 @@ public class Interactable : MonoBehaviour
 
             isPlayerInRange = true;
 
-            Debug.Log("Player in range");
+            interactButton.gameObject.SetActive(true);
 
             controls.Land.Interact.performed += OnInteract;
 
@@ -102,7 +119,7 @@ public class Interactable : MonoBehaviour
 
     // Detect when the player leaves the range of the interactable item
 
- private void OnTriggerExit2D(Collider2D collision)
+  protected virtual void OnTriggerExit2D(Collider2D collision)
 
     {
 
@@ -112,7 +129,7 @@ public class Interactable : MonoBehaviour
 
             isPlayerInRange = false;
 
-            Debug.Log("Player out of range");
+            interactButton.gameObject.SetActive(false);
 
             controls.Land.Interact.performed -= OnInteract;
 
@@ -126,36 +143,12 @@ public class Interactable : MonoBehaviour
 
     }
 
-
-
-    // Method to highlight or remove highlight from the object by changing its sprite
-
-protected void HighlightObject(bool highlight)
-
+    protected void HighlightObject(bool highlight)
     {
-
         if (spriteRenderer != null)
-
         {
-
-            if (highlight && highlightedSprite != null)
-
-            {
-
-                spriteRenderer.sprite = highlightedSprite;  // Change to highlighted sprite
-
-            }
-
-            else if (normalSprite != null)
-
-            {
-
-                spriteRenderer.sprite = normalSprite;  // Change back to normal sprite
-
-            }
-
+            spriteRenderer.sprite = highlight && highlightedSprite != null ? highlightedSprite : normalSprite;
         }
-
     }
 
     protected virtual void OnObjectRemoved(GameObject gameObject) {

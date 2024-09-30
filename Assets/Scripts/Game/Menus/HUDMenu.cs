@@ -10,6 +10,7 @@ public class HUDMenu : Panel
     [SerializeField] private Button pauseButton = null;
     [SerializeField] private Button inventoryButton = null;
     [SerializeField] private Button encyclopediaButton = null;
+    [SerializeField] private Button interactButton = null;
 
     public override void Initialize()
     {
@@ -25,16 +26,13 @@ public class HUDMenu : Panel
 
     public override void Open()
     {
+        interactButton.gameObject.SetActive(false);
         base.Open();
     }
 
     private void OpenInventory()
     {
         PanelManager.GetSingleton("inventory").Open();
-        // InventoryManager.Singleton.AddItem("UI_Weirdletter_12", "Letter");
-        // InventoryManager.Singleton.RemoveItem("UI_Weirdletter_12");
-        // SceneManager.LoadScene("Chapter1SigbinTikbalang");
-        // SceneManager.LoadScene("Chapter1BossDiwata");
     }
 
     private void OpenEncyclopedia()

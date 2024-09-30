@@ -6,7 +6,7 @@ public class Herb : Interactable
 
 {
 
-public override void Interact()
+protected override void Interact()
 
  {
 
