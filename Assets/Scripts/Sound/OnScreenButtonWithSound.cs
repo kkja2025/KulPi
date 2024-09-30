@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class OnScreenButtonWithSound : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private AudioClip clickSound = null;
+    [SerializeField] protected AudioClip clickSound = null;
     protected AudioSource soundEffectsSource = null;
 
     public virtual void Start()

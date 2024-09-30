@@ -6,6 +6,7 @@ public class WalkSound : OnScreenButtonWithSound, IPointerUpHandler
     public override void Start()
     {
         soundEffectsSource = AudioManager.Singleton.GetSoundEffectsSource();
+        soundEffectsSource.clip = clickSound;
         soundEffectsSource.loop = true;
     }
 
