@@ -67,12 +67,12 @@ public class VolumeControlMenu : Panel
         VolumeInputField.interactable = !isReadOnly;
     }
 
-    public void VolumeDown()
+    private void VolumeDown()
     {
         UpdateVolume(-1);
     }
 
-    public void VolumeUp()
+    private void VolumeUp()
     {
         UpdateVolume(1);
     }

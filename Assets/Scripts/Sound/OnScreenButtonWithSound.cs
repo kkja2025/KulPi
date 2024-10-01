@@ -7,7 +7,7 @@ public class OnScreenButtonWithSound : MonoBehaviour, IPointerDownHandler
     [SerializeField] protected AudioClip clickSound = null;
     protected AudioSource soundEffectsSource = null;
 
-    public virtual void Start()
+    protected virtual void Start()
     {
         soundEffectsSource = AudioManager.Singleton.GetSoundEffectsSource();
         soundEffectsSource.loop = true;

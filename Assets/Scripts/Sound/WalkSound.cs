@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class WalkSound : OnScreenButtonWithSound, IPointerUpHandler
 {
-    public override void Start()
+    protected override void Start()
     {
         soundEffectsSource = AudioManager.Singleton.GetSoundEffectsSource();
         soundEffectsSource.clip = clickSound;
