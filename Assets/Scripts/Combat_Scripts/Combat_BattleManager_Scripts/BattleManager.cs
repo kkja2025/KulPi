@@ -132,6 +132,7 @@ public class BattleManager : MonoBehaviour
 
     public void RestartAsync()
     {
+        Time.timeScale = 1;
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadSceneAsync(currentScene.name);
     }

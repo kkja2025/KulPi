@@ -42,7 +42,7 @@ public class BattleManagerSigbinTikbalang : BattleManager
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as SigbinTikbalangVictoryMenu;
         if (victoryMenu != null)
         {
-            victoryMenu.SetTimerText(timerText.text);
+            victoryMenu.SetTimerText($"Time: {timerText.text}");
             victoryMenu.Open();
         }
     }
