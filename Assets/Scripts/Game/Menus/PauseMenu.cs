@@ -20,11 +20,6 @@ public class PauseMenu : Panel
         base.Initialize();
     }
 
-    public override void Open()
-    {
-        base.Open();
-    }
-
     private void Resume()
     {
         PanelManager.GetSingleton("pause").Close();

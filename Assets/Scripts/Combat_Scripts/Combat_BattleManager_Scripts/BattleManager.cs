@@ -114,12 +114,17 @@ public class BattleManager : MonoBehaviour
 
     public async void ExitBattle()
     {
-        Time.timeScale = 1;
         EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
         GameObject enemy = new GameObject(enemyData.GetEnemyID());
         enemy.transform.position = enemyData.GetPosition();
         await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
         GameManager.Singleton.SetActiveEnemy(null);
         SceneManager.LoadScene("Chapter1");
+    }
+
+    public void Restart()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }
