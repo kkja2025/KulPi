@@ -36,10 +36,10 @@ public class Interactable : MonoBehaviour
                 interactButton = buttonObject.GetComponent<Button>();
                 Debug.Log("Interact Button found and assigned automatically.");
             }
-            // else
-            // {
-            //     interactButton = GameObject.Find("InteractButton").GetComponent<Button>();
-            // }
+            else
+            {
+                interactButton = GameObject.Find("InteractButton").GetComponent<Button>();
+            }
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
