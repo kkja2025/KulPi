@@ -120,7 +120,7 @@ public class MainMenuManager : MonoBehaviour
             await CloudSaveManager.Singleton.LoadPlayerData();
 
             Debug.Log("Player data loaded successfully.");
-            SceneManager.LoadScene("Chapter1");
+            SceneManager.LoadScene("Chapter1-Beach");
         }
         catch (Exception e)
         {
