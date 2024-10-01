@@ -8,14 +8,13 @@ public class DiwataVictoryMenu : VictoryMenu
 {
     protected async override void ShowLeaderboards()
     {
-       PanelManager.GetSingleton("victory").Close();
-       await LeaderboardManager.Singleton.DisplayBossChapter1Leaderboard();
-       PanelManager.GetSingleton("leaderboard").Open();
-
+        await LeaderboardManager.Singleton.DisplayBossChapter1Leaderboard();
+        base.ShowLeaderboards();
     }
 
     protected override void Next()
     {
+        base.Next();
         PanelManager.GetSingleton("victory").Close();
         GameManager.Singleton.UnlockEncyclopediaItem("Diwata", "unlock");
     }
