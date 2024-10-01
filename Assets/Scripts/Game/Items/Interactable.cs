@@ -20,7 +20,7 @@ public class Interactable : MonoBehaviour
     // Sprites for normal and highlighted states (assign in Inspector for each interactable)
     [SerializeField] protected Sprite normalSprite;
     [SerializeField] protected Sprite highlightedSprite;
-    protected Button interactButton;
+    [SerializeField] protected Button interactButton;
     protected PlayerInput controls;
 
 
@@ -30,7 +30,7 @@ public class Interactable : MonoBehaviour
     {
         if (interactButton == null)
         {
-            GameObject buttonObject = GameObject.Find("InteractButton");
+            GameObject buttonObject = GameObject.FindWithTag("InteractButton");
             if (buttonObject != null)
             {
                 interactButton = buttonObject.GetComponent<Button>();
