@@ -30,7 +30,7 @@ public class Interactable : MonoBehaviour
     {
         if (interactButton == null)
         {
-            GameObject buttonObject = GameObject.FindGameObjectWithTag("InteractButton");
+            GameObject buttonObject = GameObject.Find("InteractButton");
             if (buttonObject != null)
             {
                 interactButton = buttonObject.GetComponent<Button>();
@@ -38,7 +38,7 @@ public class Interactable : MonoBehaviour
             }
             else
             {
-                interactButton = GameObject.Find("InteractButton").GetComponent<Button>();
+                Debug.LogWarning("Interact Button not found. Please assign the Interact Button in the Inspector.");
             }
         }
 
