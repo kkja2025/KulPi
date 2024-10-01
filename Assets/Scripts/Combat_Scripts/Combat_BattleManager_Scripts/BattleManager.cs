@@ -8,12 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
+    [SerializeField] protected TMP_Text timerText;
+    [SerializeField] protected GameObject spawnsObject;
     private bool initialized = false;
     protected bool isTimerRunning = false;
-    private static BattleManager singleton = null;
-    public GameObject spawnsObject;
     protected float elapsedTime = 0f;
-    [SerializeField] public TMP_Text timerText;
+    private static BattleManager singleton = null;
 
     public static BattleManager Singleton
     {
@@ -35,13 +35,12 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    protected void Initialize()
+    private void Initialize()
     {
         if (initialized) return;
         initialized = true;
     }
-
-    void Awake()
+    private void Awake()
     {
         if (singleton == null)
         {
@@ -51,10 +50,10 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        StartClientService();
+        InitializeScene();
     }
 
-    void Update()
+    private void Update()
     {
         if (isTimerRunning) 
         {
@@ -63,7 +62,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private async void StartClientService()
+    private async void InitializeScene()
     {
         if (GameManager.Singleton == null)
         {
@@ -99,9 +98,7 @@ public class BattleManager : MonoBehaviour
 
     public virtual void Defeated()
     {
-        DestroyEnemy();
-        PanelManager.GetSingleton("hud").Close();
-        PanelManager.GetSingleton("victory").Open();
+        spawnsObject.SetActive(false);
     }
 
     public void DestroyEnemy()
@@ -112,19 +109,30 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public async void ExitBattle()
+    public async void ExitBattleAsync()
     {
-        EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
-        GameObject enemy = new GameObject(enemyData.GetEnemyID());
-        enemy.transform.position = enemyData.GetPosition();
-        await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
-        GameManager.Singleton.SetActiveEnemy(null);
-        SceneManager.LoadScene("Chapter1");
+        if (GameManager.Singleton != null)
+        {
+            var enemyData = GameManager.Singleton.GetActiveEnemy();
+            if (enemyData != null)
+            {
+                GameObject enemy = new GameObject(enemyData.GetEnemyID());
+                enemy.transform.position = enemyData.GetPosition();
+                await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
+                GameManager.Singleton.SetActiveEnemy(null);
+            }
+        }
+        
+        var asyncOperation = SceneManager.LoadSceneAsync("Chapter1");
+        while (!asyncOperation.isDone)
+        {
+            await Task.Yield();
+        }
     }
 
-    public void Restart()
+    public void RestartAsync()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        SceneManager.LoadSceneAsync(currentScene.name);
     }
 }

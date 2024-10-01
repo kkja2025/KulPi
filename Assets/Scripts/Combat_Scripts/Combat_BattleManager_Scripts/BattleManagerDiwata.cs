@@ -8,29 +8,17 @@ using Cinemachine.Utility;
 
 public class BattleManagerDiwata : BattleManagerSigbinTikbalang
 {
-    [SerializeField] public GameObject ultimateButton;
+    [SerializeField] private GameObject ultimateButton;
+    [SerializeField] private GameObject bossObject;
     private Boss boss;
-    public GameObject bossObject;
-    private static BattleManagerDiwata singleton = null;
+    private SpawnerBossDiwata spawner;
 
-    public static new BattleManagerDiwata Singleton
+    public override void StartBattle()
     {
-        get
-        {
-            if (singleton == null)
-            {
-                singleton = FindObjectOfType<BattleManagerDiwata>();
-                if (singleton != null)
-                {
-                    singleton.Initialize();
-                }
-                else
-                {
-                    Debug.LogError("BattleManagerDiwata not found in the scene!");
-                }
-            }
-            return (BattleManagerDiwata)singleton;
-        }
+        base.StartBattle();
+        bossObject.SetActive(true);
+        boss = bossObject.GetComponent<Boss>();
+        spawner = spawnsObject.GetComponent<SpawnerBossDiwata>();
     }
 
     public void ShowUltimateButton()
@@ -38,31 +26,22 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         ultimateButton.SetActive(true);
     }
 
-    public override void StartBattle()
-    {
-        bossObject.SetActive(true);
-        spawnsObject.SetActive(true);
-        UpdateSigbinCount(0);
-        UpdateTikbalangCount(0);
-        boss = bossObject.GetComponent<Boss>();
-        isTimerRunning = true;
-    }
-
     public void UseUltimate()
     {
-        Debug.Log("Ultimate used!");
-        SpawnerBossDiwata spawner = spawnsObject.GetComponent<SpawnerBossDiwata>();
         ultimateButton.SetActive(false);
-        boss.TakeUltimateDamage();
         spawner.ResetCounters();
+        boss.TakeUltimateDamage();
+        int health = boss.GetHealth();
+        if (health <= 0)
+        {
+            Defeated();
+        }
     }
 
     public override void Defeated()
     {
-        Debug.Log("Boss destroyed!");
-        Destroy(bossObject);
-        Destroy(spawnsObject);
-        DestroyEnemy();
+        spawnsObject.SetActive(false);
+        bossObject.SetActive(false);
         PanelManager.GetSingleton("hud").Close();
         LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         VictoryMenu diwataVictoryMenu = PanelManager.GetSingleton("victory") as DiwataVictoryMenu;

@@ -7,29 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class BattleManagerSigbinTikbalang : BattleManager
 {
-    [SerializeField] public TMP_Text sigbinCountText;
-    [SerializeField] public TMP_Text tikbalangCountText;
-    private static BattleManagerSigbinTikbalang singleton = null;
+    [SerializeField] private TMP_Text sigbinCountText;
+    [SerializeField] private TMP_Text tikbalangCountText;
 
-    public static new BattleManagerSigbinTikbalang Singleton
-    {
-        get
-        {
-            if (singleton == null)
-            {
-                singleton = FindObjectOfType<BattleManagerSigbinTikbalang>();
-                if (singleton != null)
-                {
-                    singleton.Initialize();
-                }
-                else
-                {
-                    Debug.LogError("BattleManagerSigbinTikbalang not found in the scene!");
-                }
-            }
-            return (BattleManagerSigbinTikbalang)singleton;
-        }
-    }
 
     public void UpdateTikbalangCount(int count)
     {
@@ -49,16 +29,14 @@ public class BattleManagerSigbinTikbalang : BattleManager
 
     public override void StartBattle()
     {
-        spawnsObject.SetActive(true);
+        base.StartBattle();
         UpdateSigbinCount(0);
         UpdateTikbalangCount(0);
-        isTimerRunning = true;
     }
 
     public override void Defeated()
     {
-        Destroy(spawnsObject);
-        DestroyEnemy();
+        base.Defeated();
         PanelManager.GetSingleton("hud").Close();
         LeaderboardManager.Singleton.SubmitTimeSigbinTikbalangChapter1((long)(elapsedTime * 1000));
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as SigbinTikbalangVictoryMenu;
