@@ -18,12 +18,12 @@ public class CombatPauseMenu : PauseMenu
 
     private void Restart()
     {
-        BattleManager.Singleton.Restart();   
+        BattleManager.Singleton.RestartAsync();   
     }
 
     protected override void ReturnMainMenu()
     {
         Time.timeScale = 1;
-        BattleManager.Singleton.ExitBattle();
+        BattleManager.Singleton.ExitBattleAsync();
     }
 }
