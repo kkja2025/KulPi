@@ -47,7 +47,7 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         VictoryMenu diwataVictoryMenu = PanelManager.GetSingleton("victory") as DiwataVictoryMenu;
         if (diwataVictoryMenu != null)
         {
-            diwataVictoryMenu.SetTimerText(timerText.text);
+            diwataVictoryMenu.SetTimerText($"Time: {timerText.text}");
             diwataVictoryMenu.Open();
         }
     }

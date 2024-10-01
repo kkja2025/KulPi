@@ -4,26 +4,26 @@ using UnityEngine.UI;
 
 public class SpawnerBossDiwata : SpawnerSigbinTikbalang
 {
-    private BattleManagerDiwata battleManager;
+    private BattleManagerDiwata bossBattleManager;
     public override void OnButtonClicked(GameObject spawnButton)
     {
         BaseOnButtonClicked(spawnButton);
-        battleManager = FindObjectOfType<BattleManagerDiwata>();
+        bossBattleManager = FindObjectOfType<BattleManagerDiwata>();
 
         if (spawnButton.name == "SpawnType1")
         {
             spawn1DestroyedCount++;
-            battleManager.UpdateSigbinCount(spawn1DestroyedCount);
+            bossBattleManager.UpdateSigbinCount(spawn1DestroyedCount);
         }
         else if (spawnButton.name == "SpawnType2")
         {
             spawn2DestroyedCount++;
-            battleManager.UpdateTikbalangCount(spawn2DestroyedCount);
+            bossBattleManager.UpdateTikbalangCount(spawn2DestroyedCount);
         }
 
         if (spawn1DestroyedCount >= destroyThreshold && spawn2DestroyedCount >= destroyThreshold)
         {
-            battleManager.ShowUltimateButton();
+            bossBattleManager.ShowUltimateButton();
         }
     }
 
@@ -31,7 +31,7 @@ public class SpawnerBossDiwata : SpawnerSigbinTikbalang
     {
         spawn1DestroyedCount = 0;
         spawn2DestroyedCount = 0;
-        battleManager.UpdateSigbinCount(0);
-        battleManager.UpdateTikbalangCount(0);
+        bossBattleManager.UpdateSigbinCount(0);
+        bossBattleManager.UpdateTikbalangCount(0);
     }
 }
