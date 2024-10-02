@@ -31,11 +31,7 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         ultimateButton.SetActive(false);
         spawner.ResetCounters();
         boss.TakeUltimateDamage();
-        int health = boss.GetHealth();
-        if (health <= 0)
-        {
-            Defeated();
-        }
+        StartCoroutine(WaitForSkillAnimationThenDefeat());
     }
 
     public override void Defeated()
@@ -49,6 +45,20 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         {
             diwataVictoryMenu.SetTimerText($"Time: {timerText.text}");
             diwataVictoryMenu.Open();
+        }
+    }
+
+    private IEnumerator WaitForSkillAnimationThenDefeat()
+    {
+        SkillAnimation skillAnimation = GetComponent<SkillAnimation>();
+        skillAnimation.StartMoveAnimation();
+
+        yield return new WaitForSeconds(skillAnimation.animationDuration + 1.5f);
+
+        int health = boss.GetHealth();
+        if (health <= 0)
+        {
+            Defeated();
         }
     }
 }

@@ -16,13 +16,13 @@ public class SkillAnimation : MonoBehaviour
     private bool isAnimating = false;
     private float elapsedTime = 0f;
 
-    void Start()
+    private void Start()
     {
         spriteToMove.gameObject.SetActive(false); // Hide the sprite at start
         moveButton.onClick.AddListener(StartMoveAnimation); // Link button press to start animation
     }
 
-    void Update()
+    private void Update()
     {
         if (isAnimating)
         {
@@ -40,7 +40,7 @@ public class SkillAnimation : MonoBehaviour
         }
     }
 
-    void StartMoveAnimation()
+    public void StartMoveAnimation()
     {
         spriteToMove.gameObject.SetActive(true); // Show the sprite
         isAnimating = true;
@@ -59,7 +59,7 @@ public class SkillAnimation : MonoBehaviour
     }
 
     // Coroutine to wait for 1 second before hiding the sprite
-    IEnumerator WaitBeforeHiding()
+    private IEnumerator WaitBeforeHiding()
     {
         yield return new WaitForSeconds(1.5f); // Wait for 1 second
         spriteToMove.gameObject.SetActive(false); // Hide the sprite after the delay
