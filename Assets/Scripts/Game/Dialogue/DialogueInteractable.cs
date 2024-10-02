@@ -40,14 +40,13 @@ public class DialogueInteractable : Interactable
     {
         if (isPlayerInRange && !conversationComplete)
         {
+            if (dialogueIcon != null)
+            {
+                dialogueIcon.SetActive(false);
+                interactButton.gameObject.SetActive(false);
+            }
             PanelManager.GetSingleton("dialogue").Open();
             Interact();
-        }
-
-        if (dialogueIcon != null)
-        {
-            dialogueIcon.SetActive(false);
-            interactButton.gameObject.SetActive(false);
         }
     }
 
@@ -124,9 +123,9 @@ public class DialogueInteractable : Interactable
             interactButton.gameObject.SetActive(false);
             HighlightObject(false);
 
-            if (dialogueIcon != null && !conversationComplete)
+            if (dialogueIcon != null)
             {
-                dialogueIcon.SetActive(false);
+                dialogueIcon.SetActive(true);
             }
         }
     }

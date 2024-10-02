@@ -26,8 +26,8 @@ public class HUDMenu : Panel
 
     public override void Open()
     {
-        interactButton.gameObject.SetActive(false);
         base.Open();
+        interactButton.gameObject.SetActive(false);
     }
 
     private void OpenInventory()

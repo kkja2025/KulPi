@@ -62,7 +62,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private async void InitializeScene()
+    private void InitializeScene()
     {
         if (GameManager.Singleton == null)
         {
@@ -72,10 +72,7 @@ public class BattleManager : MonoBehaviour
             return;
         } else
         {
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("loading").Open();
-            await Task.Delay(2000);
-            PanelManager.CloseAll();
+            PanelManager.LoadSceneAsync("");
             PanelManager.GetSingleton("hud").Open();
             PanelManager.GetSingleton("tutorial").Open();
         }
@@ -134,6 +131,6 @@ public class BattleManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadSceneAsync(currentScene.name);
+        PanelManager.LoadSceneAsync(currentScene.name);
     }
 }

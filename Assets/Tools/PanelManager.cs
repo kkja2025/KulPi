@@ -121,41 +121,39 @@ public class PanelManager : MonoBehaviour
         CloseAll();
         Open("loading");
 
-        // Find the LoadingBar in the LoadingPanel
         Image loadingBar = GetSingleton("loading").transform.Find("Container/LoadingBarContainer/LoadingBar").GetComponent<Image>();
-        loadingBar.fillAmount = 0; // Reset the loading bar fill amount to 0
+        loadingBar.fillAmount = 0;
+
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            float simulatedProgress = 0f;
+
+            while (simulatedProgress < 1f)
+            {
+                simulatedProgress += Time.deltaTime * 0.2f; 
+                loadingBar.fillAmount = simulatedProgress; 
+                yield return null;
+            }
+
+            Close("loading"); 
+            yield break; 
+        }
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
 
-        // This variable is to hold the progress value.
-        float progress = 0f;
-
         while (!asyncLoad.isDone)
         {
-            // Update the loading bar fill amount based on progress
-            // The progress value will be between 0 and 1.
-            // We can manually increase it until we reach 0.9 to show smooth loading.
-            if (asyncLoad.progress < 0.9f)
+            loadingBar.fillAmount = asyncLoad.progress / 0.9f;
+
+            if (asyncLoad.progress >= 0.9f)
             {
-                progress = asyncLoad.progress;
+                asyncLoad.allowSceneActivation = true;
             }
-            else
-            {
-                progress = Mathf.Lerp(0.9f, 1f, Time.deltaTime * 10f); // Smoothly transition to 1
-                if (progress >= 1f)
-                {
-                    progress = 1f;
-                    asyncLoad.allowSceneActivation = true; // Allow scene activation
-                }
-            }
-            Debug.Log($"Loading progress: {progress}");
-            loadingBar.fillAmount = progress; // Update the loading bar
 
             yield return null; 
         }
 
-        Close("loading"); // Close the loading panel after the scene is loaded
+        Close("loading");
     }
-
 }
