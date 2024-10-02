@@ -10,7 +10,6 @@ public class HUDMenu : Panel
     [SerializeField] private Button pauseButton = null;
     [SerializeField] private Button inventoryButton = null;
     [SerializeField] private Button encyclopediaButton = null;
-    [SerializeField] private Button interactButton = null;
 
     public override void Initialize()
     {
@@ -22,12 +21,6 @@ public class HUDMenu : Panel
         inventoryButton.onClick.AddListener(OpenInventory);
         encyclopediaButton.onClick.AddListener(OpenEncyclopedia);
         base.Initialize();
-    }
-
-    public override void Open()
-    {
-        base.Open();
-        interactButton.gameObject.SetActive(false);
     }
 
     private void OpenInventory()
