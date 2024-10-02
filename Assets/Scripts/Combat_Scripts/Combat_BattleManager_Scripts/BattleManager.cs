@@ -72,7 +72,6 @@ public class BattleManager : MonoBehaviour
             return;
         } else
         {
-            PanelManager.LoadSceneAsync("");
             PanelManager.GetSingleton("hud").Open();
             PanelManager.GetSingleton("tutorial").Open();
         }
@@ -108,9 +107,9 @@ public class BattleManager : MonoBehaviour
 
     public async void ExitBattleAsync()
     {
+        var enemyData = GameManager.Singleton.GetActiveEnemy();
         if (GameManager.Singleton != null)
         {
-            var enemyData = GameManager.Singleton.GetActiveEnemy();
             if (enemyData != null)
             {
                 GameObject enemy = new GameObject(enemyData.GetEnemyID());
@@ -120,11 +119,7 @@ public class BattleManager : MonoBehaviour
             }
         }
         
-        var asyncOperation = SceneManager.LoadSceneAsync("Chapter1");
-        while (!asyncOperation.isDone)
-        {
-            await Task.Yield();
-        }
+        PanelManager.LoadSceneAsync(enemyData.GetSceneName());
     }
 
     public void RestartAsync()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
  
 public class EnemyEncounter : Interactable
 {
@@ -7,7 +8,8 @@ public class EnemyEncounter : Interactable
     protected override async void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject player = GameObject.FindWithTag("Player");
-        EnemyEncounterData enemyData = new EnemyEncounterData(gameObject.name, transform.position, player.transform.position);
+        Scene currentScene = SceneManager.GetActiveScene();
+        EnemyEncounterData enemyData = new EnemyEncounterData(gameObject.name, transform.position, player.transform.position, currentScene.name);
         if (collision.gameObject == player)
         {
             PanelManager.LoadSceneAsync(combatSceneName);
