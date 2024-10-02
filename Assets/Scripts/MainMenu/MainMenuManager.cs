@@ -51,26 +51,15 @@ public class MainMenuManager : MonoBehaviour
     private void StartClientService()
     {
         PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             var firebaseService = FirebaseService.Singleton;
             auth = firebaseService.Auth;
             FirebaseUser user = auth.CurrentUser;
-            if (user != null)
-            {
-                Debug.Log("User is already signed in: " + user.UserId);
-                Debug.Log($"User is already signed in: {user.Email}");
-            }
-            else
+            if (user == null)
             {
                 Debug.Log("User is not signed in.");
-            }
-            if (auth.CurrentUser == null)
-            {
-                Debug.Log("User is not signed in.");
-                PanelManager.CloseAll();
-                SceneManager.LoadScene("Login");
+                PanelManager.LoadSceneAsync("Login");
             }
             else
             {
@@ -82,7 +71,7 @@ public class MainMenuManager : MonoBehaviour
         {
             Debug.LogError($"Failed to start client service: {exception.Message}");
             ShowPopUp(PopUpMenu.Action.None, "Failed to start client service.", "Retry");
-            SceneManager.LoadScene("Login");
+            PanelManager.LoadSceneAsync("Login");
         }
     }
 
@@ -109,18 +98,20 @@ public class MainMenuManager : MonoBehaviour
             Debug.Log("No user is signed in to Unity Services.");
         }
 
-        PanelManager.CloseAll();
-        SceneManager.LoadScene("Login");
+        PanelManager.LoadSceneAsync("Login");
     }
 
     public async void LoadGame()
     {
         try
         {
-            await CloudSaveManager.Singleton.LoadPlayerData();
-
+            var playerData = await CloudSaveManager.Singleton.LoadPlayerData();
+            if (playerData == null)
+            {
+                throw new Exception("No player data found.");
+            }
+            PanelManager.LoadSceneAsync(playerData.level);
             Debug.Log("Player data loaded successfully.");
-            SceneManager.LoadScene("Chapter1-Beach");
         }
         catch (Exception e)
         {
@@ -128,6 +119,7 @@ public class MainMenuManager : MonoBehaviour
             ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "Ok");
         }
     }
+    
     public async void NewGame()
     {
         string playerID = AuthenticationService.Instance.PlayerInfo.Id;
@@ -135,7 +127,7 @@ public class MainMenuManager : MonoBehaviour
         try
         {
             Vector3 startingPosition = new Vector3(0, 0, 0);
-            await CloudSaveManager.Singleton.SaveNewPlayerData(1, playerID, startingPosition);
+            await CloudSaveManager.Singleton.SaveNewPlayerData("Chapter1-Beach", playerID, startingPosition);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("cutscene").Open();
         }

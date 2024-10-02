@@ -4,13 +4,13 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public int level;
+    public string level;
     public string playerID;
     public float x;
     public float y;
     public float z;
 
-    public PlayerData(int level, string playerID, Vector3 position)
+    public PlayerData(string level, string playerID, Vector3 position)
     {
         this.level = level;
         this.playerID = playerID;

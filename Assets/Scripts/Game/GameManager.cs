@@ -68,8 +68,8 @@ public class GameManager : MonoBehaviour
 
     private async void StartClientService()
     {
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
+        PanelManager.LoadSceneAsync("");
+
         if (UnityServices.State != ServicesInitializationState.Initialized)
         {
             await UnityServices.InitializeAsync();
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            SceneManager.LoadScene("MainMenu");
+            PanelManager.LoadSceneAsync("MainMenu");
             Debug.LogError($"Error loading player data: {e.Message}");
         }
     }
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
 
-        } else if (scene.name == "Chapter1-Jungle")
+        } else if (scene.name == "Chapter1-Jungle" || scene.name == "Chapter1-Beach" )
         {
             StartClientService();
         }
@@ -119,9 +119,10 @@ public class GameManager : MonoBehaviour
         return activeEnemy;
     }
 
-    public async Task SavePlayerData()
+    public async Task SavePlayerData(Vector3? position = null )
     {
-        await CloudSaveManager.Singleton.SavePlayerData(1, playerData.playerID, playerInstance.transform.position);
+        Vector3 savePosition = position ?? playerInstance.transform.position;
+        await CloudSaveManager.Singleton.SavePlayerData(playerData.playerID, savePosition);
     }
 
     public async Task SavePlayerDataWithOffset(GameObject enemy, Vector3 playerPosition)
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
         Vector3 directionFromEnemy = (playerPosition - enemyPosition).normalized;
         float offsetDistance = 5f;
         playerPosition += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
-        await CloudSaveManager.Singleton.SavePlayerData(1, playerData.playerID, playerPosition);
+        await CloudSaveManager.Singleton.SavePlayerData(playerData.playerID, playerPosition);
     }
 
     public async Task LoadPlayerData()
@@ -206,8 +207,8 @@ public class GameManager : MonoBehaviour
 
     public async void ReturnToMainMenu()
     {
+        PanelManager.LoadSceneAsync("MainMenu");
         await SavePlayerData();
-        SceneManager.LoadScene("MainMenu");
     }
 
     public async void UnlockEncyclopediaItem(string id, string panel)

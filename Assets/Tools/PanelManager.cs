@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
+using UnityEngine.SceneManagement;
 
 public class PanelManager : MonoBehaviour
 {
@@ -107,5 +109,51 @@ public class PanelManager : MonoBehaviour
                 panel.Value.Close();
             }
         }
+    }
+
+    public static void LoadSceneAsync(string sceneName)
+    {
+        Singleton.StartCoroutine(Singleton.LoadSceneCoroutine(sceneName));
+    }
+
+    private IEnumerator LoadSceneCoroutine(string sceneName)
+    {
+        CloseAll();
+        Open("loading");
+
+        Image loadingBar = GetSingleton("loading").transform.Find("Container/LoadingBarContainer/LoadingBar").GetComponent<Image>();
+        loadingBar.fillAmount = 0;
+
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            float simulatedProgress = 0f;
+
+            while (simulatedProgress < 1f)
+            {
+                simulatedProgress += Time.deltaTime * 0.2f; 
+                loadingBar.fillAmount = simulatedProgress; 
+                yield return null;
+            }
+
+            Close("loading"); 
+            yield break; 
+        }
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+
+        while (!asyncLoad.isDone)
+        {
+            loadingBar.fillAmount = asyncLoad.progress / 0.9f;
+
+            if (asyncLoad.progress >= 0.9f)
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+
+            yield return null; 
+        }
+
+        Close("loading");
     }
 }

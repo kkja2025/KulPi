@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.Services.Authentication.PlayerAccounts;
@@ -172,22 +171,16 @@ public class LoginManager : MonoBehaviour
     {
         try
         {
+            PanelManager.LoadSceneAsync("MainMenu");
             string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
             Debug.Log("Successfully linked Firebase with Unity Authentication.");
-            SignInConfirmAsync();
         }
         catch (Exception e)
         {
             Debug.LogError("Linking Firebase with Unity Authentication failed: " + e.Message);
             ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity Authentication failed", "OK");
         }
-    }
-
-    private void SignInConfirmAsync()
-    {
-        PanelManager.CloseAll();
-        SceneManager.LoadScene("MainMenu");
     }
 
     public async void SignUpAsync(string email, string password)
@@ -215,10 +208,10 @@ public class LoginManager : MonoBehaviour
     {
         try
         {
+            PanelManager.LoadSceneAsync("MainMenu");
             string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
             Debug.Log("Successfully linked Firebase account to Unity.");
-            SceneManager.LoadScene("MainMenu");
         }
         catch (Exception e)
         {
