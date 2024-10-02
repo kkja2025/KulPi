@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class SkillAnimation : MonoBehaviour
 {
-    public Button moveButton;
-    public Transform spriteToMove; // Assign the world-space sprite you want to move
+    [SerializeField] private Button moveButton;
+    [SerializeField] private Transform spriteToMove; // Assign the world-space sprite you want to move
+    [SerializeField] private GameObject boss; // Assign the boss object here
+    [SerializeField] private Canvas canvas; // UI canvas where the button exists
     public float animationDuration = 1.0f; // How long the animation lasts
-    public GameObject boss; // Assign the boss object here
-    public Canvas canvas; // UI canvas where the button exists
 
     private Vector3 startPos;
     private Vector3 targetPos;
