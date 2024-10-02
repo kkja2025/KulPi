@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelManager : MonoBehaviour
 {
@@ -107,5 +108,31 @@ public class PanelManager : MonoBehaviour
                 panel.Value.Close();
             }
         }
+    }
+
+    public static void LoadSceneAsync(string sceneName)
+    {
+        Singleton.StartCoroutine(Singleton.LoadSceneCoroutine(sceneName));
+    }
+
+    private IEnumerator LoadSceneCoroutine(string sceneName)
+    {
+        CloseAll();
+        Open("loading");
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f)
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+
+            yield return null; 
+        }
+
+        Close("loading");
     }
 }
