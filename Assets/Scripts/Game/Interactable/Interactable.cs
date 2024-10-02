@@ -8,139 +8,100 @@ using UnityEngine.UI;
 using UnityEditor.Tilemaps;
 #endif
 
-
-
 public class Interactable : MonoBehaviour
-
 {
-
     protected bool isPlayerInRange = false;
-    // Reference to the SpriteRenderer component of the interactable
     protected SpriteRenderer spriteRenderer;
-    // Sprites for normal and highlighted states (assign in Inspector for each interactable)
     [SerializeField] protected Sprite normalSprite;
     [SerializeField] protected Sprite highlightedSprite;
-    [SerializeField] protected Button interactButton;
+    [SerializeField] protected string spriteID;
+    protected Button interactButton;
+    protected InteractButtonPositioner buttonPositioner;
     protected PlayerInput controls;
 
-
-
     private void Awake()
-
     {
-        if (interactButton == null)
+        GameObject buttonObject = GameObject.FindWithTag("InteractButton");
+        if (buttonObject != null)
         {
-            GameObject buttonObject = GameObject.FindWithTag("InteractButton");
-            if (buttonObject != null)
+            interactButton = buttonObject.GetComponent<Button>();
+            if (interactButton == null)
             {
-                interactButton = buttonObject.GetComponent<Button>();
-                Debug.Log("Interact Button found and assigned automatically.");
+                Debug.LogError("InteractButton found but does not have a Button component.");
             }
             else
             {
-                Debug.LogWarning("Interact Button not found. Please assign the Interact Button in the Inspector.");
+                buttonPositioner = interactButton.GetComponent<InteractButtonPositioner>();
             }
+        }
+        else
+        {
+            Debug.LogError("No GameObject with the tag 'InteractButton' found.");
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         controls = new PlayerInput();
     }
+
     protected virtual void OnEnable()
-    
     {
-
         controls.Enable();
-
     }
-
-
 
     protected virtual void OnDisable()
-
     {
-
         controls.Disable();
-
     }
-
-    // Override this method in child classes for specific interactions
 
     protected virtual void OnInteract(InputAction.CallbackContext context)
-
     {
-
         if (isPlayerInRange)
-
         {
-
             Interact();
-
         }
-
     }
 
-
+    protected virtual void OnObjectRemoved(GameObject gameObject)
+    {
+        GameManager.Singleton.RemoveObject(gameObject);
+        Debug.Log("Destroying object: " + gameObject.name);
+    }
 
     protected virtual void Interact()
-
     {
-
-        Debug.Log("Interacted with " + gameObject.name);
-
+        Debug.Log("Interacting with " + gameObject.name);
+        InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
+        OnObjectRemoved(gameObject);
     }
 
-
-
-    // Detect when the player enters the range of the interactable item
-
- protected virtual void OnTriggerEnter2D(Collider2D collision)
-
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.CompareTag("Player"))
-
         {
-
-            isPlayerInRange = true;
-
-            interactButton.gameObject.SetActive(true);
+            isPlayerInRange = true; 
+            if (buttonPositioner != null)
+            {
+                buttonPositioner.SetTargetObject(transform); 
+            }
 
             controls.Land.Interact.performed += OnInteract;
-
-            // Highlight the interactable by switching to the highlighted sprite
-
             HighlightObject(true);
-
         }
-
     }
 
-
-
-    // Detect when the player leaves the range of the interactable item
-
-  protected virtual void OnTriggerExit2D(Collider2D collision)
-
+    protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-
         if (collision.CompareTag("Player"))
-
         {
-
             isPlayerInRange = false;
-
-            interactButton.gameObject.SetActive(false);
+            if (buttonPositioner != null)
+            {
+                buttonPositioner.SetTargetObject(null); 
+            }
 
             controls.Land.Interact.performed -= OnInteract;
-
-
-
-            // Remove highlight by reverting to the normal sprite
-
             HighlightObject(false);
-
         }
-
     }
 
     protected void HighlightObject(bool highlight)
@@ -150,10 +111,4 @@ public class Interactable : MonoBehaviour
             spriteRenderer.sprite = highlight && highlightedSprite != null ? highlightedSprite : normalSprite;
         }
     }
-
-    protected virtual void OnObjectRemoved(GameObject gameObject) {
-        GameManager.Singleton.RemoveObject(gameObject);
-        Debug.Log("Destroying object: " + gameObject.name);
-    }
-
 }

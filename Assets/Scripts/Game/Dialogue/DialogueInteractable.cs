@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DialogueInteractable : Interactable
 {
@@ -8,12 +10,12 @@ public class DialogueInteractable : Interactable
     [SerializeField] private List<string> lakanDialogueLines;
     [SerializeField] private List<string> characterDialogueLines;
     [SerializeField] private bool doesCharacterStartFirst = false;
+    [SerializeField] private GameObject dialogueIcon;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
     private bool isLakanTurn = true;
     private bool conversationComplete = false;
-    [SerializeField] private GameObject dialogueIcon;
 
     private void Start()
     {
@@ -25,14 +27,14 @@ public class DialogueInteractable : Interactable
 
     protected override void OnEnable()
     {
-        controls.Enable();
+        base.OnEnable();
         controls.Land.Interact.performed += OnInteract;
         isLakanTurn = !doesCharacterStartFirst;
     }
 
     protected override void OnDisable()
     {
-        controls.Disable();
+        base.OnDisable();
         controls.Land.Interact.performed -= OnInteract;
     }
 
@@ -43,7 +45,6 @@ public class DialogueInteractable : Interactable
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(false);
-                interactButton.gameObject.SetActive(false);
             }
             PanelManager.GetSingleton("dialogue").Open();
             Interact();
@@ -59,7 +60,6 @@ public class DialogueInteractable : Interactable
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(true);
-                interactButton.gameObject.SetActive(true);
             }
             PanelManager.GetSingleton("dialogue").Close();
             lakanDialogueIndex = 0;
@@ -102,7 +102,15 @@ public class DialogueInteractable : Interactable
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            interactButton.gameObject.SetActive(true);
+
+            if (interactButton != null)
+            {
+
+                if (buttonPositioner != null)
+                {
+                    buttonPositioner.SetTargetObject(transform); 
+                }
+            }
 
             if (!conversationComplete)
             {
@@ -120,7 +128,15 @@ public class DialogueInteractable : Interactable
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            interactButton.gameObject.SetActive(false);
+
+            if (interactButton != null)
+            {
+                if (buttonPositioner != null)
+                {
+                    buttonPositioner.SetTargetObject(null); 
+                }
+            }
+
             HighlightObject(false);
 
             if (dialogueIcon != null)
