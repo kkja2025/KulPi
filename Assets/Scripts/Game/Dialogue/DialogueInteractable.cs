@@ -43,16 +43,16 @@ public class DialogueInteractable : Interactable
             PanelManager.GetSingleton("dialogue").Open();
             Interact();
         }
-    }
 
-    protected override void Interact()
-    {
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(false);
             interactButton.gameObject.SetActive(false);
         }
+    }
 
+    protected override void Interact()
+    {
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
             conversationComplete = true;
