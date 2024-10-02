@@ -6,6 +6,7 @@ using Unity.Services.CloudSave.Models;
 using Unity.Services.Core;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CloudSaveManager : MonoBehaviour
 {
@@ -66,9 +67,9 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async Task SavePlayerData(int level, string playerID, Vector3 position)
-    {
-        PlayerData playerData = new PlayerData(level, playerID, position);
+    public async Task SavePlayerData(string playerID, Vector3 position)
+    {   Scene currentScene = SceneManager.GetActiveScene();
+        PlayerData playerData = new PlayerData(currentScene.name, playerID, position);
         string jsonPlayerData = JsonUtility.ToJson(playerData);
         var data = new Dictionary<string, object> { { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData } };
         try
@@ -83,7 +84,7 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async Task SaveNewPlayerData(int level, string playerID, Vector3 position)
+    public async Task SaveNewPlayerData(string level, string playerID, Vector3 position)
     {
         PlayerData playerData = new PlayerData(level, playerID, position);
         string jsonPlayerData = JsonUtility.ToJson(playerData);
