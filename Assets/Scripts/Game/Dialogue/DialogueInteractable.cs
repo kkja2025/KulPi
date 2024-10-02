@@ -2,88 +2,70 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DialogueInteractable : MonoBehaviour
+public class DialogueInteractable : Interactable
 {
-    public string characterName;
-    public List<string> lakanDialogueLines;
-    public List<string> characterDialogueLines;
-
-    public bool doesCharacterStartFirst = false;
+    [SerializeField] private string characterName;
+    [SerializeField] private List<string> lakanDialogueLines;
+    [SerializeField] private List<string> characterDialogueLines;
+    [SerializeField] private bool doesCharacterStartFirst = false;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
-    private bool isPlayerInRange = false;
     private bool isLakanTurn = true;
     private bool conversationComplete = false;
-    private SpriteRenderer spriteRenderer;
-    public Sprite normalSprite;
-    public Sprite highlightedSprite;
-    private PlayerInput controls;
-    private PlayerMovement playerMovement;
+    [SerializeField] private GameObject dialogueIcon;
 
-    public GameObject dialogueIcon;
-
-    void Awake()
+    private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        controls = new PlayerInput();
-        playerMovement = FindObjectOfType<PlayerMovement>();
-
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(true);
         }
     }
 
-    void OnEnable()
+    protected override void OnEnable()
     {
         controls.Enable();
         controls.Land.Interact.performed += OnInteract;
-
         isLakanTurn = !doesCharacterStartFirst;
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
         controls.Disable();
         controls.Land.Interact.performed -= OnInteract;
     }
 
-    private void OnInteract(InputAction.CallbackContext context)
+    protected override void OnInteract(InputAction.CallbackContext context)
     {
         if (isPlayerInRange && !conversationComplete)
         {
+            PanelManager.GetSingleton("dialogue").Open();
             Interact();
-        }
-    }
-
-    public void Interact()
-    {
-        if (playerMovement != null)
-        {
-            playerMovement.enabled = false;
         }
 
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(false);
+            interactButton.gameObject.SetActive(false);
         }
+    }
 
+    protected override void Interact()
+    {
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
             conversationComplete = true;
-            DialogueUI.Instance.HideDialogue();
-
-            if (playerMovement != null)
-            {
-                playerMovement.enabled = true;
-            }
 
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(true);
+                interactButton.gameObject.SetActive(true);
             }
-
+            PanelManager.GetSingleton("dialogue").Close();
+            lakanDialogueIndex = 0;
+            characterDialogueIndex = 0;
+            conversationComplete = false;
             return;
         }
 
@@ -91,28 +73,37 @@ public class DialogueInteractable : MonoBehaviour
         {
             if (lakanDialogueIndex < lakanDialogueLines.Count)
             {
-                DialogueUI.Instance.ShowDialogue("Lakan", lakanDialogueLines[lakanDialogueIndex]);
-                lakanDialogueIndex++;
+                DialogueUI dialogueUI = PanelManager.GetSingleton("dialogue") as DialogueUI;
+                if (dialogueUI != null)
+                {
+                    dialogueUI.ShowDialogue("Lakan", lakanDialogueLines[lakanDialogueIndex]);
+                    lakanDialogueIndex++;
+                }
             }
         }
         else
         {
             if (characterDialogueIndex < characterDialogueLines.Count)
             {
-                DialogueUI.Instance.ShowDialogue(characterName, characterDialogueLines[characterDialogueIndex]);
-                characterDialogueIndex++;
+                DialogueUI dialogueUI = PanelManager.GetSingleton("dialogue") as DialogueUI;
+                if (dialogueUI != null)
+                {
+                    dialogueUI.ShowDialogue(characterName, characterDialogueLines[characterDialogueIndex]);
+                    dialogueUI.Open();
+                    characterDialogueIndex++;
+                }
             }
         }
 
         isLakanTurn = !isLakanTurn;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            Debug.Log("Player in range");
+            interactButton.gameObject.SetActive(true);
 
             if (!conversationComplete)
             {
@@ -125,26 +116,18 @@ public class DialogueInteractable : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            Debug.Log("Player out of range");
+            interactButton.gameObject.SetActive(false);
             HighlightObject(false);
 
             if (dialogueIcon != null && !conversationComplete)
             {
                 dialogueIcon.SetActive(false);
             }
-        }
-    }
-
-    private void HighlightObject(bool highlight)
-    {
-        if (spriteRenderer != null)
-        {
-            spriteRenderer.sprite = highlight && highlightedSprite != null ? highlightedSprite : normalSprite;
         }
     }
 }

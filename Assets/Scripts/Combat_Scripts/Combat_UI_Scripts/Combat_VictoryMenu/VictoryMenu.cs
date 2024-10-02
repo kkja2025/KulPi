@@ -9,6 +9,7 @@ public class VictoryMenu : Panel
     [SerializeField] private TMP_Text timerText = null;
     [SerializeField] private Button leaderboardsButton = null;
     [SerializeField] private Button nextButton = null;
+    [SerializeField] private Button retryButton = null;
 
     public override void Initialize()
     {
@@ -18,12 +19,8 @@ public class VictoryMenu : Panel
         }
         leaderboardsButton.onClick.AddListener(ShowLeaderboards);
         nextButton.onClick.AddListener(Next);
+        retryButton.onClick.AddListener(Retry);
         base.Initialize();
-    }
-
-    public override void Open()
-    {
-        base.Open();
     }
 
     public void SetTimerText(string timer)
@@ -36,11 +33,18 @@ public class VictoryMenu : Panel
 
     protected virtual void ShowLeaderboards()
     {
-
+       PanelManager.GetSingleton("victory").Close();
+       PanelManager.GetSingleton("leaderboard").Open();
     }
 
     protected virtual void Next()
     {
+        PanelManager.GetSingleton("victory").Close();
+        BattleManager.Singleton.DestroyEnemy();
+    }
 
+    protected virtual void Retry()
+    {
+        BattleManager.Singleton.RestartAsync();
     }
 }

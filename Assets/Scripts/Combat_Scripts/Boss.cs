@@ -4,8 +4,9 @@ using TMPro;
 
 public class Boss : MonoBehaviour
 {
-    [SerializeField] public TMP_Text healthText;
-    public int health; 
+    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private int health; 
+    
     public Boss(int hp)
     {
         health = hp;
@@ -16,16 +17,16 @@ public class Boss : MonoBehaviour
         UpdateHealthDisplay();
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
     public virtual void TakeUltimateDamage()
     {
         int damageAmount = 1;
         health -= damageAmount;
         UpdateHealthDisplay();
-        Debug.Log("Boss health: " + health);
-        if (health <= 0)
-        {
-            BattleManagerDiwata.Singleton.Defeated();
-        }
     }
 
     private void UpdateHealthDisplay()

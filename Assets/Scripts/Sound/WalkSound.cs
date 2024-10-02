@@ -3,21 +3,20 @@ using UnityEngine.EventSystems;
 
 public class WalkSound : OnScreenButtonWithSound, IPointerUpHandler
 {
-    public AudioClip walkClip;
-
-    public void Start()
+    protected override void Start()
     {
-        AudioManager.Singleton.soundEffectsSource.clip = walkClip;
-        AudioManager.Singleton.soundEffectsSource.loop = true;
+        soundEffectsSource = AudioManager.Singleton.GetSoundEffectsSource();
+        soundEffectsSource.clip = clickSound;
+        soundEffectsSource.loop = true;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        AudioManager.Singleton.soundEffectsSource.Play();
+        soundEffectsSource.Play();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        AudioManager.Singleton.soundEffectsSource.Stop();
+       soundEffectsSource.Stop();
     }
 }

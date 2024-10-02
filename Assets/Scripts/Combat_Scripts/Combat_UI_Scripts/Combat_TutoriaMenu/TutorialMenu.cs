@@ -14,15 +14,25 @@ public class TutorialMenu : Panel
         {
             return;
         }
+        if (startButton != null)
+        {
         startButton.onClick.AddListener(StartBattle);
+        }
         base.Initialize();
     }
 
     public override void Open()
     {
         base.Open();
+        var tutorial1 = PanelManager.GetSingleton("tutorial1");
+        if (tutorial1 != null)
+        {
+            tutorial1.Open();
+        } else {
+            return;
+        }
     }
-
+    
     private void StartBattle()
     {
         PanelManager.GetSingleton("tutorial").Close();

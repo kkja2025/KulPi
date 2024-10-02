@@ -8,15 +8,13 @@ public class SigbinTikbalangVictoryMenu : VictoryMenu
 {
     protected async override void ShowLeaderboards()
     {
-       PanelManager.GetSingleton("victory").Close();
-       await LeaderboardManager.Singleton.DisplaySigbinTikbalangChapter1Leaderboard();
-       PanelManager.GetSingleton("leaderboard").Open();
-
+        await LeaderboardManager.Singleton.DisplaySigbinTikbalangChapter1Leaderboard();
+        base.ShowLeaderboards();
     }
 
     protected override void Next()
     {
-        PanelManager.GetSingleton("victory").Close();
+        base.Next();
         GameManager.Singleton.UnlockEncyclopediaItem("Sigbin", "unlocksigbin");
     }
 }

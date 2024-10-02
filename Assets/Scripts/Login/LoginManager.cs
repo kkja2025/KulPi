@@ -134,7 +134,6 @@ public class LoginManager : MonoBehaviour
 
     private void AutomaticSignIn()
     {
-        PanelManager.GetSingleton("loading").Open();
         FirebaseUser user = auth.CurrentUser;
         if (user != null)
         {
@@ -152,7 +151,6 @@ public class LoginManager : MonoBehaviour
 
     public async void SignInAsync(string email, string password)
     {
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             await auth.SignInWithEmailAndPasswordAsync(email, password);
@@ -167,10 +165,6 @@ public class LoginManager : MonoBehaviour
         {
             Debug.Log("Error during sign in: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Error during sign in", "OK");
-        }
-        finally
-        {
-            PanelManager.Close("loading");
         }
     }
 
@@ -198,7 +192,6 @@ public class LoginManager : MonoBehaviour
 
     public async void SignUpAsync(string email, string password)
     {
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
@@ -236,7 +229,6 @@ public class LoginManager : MonoBehaviour
 
     public async void RequestResetPasswordAsync(string email)
     {
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             await auth.SendPasswordResetEmailAsync(email);
@@ -257,7 +249,6 @@ public class LoginManager : MonoBehaviour
     
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
     {
-        PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
     }

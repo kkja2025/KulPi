@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] protected GameObject spawnButtonPrefab1 = null;     
-    [SerializeField] protected GameObject spawnButtonPrefab2 = null;
+    [SerializeField] private GameObject spawnButtonPrefab1 = null;     
+    [SerializeField] private GameObject spawnButtonPrefab2 = null;
     [SerializeField] private RectTransform spawnParent = null;
     [SerializeField] private int spawnPerWave;
     [SerializeField] private float spawnInterval;
-    protected int clickCount = 0;    
+    private int clickCount = 0;    
     protected List<GameObject> currentSpawns = new List<GameObject>();
 
     private void Start()
