@@ -1,8 +1,10 @@
 using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor.Rendering.LookDev;
+#endif
 
 public class DialogueInteractable : Interactable
 {
