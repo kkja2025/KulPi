@@ -426,6 +426,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   spriteID: 
+  onCollisionSound: {fileID: 0}
   sceneName: Chapter1-Jungle
 --- !u!1 &157801697
 GameObject:
@@ -465,6 +466,7 @@ MonoBehaviour:
   normalSprite: {fileID: 1331599780, guid: 943b204b975be8a4b96d1e3a0dd999a6, type: 3}
   highlightedSprite: {fileID: 0}
   spriteID: 
+  onCollisionSound: {fileID: 0}
   characterName: Aling Rosa
   lakanDialogueLines:
   - (Coughing) What happened to this place? It's nothing like the pictures I've seen...
@@ -911,6 +913,7 @@ MonoBehaviour:
   normalSprite: {fileID: 21300000, guid: 966c31ee8e9e38e42a767566396f742a, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 5f3fa3bddcd9f464b862f719c42ea869, type: 3}
   spriteID: Bush 1 (no flowers) - GREEN
+  onCollisionSound: {fileID: 0}
 --- !u!1 &285863589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,6 +1574,143 @@ Transform:
   - {fileID: 829808214}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &802891533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 802891534}
+  - component: {fileID: 802891537}
+  - component: {fileID: 802891536}
+  - component: {fileID: 802891535}
+  m_Layer: 0
+  m_Name: Seagull
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &802891534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802891533}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.25, y: 0.29, z: 0}
+  m_LocalScale: {x: 0.12103436, y: 0.14369355, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1429394077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &802891535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802891533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1fe8c4023786a4bbe26eb8506b8ed3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSprite: {fileID: 0}
+  highlightedSprite: {fileID: 0}
+  spriteID: 
+  onCollisionSound: {fileID: 8300000, guid: 719756587bf9c67438ef045ad337e0ee, type: 3}
+--- !u!58 &802891536
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802891533}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 5
+--- !u!212 &802891537
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802891533}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.45, y: 0.3}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &812527608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2642,6 +2782,7 @@ MonoBehaviour:
   normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
   highlightedSprite: {fileID: 0}
   spriteID: 
+  onCollisionSound: {fileID: 0}
   characterName: Mang Pido
   lakanDialogueLines:
   - What can we do?
@@ -2747,6 +2888,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 500321310}
     m_Modifications:
+    - target: {fileID: 896984004997456320, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 896984004997456320, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f8c1a8439f5af8408de297e3166c5e5, type: 3}
+    - target: {fileID: 896984004997456320, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e118076a685ae343a40a059d862fde5, type: 3}
+    - target: {fileID: 896984004997456320, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: b8df314f3b3f52d458264a751ab540d9, type: 3}
     - target: {fileID: 1226817343550661433, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2827,6 +2984,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464799672745800588, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464799672745800588, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f8c1a8439f5af8408de297e3166c5e5, type: 3}
+    - target: {fileID: 1464799672745800588, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e118076a685ae343a40a059d862fde5, type: 3}
+    - target: {fileID: 1464799672745800588, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: clickSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: b8df314f3b3f52d458264a751ab540d9, type: 3}
     - target: {fileID: 3114931523642472230, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -2867,6 +3040,7 @@ Transform:
   m_Children:
   - {fileID: 259289090}
   - {fileID: 83359666}
+  - {fileID: 802891534}
   - {fileID: 157801702}
   - {fileID: 1327894790}
   m_Father: {fileID: 0}

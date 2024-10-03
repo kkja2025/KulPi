@@ -15,6 +15,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] protected Sprite normalSprite;
     [SerializeField] protected Sprite highlightedSprite;
     [SerializeField] protected string spriteID;
+    [SerializeField] protected AudioClip onCollisionSound;
     protected Button interactButton;
     protected InteractButtonPositioner buttonPositioner;
     protected PlayerInput controls;
@@ -83,7 +84,7 @@ public class Interactable : MonoBehaviour
             {
                 buttonPositioner.SetTargetObject(transform); 
             }
-
+            AudioManager.Singleton.PlayBackgroundSound(onCollisionSound, false);
             controls.Land.Interact.performed += OnInteract;
             HighlightObject(true);
         }

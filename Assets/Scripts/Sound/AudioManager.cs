@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     {
         { "Login", "Main_Theme" },
         { "MainMenu", "Main_Theme" },
-        { "Chapter1-Beach", "Forest" },
+        { "Chapter1-Beach", "Shore" },
         { "Chapter1-Jungle", "Forest" },
         { "Chapter1BossDiwata", "Battle_Diwata" },
         { "Chapter1SigbinTikbalang", "Battle_Sigbin_Tikbalang" }
@@ -173,7 +173,41 @@ public class AudioManager : MonoBehaviour
         currentMusicClipName = newClip.name; 
     }
 
-    public void PlaySoundEffect(string clipName)
+    public void PlayBackgroundSound(AudioClip clip, bool loop)
+    {
+        if (clip != null)
+        {
+            if(loop == false)
+            {
+                 backgroundMusicSource.PlayOneShot(clip);
+            }
+            else
+            {
+                backgroundMusicSource.clip = clip;
+                backgroundMusicSource.loop = true;
+                backgroundMusicSource.Play();
+            }
+        }
+    }
+    public void PlaySoundEffect(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            soundEffectsSource.clip = clip;
+            soundEffectsSource.loop = false;
+            soundEffectsSource.Play();
+        }
+    }
+
+    public void PlaySoundEffectOneShot(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            soundEffectsSource.PlayOneShot(clip);
+        }
+    }
+
+    public void PlaySoundEffectResourceOneSot(string clipName)
     {
         AudioClip clip = GetCachedClip("Sound/SFX/" + clipName);
         if (clip == null) return;
@@ -192,7 +226,7 @@ public class AudioManager : MonoBehaviour
         soundEffectsSource.PlayOneShot(clip);
     }
 
-    public void PlayVoiceOver(string clipName)
+    public void PlayVoiceOverResource(string clipName)
     {
         AudioClip clip = GetCachedClip("Sound/VoiceOver/" + clipName);
         if (clip == null) return;
