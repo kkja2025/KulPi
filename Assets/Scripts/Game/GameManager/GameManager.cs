@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.VisualScripting;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.ShaderGraph;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     protected PlayerData playerData;
     protected List<string> removedObjects = new List<string>();
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] protected TMP_Text objectiveText;
 
     public static GameManager Singleton
     {
@@ -105,6 +107,11 @@ public class GameManager : MonoBehaviour
             singleton = null;
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void SetObjectiveText(string text)
+    {
+        objectiveText.text = text;
     }
 
     public async Task SavePlayerData(Vector3? position = null )
@@ -226,7 +233,7 @@ public class GameManager : MonoBehaviour
                 item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin();
                 break;
             default:
-                Debug.LogWarning("Invalid encyclopedia id provided.");
+                Debug.LogWarning("No encyclopedia entry provided.");
                 return;
         }
         EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
