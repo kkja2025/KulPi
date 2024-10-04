@@ -105,7 +105,7 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    protected void HighlightObject(bool highlight)
+    protected virtual void HighlightObject(bool highlight)
     {
         if (spriteRenderer != null)
         {

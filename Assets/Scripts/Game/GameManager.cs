@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            PanelManager.LoadSceneAsync("MainMenu");
+            SceneManager.LoadScene("Login");
             Debug.LogError($"Error loading player data: {e.Message}");
         }
     }
