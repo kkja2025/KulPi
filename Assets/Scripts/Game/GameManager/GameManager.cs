@@ -16,12 +16,11 @@ using UnityEditor.Rendering.LookDev;
 public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
-    [SerializeField] private GameObject playerPrefab;
-    private GameObject playerInstance;
-    private PlayerData playerData;
-    private EnemyEncounterData activeEnemy = null;
     private static GameManager singleton = null;
-    private List<string> removedObjects = new List<string>();
+    protected GameObject playerInstance;
+    protected PlayerData playerData;
+    protected List<string> removedObjects = new List<string>();
+    [SerializeField] private GameObject playerPrefab;
 
     public static GameManager Singleton
     {
@@ -49,7 +48,6 @@ public class GameManager : MonoBehaviour
         initialized = true;
         DontDestroyOnLoad(gameObject);
     }
-
     
     private void Awake()
     {
@@ -107,16 +105,6 @@ public class GameManager : MonoBehaviour
             singleton = null;
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    public void SetActiveEnemy(EnemyEncounterData enemy)
-    {
-        activeEnemy = enemy;
-    }
-
-    public EnemyEncounterData GetActiveEnemy()
-    {
-        return activeEnemy;
     }
 
     public async Task SavePlayerData(Vector3? position = null )

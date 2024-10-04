@@ -119,6 +119,7 @@ public class PanelManager : MonoBehaviour
         }
         catch (System.Exception ex)
         {
+            Debug.LogError("Error loading scene. Returning to Login: " + ex.Message);
             SceneManager.LoadScene("Login");
         }
     }

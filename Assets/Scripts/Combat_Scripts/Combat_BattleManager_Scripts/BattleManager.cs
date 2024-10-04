@@ -10,7 +10,8 @@ public class BattleManager : MonoBehaviour
 {
     [SerializeField] protected TMP_Text timerText;
     [SerializeField] protected GameObject spawnsObject;
-    private bool initialized = false;
+    private bool initialized = false; 
+    private Chapter1GameManager gameManager;
     protected bool isTimerRunning = false;
     protected float elapsedTime = 0f;
     private static BattleManager singleton = null;
@@ -50,6 +51,15 @@ public class BattleManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        gameManager = GameManager.Singleton as Chapter1GameManager;
+        if (gameManager != null)
+        {
+            Debug.Log("Chapter1GameManager instance accessed successfully!");
+        }
+        else
+        {
+            Debug.LogError("Chapter1GameManager instance not found.");
+        }
         InitializeScene();
     }
 
@@ -64,17 +74,12 @@ public class BattleManager : MonoBehaviour
 
     private void InitializeScene()
     {
-        if (GameManager.Singleton == null)
+        if (Time.timeScale != 1f)
         {
-            Debug.Log("Game Manager not found! Returning to Main Menu.");
             Time.timeScale = 1f;
-            SceneManager.LoadScene("MainMenu");
-            return;
-        } else
-        {
-            PanelManager.GetSingleton("hud").Open();
-            PanelManager.GetSingleton("tutorial").Open();
         }
+        PanelManager.GetSingleton("hud").Open();
+        PanelManager.GetSingleton("tutorial").Open();
     }
 
     private void UpdateTimerDisplay()
@@ -85,7 +90,7 @@ public class BattleManager : MonoBehaviour
             timerText.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
         }
     }
-
+    
     public virtual void StartBattle()
     {
         spawnsObject.SetActive(true);
@@ -97,35 +102,34 @@ public class BattleManager : MonoBehaviour
         spawnsObject.SetActive(false);
     }
 
-    public void DestroyEnemy()
-    {
-        EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
-        GameObject enemy = new GameObject(enemyData.GetEnemyID());
-        GameManager.Singleton.RemoveObject(enemy);
-
-    }
-
-    public async void ExitBattleAsync()
-    {
-        var enemyData = GameManager.Singleton.GetActiveEnemy();
-        if (GameManager.Singleton != null)
-        {
-            if (enemyData != null)
-            {
-                GameObject enemy = new GameObject(enemyData.GetEnemyID());
-                enemy.transform.position = enemyData.GetPosition();
-                await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
-                GameManager.Singleton.SetActiveEnemy(null);
-            }
-        }
-        
-        PanelManager.LoadSceneAsync(enemyData.GetSceneName());
-    }
-
     public void RestartAsync()
     {
         Time.timeScale = 1;
         Scene currentScene = SceneManager.GetActiveScene();
         PanelManager.LoadSceneAsync(currentScene.name);
+    }
+
+    public void DestroyEnemy()
+    {
+        EnemyEncounterData enemyData = gameManager.GetActiveEnemy();
+        GameObject enemy = new GameObject(enemyData.GetEnemyID());
+        gameManager.RemoveObject(enemy);
+    }
+
+    public async void ExitBattleAsync()
+    {
+        var enemyData = gameManager.GetActiveEnemy();
+        if (gameManager != null)
+        {
+            if (enemyData != null)
+            {
+                GameObject enemy = new GameObject(enemyData.GetEnemyID());
+                enemy.transform.position = enemyData.GetPosition();
+                await gameManager.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
+                gameManager.SetActiveEnemy(null);
+            }
+        }
+        
+        PanelManager.LoadSceneAsync(enemyData.GetSceneName());
     }
 }
