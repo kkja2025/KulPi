@@ -14,7 +14,6 @@ public class Interactable : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
     [SerializeField] protected Sprite normalSprite;
     [SerializeField] protected Sprite highlightedSprite;
-    [SerializeField] protected string spriteID;
     [SerializeField] protected AudioClip onCollisionSound;
     protected Button interactButton;
     protected InteractButtonPositioner buttonPositioner;
@@ -62,17 +61,9 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    protected virtual void OnObjectRemoved(GameObject gameObject)
-    {
-        GameManager.Singleton.RemoveObject(gameObject);
-        Debug.Log("Destroying object: " + gameObject.name);
-    }
-
     protected virtual void Interact()
     {
         Debug.Log("Interacting with " + gameObject.name);
-        InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
-        OnObjectRemoved(gameObject);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

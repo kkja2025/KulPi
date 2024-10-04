@@ -12,7 +12,7 @@ public class SpawnerSigbinTikbalang : Spawner
     public override void OnButtonClicked(GameObject spawnButton)
     {
         base.OnButtonClicked(spawnButton);
-        battleManager = FindObjectOfType<BattleManagerSigbinTikbalang>();
+        battleManager = BattleManager.Singleton as BattleManagerSigbinTikbalang;
 
         if (spawnButton.name == "SpawnType1")
         {

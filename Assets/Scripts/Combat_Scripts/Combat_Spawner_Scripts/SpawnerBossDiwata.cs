@@ -8,7 +8,7 @@ public class SpawnerBossDiwata : SpawnerSigbinTikbalang
     public override void OnButtonClicked(GameObject spawnButton)
     {
         BaseOnButtonClicked(spawnButton);
-        bossBattleManager = FindObjectOfType<BattleManagerDiwata>();
+        bossBattleManager = BattleManager.Singleton as BattleManagerDiwata;
 
         if (spawnButton.name == "SpawnType1")
         {

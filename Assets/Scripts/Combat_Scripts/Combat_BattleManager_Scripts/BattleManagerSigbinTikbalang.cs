@@ -8,8 +8,7 @@ using UnityEngine.SceneManagement;
 public class BattleManagerSigbinTikbalang : BattleManager
 {
     [SerializeField] private TMP_Text sigbinCountText;
-    [SerializeField] private TMP_Text tikbalangCountText;
-
+    [SerializeField] private TMP_Text tikbalangCountText;  
 
     public void UpdateTikbalangCount(int count)
     {
