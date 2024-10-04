@@ -11,7 +11,12 @@ public class SceneChange : Interactable
         if (collision.gameObject == player)
         {
             PanelManager.LoadSceneAsync(sceneName);
-            await GameManager.Singleton.SavePlayerData(defaultPosition);
+
+            PlayerData playerData = GameManager.Singleton.GetPlayerData();
+            playerData.SetLevel(sceneName);
+            playerData.SetPosition(defaultPosition);
+            
+            await GameManager.Singleton.SavePlayerData();
         }
     }
 }

@@ -114,10 +114,10 @@ public class GameManager : MonoBehaviour
         objectiveText.text = text;
     }
 
-    public async Task SavePlayerData(Vector3? position = null )
+    public async Task SavePlayerData()
     {
-        Vector3 savePosition = position ?? playerInstance.transform.position;
-        await CloudSaveManager.Singleton.SavePlayerData(playerData.playerID, savePosition);
+        playerData.SetPosition(playerInstance.transform.position);
+        await CloudSaveManager.Singleton.SavePlayerData(playerData);
     }
 
     public async Task SavePlayerDataWithOffset(GameObject enemy, Vector3 playerPosition)
@@ -126,7 +126,14 @@ public class GameManager : MonoBehaviour
         Vector3 directionFromEnemy = (playerPosition - enemyPosition).normalized;
         float offsetDistance = 5f;
         playerPosition += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
-        await CloudSaveManager.Singleton.SavePlayerData(playerData.playerID, playerPosition);
+
+        playerData.SetPosition(playerPosition);
+        await CloudSaveManager.Singleton.SavePlayerData(playerData);
+    }
+
+    public PlayerData GetPlayerData()
+    {
+        return playerData;
     }
 
     public async Task LoadPlayerData()
@@ -154,8 +161,8 @@ public class GameManager : MonoBehaviour
         {
             Vector3 spawnPosition = loadedData.GetPosition();
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            Debug.Log($"Loaded new Player Level: {loadedData.level}");
-            Debug.Log($"Loaded new Player Name: {loadedData.playerID}");
+            Debug.Log($"Loaded new Player Level: {loadedData.GetLevel()}");
+            Debug.Log($"Loaded new Player Name: {loadedData.GetPlayerID()}");
             Debug.Log($"Loaded new Player Position: {spawnPosition}");
         }
         else

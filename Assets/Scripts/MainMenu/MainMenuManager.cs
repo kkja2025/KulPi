@@ -110,7 +110,7 @@ public class MainMenuManager : MonoBehaviour
             {
                 throw new Exception("No player data found.");
             }
-            PanelManager.LoadSceneAsync(playerData.level);
+            PanelManager.LoadSceneAsync(playerData.GetLevel());
             Debug.Log("Player data loaded successfully.");
         }
         catch (Exception e)
@@ -127,7 +127,10 @@ public class MainMenuManager : MonoBehaviour
         try
         {
             Vector3 startingPosition = new Vector3(0, 0, 0);
-            await CloudSaveManager.Singleton.SaveNewPlayerData("Chapter1-Beach", playerID, startingPosition);
+            PlayerData playerData = new PlayerData("Chapter1-Beach", startingPosition);
+            playerData.SetPlayerID(playerID);
+
+            await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("cutscene").Open();
         }
