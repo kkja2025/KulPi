@@ -105,7 +105,7 @@ public class MainMenuManager : MonoBehaviour
     {
         try
         {
-            var playerData = await CloudSaveManager.Singleton.LoadPlayerData();
+            PlayerData playerData = await CloudSaveManager.Singleton.LoadPlayerData();
             if (playerData == null)
             {
                 throw new Exception("No player data found.");
@@ -129,6 +129,7 @@ public class MainMenuManager : MonoBehaviour
             Vector3 startingPosition = new Vector3(0, 0, 0);
             PlayerData playerData = new PlayerData("Chapter1-Beach", startingPosition);
             playerData.SetPlayerID(playerID);
+            playerData.SetActiveQuest("Make your way to the village. Find out what is happening.");
 
             await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);
             PanelManager.CloseAll();

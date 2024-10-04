@@ -4,12 +4,12 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    private string level;
-    private string playerID;
-    private string activeQuest;
-    private float x;
-    private float y;
-    private float z;
+    [SerializeField] private string level;
+    [SerializeField] private string playerID;
+    [SerializeField] private string activeQuest;
+    [SerializeField] private float x;
+    [SerializeField] private float y;
+    [SerializeField] private float z;
 
     public PlayerData(string level, Vector3 position)
     {
@@ -44,7 +44,7 @@ public class PlayerData
     {
         this.level = level;
     }
-    
+
     public void SetPlayerID(string id)
     {
         playerID = id;

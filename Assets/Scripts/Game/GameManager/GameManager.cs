@@ -111,7 +111,15 @@ public class GameManager : MonoBehaviour
 
     public void SetObjectiveText(string text)
     {
-        objectiveText.text = text;
+        if (objectiveText != null)
+        {
+            Debug.Log("Setting objective text to: " + text);
+            objectiveText.text = text;
+        }
+        else
+        {
+            Debug.LogError("Objective Text is not assigned or initialized!");
+        }
     }
 
     public async Task SavePlayerData()
@@ -161,9 +169,7 @@ public class GameManager : MonoBehaviour
         {
             Vector3 spawnPosition = loadedData.GetPosition();
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            Debug.Log($"Loaded new Player Level: {loadedData.GetLevel()}");
-            Debug.Log($"Loaded new Player Name: {loadedData.GetPlayerID()}");
-            Debug.Log($"Loaded new Player Position: {spawnPosition}");
+            SetObjectiveText(loadedData.GetActiveQuest());
         }
         else
         {
