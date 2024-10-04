@@ -13,6 +13,8 @@ public class DialogueInteractable : Interactable
     [SerializeField] private List<string> characterDialogueLines;
     [SerializeField] private bool doesCharacterStartFirst = false;
     [SerializeField] private GameObject dialogueIcon;
+    [SerializeField] protected Sprite dialogueIconSprite;
+    [SerializeField] protected Sprite dialogueIconHighlightedSprite;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
@@ -116,9 +118,9 @@ public class DialogueInteractable : Interactable
 
             if (!conversationComplete)
             {
-                HighlightObject(true);
                 if (dialogueIcon != null)
                 {
+                    HighlightObject(true);
                     dialogueIcon.SetActive(true);
                 }
             }
@@ -139,12 +141,21 @@ public class DialogueInteractable : Interactable
                 }
             }
 
-            HighlightObject(false);
-
             if (dialogueIcon != null)
             {
+                HighlightObject(false);
                 dialogueIcon.SetActive(true);
             }
+        }
+    }
+
+    protected override void HighlightObject(bool highlight)
+    {  
+        base.HighlightObject(highlight);
+        SpriteRenderer dialogueIconSpriteRenderer = dialogueIcon.GetComponent<SpriteRenderer>();
+        if (dialogueIconSpriteRenderer != null)
+        {
+            dialogueIconSpriteRenderer.sprite = highlight && dialogueIconHighlightedSprite != null ? dialogueIconHighlightedSprite : dialogueIconSprite;
         }
     }
 }

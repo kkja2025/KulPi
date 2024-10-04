@@ -440,7 +440,6 @@ GameObject:
   - component: {fileID: 157801700}
   - component: {fileID: 157801699}
   - component: {fileID: 157801698}
-  - component: {fileID: 157801705}
   - component: {fileID: 157801704}
   - component: {fileID: 157801703}
   m_Layer: 0
@@ -463,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 1331599780, guid: 943b204b975be8a4b96d1e3a0dd999a6, type: 3}
-  highlightedSprite: {fileID: 0}
+  highlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
   onCollisionSound: {fileID: 0}
   characterName: Aling Rosa
   lakanDialogueLines:
@@ -475,6 +474,8 @@ MonoBehaviour:
   - Find the source of the pollution. It's coming from the Sacred Grove.
   doesCharacterStartFirst: 0
   dialogueIcon: {fileID: 628792052}
+  dialogueIconSprite: {fileID: 0}
+  dialogueIconHighlightedSprite: {fileID: 0}
 --- !u!58 &157801699
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -625,50 +626,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Keyboard>/e
---- !u!114 &157801705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157801697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &172982239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2667,6 +2624,8 @@ MonoBehaviour:
   - We need to purify the Sacred Grove. Perhaps the Babaylan knows how.
   doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 897186194}
+  dialogueIconSprite: {fileID: 0}
+  dialogueIconHighlightedSprite: {fileID: 0}
 --- !u!95 &1327894788
 Animator:
   serializedVersion: 5
@@ -2862,7 +2821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3209146870802893673, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278826203
+      value: 4278252543
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
