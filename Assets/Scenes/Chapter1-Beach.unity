@@ -318,11 +318,11 @@ Transform:
   m_GameObject: {fileID: 83359665}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 35.78, y: 0.83, z: 0}
+  m_LocalPosition: {x: 19.99, y: 0.36, z: 0}
   m_LocalScale: {x: 0.12103436, y: 0.14369355, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1429394077}
+  m_Father: {fileID: 1523227125}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &83359667
 CircleCollider2D:
@@ -425,7 +425,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
-  spriteID: 
   onCollisionSound: {fileID: 0}
   sceneName: Chapter1-Jungle
 --- !u!1 &157801697
@@ -465,7 +464,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 1331599780, guid: 943b204b975be8a4b96d1e3a0dd999a6, type: 3}
   highlightedSprite: {fileID: 0}
-  spriteID: 
   onCollisionSound: {fileID: 0}
   characterName: Worried Mother
   lakanDialogueLines:
@@ -478,6 +476,8 @@ MonoBehaviour:
     to her. She might have answers."
   doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 628792052}
+  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
+  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 4e9a49d145e300240b3e49c091077704, type: 3}
 --- !u!58 &157801699
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -778,143 +778,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1226817343550661433, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
   m_PrefabInstance: {fileID: 1392687532}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &259289086
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 259289090}
-  - component: {fileID: 259289089}
-  - component: {fileID: 259289088}
-  - component: {fileID: 259289091}
-  m_Layer: 0
-  m_Name: Herb
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!58 &259289088
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259289086}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.2
---- !u!212 &259289089
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259289086}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 966c31ee8e9e38e42a767566396f742a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.45, y: 0.3}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &259289090
+--- !u!4 &259289090 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+  m_PrefabInstance: {fileID: 1260589063799063071}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259289086}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.94, y: 0.04, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1429394077}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &259289091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259289086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df1fe8c4023786a4bbe26eb8506b8ed3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalSprite: {fileID: 21300000, guid: 966c31ee8e9e38e42a767566396f742a, type: 3}
-  highlightedSprite: {fileID: 21300000, guid: 5f3fa3bddcd9f464b862f719c42ea869, type: 3}
-  spriteID: Bush 1 (no flowers) - GREEN
-  onCollisionSound: {fileID: 0}
 --- !u!1 &285863589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,11 +1471,11 @@ Transform:
   m_GameObject: {fileID: 802891533}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.25, y: 0.29, z: 0}
+  m_LocalPosition: {x: 4.25, y: 0.28999996, z: 0}
   m_LocalScale: {x: 0.12103436, y: 0.14369355, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1429394077}
+  m_Father: {fileID: 1720577227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &802891535
 MonoBehaviour:
@@ -1623,7 +1491,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
-  spriteID: 
   onCollisionSound: {fileID: 8300000, guid: 719756587bf9c67438ef045ad337e0ee, type: 3}
 --- !u!58 &802891536
 CircleCollider2D:
@@ -2383,7 +2250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1091311939}
-  - component: {fileID: 1091311938}
+  - component: {fileID: 1091311940}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2391,19 +2258,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1091311938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1091311937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85d168bbbb0dae342825b9796c999766, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 3168744701678708216, guid: 8a33f397e1747854d936a2b5beb73409, type: 3}
 --- !u!4 &1091311939
 Transform:
   m_ObjectHideFlags: 0
@@ -2421,6 +2275,20 @@ Transform:
   - {fileID: 1786011512}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1091311940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091311937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec4a5ce0954f0d44b8a052277bc89ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 3168744701678708216, guid: 8a33f397e1747854d936a2b5beb73409, type: 3}
+  objectiveText: {fileID: 1392687533}
 --- !u!1 &1136032811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,7 +2867,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
   highlightedSprite: {fileID: 0}
-  spriteID: 
   onCollisionSound: {fileID: 0}
   characterName: Elder Fisherman
   lakanDialogueLines:
@@ -3013,6 +2880,8 @@ MonoBehaviour:
     village is swallowed by the sea.
   doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 897186194}
+  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
+  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
 --- !u!95 &1327894788
 Animator:
   serializedVersion: 5
@@ -3095,7 +2964,7 @@ Transform:
   m_GameObject: {fileID: 1327894785}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.13, y: 0.29, z: 0}
+  m_LocalPosition: {x: 2.1299999, y: 0.28999996, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3207,6 +3076,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+--- !u!114 &1392687533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3209146870802893673, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+  m_PrefabInstance: {fileID: 1392687532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1428995615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,7 +3116,7 @@ Transform:
   m_GameObject: {fileID: 1428995615}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.89, y: 0.27, z: 0}
+  m_LocalPosition: {x: 25.89, y: 0.26999998, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3292,7 +3172,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
   highlightedSprite: {fileID: 0}
-  spriteID: 
   onCollisionSound: {fileID: 0}
   characterName: Old Man
   lakanDialogueLines:
@@ -3305,6 +3184,8 @@ MonoBehaviour:
     this?
   doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 1620818586}
+  dialogueIconSprite: {fileID: 0}
+  dialogueIconHighlightedSprite: {fileID: 0}
 --- !u!95 &1428995619
 Animator:
   serializedVersion: 5
@@ -3407,9 +3288,6 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 259289090}
-  - {fileID: 83359666}
-  - {fileID: 802891534}
   - {fileID: 1327894790}
   - {fileID: 157801702}
   - {fileID: 1563984207}
@@ -3624,6 +3502,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 285863589}
   parallaxEffect: 1
+--- !u!1 &1523227124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1523227125}
+  m_Layer: 0
+  m_Name: Items
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1523227125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523227124}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.44, y: -4.18, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 259289090}
+  - {fileID: 83359666}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1549504315 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8584209383678071674, guid: f31996b2eb89fa6428e0e600780b6a31, type: 3}
@@ -3658,7 +3569,7 @@ Transform:
   m_GameObject: {fileID: 1563984206}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.65, y: 0.27, z: 0}
+  m_LocalPosition: {x: 17.65, y: 0.26999998, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3714,7 +3625,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
   highlightedSprite: {fileID: 0}
-  spriteID: 
   onCollisionSound: {fileID: 0}
   characterName: Young Villager
   lakanDialogueLines:
@@ -3727,6 +3637,8 @@ MonoBehaviour:
     it is, we\u2019re trapped in it now."
   doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 885253857}
+  dialogueIconSprite: {fileID: 0}
+  dialogueIconHighlightedSprite: {fileID: 0}
 --- !u!95 &1563984210
 Animator:
   serializedVersion: 5
@@ -24323,6 +24235,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1720577226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1720577227}
+  m_Layer: 0
+  m_Name: Animals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1720577227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720577226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.44, y: -4.18, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 802891534}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1740826491
 GameObject:
   m_ObjectHideFlags: 0
@@ -25969,6 +25913,83 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7422719261795765143, guid: fa753ae6fedefff448092c751ed1771b, type: 3}
   m_PrefabInstance: {fileID: 1163770395}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1260589063799063071
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1523227125}
+    m_Modifications:
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948677336838944258, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723989319488503758, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: spriteID
+      value: Bush 1 (no flowers) - GREEN
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723989319488503758, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: normalSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 966c31ee8e9e38e42a767566396f742a, type: 3}
+    - target: {fileID: 3723989319488503758, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: highlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5f3fa3bddcd9f464b862f719c42ea869, type: 3}
+    - target: {fileID: 7640532005889362631, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 966c31ee8e9e38e42a767566396f742a, type: 3}
+    - target: {fileID: 7640532005889362631, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790742384432185631, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: m_Name
+      value: Herb
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
 --- !u!224 &1623232575418322170 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6887887389124419781, guid: 56d7835d2709d114483cfef2ea579cee, type: 3}
@@ -26183,4 +26204,6 @@ SceneRoots:
   - {fileID: 1894741812}
   - {fileID: 500321310}
   - {fileID: 717148156}
+  - {fileID: 1523227125}
+  - {fileID: 1720577227}
   - {fileID: 1429394077}
