@@ -189,12 +189,12 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-    public void PlaySoundEffect(AudioClip clip)
+    public void PlaySoundEffect(AudioClip clip, bool loop)
     {
         if (clip != null)
         {
             soundEffectsSource.clip = clip;
-            soundEffectsSource.loop = false;
+            soundEffectsSource.loop = loop;
             soundEffectsSource.Play();
         }
     }

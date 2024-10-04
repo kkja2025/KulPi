@@ -113,13 +113,26 @@ public class PanelManager : MonoBehaviour
 
     public static void LoadSceneAsync(string sceneName)
     {
-        Singleton.StartCoroutine(Singleton.LoadSceneCoroutine(sceneName));
+        try
+        {
+            Singleton.StartCoroutine(Singleton.LoadSceneCoroutine(sceneName));
+        }
+        catch (System.Exception ex)
+        {
+            SceneManager.LoadScene("Login");
+        }
     }
 
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
         CloseAll();
         Open("loading");
+
+        AudioSource soundEffectsSource = AudioManager.Singleton.GetSoundEffectsSource();
+        if (soundEffectsSource != null)
+        {
+            soundEffectsSource.Stop();
+        }
 
         Image loadingBar = GetSingleton("loading").transform.Find("Container/LoadingBarContainer/LoadingBar").GetComponent<Image>();
         loadingBar.fillAmount = 0;

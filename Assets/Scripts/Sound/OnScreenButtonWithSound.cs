@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class OnScreenButtonWithSound : MonoBehaviour, IPointerDownHandler
@@ -14,7 +13,7 @@ public class OnScreenButtonWithSound : MonoBehaviour, IPointerDownHandler
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
-    {   
+    {  
         soundEffectsSource.PlayOneShot(clickSound);
     }
 }

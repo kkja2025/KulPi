@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     public Animator anim;
     private SpriteRenderer spriteRenderer;
-    bool isGrounded;
+    public bool isGrounded;
     public Transform groundCheck;
 
     private float direction = 0f;
@@ -100,9 +100,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-
     }
-
 
     private void OnEnable()
     {
