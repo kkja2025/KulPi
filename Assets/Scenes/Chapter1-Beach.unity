@@ -439,10 +439,10 @@ GameObject:
   - component: {fileID: 157801701}
   - component: {fileID: 157801700}
   - component: {fileID: 157801699}
-  - component: {fileID: 157801698}
   - component: {fileID: 157801705}
   - component: {fileID: 157801704}
   - component: {fileID: 157801703}
+  - component: {fileID: 157801706}
   m_Layer: 0
   m_Name: WorriedMother
   m_TagString: Untagged
@@ -450,34 +450,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &157801698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157801697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef73454d116c90640acde274104c529b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalSprite: {fileID: 1331599780, guid: 943b204b975be8a4b96d1e3a0dd999a6, type: 3}
-  highlightedSprite: {fileID: 0}
-  onCollisionSound: {fileID: 0}
-  characterName: Worried Mother
-  lakanDialogueLines:
-  - How long has it been like this?
-  characterDialogueLines:
-  - "We can't drink the water anymore. It burns the skin... And my children, they\u2019ve
-    been coughing ever since the river turned black."
-  - "It started when the trees began falling\u2014one by one, as if struck by an
-    invisible hand. Babaylan says it's a curse. Please, if you're here to help, go
-    to her. She might have answers."
-  doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 628792052}
-  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
-  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 4e9a49d145e300240b3e49c091077704, type: 3}
 --- !u!58 &157801699
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -672,6 +644,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &157801706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157801697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSprite: {fileID: 1331599780, guid: 943b204b975be8a4b96d1e3a0dd999a6, type: 3}
+  highlightedSprite: {fileID: 0}
+  onCollisionSound: {fileID: 0}
+  characterName: Worried Mother
+  lakanDialogueLines:
+  - How long has it been like this?
+  characterDialogueLines:
+  - "We can't drink the water anymore. It burns the skin... And my children, they\u2019ve
+    been coughing ever since the river turned black."
+  - "It started when the trees began falling\u2014one by one, as if struck by an
+    invisible hand. Babaylan says it's a curse. Please, if you're here to help, go
+    to her. She might have answers."
+  doesCharacterStartFirst: 1
+  dialogueIcon: {fileID: 0}
+  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
+  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
 --- !u!1001 &172982239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2809,8 +2809,8 @@ GameObject:
   - component: {fileID: 1327894790}
   - component: {fileID: 1327894789}
   - component: {fileID: 1327894788}
-  - component: {fileID: 1327894787}
   - component: {fileID: 1327894786}
+  - component: {fileID: 1327894791}
   m_Layer: 0
   m_Name: ElderFisherman
   m_TagString: Untagged
@@ -2853,35 +2853,6 @@ CircleCollider2D:
   m_Offset: {x: -0.08950138, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &1327894787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327894785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef73454d116c90640acde274104c529b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
-  highlightedSprite: {fileID: 0}
-  onCollisionSound: {fileID: 0}
-  characterName: Elder Fisherman
-  lakanDialogueLines:
-  - What happened here?
-  characterDialogueLines:
-  - "This sea used to be our lifeblood... Now, it's a graveyard. Every morning, more
-    fish float to the surface\u2014bloated, poisoned. It's like the ocean itself
-    is sick."
-  - No one knows for sure... But the elders say we angered the Diwata. The Babaylan
-    will know more. Maybe there's still time to make things right... before the whole
-    village is swallowed by the sea.
-  doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 897186194}
-  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
-  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 4e9a49d145e300240b3e49c091077704, type: 3}
 --- !u!95 &1327894788
 Animator:
   serializedVersion: 5
@@ -2971,6 +2942,35 @@ Transform:
   - {fileID: 897186196}
   m_Father: {fileID: 1429394077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1327894791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327894785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
+  highlightedSprite: {fileID: 0}
+  onCollisionSound: {fileID: 0}
+  characterName: Elder Fisherman
+  lakanDialogueLines:
+  - What happened here?
+  characterDialogueLines:
+  - "This sea used to be our lifeblood... Now, it's a graveyard. Every morning, more
+    fish float to the surface\u2014bloated, poisoned. It's like the ocean itself
+    is sick."
+  - No one knows for sure... But the elders say we angered the Diwata. The Babaylan
+    will know more. Maybe there's still time to make things right... before the whole
+    village is swallowed by the sea.
+  doesCharacterStartFirst: 1
+  dialogueIcon: {fileID: 0}
+  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
+  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
 --- !u!1001 &1392687532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3102,8 +3102,8 @@ GameObject:
   - component: {fileID: 1428995616}
   - component: {fileID: 1428995620}
   - component: {fileID: 1428995619}
-  - component: {fileID: 1428995618}
   - component: {fileID: 1428995617}
+  - component: {fileID: 1428995621}
   m_Layer: 0
   m_Name: OldMan
   m_TagString: Untagged
@@ -3162,34 +3162,6 @@ CircleCollider2D:
   m_Offset: {x: -0.08950138, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &1428995618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428995615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef73454d116c90640acde274104c529b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
-  highlightedSprite: {fileID: 0}
-  onCollisionSound: {fileID: 0}
-  characterName: Old Man
-  lakanDialogueLines:
-  - What do you mean?
-  characterDialogueLines:
-  - "The wind doesn\u2019t blow like it used to. It\u2019s as if even the spirits
-    have abandoned this place."
-  - Once, we lived in harmony with the land, with the Diwata. But now... there is
-    only anger, destruction. Fallen trees, poisoned waters. What did we do to deserve
-    this?
-  doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 1620818586}
-  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
-  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 4e9a49d145e300240b3e49c091077704, type: 3}
 --- !u!95 &1428995619
 Animator:
   serializedVersion: 5
@@ -3263,6 +3235,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1428995621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428995615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
+  highlightedSprite: {fileID: 0}
+  onCollisionSound: {fileID: 0}
+  characterName: Old Man
+  lakanDialogueLines:
+  - What do you mean?
+  characterDialogueLines:
+  - "The wind doesn\u2019t blow like it used to. It\u2019s as if even the spirits
+    have abandoned this place."
+  - Once, we lived in harmony with the land, with the Diwata. But now... there is
+    only anger, destruction. Fallen trees, poisoned waters. What did we do to deserve
+    this?
+  doesCharacterStartFirst: 1
+  dialogueIcon: {fileID: 0}
+  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
+  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
 --- !u!1 &1429394076
 GameObject:
   m_ObjectHideFlags: 0
@@ -3555,8 +3555,8 @@ GameObject:
   - component: {fileID: 1563984207}
   - component: {fileID: 1563984211}
   - component: {fileID: 1563984210}
-  - component: {fileID: 1563984209}
   - component: {fileID: 1563984208}
+  - component: {fileID: 1563984212}
   m_Layer: 0
   m_Name: YoungVillager
   m_TagString: Untagged
@@ -3615,34 +3615,6 @@ CircleCollider2D:
   m_Offset: {x: -0.08950138, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &1563984209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563984206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef73454d116c90640acde274104c529b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
-  highlightedSprite: {fileID: 0}
-  onCollisionSound: {fileID: 0}
-  characterName: Young Villager
-  lakanDialogueLines:
-  - Has anyone tried to stop it?
-  characterDialogueLines:
-  - "We should leave... Before it's too late. The Diwata is angry, and we\u2019re
-    paying the price."
-  - "Some tried to make offerings, but... nothing changes. The Babaylan says it\u2019s
-    deeper than just a broken promise. She can explain better than I can. But whatever
-    it is, we\u2019re trapped in it now."
-  doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 885253857}
-  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
-  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 4e9a49d145e300240b3e49c091077704, type: 3}
 --- !u!95 &1563984210
 Animator:
   serializedVersion: 5
@@ -3716,6 +3688,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1563984212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563984206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
+  highlightedSprite: {fileID: 0}
+  onCollisionSound: {fileID: 0}
+  characterName: Young Villager
+  lakanDialogueLines:
+  - Has anyone tried to stop it?
+  characterDialogueLines:
+  - "We should leave... Before it's too late. The Diwata is angry, and we\u2019re
+    paying the price."
+  - "Some tried to make offerings, but... nothing changes. The Babaylan says it\u2019s
+    deeper than just a broken promise. She can explain better than I can. But whatever
+    it is, we\u2019re trapped in it now."
+  doesCharacterStartFirst: 0
+  dialogueIcon: {fileID: 0}
+  dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
+  dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
 --- !u!1 &1583476453
 GameObject:
   m_ObjectHideFlags: 0
