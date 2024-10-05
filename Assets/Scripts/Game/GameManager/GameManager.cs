@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void SetObjectiveText(string text)
+    public virtual void SetObjective(string text)
     {
         if (objectiveText != null)
         {
@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
         {
             Vector3 spawnPosition = loadedData.GetPosition();
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            SetObjectiveText(loadedData.GetActiveQuest());
+            SetObjective(loadedData.GetActiveQuest());
         }
         else
         {
