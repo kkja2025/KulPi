@@ -21,6 +21,7 @@ public class HUDMenu : Panel
         {
             return;
         }
+        isQuestTextVisible = questTextObject.activeSelf;
         pauseButton.onClick.AddListener(OpenPause);
         inventoryButton.onClick.AddListener(OpenInventory);
         encyclopediaButton.onClick.AddListener(OpenEncyclopedia);

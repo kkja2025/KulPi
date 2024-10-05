@@ -19,7 +19,7 @@ public class DialogueInteractable : Interactable
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
     private bool isLakanTurn = true;
-    protected bool conversationComplete = false;
+    private bool conversationComplete = false;
 
     protected virtual void Start()
     {

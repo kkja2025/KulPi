@@ -28,6 +28,11 @@ public class Chapter1GameManager : GameManager
         await SavePlayerData();
     }
 
+    public string GetObjective()
+    {
+        return currentObjective;
+    }
+
     public bool IsObjectiveComplete()
     {
         return isObjectiveComplete;
