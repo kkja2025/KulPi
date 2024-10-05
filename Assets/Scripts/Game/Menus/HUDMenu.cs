@@ -10,6 +10,10 @@ public class HUDMenu : Panel
     [SerializeField] private Button pauseButton = null;
     [SerializeField] private Button inventoryButton = null;
     [SerializeField] private Button encyclopediaButton = null;
+    [SerializeField] private Button questButton = null;
+    [SerializeField] private GameObject questTextObject;
+    private bool isQuestTextVisible = false;
+
 
     public override void Initialize()
     {
@@ -20,6 +24,7 @@ public class HUDMenu : Panel
         pauseButton.onClick.AddListener(OpenPause);
         inventoryButton.onClick.AddListener(OpenInventory);
         encyclopediaButton.onClick.AddListener(OpenEncyclopedia);
+        questButton.onClick.AddListener(ShowQuest);
         base.Initialize();
     }
 
@@ -33,10 +38,15 @@ public class HUDMenu : Panel
         PanelManager.GetSingleton("encyclopedia").Open();    
     }
 
+    private void ShowQuest()
+    {
+        isQuestTextVisible = !isQuestTextVisible;
+        questTextObject.SetActive(isQuestTextVisible);
+    }
+
     private void OpenPause()
     {
         Time.timeScale = 0;
         PanelManager.GetSingleton("pause").Open();
     }
-
 }

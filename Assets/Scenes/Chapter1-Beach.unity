@@ -318,7 +318,7 @@ Transform:
   m_GameObject: {fileID: 83359665}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.24, y: 0.46, z: 0}
+  m_LocalPosition: {x: 20.06, y: 0.46, z: 0}
   m_LocalScale: {x: 0.12103436, y: 0.14369355, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -567,7 +567,7 @@ Transform:
   m_GameObject: {fileID: 157801697}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.45, y: 0.32, z: 0}
+  m_LocalPosition: {x: 6.54, y: 0.32, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -669,9 +669,11 @@ MonoBehaviour:
     invisible hand. Babaylan says it's a curse. Please, if you're here to help, go
     to her. She might have answers."
   doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 0}
+  dialogueIcon: {fileID: 628792052}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  giveNewObjective: Make your way deeper into the village. Find the Babaylan.
+  totalNPCs: 4
 --- !u!1001 &172982239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1967,6 +1969,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4169020621501304333, guid: 3d861856f30928d4684f96de81429384, type: 3}
   m_PrefabInstance: {fileID: 840558164}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &861559734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8393095628245401501, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+  m_PrefabInstance: {fileID: 1392687532}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &885253857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2714,6 +2721,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1254342844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8934119628326707214, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+  m_PrefabInstance: {fileID: 1392687532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1266536327
 GameObject:
   m_ObjectHideFlags: 0
@@ -2968,9 +2986,11 @@ MonoBehaviour:
     will know more. Maybe there's still time to make things right... before the whole
     village is swallowed by the sea.
   doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 0}
+  dialogueIcon: {fileID: 897186194}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  giveNewObjective: Make your way deeper into the village. Find the Babaylan.
+  totalNPCs: 4
 --- !u!1001 &1392687532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3071,9 +3091,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 8366815094534486446, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 3844053848140345905, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -220
+      objectReference: {fileID: 0}
+    - target: {fileID: 5102418501168117871, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: questButton
+      value: 
+      objectReference: {fileID: 1254342844}
+    - target: {fileID: 5102418501168117871, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: questTextObject
+      value: 
+      objectReference: {fileID: 861559734}
+    - target: {fileID: 6984707049411885169, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: m_Name
+      value: QuestButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3085,7 +3117,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3209146870802893673, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
   m_PrefabInstance: {fileID: 1392687532}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 861559734}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -3120,7 +3152,7 @@ Transform:
   m_GameObject: {fileID: 1428995615}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.89, y: 0.26999998, z: 0}
+  m_LocalPosition: {x: 15.87, y: 0.26999998, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3260,9 +3292,11 @@ MonoBehaviour:
     only anger, destruction. Fallen trees, poisoned waters. What did we do to deserve
     this?
   doesCharacterStartFirst: 1
-  dialogueIcon: {fileID: 0}
+  dialogueIcon: {fileID: 1620818586}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  giveNewObjective: Make your way deeper into the village. Find the Babaylan.
+  totalNPCs: 4
 --- !u!1 &1429394076
 GameObject:
   m_ObjectHideFlags: 0
@@ -3573,7 +3607,7 @@ Transform:
   m_GameObject: {fileID: 1563984206}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.65, y: 0.26999998, z: 0}
+  m_LocalPosition: {x: 11.24, y: 0.26999998, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3713,9 +3747,11 @@ MonoBehaviour:
     deeper than just a broken promise. She can explain better than I can. But whatever
     it is, we\u2019re trapped in it now."
   doesCharacterStartFirst: 0
-  dialogueIcon: {fileID: 0}
+  dialogueIcon: {fileID: 885253857}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  giveNewObjective: Make your way deeper into the village. Find the Babaylan.
+  totalNPCs: 4
 --- !u!1 &1583476453
 GameObject:
   m_ObjectHideFlags: 0
