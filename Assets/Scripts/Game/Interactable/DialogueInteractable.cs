@@ -14,7 +14,7 @@ public class DialogueInteractable : Interactable
     [SerializeField] private GameObject dialogueIcon;
     [SerializeField] protected Sprite dialogueIconSprite;
     [SerializeField] protected Sprite dialogueIconHighlightedSprite;
-    [SerializeField] private Button dialogueInteractButton;
+    private Button dialogueInteractButton;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
@@ -23,17 +23,12 @@ public class DialogueInteractable : Interactable
 
     protected override void Awake()
     {
+        isLakanTurn = !doesCharacterStartFirst;
         base.Awake();
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(true);
         }
-
-        if (dialogueInteractButton != null)
-        {
-            dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
-        }
-        isLakanTurn = !doesCharacterStartFirst;
     }
 
     protected override void OnInteractButtonClicked()
@@ -47,6 +42,12 @@ public class DialogueInteractable : Interactable
             Time.timeScale = 0;
             Time.timeScale = 1;
             PanelManager.GetSingleton("dialogue").Open();
+            if(dialogueInteractButton == null)
+            {
+                GameObject buttonObject = GameObject.FindWithTag("DialogueInteractButton");
+                dialogueInteractButton = buttonObject.GetComponent<Button>();
+                dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
+            }
             Interact();
         }
     }
@@ -62,6 +63,8 @@ public class DialogueInteractable : Interactable
                 dialogueIcon.SetActive(true);
             }
             PanelManager.GetSingleton("dialogue").Close();
+
+            isLakanTurn = !doesCharacterStartFirst;
             lakanDialogueIndex = 0;
             characterDialogueIndex = 0;
             conversationComplete = false;

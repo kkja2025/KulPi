@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProgressBlocker : DialogueInteractable
 {
-    [SerializeField] private string completedObjective;
+    [SerializeField] private string completedObjective = null;
     private Collider2D barrierCollider;
     private Chapter1GameManager gameManager;
 
@@ -19,18 +19,25 @@ public class ProgressBlocker : DialogueInteractable
     {
         if (collision.CompareTag("Player"))
         {
-            if (completedObjective == gameManager.GetObjective())
+            isPlayerInRange = true;
+            conversationComplete = false;
+
+            if (string.IsNullOrEmpty(completedObjective) || completedObjective == gameManager.GetObjective())
             {
+                Debug.Log("Opening dialogue. Objective is either null or matched.");
+
                 if (barrierCollider != null)
                 {
                     OnInteractButtonClicked();
-                    barrierCollider.enabled = true;
+                    barrierCollider.enabled = true; 
                 }
-            } 
+            }
             else
             {
+                Debug.Log("Objective completed. Destroying the barrier.");
                 Destroy(gameObject);
             }
         }
     }
+
 }
