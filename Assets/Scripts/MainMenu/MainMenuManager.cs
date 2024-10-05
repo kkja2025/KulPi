@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
 using Unity.Services.Core;
@@ -56,12 +55,7 @@ public class MainMenuManager : MonoBehaviour
             var firebaseService = FirebaseService.Singleton;
             auth = firebaseService.Auth;
             FirebaseUser user = auth.CurrentUser;
-            if (user == null)
-            {
-                Debug.Log("User is not signed in.");
-                PanelManager.LoadSceneAsync("Login");
-            }
-            else
+            if (user != null)
             {
                 PanelManager.CloseAll();
                 PanelManager.GetSingleton("main").Open();
@@ -70,7 +64,6 @@ public class MainMenuManager : MonoBehaviour
         catch (Exception exception)
         {
             Debug.LogError($"Failed to start client service: {exception.Message}");
-            ShowPopUp(PopUpMenu.Action.None, "Failed to start client service.", "Retry");
             PanelManager.LoadSceneAsync("Login");
         }
     }
@@ -143,7 +136,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
     {
-        PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
     }

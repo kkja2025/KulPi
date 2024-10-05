@@ -1,12 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
-#if UNITY_EDITOR
-using UnityEditor.Tilemaps;
-#endif
 
 public class Interactable : MonoBehaviour
 {
@@ -17,9 +12,8 @@ public class Interactable : MonoBehaviour
     [SerializeField] protected AudioClip onCollisionSound;
     protected Button interactButton;
     protected InteractButtonPositioner buttonPositioner;
-    protected PlayerInput controls;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         GameObject buttonObject = GameObject.FindWithTag("InteractButton");
         if (buttonObject != null)
@@ -32,6 +26,7 @@ public class Interactable : MonoBehaviour
             else
             {
                 buttonPositioner = interactButton.GetComponent<InteractButtonPositioner>();
+                interactButton.onClick.AddListener(OnInteractButtonClicked); 
             }
         }
         else
@@ -40,20 +35,9 @@ public class Interactable : MonoBehaviour
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        controls = new PlayerInput();
     }
 
-    protected virtual void OnEnable()
-    {
-        controls.Enable();
-    }
-
-    protected virtual void OnDisable()
-    {
-        controls.Disable();
-    }
-
-    protected virtual void OnInteract(InputAction.CallbackContext context)
+    protected virtual void OnInteractButtonClicked()
     {
         if (isPlayerInRange)
         {
@@ -70,14 +54,14 @@ public class Interactable : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerInRange = true; 
+            isPlayerInRange = true;
             if (buttonPositioner != null)
             {
                 buttonPositioner.SetTargetObject(transform); 
             }
+
             AudioManager.Singleton.PlayBackgroundSound(onCollisionSound, false);
-            controls.Land.Interact.performed += OnInteract;
-            HighlightObject(true);
+            HighlightObject(true); 
         }
     }
 
@@ -90,9 +74,7 @@ public class Interactable : MonoBehaviour
             {
                 buttonPositioner.SetTargetObject(null); 
             }
-
-            controls.Land.Interact.performed -= OnInteract;
-            HighlightObject(false);
+            HighlightObject(false); 
         }
     }
 

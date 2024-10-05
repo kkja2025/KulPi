@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ProgressBlocker : DialogueInteractable
 {
@@ -9,9 +8,9 @@ public class ProgressBlocker : DialogueInteractable
     private Collider2D barrierCollider;
     private Chapter1GameManager gameManager;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         gameManager = GameManager.Singleton as Chapter1GameManager;
         barrierCollider = GetComponent<Collider2D>();
     }
@@ -19,21 +18,19 @@ public class ProgressBlocker : DialogueInteractable
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {   
-            PanelManager.GetSingleton("dialogue").Open();
-            Interact();
-            if (completedObjective != gameManager.GetObjective())
+        {
+            if (completedObjective == gameManager.GetObjective())
             {
                 if (barrierCollider != null)
                 {
+                    OnInteractButtonClicked();
                     barrierCollider.enabled = true;
                 }
             } 
             else
             {
-                barrierCollider.enabled = false;
+                Destroy(gameObject);
             }
-            
         }
     }
 }

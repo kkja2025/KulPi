@@ -439,9 +439,6 @@ GameObject:
   - component: {fileID: 157801701}
   - component: {fileID: 157801700}
   - component: {fileID: 157801699}
-  - component: {fileID: 157801705}
-  - component: {fileID: 157801704}
-  - component: {fileID: 157801703}
   - component: {fileID: 157801706}
   m_Layer: 0
   m_Name: WorriedMother
@@ -574,76 +571,6 @@ Transform:
   - {fileID: 628792053}
   m_Father: {fileID: 1429394077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &157801703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157801697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e3693f7ff5cd1440a223e73638a1732, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: f9da1c2ad7d18e8449d0cdee91a2e695, type: 3}
---- !u!114 &157801704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157801697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Keyboard>/e
---- !u!114 &157801705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157801697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &157801706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,6 +599,7 @@ MonoBehaviour:
   dialogueIcon: {fileID: 628792052}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  dialogueInteractButton: {fileID: 840558166}
   giveNewObjective: Make your way deeper into the village. Find the Babaylan.
   totalNPCs: 4
 --- !u!1001 &172982239
@@ -1839,6 +1767,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 500321310}
     m_Modifications:
+    - target: {fileID: 147995849611642089, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 469092472740098698, guid: 3d861856f30928d4684f96de81429384, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1965.6
@@ -1870,6 +1802,34 @@ PrefabInstance:
     - target: {fileID: 3130620919337862124, guid: 3d861856f30928d4684f96de81429384, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 11500000, guid: ed9145ca61616e94586387fc4f4bc43b, type: 3}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_name
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4169020621501304333, guid: 3d861856f30928d4684f96de81429384, type: 3}
       propertyPath: m_Pivot.x
@@ -1993,6 +1953,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4169020621501304333, guid: 3d861856f30928d4684f96de81429384, type: 3}
   m_PrefabInstance: {fileID: 840558164}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &840558166 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3208705663845455669, guid: 3d861856f30928d4684f96de81429384, type: 3}
+  m_PrefabInstance: {fileID: 840558164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &861559734 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8393095628245401501, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
@@ -2194,10 +2165,11 @@ Transform:
   m_GameObject: {fileID: 911288747}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.39, y: 0.33, z: 0}
+  m_LocalPosition: {x: -3.39, y: -0.45, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1294176831}
   m_Father: {fileID: 1523227125}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &911288749
@@ -2232,7 +2204,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 4.691282}
+  m_Offset: {x: 0, y: 5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2243,7 +2215,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 13.810279}
+  m_Size: {x: 1, y: 10}
   m_EdgeRadius: 0
 --- !u!95 &911288751
 Animator:
@@ -2289,6 +2261,7 @@ MonoBehaviour:
   dialogueIcon: {fileID: 0}
   dialogueIconSprite: {fileID: 0}
   dialogueIconHighlightedSprite: {fileID: 0}
+  dialogueInteractButton: {fileID: 840558166}
   completedObjective: Make your way to the village. Find out what is happening.
 --- !u!1 &962060771
 GameObject:
@@ -2964,6 +2937,129 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1294176830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294176831}
+  - component: {fileID: 1294176833}
+  - component: {fileID: 1294176832}
+  m_Layer: 0
+  m_Name: Barrier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1294176831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294176830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 911288748}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1294176832
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294176830}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 10}
+  m_EdgeRadius: 0
+--- !u!61 &1294176833
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294176830}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 2.1594596}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5.318919}
+  m_EdgeRadius: 0
 --- !u!1 &1327894785
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,6 +3233,7 @@ MonoBehaviour:
   dialogueIcon: {fileID: 897186194}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  dialogueInteractButton: {fileID: 840558166}
   giveNewObjective: Make your way deeper into the village. Find the Babaylan.
   totalNPCs: 4
 --- !u!1001 &1392687532
@@ -3443,6 +3540,7 @@ MonoBehaviour:
   dialogueIcon: {fileID: 1620818586}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  dialogueInteractButton: {fileID: 840558166}
   giveNewObjective: Make your way deeper into the village. Find the Babaylan.
   totalNPCs: 4
 --- !u!1 &1429394076
@@ -3895,10 +3993,11 @@ MonoBehaviour:
   - "Some tried to make offerings, but... nothing changes. The Babaylan says it\u2019s
     deeper than just a broken promise. She can explain better than I can. But whatever
     it is, we\u2019re trapped in it now."
-  doesCharacterStartFirst: 0
+  doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 885253857}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
   dialogueIconHighlightedSprite: {fileID: 21300000, guid: 0e56e96901a4475419429e288aaf03b2, type: 3}
+  dialogueInteractButton: {fileID: 840558166}
   giveNewObjective: Make your way deeper into the village. Find the Babaylan.
   totalNPCs: 4
 --- !u!1 &1583476453

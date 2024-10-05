@@ -4,13 +4,13 @@ using UnityEngine;
 public class QuestNPCInteraction : DialogueInteractable
 {
     [SerializeField] private string giveNewObjective;
-    [SerializeField] private int totalNPCs = 1;
+    [SerializeField] private int totalNPCs;
     private bool hasTalked = false;
     private Chapter1GameManager gameManager;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         gameManager = GameManager.Singleton as Chapter1GameManager;
     }
 
@@ -21,6 +21,7 @@ public class QuestNPCInteraction : DialogueInteractable
         {
             hasTalked = true;
             gameManager.IncrementCount();
+            Debug.Log("Has talked Count is " + gameManager.GetCount());
         }
     }
 
@@ -29,7 +30,7 @@ public class QuestNPCInteraction : DialogueInteractable
         base.OnTriggerExit2D(collision);
         if (gameManager.GetCount() >= totalNPCs)
         {
-            gameManager.CompleteObjective();
+            Debug.Log("Count is " + gameManager.GetCount());
             if(giveNewObjective != "") 
             {
                 gameManager.SetObjective(giveNewObjective);
