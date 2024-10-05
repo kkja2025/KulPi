@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor.Rendering.LookDev;
@@ -15,34 +14,24 @@ public class DialogueInteractable : Interactable
     [SerializeField] private GameObject dialogueIcon;
     [SerializeField] protected Sprite dialogueIconSprite;
     [SerializeField] protected Sprite dialogueIconHighlightedSprite;
+    private Button dialogueInteractButton;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
     private bool isLakanTurn = true;
-    private bool conversationComplete = false;
+    protected bool conversationComplete = false;
 
-    private void Start()
+    protected override void Awake()
     {
+        isLakanTurn = !doesCharacterStartFirst;
+        base.Awake();
         if (dialogueIcon != null)
         {
             dialogueIcon.SetActive(true);
         }
     }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        controls.Land.Interact.performed += OnInteract;
-        isLakanTurn = !doesCharacterStartFirst;
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        controls.Land.Interact.performed -= OnInteract;
-    }
-
-    protected override void OnInteract(InputAction.CallbackContext context)
+    protected override void OnInteractButtonClicked()
     {
         if (isPlayerInRange && !conversationComplete)
         {
@@ -50,7 +39,15 @@ public class DialogueInteractable : Interactable
             {
                 dialogueIcon.SetActive(false);
             }
+            Time.timeScale = 0;
+            Time.timeScale = 1;
             PanelManager.GetSingleton("dialogue").Open();
+            if(dialogueInteractButton == null)
+            {
+                GameObject buttonObject = GameObject.FindWithTag("DialogueInteractButton");
+                dialogueInteractButton = buttonObject.GetComponent<Button>();
+                dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
+            }
             Interact();
         }
     }
@@ -66,6 +63,8 @@ public class DialogueInteractable : Interactable
                 dialogueIcon.SetActive(true);
             }
             PanelManager.GetSingleton("dialogue").Close();
+
+            isLakanTurn = !doesCharacterStartFirst;
             lakanDialogueIndex = 0;
             characterDialogueIndex = 0;
             conversationComplete = false;
