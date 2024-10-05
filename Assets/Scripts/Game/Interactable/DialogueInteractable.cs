@@ -19,9 +19,9 @@ public class DialogueInteractable : Interactable
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
     private bool isLakanTurn = true;
-    private bool conversationComplete = false;
+    protected bool conversationComplete = false;
 
-    private void Start()
+    protected virtual void Start()
     {
         if (dialogueIcon != null)
         {

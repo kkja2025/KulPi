@@ -6,9 +6,8 @@ public class Chapter1GameManager : GameManager
 {
     private EnemyEncounterData activeEnemy = null;
     private string currentObjective = "";
+    private int count = 0;
     private bool isObjectiveComplete = false;
-    private int npcTalkCount = 0;
-    private int totalNPCs = 4;
 
     public void SetActiveEnemy(EnemyEncounterData enemy)
     {
@@ -20,14 +19,21 @@ public class Chapter1GameManager : GameManager
         return activeEnemy;
     }
 
-    public override void SetObjective(string objective)
+    public override async void SetObjective(string objective)
     {
         currentObjective = objective;
+        playerData.SetActiveQuest(currentObjective);
         isObjectiveComplete = false;
         UpdateObjectiveText();
+        await SavePlayerData();
     }
 
-     private void CompleteObjective()
+    public bool IsObjectiveComplete()
+    {
+        return isObjectiveComplete;
+    }
+
+    public void CompleteObjective()
     {
         isObjectiveComplete = true;
         UpdateObjectiveText();
@@ -39,23 +45,15 @@ public class Chapter1GameManager : GameManager
         {
             objectiveText.text = currentObjective;
         }
-        else
-        {
-            objectiveText.text = "Objective Complete!";
-        }
     }
 
-    public void TalkedToNPC()
+    public int GetCount()
     {
-        npcTalkCount++;
-        Debug.Log("Talked to NPC. Total NPCs talked to: " + npcTalkCount);
-        if (npcTalkCount >= totalNPCs)
-        {
-            CompleteObjective();
-        }
-        UpdateObjectiveText();
+        return count;
     }
 
-
-
+    public void IncrementCount()
+    {
+        count++;
+    }
 }

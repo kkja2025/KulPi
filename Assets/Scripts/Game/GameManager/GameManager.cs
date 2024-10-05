@@ -78,6 +78,10 @@ public class GameManager : MonoBehaviour
         {
             await LoadRemovedObjects();
             await LoadPlayerData();
+            if (playerData != null)
+            {
+                SetObjective(playerData.GetActiveQuest());
+            }
             await Task.Delay(2000);
             PanelManager.CloseAll();
             PanelManager.GetSingleton("hud").Open();
@@ -169,7 +173,6 @@ public class GameManager : MonoBehaviour
         {
             Vector3 spawnPosition = loadedData.GetPosition();
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
-            SetObjective(loadedData.GetActiveQuest());
         }
         else
         {
@@ -213,10 +216,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public async void ReturnToMainMenu()
+    public void ReturnToMainMenu()
     {
         PanelManager.LoadSceneAsync("MainMenu");
-        await SavePlayerData();
     }
 
     public async void UnlockEncyclopediaItem(string id, string panel)
