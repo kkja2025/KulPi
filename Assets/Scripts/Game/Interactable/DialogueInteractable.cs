@@ -10,7 +10,7 @@ public class DialogueInteractable : Interactable
     [SerializeField] private string characterName;
     [SerializeField] protected List<string> lakanDialogueLines;
     [SerializeField] protected List<string> characterDialogueLines;
-    [SerializeField] protected bool doesCharacterStartFirst = false;
+    [SerializeField] protected bool doesCharacterStartFirst;
     [SerializeField] private GameObject dialogueIcon;
     [SerializeField] protected Sprite dialogueIconSprite;
     [SerializeField] protected Sprite dialogueIconHighlightedSprite;
@@ -18,7 +18,7 @@ public class DialogueInteractable : Interactable
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
-    private bool isLakanTurn = true;
+    protected bool isLakanTurn = true;
     private bool isConversationComplete = false;
 
     protected override void Awake()
@@ -78,6 +78,7 @@ public class DialogueInteractable : Interactable
 
     protected override void Interact()
     {
+        Debug.Log("Interacting :" + isLakanTurn);
         if (isLakanTurn)
         {
             Debug.Log("Lakan's turn.");
