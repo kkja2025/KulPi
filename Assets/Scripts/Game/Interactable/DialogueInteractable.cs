@@ -68,7 +68,6 @@ public class DialogueInteractable : Interactable
                 dialogueIcon.SetActive(true);
             }
             PanelManager.GetSingleton("dialogue").Close();
-            Debug.Log("Dialogue completed.");
             lakanDialogueIndex = 0;
             characterDialogueIndex = 0;
             isLakanTurn = !doesCharacterStartFirst;
@@ -78,10 +77,8 @@ public class DialogueInteractable : Interactable
 
     protected override void Interact()
     {
-        Debug.Log("Interacting :" + isLakanTurn);
         if (isLakanTurn)
         {
-            Debug.Log("Lakan's turn.");
             if (lakanDialogueIndex < lakanDialogueLines.Count)
             {
                 DialogueUI dialogueUI = PanelManager.GetSingleton("dialogue") as DialogueUI;
@@ -96,7 +93,6 @@ public class DialogueInteractable : Interactable
         {
             if (characterDialogueIndex < characterDialogueLines.Count)
             {
-                Debug.Log("Character's turn.");
                 DialogueUI dialogueUI = PanelManager.GetSingleton("dialogue") as DialogueUI;
                 if (dialogueUI != null)
                 {
@@ -115,7 +111,6 @@ public class DialogueInteractable : Interactable
         {
             isLakanTurn = !isLakanTurn;
         }
-        Debug.Log("Is Lakan's turn: " + isLakanTurn);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

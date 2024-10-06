@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class QuestNPCInteraction : DialogueInteractable
 {
-    [SerializeField] private string giveNewObjective;    
-    [SerializeField] private string completeObjective;
+    [SerializeField] private string giveNewQuest;    
     [SerializeField] private int totalNPCs;
     [SerializeField] private List<string> questReturnDialogue;
     [SerializeField] private List<string> npcQuestReturnDialogue;
     [SerializeField] private bool returnDoesCharacterStartFirst;
+    [SerializeField] private string completeQuest;
+    [SerializeField] private string giveFollowUpQuest;   
     private bool hasTalked = false;
     private bool hasCompleted = false;
     private Chapter1GameManager gameManager;
@@ -22,12 +23,13 @@ public class QuestNPCInteraction : DialogueInteractable
 
     protected override void Interact()
     {
-        string currentObjective = gameManager.GetObjective();
-        if (currentObjective == completeObjective && !hasCompleted)
+        string currentQuest = gameManager.GetObjective();
+        if (currentQuest == completeQuest && !hasCompleted)
         {
+            hasCompleted = true;
             CompleteQuest();
         }
-        else if (!hasTalked && currentObjective != giveNewObjective)
+        else if (!hasTalked && currentQuest != giveNewQuest)
         {
             hasTalked = true;
             gameManager.IncrementCount();
@@ -47,12 +49,20 @@ public class QuestNPCInteraction : DialogueInteractable
     {
         if (gameManager.GetCount() >= totalNPCs)
         {
-            if(giveNewObjective != "") 
+            if(giveNewQuest != "") 
             {
-                gameManager.SetObjective(giveNewObjective);
+                gameManager.SetObjective(giveNewQuest);
                 gameManager.SetCount(0);
-                Debug.Log("Quest started: " + giveNewObjective);
+                Debug.Log("Quest started: " + giveNewQuest);
             }
+        }
+    }
+
+    private void SetNewQuest()
+    {
+        if(giveFollowUpQuest != "") 
+        {
+            giveNewQuest = giveFollowUpQuest;
         }
     }
 
@@ -61,18 +71,16 @@ public class QuestNPCInteraction : DialogueInteractable
         if(questReturnDialogue.Count > 0)
         {
             SetDialogue(questReturnDialogue, npcQuestReturnDialogue);
-            hasCompleted = true;
+            SetNewQuest();
         }
     }
 
     private void SetDialogue(List<string> dialogueLines, List<string> npcDialogueLines)
     {
-        Debug.Log("Setting dialogue. Character starts first: " + returnDoesCharacterStartFirst);
         lakanDialogueLines = dialogueLines;
         characterDialogueLines = npcDialogueLines;
         hasTalked = false;
         doesCharacterStartFirst = returnDoesCharacterStartFirst;
         isLakanTurn = !returnDoesCharacterStartFirst;
-        Debug.Log("doesCharacterStartFirst assigned: " + isLakanTurn);
     }
 }
