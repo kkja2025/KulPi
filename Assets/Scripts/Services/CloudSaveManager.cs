@@ -13,6 +13,7 @@ public class CloudSaveManager : MonoBehaviour
     private static CloudSaveManager singleton = null;
     private const string CLOUD_SAVE_PLAYER_DATA_KEY = "player_data";
     private const string CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY = "removed_objects";
+    private const string CLOUD_SAVE_INTERACTED_NPC_DATA_KEY = "interacted_npc";
 
     public static CloudSaveManager Singleton
     {
@@ -89,6 +90,7 @@ public class CloudSaveManager : MonoBehaviour
         { 
             { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
             { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, "{}" },
+            { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, "{}" },
             { InventoryManager.CLOUD_SAVE_INVENTORY_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY, "{}" },
@@ -175,6 +177,48 @@ public class CloudSaveManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("Error in LoadRemovedObjectsData: " + e.Message);
+            throw;
+        }
+    }
+
+    public async Task SaveInteractedNPCData(List<string> interactedNPCs)
+    {
+
+        string jsonInteractedNPC = JsonUtility.ToJson(new InteractedNPCDataList { List = interactedNPCs });
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, jsonInteractedNPC } };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+            Debug.Log("Data saved successfully.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveInteractedNPCData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<string>> LoadInteractedNPCData()
+    {
+        try
+        {
+            var interactedNPCData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY });
+
+            if (interactedNPCData.TryGetValue(CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, out var interactedNPCJson))
+            {
+                string json = interactedNPCJson.Value.GetAsString();
+                var interactedNPC = JsonUtility.FromJson<InteractedNPCDataList>(json).List;
+                return interactedNPC;
+            }
+            else
+            {
+                Debug.LogWarning("NPC data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadInteractedNPCData: " + e.Message);
             throw;
         }
     }

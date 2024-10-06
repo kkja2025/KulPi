@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     protected GameObject playerInstance;
     protected PlayerData playerData;
     protected List<string> removedObjects = new List<string>();
+    protected List<string> interactedNPC = new List<string>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] protected TMP_Text objectiveText;
 
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
         try
         {
             await LoadRemovedObjects();
+            await LoadInteractedNPC();
             await LoadPlayerData();
             if (playerData != null)
             {
@@ -213,6 +215,46 @@ public class GameManager : MonoBehaviour
                     Destroy(obj);
                     Debug.Log($"Removed {objectName} from the scene.");
                 }
+            }
+        }
+    }
+
+    public async void AddInteractedNPC(GameObject npc)
+    {
+        if (npc != null)
+        {
+            interactedNPC.Add(npc.name);
+            await CloudSaveManager.Singleton.SaveInteractedNPCData(interactedNPC);
+        }
+    }
+
+    private async Task LoadInteractedNPC()
+    {
+        var result = await CloudSaveManager.Singleton.LoadInteractedNPCData();
+        if (result != null)
+        {
+            Debug.Log($"Loaded {result.Count} interacted NPC.");
+            interactedNPC = result;
+            foreach (var npcName in interactedNPC)
+            {
+                GameObject obj = GameObject.Find(npcName);
+                if (obj != null)
+                {
+                    QuestNPCInteraction npcInteraction = obj.GetComponent<QuestNPCInteraction>();
+                     if (npcInteraction != null)
+                    {
+                        npcInteraction.SetHasTalked(true);
+                        Debug.Log($"Has talked to {npcName} from the scene.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"QuestNPCInteraction component not found on {npcName}.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"NPC {npcName} not found in the scene.");
+                }        
             }
         }
     }

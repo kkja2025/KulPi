@@ -33,9 +33,9 @@ public class QuestNPCInteraction : DialogueInteractable
         {
             hasTalked = true;
             gameManager.IncrementCount();
+            gameManager.AddInteractedNPC(gameObject);
             Debug.Log("Incremented count: " + gameManager.GetCount());
-        }
-        
+        }   
         base.Interact();
     }
 
@@ -82,5 +82,10 @@ public class QuestNPCInteraction : DialogueInteractable
         hasTalked = false;
         doesCharacterStartFirst = returnDoesCharacterStartFirst;
         isLakanTurn = !returnDoesCharacterStartFirst;
+    }
+
+    public void SetHasTalked(bool value)
+    {
+        hasTalked = value;
     }
 }
