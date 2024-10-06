@@ -33,23 +33,26 @@ public class DialogueInteractable : Interactable
 
     protected override void OnInteractButtonClicked()
     {
-        if (isPlayerInRange && !conversationComplete)
+        PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        if(playerMovement.isGrounded)
         {
-            if (dialogueIcon != null)
+            if (isPlayerInRange && !conversationComplete)
             {
-                dialogueIcon.SetActive(false);
+                if (dialogueIcon != null)
+                {
+                    dialogueIcon.SetActive(false);
+                }
+                PanelManager.GetSingleton("dialogue").Open();
+                if(dialogueInteractButton == null)
+                {
+                    GameObject buttonObject = GameObject.FindWithTag("DialogueInteractButton");
+                    dialogueInteractButton = buttonObject.GetComponent<Button>();
+                    dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
+                }
+                Interact();
             }
-            Time.timeScale = 0;
-            Time.timeScale = 1;
-            PanelManager.GetSingleton("dialogue").Open();
-            if(dialogueInteractButton == null)
-            {
-                GameObject buttonObject = GameObject.FindWithTag("DialogueInteractButton");
-                dialogueInteractButton = buttonObject.GetComponent<Button>();
-                dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
-            }
-            Interact();
         }
+        
     }
 
     protected override void Interact()
