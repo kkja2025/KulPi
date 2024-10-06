@@ -28,6 +28,8 @@ public class ProgressBlocker : DialogueInteractable
 
                 if (barrierCollider != null)
                 {
+                    PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+                    playerMovement.isGrounded = true;
                     OnInteractButtonClicked();
                     barrierCollider.enabled = true; 
                 }
