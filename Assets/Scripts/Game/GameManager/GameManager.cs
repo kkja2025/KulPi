@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         initialized = true;
         DontDestroyOnLoad(gameObject);
     }
-    
+
     private void Awake()
     {
         if (singleton != null && singleton != this)
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         }
         singleton = this;
         DontDestroyOnLoad(gameObject);
-        
+
         SceneManager.sceneLoaded += OnSceneLoaded;
         Application.runInBackground = true;
         StartClientService();
@@ -99,7 +99,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
 
-        } else if (scene.name == "Chapter1-Jungle" || scene.name == "Chapter1-Beach" )
+        }
+        else if (scene.name == "Chapter1-Jungle" || scene.name == "Chapter1-Beach")
         {
             StartClientService();
         }
@@ -226,26 +227,29 @@ public class GameManager : MonoBehaviour
         EncyclopediaItem item = null;
         switch (id)
         {
-            case "Diwata":
-                item = EncyclopediaItem.Figures_Chapter1_Diwata();
+            case "Babaylan":
+                item = EncyclopediaItem.Figures_Chapter1_Babaylan();
                 break;
-            case "SacredGrove":
-                item = EncyclopediaItem.Events_Chapter1_Sacred_Grove();
+            case "Albularyo":
+                item = EncyclopediaItem.Figures_Chapter1_Albularyo();
                 break;
-            case "CursedLandOfSugbu":
-                item = EncyclopediaItem.Events_Chapter1_Cursed_Land_of_Sugbu();
+            case "Lagundi":
+                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Lagundi();
                 break;
-            case "TraditionalFilipinoMedicine":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Traditional_Filipino_Medicine();
+            case "Sambong":
+                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Sambong();
                 break;
-            case "PowersAndFilipinoSpirituality":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Powers_and_Filipino_Spirituality();
+            case "NiyogNiyogan":
+                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_NiyogNiyogan();
                 break;
             case "Tikbalang":
                 item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Tikbalang();
                 break;
             case "Sigbin":
                 item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin();
+                break;
+            case "Sigbin":
+                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
                 break;
             default:
                 Debug.LogWarning("No encyclopedia entry provided.");
