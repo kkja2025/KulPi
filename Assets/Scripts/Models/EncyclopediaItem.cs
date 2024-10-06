@@ -29,22 +29,32 @@ public class EncyclopediaItem
     public void SetSprite(Sprite sprite)
     {
         itemIcon = sprite;
-    }   
+    }
 
     // Figures
-    public static EncyclopediaItem Figures_Chapter1_Diwata()
+    public static EncyclopediaItem Figures_Chapter1_Babaylan()
     {
-        string id = "Diwata";
+        string id = "Babaylan";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Diwata";
-        string description = "     The Diwata are revered nature spirits in Filipino folklore, protectors of forests, mountains, and bodies of water. In their pure form, they embody the beauty and serenity of the natural world. However, the Diwata has been corrupted by the greed of the Sakim, turning her into a vengeful, serpent-like creature. Once a benevolent guardian of Sugbu’s land, her pain and transformation into this monstrous form serve as a reminder of the consequences of environmental destruction.";
+        string title = "Babaylan";
+        string description = "     The Babaylan were powerful women (or sometimes men) in ancient Filipino communities. They were spiritual leaders who communicated with the spirits, healed the sick, and performed rituals to keep balance between the people and the spirit world. They also played a role in important ceremonies, like marriages and harvest celebrations. Today, some indigenous communities still have Babaylans.";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+    public static EncyclopediaItem Figures_Chapter1_Albularyo()
+    {
+        string id = "Albularyo";
+        string chapter = "Chapter 1: 'The Tainted Paradise'";
+        string title = "Albularyo";
+        string description = "     The Albularyo is a traditional Filipino healer, known for using herbal medicine, massage (called hilot), and spiritual healing. They often treat illnesses believed to be caused by supernatural beings, like bad spirits. People still visit albularyos, especially in rural areas, when they feel sick or need spiritual guidance.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
     // Events
-    public static EncyclopediaItem Events_Chapter1_Sacred_Grove()
+    /* public static EncyclopediaItem Events_Chapter1_Sacred_Grove()
     {
         string id = "SacredGrove";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
@@ -65,48 +75,68 @@ public class EncyclopediaItem
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
+    */
 
     // Practices and Traditions
-    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Traditional_Filipino_Medicine()
+    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Lagundi()
     {
-        string id = "TraditionalFilipinoMedicine";
+        string id = "Lagundi";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Traditional Filipino Medicine";
-        string description = "     Herbal medicine, an integral part of Filipino healing traditions, involves the use of plants and natural remedies. Healers like the Babaylan were often relied upon to treat both physical and spiritual ailments. The tradition where the power of nature and the deep knowledge of the land are essential to curing illnesses.";
+        string title = "Lagundi";
+        string description = "      Lagundi (Vitex negundo) is a plant used in traditional Filipino medicine, especially for treating coughs, colds, and asthma. Many families in the Philippines keep lagundi leaves at home for making herbal tea when someone is sick.";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Sambong()
+    {
+        string id = "Sambong";
+        string chapter = "Chapter 1: 'The Tainted Paradise'";
+        string title = "Sambong";
+        string description = "      Sambong (Blumea balsamifera) is another plant used in Filipino herbal medicine. It’s often used to treat kidney problems and urinary infections. People usually boil the leaves to make tea, which is believed to help flush out toxins from the body.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
-    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Powers_and_Filipino_Spirituality()
+    public static EncyclopediaItem PracticesAndTraditions_Chapter1_NiyogNiyogan()
     {
-        string id = "PowersAndFilipinoSpirituality";
+        string id = "NiyogNiyogan";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Powers and Filipino Spirituality";
-        string description = "     In Filipino spirituality, the elements—earth, water, fire, and wind—are sacred and essential to maintaining balance in the world. These elemental powers, granted to Lakan through the Bantayog ng Panahon, represent the ancient connection between humans and nature. These powers can be used to purify the land, cleanse water sources, and defeat corrupted creatures.";
+        string title = "Niyog-Niyogan";
+        string description = "      Niyog-niyogan (Quisqualis indica) is a plant used to get rid of intestinal worms. In the Philippines, kids are often given a few seeds of niyog-niyogan to chew when they have stomach issues caused by worms.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
     // Mythology and Folklore
-    public static EncyclopediaItem MythologyAndFolklore_Chapter1_Mythical_Creatures_Tikbalang()
+    public static EncyclopediaItem MythologyAndFolklore_Chapter1_Sigbin()
     {
-        string id = "Tikbalang";
+        string id = "Sigbin";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Philippine Mythical Creatures: Tikbalang";
-        string description = "     Tikbalang are horse-like creatures known to mislead travelers deep within the forests. Often depicted as tall, fearsome beings with the head of a horse and the body of a human, they are believed to create illusions to confuse and terrify humans. In the Sacred Grove, corrupted Tikbalang serve as guardians of the twisted path, attacking those who dare to venture too close to the heart of the Grove.";
+        string title = "Sigbin";
+        string description = "      The Sigbin is a creature from Filipino folklore. It’s said to come out at night, walking backwards with its head between its hind legs, and sucking the blood of its victims. Some stories say it can make itself invisible. In some regions, it’s believed that the Sigbin is controlled by powerful witches.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
-
-    public static EncyclopediaItem MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin()
+    public static EncyclopediaItem MythologyAndFolklore_Chapter1_Tikbalang()
     {
-        string id = "Sigbin";
+        string id = "Tikbalang";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Philippine Mythical Creatures: Sigbin";
-        string description = "     The Sigbin is a rare and terrifying creature in Filipino folklore. It walks backward, has large fangs, and lurks in the shadows, feeding on fear. These creatures are known to come out during the night and prey upon the weak and vulnerable. In the game, corrupted Sigbin roam the Blighted Grove, embodying the chaos and darkness that has overtaken the sacred land.";
+        string title = "Tikbalang";
+        string description = "     A Tikbalang is a mythical creature that has the head of a horse and the body of a human. It is said to roam the mountains and forests, playing tricks on travelers by confusing them and leading them in circles. However, if you manage to tame a tikbalang, it will become your protector.";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+    public static EncyclopediaItem MythologyAndFolklore_Chapter1_Diwata()
+    {
+        string id = "Diwata";
+        string chapter = "Chapter 1: 'The Tainted Paradise'";
+        string title = "Diwata";
+        string description = "     A Diwata is a nature spirit or goddess in Filipino mythology. They are often beautiful, magical beings who protect forests, rivers, and mountains. Diwatas are kind to those who respect nature, but they can become angry and cause misfortune if their land is harmed.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
