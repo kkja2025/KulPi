@@ -71,7 +71,7 @@ public class LoginManager : MonoBehaviour
                 var firebaseService = FirebaseService.Singleton;
                 if (firebaseService == null)
                 {
-                    Debug.LogError("FirebaseService singleton is null.");
+                    Debug.Log("FirebaseService singleton is null.");
                     if (attempt < maxRetries)
                     {
                         await Task.Delay(retryDelay); 
@@ -84,7 +84,7 @@ public class LoginManager : MonoBehaviour
                 auth = firebaseService.Auth;
                 if (auth == null)
                 {
-                    Debug.LogError("FirebaseAuth instance is null.");
+                    Debug.Log("FirebaseAuth instance is null.");
                     if (attempt < maxRetries)
                     {
                         await Task.Delay(retryDelay); 
@@ -126,7 +126,7 @@ public class LoginManager : MonoBehaviour
 
         if (!success)
         {
-            Debug.LogError("Failed to initialize after multiple attempts.");
+            Debug.Log("Failed to initialize after multiple attempts.");
             ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize after multiple attempts.", "Retry");
         }
     }
@@ -178,7 +178,7 @@ public class LoginManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Linking Firebase with Unity Authentication failed: " + e.Message);
+            Debug.Log("Linking Firebase with Unity Authentication failed: " + e.Message);
             ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity Authentication failed", "OK");
         }
     }
@@ -215,7 +215,7 @@ public class LoginManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Linking Firebase with Unity failed: " + e.Message);
+            Debug.Log("Linking Firebase with Unity failed: " + e.Message);
             ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity failed", "OK");
         }
     }
