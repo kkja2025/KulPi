@@ -243,12 +243,12 @@ public class GameManager : MonoBehaviour
                 item = EncyclopediaItem.PracticesAndTraditions_Chapter1_NiyogNiyogan();
                 break;
             case "Tikbalang":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Tikbalang();
+                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Tikbalang();
                 break;
             case "Sigbin":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Mythical_Creatures_Sigbin();
+                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Sigbin();
                 break;
-            case "Sigbin":
+            case "Diwata":
                 item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
                 break;
             default:
