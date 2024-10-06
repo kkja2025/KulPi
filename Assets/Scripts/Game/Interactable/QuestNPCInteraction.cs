@@ -6,6 +6,7 @@ public class QuestNPCInteraction : DialogueInteractable
     [SerializeField] private string giveNewObjective;
     [SerializeField] private int totalNPCs;
     private bool hasTalked = false;
+    private bool isDestroyed = false;
     private Chapter1GameManager gameManager;
 
     protected override void Awake()
@@ -30,10 +31,10 @@ public class QuestNPCInteraction : DialogueInteractable
         base.OnTriggerExit2D(collision);
         if (gameManager.GetCount() >= totalNPCs)
         {
-            Debug.Log("Count is " + gameManager.GetCount());
             if(giveNewObjective != "") 
             {
                 gameManager.SetObjective(giveNewObjective);
+                gameManager.SetCount(0);
             }
         }
     }

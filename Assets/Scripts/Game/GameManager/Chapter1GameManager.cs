@@ -34,6 +34,11 @@ public class Chapter1GameManager : GameManager
         return count;
     }
 
+    public void SetCount(int newCount)
+    {
+        count = newCount;
+    }
+
     public void IncrementCount()
     {
         count++;
