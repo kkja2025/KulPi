@@ -20,7 +20,6 @@ public class ProgressBlocker : DialogueInteractable
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            conversationComplete = false;
 
             if (string.IsNullOrEmpty(completedObjective) || completedObjective == gameManager.GetObjective())
             {

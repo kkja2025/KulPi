@@ -1,15 +1,13 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Services.CloudSave;
-using UnityEngine.SceneManagement;
 
 public class InventoryManager : MonoBehaviour
 {
     private bool initialized = false;
     private static InventoryManager singleton = null;
-    public List<InventoryItem> inventory = null;
-    public const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
+    private List<InventoryItem> inventory = new List<InventoryItem>();
     
     public static InventoryManager Singleton
     {
@@ -43,17 +41,20 @@ public class InventoryManager : MonoBehaviour
         StartClientService();
     }
 
-    private void StartClientService()
+    private async void StartClientService()
     {
-        LoadInventoryAsync();
+        await LoadInventoryAsync();
+    }
+
+    public List<InventoryItem> GetInventory()
+    {
+        return inventory;
     }
 
     public void AddItem(string itemID, string itemName)
     {
         InventoryItem item = new InventoryItem(itemID, itemName);
         inventory.Add(item);
-        Debug.Log(itemName + " added to inventory.");
-        SaveInventoryAsync();
     }
 
     public bool RemoveItem(string itemName)
@@ -62,8 +63,6 @@ public class InventoryManager : MonoBehaviour
         
         if (itemsRemoved > 0)
         {
-            Debug.Log(itemName + " removed from inventory.");
-            SaveInventoryAsync(); 
             return true;  
         }
         else
@@ -73,14 +72,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private async void SaveInventoryAsync()
+    public async Task SaveInventoryAsync()
     {
         try
         {
-            string jsonInventory = JsonUtility.ToJson(new InventoryItemList { items = inventory });
-            var data = new Dictionary<string, object> { { CLOUD_SAVE_INVENTORY_KEY, jsonInventory } };
-            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Inventory saved successfully.");
+            await CloudSaveManager.Singleton.SaveInventoryData(inventory);
         }
         catch (Exception e)
         {
@@ -88,39 +84,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private async void LoadInventoryAsync()
+    private async Task LoadInventoryAsync()
     {
-        try
+        var result = await CloudSaveManager.Singleton.LoadInventoryData();
+        if (result != null)
         {
-            var inventoryData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_INVENTORY_KEY });
-
-            if (inventoryData.TryGetValue(CLOUD_SAVE_INVENTORY_KEY, out var inventoryJson))
-            {
-                string json = inventoryJson.Value.GetAsString();
-                var loadedInventory = JsonUtility.FromJson<InventoryItemList>(json)?.items;
-
-                if (loadedInventory != null && loadedInventory.Count > 0)
-                {
-                    inventory = loadedInventory;
-                    Debug.Log("Inventory loaded successfully.");
-                }
-                else
-                {
-                    Debug.Log("Inventory is empty.");
-                    inventory = new List<InventoryItem>();
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No inventory found in Cloud Save, initializing a new inventory.");
-                inventory = new List<InventoryItem>();
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Failed to load inventory: " + e.Message);
-            inventory = new List<InventoryItem>();
-            GameManager.Singleton.ReturnToMainMenu();
-        }
+            inventory = result;
+        }     
     }
 }

@@ -8,9 +8,9 @@ using UnityEditor.Rendering.LookDev;
 public class DialogueInteractable : Interactable
 {
     [SerializeField] private string characterName;
-    [SerializeField] private List<string> lakanDialogueLines;
-    [SerializeField] private List<string> characterDialogueLines;
-    [SerializeField] private bool doesCharacterStartFirst = false;
+    [SerializeField] protected List<string> lakanDialogueLines;
+    [SerializeField] protected List<string> characterDialogueLines;
+    [SerializeField] protected bool doesCharacterStartFirst;
     [SerializeField] private GameObject dialogueIcon;
     [SerializeField] protected Sprite dialogueIconSprite;
     [SerializeField] protected Sprite dialogueIconHighlightedSprite;
@@ -18,8 +18,8 @@ public class DialogueInteractable : Interactable
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
-    private bool isLakanTurn = true;
-    protected bool conversationComplete = false;
+    protected bool isLakanTurn = true;
+    private bool isConversationComplete = false;
 
     protected override void Awake()
     {
@@ -36,7 +36,12 @@ public class DialogueInteractable : Interactable
         PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         if(playerMovement.isGrounded)
         {
-            if (isPlayerInRange && !conversationComplete)
+            if (isConversationComplete)
+            {
+                ConversationCompleted();
+                isConversationComplete = false;
+            }
+            else if (isPlayerInRange && !isConversationComplete)
             {
                 if (dialogueIcon != null)
                 {
@@ -50,30 +55,28 @@ public class DialogueInteractable : Interactable
                     dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
                 }
                 Interact();
-            }
+            } 
         }
-        
     }
 
-    protected override void Interact()
+    protected virtual void ConversationCompleted()
     {
         if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
         {
-            conversationComplete = true;
-
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(true);
             }
             PanelManager.GetSingleton("dialogue").Close();
-
-            isLakanTurn = !doesCharacterStartFirst;
             lakanDialogueIndex = 0;
             characterDialogueIndex = 0;
-            conversationComplete = false;
+            isLakanTurn = !doesCharacterStartFirst;
             return;
         }
+    }
 
+    protected override void Interact()
+    {
         if (isLakanTurn)
         {
             if (lakanDialogueIndex < lakanDialogueLines.Count)
@@ -82,7 +85,7 @@ public class DialogueInteractable : Interactable
                 if (dialogueUI != null)
                 {
                     dialogueUI.ShowDialogue("Lakan", lakanDialogueLines[lakanDialogueIndex]);
-                    lakanDialogueIndex++;
+                    lakanDialogueIndex++;         
                 }
             }
         }
@@ -94,13 +97,20 @@ public class DialogueInteractable : Interactable
                 if (dialogueUI != null)
                 {
                     dialogueUI.ShowDialogue(characterName, characterDialogueLines[characterDialogueIndex]);
-                    dialogueUI.Open();
                     characterDialogueIndex++;
                 }
             }
         }
+        if (lakanDialogueIndex >= lakanDialogueLines.Count && characterDialogueIndex >= characterDialogueLines.Count)
+        {
+            isConversationComplete = true;
+        }
 
         isLakanTurn = !isLakanTurn;
+        if (isLakanTurn && lakanDialogueIndex >= lakanDialogueLines.Count)
+        {
+            isLakanTurn = !isLakanTurn;
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -118,14 +128,12 @@ public class DialogueInteractable : Interactable
                 }
             }
 
-            if (!conversationComplete)
+            if (dialogueIcon != null)
             {
-                if (dialogueIcon != null)
-                {
-                    HighlightObject(true);
-                    dialogueIcon.SetActive(true);
-                }
+                HighlightObject(true);
+                dialogueIcon.SetActive(true);
             }
+            
         }
     }
 

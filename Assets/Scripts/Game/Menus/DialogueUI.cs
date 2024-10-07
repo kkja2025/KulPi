@@ -10,7 +10,7 @@ public class DialogueUI : Panel
     {
         characterNameText.text = characterName;
         dialogueText.text = dialogue;
-        
+        Open();
         Debug.Log("Showing Dialogue: " + characterName + ": " + dialogue);
     }
 }

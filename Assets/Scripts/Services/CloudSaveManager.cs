@@ -12,7 +12,9 @@ public class CloudSaveManager : MonoBehaviour
     private bool initialized = false;
     private static CloudSaveManager singleton = null;
     private const string CLOUD_SAVE_PLAYER_DATA_KEY = "player_data";
+    private const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
     private const string CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY = "removed_objects";
+    private const string CLOUD_SAVE_INTERACTED_NPC_DATA_KEY = "interacted_npc";
 
     public static CloudSaveManager Singleton
     {
@@ -66,6 +68,80 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
+    public async Task SaveEncyclopediaEntryData(Dictionary<string, object> data)
+    {
+        try 
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveEncyclopediaEntryData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesData(string key)
+    {
+        try
+        {
+            var encyclopediaData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { key });
+            if (encyclopediaData.TryGetValue(key, out var encyclopediaEntryJson))            {
+                string json = encyclopediaEntryJson.Value.GetAsString();
+                var encyclopedia = JsonUtility.FromJson<EncyclopediaItemList>(json).items;
+            return encyclopedia;
+            }
+            else
+            {
+                Debug.LogWarning("Encyclopedia data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadEncyclopediaEntriesData: " + e.Message);
+            throw;
+        }
+    }
+
+    public async Task SaveInventoryData(List<InventoryItem> inventory)
+    {
+        string jsonInventory = JsonUtility.ToJson(new InventoryItemList { items = inventory });
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_INVENTORY_KEY, jsonInventory } };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveInventoryData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<InventoryItem>> LoadInventoryData()
+    {
+        try
+        {
+            var inventoryData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_INVENTORY_KEY });
+
+            if (inventoryData.TryGetValue(CLOUD_SAVE_INVENTORY_KEY, out var inventoryJson))            {
+                string json = inventoryJson.Value.GetAsString();
+                var inventory = JsonUtility.FromJson<InventoryItemList>(json).items;
+                return inventory;
+            }
+            else
+            {
+                Debug.LogWarning("Inventory data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadInventoryData: " + e.Message);
+            throw;
+        }
+    }
     public async Task SavePlayerData(PlayerData playerData)
     {
         string jsonPlayerData = JsonUtility.ToJson(playerData);
@@ -73,7 +149,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
@@ -88,8 +163,9 @@ public class CloudSaveManager : MonoBehaviour
         var data = new Dictionary<string, object> 
         { 
             { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
+            { CLOUD_SAVE_INVENTORY_KEY, "{}" },
             { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, "{}" },
-            { InventoryManager.CLOUD_SAVE_INVENTORY_KEY, "{}" },
+            { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY, "{}" },
@@ -98,7 +174,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
@@ -145,7 +220,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
@@ -175,6 +249,47 @@ public class CloudSaveManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("Error in LoadRemovedObjectsData: " + e.Message);
+            throw;
+        }
+    }
+
+    public async Task SaveInteractedNPCData(List<string> interactedNPCs)
+    {
+
+        string jsonInteractedNPC = JsonUtility.ToJson(new InteractedNPCDataList { List = interactedNPCs });
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, jsonInteractedNPC } };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveInteractedNPCData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<string>> LoadInteractedNPCData()
+    {
+        try
+        {
+            var interactedNPCData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY });
+
+            if (interactedNPCData.TryGetValue(CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, out var interactedNPCJson))
+            {
+                string json = interactedNPCJson.Value.GetAsString();
+                var interactedNPC = JsonUtility.FromJson<InteractedNPCDataList>(json).List;
+                return interactedNPC;
+            }
+            else
+            {
+                Debug.LogWarning("NPC data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadInteractedNPCData: " + e.Message);
             throw;
         }
     }

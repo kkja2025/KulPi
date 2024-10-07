@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     private static GameManager singleton = null;
     protected GameObject playerInstance;
     protected PlayerData playerData;
-    protected List<string> removedObjects = new List<string>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] protected TMP_Text objectiveText;
 
@@ -76,7 +75,6 @@ public class GameManager : MonoBehaviour
         }
         try
         {
-            await LoadRemovedObjects();
             await LoadPlayerData();
             if (playerData != null)
             {
@@ -118,12 +116,7 @@ public class GameManager : MonoBehaviour
     {
         if (objectiveText != null)
         {
-            Debug.Log("Setting objective text to: " + text);
             objectiveText.text = text;
-        }
-        else
-        {
-            Debug.LogError("Objective Text is not assigned or initialized!");
         }
     }
 
@@ -160,13 +153,7 @@ public class GameManager : MonoBehaviour
                 playerData = loadedData;
                 Vector3 spawnPosition = loadedData.GetPosition();
                 playerInstance.transform.position = spawnPosition;
-                Debug.Log($"Updated Player Position to: {spawnPosition}");
             }
-            else
-            {
-                Debug.LogWarning("No player data found to update position.");
-            }
-
             return;
         }
 
@@ -175,45 +162,11 @@ public class GameManager : MonoBehaviour
             Vector3 spawnPosition = loadedData.GetPosition();
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         }
-        else
-        {
-            Debug.LogWarning("No player data found.");
-        }
 
         CinemachineVirtualCamera virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         if (virtualCamera != null)
         {
             virtualCamera.Follow = playerInstance.transform;
-            Debug.Log("Assigned player instance to the virtual camera's follow target.");
-        }
-    }
-
-    public async void RemoveObject(GameObject obj)
-    {
-        if (obj != null)
-        {
-            removedObjects.Add(obj.name);
-            Destroy(obj);
-            await CloudSaveManager.Singleton.SaveRemovedObjectsData(removedObjects);
-        }
-    }
-
-    private async Task LoadRemovedObjects()
-    {
-        var result = await CloudSaveManager.Singleton.LoadRemovedObjectsData();
-        if (result != null)
-        {
-            Debug.Log($"Loaded {result.Count} removed objects.");
-            removedObjects = result;
-            foreach (var objectName in removedObjects)
-            {
-                GameObject obj = GameObject.Find(objectName);
-                if (obj != null)
-                {
-                    Destroy(obj);
-                    Debug.Log($"Removed {objectName} from the scene.");
-                }
-            }
         }
     }
 
@@ -222,45 +175,31 @@ public class GameManager : MonoBehaviour
         PanelManager.LoadSceneAsync("MainMenu");
     }
 
-    public async void UnlockEncyclopediaItem(string id, string panel)
+    public async void SaveEncyclopediaItem(string id)
     {
-        EncyclopediaItem item = null;
-        switch (id)
-        {
-            case "Babaylan":
-                item = EncyclopediaItem.Figures_Chapter1_Babaylan();
-                break;
-            case "Albularyo":
-                item = EncyclopediaItem.Figures_Chapter1_Albularyo();
-                break;
-            case "Lagundi":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Lagundi();
-                break;
-            case "Sambong":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Sambong();
-                break;
-            case "NiyogNiyogan":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_NiyogNiyogan();
-                break;
-            case "Tikbalang":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Tikbalang();
-                break;
-            case "Sigbin":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Sigbin();
-                break;
-            case "Diwata":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
-                break;
-            default:
-                Debug.LogWarning("No encyclopedia entry provided.");
-                return;
-        }
+        EncyclopediaItem item = GetEncyclopediaItemById(id);
+        if (item == null) return;
+
+        await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync(item.itemCategory);
+    }
+
+    public void UnlockEncyclopediaItem(string id, string panel)
+    {
+        EncyclopediaItem item = GetEncyclopediaItemById(id);
+        if (item == null) return;
+
         EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
         if (encyclopediaUnlockEntry != null)
         {
             encyclopediaUnlockEntry.SetEncyclopediaItem(item);
             encyclopediaUnlockEntry.Open();
         }
-        await EncyclopediaManager.Singleton.AddItem(item);
+
+        EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
+    }
+
+    protected virtual EncyclopediaItem GetEncyclopediaItemById(string id)
+    {
+        return null;
     }
 }

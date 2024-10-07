@@ -10,7 +10,7 @@ public class LeaderboardManager : MonoBehaviour
 {
     private bool initialized = false;
     private static LeaderboardManager singleton = null;
-    public List<LeaderboardItem> leaderboard = null;
+    private List<LeaderboardItem> leaderboard = new List<LeaderboardItem>();
 
     public static LeaderboardManager Singleton
     {
@@ -44,6 +44,11 @@ public class LeaderboardManager : MonoBehaviour
         StartClientService();
     }
 
+    public List<LeaderboardItem> GetLeaderboard()
+    {
+        return leaderboard;
+    }
+    
     private async void StartClientService()
     {
         if (UnityServices.State != ServicesInitializationState.Initialized)
@@ -52,7 +57,7 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
-    public async void SubmitTimeBossChapter1(long timeInMilliseconds)
+    public async Task SubmitTimeBossChapter1(long timeInMilliseconds)
     {
         try
         {
@@ -85,8 +90,8 @@ public class LeaderboardManager : MonoBehaviour
             Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
         }
     }
-
-    public async void SubmitTimeSigbinTikbalangChapter1(long timeInMilliseconds)
+    
+    public async Task SubmitTimeSigbinTikbalangChapter1(long timeInMilliseconds)
     {
         try
         {
@@ -99,7 +104,7 @@ public class LeaderboardManager : MonoBehaviour
             Debug.LogError($"Failed to submit time: {e.Message}");
         }
     }
-
+    
     public async Task DisplaySigbinTikbalangChapter1Leaderboard()
     {
         try

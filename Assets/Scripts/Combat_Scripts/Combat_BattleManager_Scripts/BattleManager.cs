@@ -100,6 +100,12 @@ public class BattleManager : MonoBehaviour
     public virtual void Defeated()
     {
         spawnsObject.SetActive(false);
+        VictoryAnimation();
+    }
+
+    public void VictoryAnimation()
+    {
+        // Play victory animation
     }
 
     public void RestartAsync()
@@ -109,11 +115,12 @@ public class BattleManager : MonoBehaviour
         PanelManager.LoadSceneAsync(currentScene.name);
     }
 
-    public void DestroyEnemy()
+    public async void DestroyEnemy()
     {
         EnemyEncounterData enemyData = gameManager.GetActiveEnemy();
         GameObject enemy = new GameObject(enemyData.GetEnemyID());
-        gameManager.RemoveObject(enemy);
+        RemovedObjectsManager.Singleton.RemoveObject(enemy);
+        await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
     }
 
     public async void ExitBattleAsync()
