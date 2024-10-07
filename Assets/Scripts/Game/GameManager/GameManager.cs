@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     private static GameManager singleton = null;
     protected GameObject playerInstance;
     protected PlayerData playerData;
-    protected List<string> interactedNPC = new List<string>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] protected TMP_Text objectiveText;
 
@@ -76,7 +75,6 @@ public class GameManager : MonoBehaviour
         }
         try
         {
-            await LoadInteractedNPC();
             await LoadPlayerData();
             if (playerData != null)
             {
@@ -169,40 +167,6 @@ public class GameManager : MonoBehaviour
         if (virtualCamera != null)
         {
             virtualCamera.Follow = playerInstance.transform;
-        }
-    }
-
-    public void AddInteractedNPC(GameObject npc)
-    {
-        if (npc != null)
-        {
-            interactedNPC.Add(npc.name);
-        }
-    }
-
-    public async void SaveInteractedNPC()
-    {
-        await CloudSaveManager.Singleton.SaveInteractedNPCData(interactedNPC);
-    }
-
-    private async Task LoadInteractedNPC()
-    {
-        var result = await CloudSaveManager.Singleton.LoadInteractedNPCData();
-        if (result != null)
-        {
-            interactedNPC = result;
-            foreach (var npcName in interactedNPC)
-            {
-                GameObject obj = GameObject.Find(npcName);
-                if (obj != null)
-                {
-                    QuestNPCInteraction npcInteraction = obj.GetComponent<QuestNPCInteraction>();
-                     if (npcInteraction != null)
-                    {
-                        npcInteraction.SetHasTalked(true);
-                    }
-                }
-            }
         }
     }
 

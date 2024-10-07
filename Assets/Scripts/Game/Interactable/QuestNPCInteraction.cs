@@ -33,7 +33,7 @@ public class QuestNPCInteraction : DialogueInteractable
         {
             hasTalked = true;
             gameManager.IncrementCount();
-            gameManager.AddInteractedNPC(gameObject);
+            InteractedNPCManager.Singleton.AddInteractedNPC(gameObject);
             Debug.Log("Incremented count: " + gameManager.GetCount());
         }   
         base.Interact();
@@ -53,7 +53,7 @@ public class QuestNPCInteraction : DialogueInteractable
             {
                 gameManager.SetObjective(giveNewQuest);
                 gameManager.SetCount(0);
-                gameManager.SaveInteractedNPC();
+                InteractedNPCManager.Singleton.SaveInteractedNPC();
                 Debug.Log("Quest started: " + giveNewQuest);
             }
         }
