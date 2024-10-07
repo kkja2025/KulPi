@@ -1,5 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public class InventoryItemList
+{
+    public List<InventoryItem> items = null;
+}
 
 [System.Serializable]
 public class InventoryItem
@@ -8,7 +15,6 @@ public class InventoryItem
     public string itemName;
     public Sprite itemIcon;
 
-    // Constructor
     public InventoryItem(string id, string name)
     {
         itemID = id;
