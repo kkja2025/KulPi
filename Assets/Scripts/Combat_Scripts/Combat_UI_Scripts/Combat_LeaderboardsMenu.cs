@@ -39,7 +39,7 @@ public class LeaderboardsMenu : Panel
         {
             Destroy(child.gameObject);
         }
-        var items = LeaderboardManager.Singleton.leaderboard;
+        var items = LeaderboardManager.Singleton.GetLeaderboard();
 
         foreach (var item in items)
         {

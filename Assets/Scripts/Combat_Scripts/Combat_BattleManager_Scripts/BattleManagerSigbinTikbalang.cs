@@ -33,11 +33,11 @@ public class BattleManagerSigbinTikbalang : BattleManager
         UpdateTikbalangCount(0);
     }
 
-    public override void Defeated()
+    public override async void Defeated()
     {
         base.Defeated();
         PanelManager.GetSingleton("hud").Close();
-        LeaderboardManager.Singleton.SubmitTimeSigbinTikbalangChapter1((long)(elapsedTime * 1000));
+        await LeaderboardManager.Singleton.SubmitTimeSigbinTikbalangChapter1((long)(elapsedTime * 1000));
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as SigbinTikbalangVictoryMenu;
         if (victoryMenu != null)
         {

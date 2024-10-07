@@ -100,6 +100,12 @@ public class BattleManager : MonoBehaviour
     public virtual void Defeated()
     {
         spawnsObject.SetActive(false);
+        VictoryAnimation();
+    }
+
+    public void VictoryAnimation()
+    {
+        // Play victory animation
     }
 
     public void RestartAsync()

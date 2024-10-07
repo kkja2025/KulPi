@@ -34,12 +34,13 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         StartCoroutine(WaitForSkillAnimationThenDefeat());
     }
 
-    public override void Defeated()
+    public override async void Defeated()
     {
         spawnsObject.SetActive(false);
         bossObject.SetActive(false);
+        VictoryAnimation();
         PanelManager.GetSingleton("hud").Close();
-        LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
+        await LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         VictoryMenu diwataVictoryMenu = PanelManager.GetSingleton("victory") as DiwataVictoryMenu;
         if (diwataVictoryMenu != null)
         {
