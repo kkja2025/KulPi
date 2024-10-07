@@ -53,6 +53,7 @@ public class QuestNPCInteraction : DialogueInteractable
             {
                 gameManager.SetObjective(giveNewQuest);
                 gameManager.SetCount(0);
+                gameManager.SaveInteractedNPC();
                 Debug.Log("Quest started: " + giveNewQuest);
             }
         }

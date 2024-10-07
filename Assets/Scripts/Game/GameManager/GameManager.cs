@@ -120,12 +120,7 @@ public class GameManager : MonoBehaviour
     {
         if (objectiveText != null)
         {
-            Debug.Log("Setting objective text to: " + text);
             objectiveText.text = text;
-        }
-        else
-        {
-            Debug.LogError("Objective Text is not assigned or initialized!");
         }
     }
 
@@ -162,13 +157,7 @@ public class GameManager : MonoBehaviour
                 playerData = loadedData;
                 Vector3 spawnPosition = loadedData.GetPosition();
                 playerInstance.transform.position = spawnPosition;
-                Debug.Log($"Updated Player Position to: {spawnPosition}");
             }
-            else
-            {
-                Debug.LogWarning("No player data found to update position.");
-            }
-
             return;
         }
 
@@ -177,16 +166,11 @@ public class GameManager : MonoBehaviour
             Vector3 spawnPosition = loadedData.GetPosition();
             playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
         }
-        else
-        {
-            Debug.LogWarning("No player data found.");
-        }
 
         CinemachineVirtualCamera virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         if (virtualCamera != null)
         {
             virtualCamera.Follow = playerInstance.transform;
-            Debug.Log("Assigned player instance to the virtual camera's follow target.");
         }
     }
 
@@ -205,7 +189,6 @@ public class GameManager : MonoBehaviour
         var result = await CloudSaveManager.Singleton.LoadRemovedObjectsData();
         if (result != null)
         {
-            Debug.Log($"Loaded {result.Count} removed objects.");
             removedObjects = result;
             foreach (var objectName in removedObjects)
             {
@@ -213,19 +196,22 @@ public class GameManager : MonoBehaviour
                 if (obj != null)
                 {
                     Destroy(obj);
-                    Debug.Log($"Removed {objectName} from the scene.");
                 }
             }
         }
     }
 
-    public async void AddInteractedNPC(GameObject npc)
+    public void AddInteractedNPC(GameObject npc)
     {
         if (npc != null)
         {
             interactedNPC.Add(npc.name);
-            await CloudSaveManager.Singleton.SaveInteractedNPCData(interactedNPC);
         }
+    }
+
+    public async void SaveInteractedNPC()
+    {
+        await CloudSaveManager.Singleton.SaveInteractedNPCData(interactedNPC);
     }
 
     private async Task LoadInteractedNPC()
@@ -233,7 +219,6 @@ public class GameManager : MonoBehaviour
         var result = await CloudSaveManager.Singleton.LoadInteractedNPCData();
         if (result != null)
         {
-            Debug.Log($"Loaded {result.Count} interacted NPC.");
             interactedNPC = result;
             foreach (var npcName in interactedNPC)
             {
@@ -244,17 +229,8 @@ public class GameManager : MonoBehaviour
                      if (npcInteraction != null)
                     {
                         npcInteraction.SetHasTalked(true);
-                        Debug.Log($"Has talked to {npcName} from the scene.");
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"QuestNPCInteraction component not found on {npcName}.");
                     }
                 }
-                else
-                {
-                    Debug.LogWarning($"NPC {npcName} not found in the scene.");
-                }        
             }
         }
     }
