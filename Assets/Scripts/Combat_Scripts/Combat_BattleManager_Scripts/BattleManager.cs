@@ -114,7 +114,7 @@ public class BattleManager : MonoBehaviour
         EnemyEncounterData enemyData = gameManager.GetActiveEnemy();
         GameObject enemy = new GameObject(enemyData.GetEnemyID());
         RemovedObjectsManager.Singleton.RemoveObject(enemy);
-        await RemovedObjectsManager.Singleton.SaveRemovedObjects();
+        await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
     }
 
     public async void ExitBattleAsync()

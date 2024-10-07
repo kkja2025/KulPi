@@ -44,7 +44,8 @@ public class QuestItemInteraction : ItemInteractable
             {
                 gameManager.SetObjective(giveNewObjective);
                 gameManager.SetCount(0);
-                await RemovedObjectsManager.Singleton.SaveRemovedObjects();
+                await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
+                await InventoryManager.Singleton.SaveInventoryAsync();
             }
         }
     }

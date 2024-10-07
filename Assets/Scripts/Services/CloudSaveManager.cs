@@ -12,6 +12,7 @@ public class CloudSaveManager : MonoBehaviour
     private bool initialized = false;
     private static CloudSaveManager singleton = null;
     private const string CLOUD_SAVE_PLAYER_DATA_KEY = "player_data";
+    private const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
     private const string CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY = "removed_objects";
     private const string CLOUD_SAVE_INTERACTED_NPC_DATA_KEY = "interacted_npc";
 
@@ -67,6 +68,44 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
+    public async Task SaveInventoryData(List<InventoryItem> inventory)
+    {
+        string jsonInventory = JsonUtility.ToJson(new InventoryItemList { items = inventory });
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_INVENTORY_KEY, jsonInventory } };
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveInventoryData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<InventoryItem>> LoadInventoryData()
+    {
+        try
+        {
+            var inventoryData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_INVENTORY_KEY });
+
+            if (inventoryData.TryGetValue(CLOUD_SAVE_INVENTORY_KEY, out var inventoryJson))            {
+                string json = inventoryJson.Value.GetAsString();
+                var inventory = JsonUtility.FromJson<InventoryItemList>(json)?.items;
+                return inventory;
+            }
+            else
+            {
+                Debug.LogWarning("Inventory data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadInventoryData: " + e.Message);
+            throw;
+        }
+    }
     public async Task SavePlayerData(PlayerData playerData)
     {
         string jsonPlayerData = JsonUtility.ToJson(playerData);
@@ -89,9 +128,9 @@ public class CloudSaveManager : MonoBehaviour
         var data = new Dictionary<string, object> 
         { 
             { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
+            { CLOUD_SAVE_INVENTORY_KEY, "{}" },
             { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, "{}" },
             { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, "{}" },
-            { InventoryManager.CLOUD_SAVE_INVENTORY_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY, "{}" },
             { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY, "{}" },

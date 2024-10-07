@@ -42,12 +42,12 @@ public class RemovedObjectsManager : MonoBehaviour
         StartClientService();
     }
 
-    private void StartClientService()
+    private async void StartClientService()
     {
-        LoadRemovedObjectsAsync();
+        await LoadRemovedObjectsAsync();
     }
     
-    private async void LoadRemovedObjectsAsync()
+    private async Task LoadRemovedObjectsAsync()
     {
         var result = await CloudSaveManager.Singleton.LoadRemovedObjectsData();
         if (result != null)
@@ -61,7 +61,7 @@ public class RemovedObjectsManager : MonoBehaviour
                     Destroy(obj);
                 }
             }
-        }
+        }           
     }
 
     public void RemoveObject(GameObject obj)
@@ -73,7 +73,7 @@ public class RemovedObjectsManager : MonoBehaviour
         }
     }
 
-    public async Task SaveRemovedObjects()
+    public async Task SaveRemovedObjectsAsync()
     {
         await CloudSaveManager.Singleton.SaveRemovedObjectsData(removedObjects);
     }

@@ -36,7 +36,7 @@ public class InventoryMenu : Panel
             Destroy(child.gameObject);
         }
 
-        var items = InventoryManager.Singleton.inventory;
+        var items = InventoryManager.Singleton.GetInventory();
 
         foreach (var item in items)
         {
