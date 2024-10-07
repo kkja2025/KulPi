@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-using UnityEngine.SceneManagement;
-
 public class EncyclopediaManager : MonoBehaviour
 {
     private bool initialized = false;
