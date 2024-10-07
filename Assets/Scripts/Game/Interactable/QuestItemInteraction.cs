@@ -34,9 +34,9 @@ public class QuestItemInteraction : ItemInteractable
         }
     }
 
-    private void OnObjectRemoved(GameObject gameObject)
+    private async void OnObjectRemoved(GameObject gameObject)
     {
-        gameManager.RemoveObject(gameObject);
+        RemovedObjectsManager.Singleton.RemoveObject(gameObject);
         
         if (gameManager.GetCount() >= totalItems)
         {
@@ -44,6 +44,7 @@ public class QuestItemInteraction : ItemInteractable
             {
                 gameManager.SetObjective(giveNewObjective);
                 gameManager.SetCount(0);
+                await RemovedObjectsManager.Singleton.SaveRemovedObjects();
             }
         }
     }

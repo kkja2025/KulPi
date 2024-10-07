@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     private static GameManager singleton = null;
     protected GameObject playerInstance;
     protected PlayerData playerData;
-    protected List<string> removedObjects = new List<string>();
     protected List<string> interactedNPC = new List<string>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] protected TMP_Text objectiveText;
@@ -77,7 +76,6 @@ public class GameManager : MonoBehaviour
         }
         try
         {
-            await LoadRemovedObjects();
             await LoadInteractedNPC();
             await LoadPlayerData();
             if (playerData != null)
@@ -171,33 +169,6 @@ public class GameManager : MonoBehaviour
         if (virtualCamera != null)
         {
             virtualCamera.Follow = playerInstance.transform;
-        }
-    }
-
-    public async void RemoveObject(GameObject obj)
-    {
-        if (obj != null)
-        {
-            removedObjects.Add(obj.name);
-            Destroy(obj);
-            await CloudSaveManager.Singleton.SaveRemovedObjectsData(removedObjects);
-        }
-    }
-
-    private async Task LoadRemovedObjects()
-    {
-        var result = await CloudSaveManager.Singleton.LoadRemovedObjectsData();
-        if (result != null)
-        {
-            removedObjects = result;
-            foreach (var objectName in removedObjects)
-            {
-                GameObject obj = GameObject.Find(objectName);
-                if (obj != null)
-                {
-                    Destroy(obj);
-                }
-            }
         }
     }
 

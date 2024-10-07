@@ -109,11 +109,12 @@ public class BattleManager : MonoBehaviour
         PanelManager.LoadSceneAsync(currentScene.name);
     }
 
-    public void DestroyEnemy()
+    public async void DestroyEnemy()
     {
         EnemyEncounterData enemyData = gameManager.GetActiveEnemy();
         GameObject enemy = new GameObject(enemyData.GetEnemyID());
-        gameManager.RemoveObject(enemy);
+        RemovedObjectsManager.Singleton.RemoveObject(enemy);
+        await RemovedObjectsManager.Singleton.SaveRemovedObjects();
     }
 
     public async void ExitBattleAsync()
