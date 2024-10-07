@@ -135,8 +135,14 @@ public class PanelManager : MonoBehaviour
             soundEffectsSource.Stop();
         }
 
-        Image loadingBar = GetSingleton("loading").transform.Find("Container/LoadingBarContainer/LoadingBar").GetComponent<Image>();
-        loadingBar.fillAmount = 0;
+        // Image loadingBar = GetSingleton("loading").transform.Find("Container/LoadingBarContainer/LoadingBar").GetComponent<Image>();
+        // loadingBar.fillAmount = 0;
+        Sprite[] loadingSprites = Resources.LoadAll<Sprite>("Icons/Loading/Loading_Book_Animation");
+        Image loadingImage = GetSingleton("loading").transform.Find("Container/LoadingBookContainer/LoadingImage").GetComponent<Image>();
+
+        int currentFrame = 0;
+        float frameInterval = 0.1f;
+        float frameTimer = 0f;
 
         if (string.IsNullOrEmpty(sceneName))
         {
@@ -144,13 +150,22 @@ public class PanelManager : MonoBehaviour
 
             while (simulatedProgress < 1f)
             {
-                simulatedProgress += Time.deltaTime * 0.2f; 
-                loadingBar.fillAmount = simulatedProgress; 
+                simulatedProgress += Time.deltaTime * 0.2f;
+                // loadingBar.fillAmount = simulatedProgress; 
+                
+                frameTimer += Time.deltaTime;
+                if (frameTimer >= frameInterval)
+                {
+                    currentFrame = (currentFrame + 1) % loadingSprites.Length;
+                    loadingImage.sprite = loadingSprites[currentFrame];
+                    frameTimer = 0f;
+                }
+
                 yield return null;
             }
 
-            Close("loading"); 
-            yield break; 
+            Close("loading");
+            yield break;
         }
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
@@ -158,14 +173,21 @@ public class PanelManager : MonoBehaviour
 
         while (!asyncLoad.isDone)
         {
-            loadingBar.fillAmount = asyncLoad.progress / 0.9f;
+            // loadingBar.fillAmount = asyncLoad.progress / 0.9f;
+            frameTimer += Time.deltaTime;
+            if (frameTimer >= frameInterval)
+            {
+                currentFrame = (currentFrame + 1) % loadingSprites.Length;
+                loadingImage.sprite = loadingSprites[currentFrame];
+                frameTimer = 0f;
+            }
 
             if (asyncLoad.progress >= 0.9f)
             {
                 asyncLoad.allowSceneActivation = true;
             }
 
-            yield return null; 
+            yield return null;
         }
 
         Close("loading");
