@@ -68,13 +68,49 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
+    public async Task SaveEncyclopediaEntryData(Dictionary<string, object> data)
+    {
+        try 
+        {
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in SaveEncyclopediaEntryData: " + e.Message);
+            HandleCloudSaveException(e);
+        }
+    }
+
+    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesData(string key)
+    {
+        try
+        {
+            var encyclopediaData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { key });
+            if (encyclopediaData.TryGetValue(key, out var encyclopediaEntryJson))            {
+                string json = encyclopediaEntryJson.Value.GetAsString();
+                var encyclopedia = JsonUtility.FromJson<EncyclopediaItemList>(json).items;
+            return encyclopedia;
+            }
+            else
+            {
+                Debug.LogWarning("Encyclopedia data not found.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error in LoadEncyclopediaEntriesData: " + e.Message);
+            throw;
+        }
+    }
+
     public async Task SaveInventoryData(List<InventoryItem> inventory)
     {
         string jsonInventory = JsonUtility.ToJson(new InventoryItemList { items = inventory });
         var data = new Dictionary<string, object> { { CLOUD_SAVE_INVENTORY_KEY, jsonInventory } };
         try
         {
-            await CloudSaveService.Instance.Data.Player.SaveAsync(data);;
+            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
         }
         catch (Exception e)
         {
@@ -91,7 +127,7 @@ public class CloudSaveManager : MonoBehaviour
 
             if (inventoryData.TryGetValue(CLOUD_SAVE_INVENTORY_KEY, out var inventoryJson))            {
                 string json = inventoryJson.Value.GetAsString();
-                var inventory = JsonUtility.FromJson<InventoryItemList>(json)?.items;
+                var inventory = JsonUtility.FromJson<InventoryItemList>(json).items;
                 return inventory;
             }
             else
@@ -113,7 +149,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
@@ -139,7 +174,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
@@ -186,7 +220,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {
@@ -228,7 +261,6 @@ public class CloudSaveManager : MonoBehaviour
         try
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-            Debug.Log("Data saved successfully.");
         }
         catch (Exception e)
         {

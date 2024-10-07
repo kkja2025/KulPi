@@ -46,6 +46,7 @@ public class QuestItemInteraction : ItemInteractable
                 gameManager.SetCount(0);
                 await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
                 await InventoryManager.Singleton.SaveInventoryAsync();
+                SaveUnlockedEntry();
             }
         }
     }
@@ -53,5 +54,11 @@ public class QuestItemInteraction : ItemInteractable
     private void UnlockEntry()
     {
         gameManager.UnlockEncyclopediaItem(spriteID, "unlock");
+        Debug.Log("Unlocked entry: " + spriteID);
+    }
+
+    private void SaveUnlockedEntry()
+    {
+        gameManager.SaveEncyclopediaItem(spriteID);
     }
 }

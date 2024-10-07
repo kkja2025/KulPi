@@ -175,45 +175,31 @@ public class GameManager : MonoBehaviour
         PanelManager.LoadSceneAsync("MainMenu");
     }
 
-    public async void UnlockEncyclopediaItem(string id, string panel)
+    public async void SaveEncyclopediaItem(string id)
     {
-        EncyclopediaItem item = null;
-        switch (id)
-        {
-            case "Babaylan":
-                item = EncyclopediaItem.Figures_Chapter1_Babaylan();
-                break;
-            case "Albularyo":
-                item = EncyclopediaItem.Figures_Chapter1_Albularyo();
-                break;
-            case "Lagundi":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Lagundi();
-                break;
-            case "Sambong":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_Sambong();
-                break;
-            case "NiyogNiyogan":
-                item = EncyclopediaItem.PracticesAndTraditions_Chapter1_NiyogNiyogan();
-                break;
-            case "Tikbalang":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Tikbalang();
-                break;
-            case "Sigbin":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Sigbin();
-                break;
-            case "Diwata":
-                item = EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
-                break;
-            default:
-                Debug.LogWarning("No encyclopedia entry provided.");
-                return;
-        }
+        EncyclopediaItem item = GetEncyclopediaItemById(id);
+        if (item == null) return;
+
+        await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync(item.itemCategory);
+    }
+
+    public void UnlockEncyclopediaItem(string id, string panel)
+    {
+        EncyclopediaItem item = GetEncyclopediaItemById(id);
+        if (item == null) return;
+
         EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
         if (encyclopediaUnlockEntry != null)
         {
             encyclopediaUnlockEntry.SetEncyclopediaItem(item);
             encyclopediaUnlockEntry.Open();
         }
-        await EncyclopediaManager.Singleton.AddItem(item);
+
+        EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
+    }
+
+    protected virtual EncyclopediaItem GetEncyclopediaItemById(string id)
+    {
+        return null;
     }
 }

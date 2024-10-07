@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,6 +11,7 @@ public class EncyclopediaPanel : Panel
     [SerializeField] private RectTransform buttonContent = null;
     [SerializeField] private GameObject buttonPrefab = null;
     [SerializeField] private string keyType;
+    private List<EncyclopediaItem> encyclopediaList = null;
     private const string CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
     private const string CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
     private const string CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY = EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
@@ -36,27 +38,31 @@ public class EncyclopediaPanel : Panel
         {
             Destroy(child.gameObject);
         }
-
+        List<EncyclopediaItem> loadedEncyclopediaList = null;
         switch (key)
         {
             case "figures":
-                await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
+                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
                 break;
             case "events":
-                await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
+                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
                 break;
             case "practices":
-                await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
+                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
                 break;
             case "mythology":
-                await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
+                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
                 break;
             default:
                 Debug.LogWarning("Invalid encyclopedia key provided.");
                 return;
         }
+        
+        encyclopediaList = EncyclopediaManager.Singleton.GetEncyclopediaList();
+        List<EncyclopediaItem> mergedList = encyclopediaList.Concat(loadedEncyclopediaList).ToList();
+        EncyclopediaManager.Singleton.SetEncyclopediaList(mergedList);
 
-        var chapters = EncyclopediaManager.Singleton.encyclopediaList.Select(item => item.itemChapter).Distinct().ToList();
+        var chapters = encyclopediaList.Select(item => item.itemChapter).Distinct().ToList();
 
         foreach (var chapter in chapters)
         {
@@ -88,7 +94,8 @@ public class EncyclopediaPanel : Panel
         }
 
         AddBackButton(chapter);
-        var titlesInChapter = EncyclopediaManager.Singleton.encyclopediaList
+        var titlesInChapter = encyclopediaList
+
             .Where(x => x.itemChapter == chapter) 
             .Select(x => x.itemTitle)
             .Distinct()             
@@ -141,7 +148,7 @@ public class EncyclopediaPanel : Panel
             Destroy(child.gameObject);
         }
 
-        var selectedItem = EncyclopediaManager.Singleton.encyclopediaList.FirstOrDefault(x => x.itemTitle == title);
+        var selectedItem = encyclopediaList.FirstOrDefault(x => x.itemTitle == title);
 
         if (selectedItem != null)
         {

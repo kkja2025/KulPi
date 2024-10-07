@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using Unity.Services.CloudSave;
+
 using UnityEngine.SceneManagement;
 
 public class EncyclopediaManager : MonoBehaviour
 {
     private bool initialized = false;
     private static EncyclopediaManager singleton = null;
-    public List<EncyclopediaItem> encyclopediaList = null;
-    
+    private List<EncyclopediaItem> encyclopediaList = new List<EncyclopediaItem>();
     public static EncyclopediaManager Singleton
     {
         get
@@ -42,127 +41,59 @@ public class EncyclopediaManager : MonoBehaviour
         Application.runInBackground = true;
     }
 
+    public List<EncyclopediaItem> GetEncyclopediaList()
+    {
+        return encyclopediaList;
+    }
+
+    public void SetEncyclopediaList(List<EncyclopediaItem> list)
+    {
+        encyclopediaList = list;
+    }
+
     public async Task SaveEncyclopediaEntryAsync(string key)
     {
-        try
-        {   
-            string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
-            var data = new Dictionary<string, object> { { key, jsonEncyclopedia } };
+        string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
+        var data = new Dictionary<string, object> { { key, jsonEncyclopedia } };
 
-            switch (key)
-            {
-                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
-                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY] = jsonEncyclopedia;
-                    break;
-                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
-                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY] = jsonEncyclopedia;
-                    break;
-                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
-                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY] = jsonEncyclopedia;
-                    break;
-                case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
-                    data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY] = jsonEncyclopedia;
-                    break;
-                default:
-                    Debug.LogWarning("Invalid encyclopedia key: " + key);
-                    return;
-            }
-
-            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-        }
-        catch (Exception e)
+        switch (key)
         {
-            Debug.LogError("Failed to save encyclopedia entry: " + e.Message);
+            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
+                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY] = jsonEncyclopedia;
+                break;
+            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
+                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY] = jsonEncyclopedia;
+                break;
+            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
+                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY] = jsonEncyclopedia;
+                break;
+            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
+                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY] = jsonEncyclopedia;
+                break;
+            default:
+                Debug.LogWarning("Invalid encyclopedia key: " + key);
+                return;
+        }
+
+        await CloudSaveManager.Singleton.SaveEncyclopediaEntryData(data);
+    }
+
+    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesAsync(string key)
+    {
+        var result = await CloudSaveManager.Singleton.LoadEncyclopediaEntriesData(key);
+        if (result != null)
+        {
+            return result;
+        }
+        else
+        {
+            Debug.LogWarning("Encyclopedia data not found.");
+            return new List<EncyclopediaItem>();
         }
     }
 
-    public async Task LoadEncyclopediaEntriesAsync(string key)
+    public void AddItemToEncyclopedia(EncyclopediaItem item)
     {
-        try
-        {
-            var keys = new HashSet<string> { key };
-            
-            var encyclopediaData = await CloudSaveService.Instance.Data.Player.LoadAsync(keys);
-
-            if (encyclopediaData.TryGetValue(key, out var encyclopediaEntryJson))
-            {
-                string json = encyclopediaEntryJson.Value.GetAsString();
-                var loadedEncyclopediaList = JsonUtility.FromJson<EncyclopediaItemList>(json)?.items;
-
-                switch (key)
-                {
-                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
-                        if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
-                        {
-                            encyclopediaList = loadedEncyclopediaList;
-                            Debug.Log("Encyclopedia figures loaded successfully.");
-                        }
-                        else
-                        {
-                            Debug.Log("Encyclopedia figures list is empty.");
-                            encyclopediaList = new List<EncyclopediaItem>();
-                        }
-                        break;
-                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
-                        if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
-                        {
-                            encyclopediaList = loadedEncyclopediaList;
-                            Debug.Log("Encyclopedia events loaded successfully.");
-                        }
-                        else
-                        {
-                            Debug.Log("Encyclopedia events list is empty.");
-                            encyclopediaList = new List<EncyclopediaItem>();
-                        }
-                        break;
-                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
-                        if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
-                        {
-                            encyclopediaList = loadedEncyclopediaList;
-                            Debug.Log("Encyclopedia practices and traditions loaded successfully.");
-                        }
-                        else
-                        {
-                            Debug.Log("Encyclopedia practices and traditions list is empty.");
-                            encyclopediaList = new List<EncyclopediaItem>();
-                        }
-                        break;
-                    case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
-                        if (loadedEncyclopediaList != null && loadedEncyclopediaList.Count > 0)
-                        {
-                            encyclopediaList = loadedEncyclopediaList;
-                            Debug.Log("Encyclopedia mythology and folklore loaded successfully.");
-                        }
-                        else
-                        {
-                            Debug.Log("Encyclopedia mythology and folklore list is empty.");
-                            encyclopediaList = new List<EncyclopediaItem>();
-                        }
-                        break;
-                    default:
-                        Debug.LogWarning("Invalid encyclopedia key: " + key);
-                        encyclopediaList = new List<EncyclopediaItem>();
-                        break;
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No entries found in Cloud Save for key: " + key);
-                encyclopediaList = new List<EncyclopediaItem>();
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Failed to load encyclopedia entries: " + e.Message);
-            encyclopediaList = new List<EncyclopediaItem>();
-        }
-    }
-
-    public async Task AddItem(EncyclopediaItem item)
-    {
-        await LoadEncyclopediaEntriesAsync(item.itemCategory);
         encyclopediaList.Add(item);
-        Debug.Log(item.itemTitle + " added to EncyclopediaList.");
-        await SaveEncyclopediaEntryAsync(item.itemCategory);
     }
 }
