@@ -6,12 +6,10 @@ public class ProgressBlocker : DialogueInteractable
 {
     [SerializeField] private string completedObjective = null;
     private Collider2D barrierCollider;
-    private Chapter1GameManager gameManager;
 
     protected override void Awake()
     {
         base.Awake();
-        gameManager = GameManager.Singleton as Chapter1GameManager;
         barrierCollider = GetComponent<Collider2D>();
     }
 
@@ -21,7 +19,7 @@ public class ProgressBlocker : DialogueInteractable
         {
             isPlayerInRange = true;
 
-            if (string.IsNullOrEmpty(completedObjective) || completedObjective == gameManager.GetObjective())
+            if (string.IsNullOrEmpty(completedObjective) || completedObjective == GameManager.Singleton.GetObjective())
             {
                 Debug.Log("Opening dialogue. Objective is either null or matched.");
 

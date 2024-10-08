@@ -11,7 +11,6 @@ public class BattleManager : MonoBehaviour
     [SerializeField] protected TMP_Text timerText;
     [SerializeField] protected GameObject spawnsObject;
     private bool initialized = false; 
-    private Chapter1GameManager gameManager;
     protected bool isTimerRunning = false;
     protected float elapsedTime = 0f;
     private static BattleManager singleton = null;
@@ -50,15 +49,6 @@ public class BattleManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-        gameManager = GameManager.Singleton as Chapter1GameManager;
-        if (gameManager != null)
-        {
-            Debug.Log("Chapter1GameManager instance accessed successfully!");
-        }
-        else
-        {
-            Debug.LogError("Chapter1GameManager instance not found.");
         }
         InitializeScene();
     }
@@ -117,7 +107,7 @@ public class BattleManager : MonoBehaviour
 
     public async void DestroyEnemy()
     {
-        EnemyEncounterData enemyData = gameManager.GetActiveEnemy();
+        EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
         GameObject enemy = new GameObject(enemyData.GetEnemyID());
         RemovedObjectsManager.Singleton.RemoveObject(enemy);
         await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
@@ -125,15 +115,15 @@ public class BattleManager : MonoBehaviour
 
     public async void ExitBattleAsync()
     {
-        var enemyData = gameManager.GetActiveEnemy();
-        if (gameManager != null)
+        var enemyData = GameManager.Singleton.GetActiveEnemy();
+        if (GameManager.Singleton != null)
         {
             if (enemyData != null)
             {
                 GameObject enemy = new GameObject(enemyData.GetEnemyID());
                 enemy.transform.position = enemyData.GetPosition();
-                await gameManager.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
-                gameManager.SetActiveEnemy(null);
+                await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
+                GameManager.Singleton.SetActiveEnemy(null);
             }
         }
         
