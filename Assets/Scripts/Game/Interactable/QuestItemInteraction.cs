@@ -7,13 +7,6 @@ public class QuestItemInteraction : ItemInteractable
     [SerializeField] private string giveNewObjective;
     [SerializeField] private int totalItems;
     private bool hasInteracted = false;
-    private Chapter1GameManager gameManager;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        gameManager = GameManager.Singleton as Chapter1GameManager;
-    }
 
     protected override void Interact()
     {
@@ -21,7 +14,7 @@ public class QuestItemInteraction : ItemInteractable
         if (!hasInteracted)
         {
             hasInteracted = true;
-            gameManager.IncrementCount();           
+            GameManager.Singleton.IncrementCount();           
             if (spriteID != null)
             {
                 InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
@@ -38,12 +31,12 @@ public class QuestItemInteraction : ItemInteractable
     {
         RemovedObjectsManager.Singleton.RemoveObject(gameObject);
         
-        if (gameManager.GetCount() >= totalItems)
+        if (GameManager.Singleton.GetCount() >= totalItems)
         {
             if(giveNewObjective != "") 
             {
-                gameManager.SetObjective(giveNewObjective);
-                gameManager.SetCount(0);
+                GameManager.Singleton.SetObjective(giveNewObjective);
+                GameManager.Singleton.SetCount(0);
                 await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
                 await InventoryManager.Singleton.SaveInventoryAsync();
                 SaveUnlockedEntry();
@@ -53,12 +46,12 @@ public class QuestItemInteraction : ItemInteractable
 
     private void UnlockEntry()
     {
-        gameManager.UnlockEncyclopediaItem(spriteID, "unlock");
+        GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
         Debug.Log("Unlocked entry: " + spriteID);
     }
 
     private void SaveUnlockedEntry()
     {
-        gameManager.SaveEncyclopediaItem(spriteID);
+        GameManager.Singleton.SaveEncyclopediaItem(spriteID);
     }
 }

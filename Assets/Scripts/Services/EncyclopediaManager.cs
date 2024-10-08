@@ -94,4 +94,30 @@ public class EncyclopediaManager : MonoBehaviour
     {
         encyclopediaList.Add(item);
     }
+
+    public EncyclopediaItem GetEncyclopediaItemById(string id)
+    {
+        switch (id)
+        {
+            case "Babaylan":
+                return EncyclopediaItem.Figures_Chapter1_Babaylan();
+            case "Albularyo":
+                return EncyclopediaItem.Figures_Chapter1_Albularyo();
+            case "Lagundi":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter1_Lagundi();
+            case "Sambong":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter1_Sambong();
+            case "NiyogNiyogan":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter1_NiyogNiyogan();
+            case "Tikbalang":
+                return EncyclopediaItem.MythologyAndFolklore_Chapter1_Tikbalang();
+            case "Sigbin":
+                return EncyclopediaItem.MythologyAndFolklore_Chapter1_Sigbin();
+            case "Diwata":
+                return EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
+            default:
+                Debug.LogWarning("No encyclopedia entry found for the provided ID.");
+                return null;
+        }
+    }
 }

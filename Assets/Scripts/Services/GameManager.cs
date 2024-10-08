@@ -18,10 +18,12 @@ public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
     private static GameManager singleton = null;
-    protected GameObject playerInstance;
-    protected PlayerData playerData;
+    private EnemyEncounterData activeEnemy = null;
+    private int count = 0;
+    private GameObject playerInstance;
+    private PlayerData playerData;
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] protected TMP_Text objectiveText;
+    [SerializeField] private TMP_Text objectiveText;
 
     public static GameManager Singleton
     {
@@ -103,6 +105,7 @@ public class GameManager : MonoBehaviour
             StartClientService();
         }
     }
+    
     private void OnDestroy()
     {
         if (singleton == this)
@@ -111,13 +114,42 @@ public class GameManager : MonoBehaviour
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-
-    public virtual void SetObjective(string text)
+    
+    public void SetActiveEnemy(EnemyEncounterData enemy)
     {
-        if (objectiveText != null)
-        {
-            objectiveText.text = text;
-        }
+        activeEnemy = enemy;
+    }
+
+    public EnemyEncounterData GetActiveEnemy()
+    {
+        return activeEnemy;
+    }
+
+    public async void SetObjective(string objective)
+    {
+        playerData.SetActiveQuest(objective);
+        objectiveText.text = objective;
+        await SavePlayerData();
+    }
+
+    public string GetObjective()
+    {
+        return playerData.GetActiveQuest();
+    }
+
+    public int GetCount()
+    {
+        return count;
+    }
+
+    public void SetCount(int newCount)
+    {
+        count = newCount;
+    }
+
+    public void IncrementCount()
+    {
+        count++;
     }
 
     public async Task SavePlayerData()
@@ -140,6 +172,15 @@ public class GameManager : MonoBehaviour
     public PlayerData GetPlayerData()
     {
         return playerData;
+    }
+
+    public async void SetPlayerPosition(Vector3 position)
+    {
+        if (playerInstance != null)
+        {
+            playerInstance.transform.position = position;
+            await SavePlayerData();
+        }
     }
 
     public async Task LoadPlayerData()
@@ -177,7 +218,7 @@ public class GameManager : MonoBehaviour
 
     public async void SaveEncyclopediaItem(string id)
     {
-        EncyclopediaItem item = GetEncyclopediaItemById(id);
+        EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);
         if (item == null) return;
 
         await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync(item.itemCategory);
@@ -185,7 +226,7 @@ public class GameManager : MonoBehaviour
 
     public void UnlockEncyclopediaItem(string id, string panel)
     {
-        EncyclopediaItem item = GetEncyclopediaItemById(id);
+        EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);
         if (item == null) return;
 
         EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
@@ -196,10 +237,5 @@ public class GameManager : MonoBehaviour
         }
 
         EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
-    }
-
-    protected virtual EncyclopediaItem GetEncyclopediaItemById(string id)
-    {
-        return null;
     }
 }

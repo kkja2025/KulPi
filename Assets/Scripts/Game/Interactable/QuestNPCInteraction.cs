@@ -13,17 +13,10 @@ public class QuestNPCInteraction : DialogueInteractable
     [SerializeField] private string giveFollowUpQuest;   
     private bool hasTalked = false;
     private bool hasCompleted = false;
-    private Chapter1GameManager gameManager;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        gameManager = GameManager.Singleton as Chapter1GameManager;
-    }
 
     protected override void Interact()
     {
-        string currentQuest = gameManager.GetObjective();
+        string currentQuest = GameManager.Singleton.GetObjective();
         if (currentQuest == completeQuest && !hasCompleted)
         {
             hasCompleted = true;
@@ -32,9 +25,9 @@ public class QuestNPCInteraction : DialogueInteractable
         else if (!hasTalked && currentQuest != giveNewQuest)
         {
             hasTalked = true;
-            gameManager.IncrementCount();
+            GameManager.Singleton.IncrementCount();
             InteractedNPCManager.Singleton.AddInteractedNPC(gameObject);
-            Debug.Log("Incremented count: " + gameManager.GetCount());
+            Debug.Log("Incremented count: " + GameManager.Singleton.GetCount());
         }   
         base.Interact();
     }
@@ -47,12 +40,12 @@ public class QuestNPCInteraction : DialogueInteractable
 
     private void StartQuest()
     {
-        if (gameManager.GetCount() >= totalNPCs)
+        if (GameManager.Singleton.GetCount() >= totalNPCs)
         {
             if(giveNewQuest != "") 
             {
-                gameManager.SetObjective(giveNewQuest);
-                gameManager.SetCount(0);
+                GameManager.Singleton.SetObjective(giveNewQuest);
+                GameManager.Singleton.SetCount(0);
                 InteractedNPCManager.Singleton.SaveInteractedNPC();
                 Debug.Log("Quest started: " + giveNewQuest);
             }
