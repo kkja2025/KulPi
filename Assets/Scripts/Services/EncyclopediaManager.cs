@@ -49,43 +49,20 @@ public class EncyclopediaManager : MonoBehaviour
         encyclopediaList = list;
     }
 
-    public async Task SaveEncyclopediaEntryAsync(string key)
+    public async Task SaveEncyclopediaEntryAsync()
     {
-        string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
-        var data = new Dictionary<string, object> { { key, jsonEncyclopedia } };
-
-        switch (key)
-        {
-            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY:
-                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY] = jsonEncyclopedia;
-                break;
-            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY:
-                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY] = jsonEncyclopedia;
-                break;
-            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY:
-                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY] = jsonEncyclopedia;
-                break;
-            case EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY:
-                data[EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY] = jsonEncyclopedia;
-                break;
-            default:
-                Debug.LogWarning("Invalid encyclopedia key: " + key);
-                return;
-        }
-
-        await CloudSaveManager.Singleton.SaveEncyclopediaEntryData(data);
+        await CloudSaveManager.Singleton.SaveEncyclopediaEntryData(encyclopediaList);
     }
 
-    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesAsync(string key)
+    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesAsync()
     {
-        var result = await CloudSaveManager.Singleton.LoadEncyclopediaEntriesData(key);
+        var result = await CloudSaveManager.Singleton.LoadEncyclopediaEntriesData();
         if (result != null)
         {
             return result;
         }
         else
         {
-            Debug.LogWarning("Encyclopedia data not found.");
             return new List<EncyclopediaItem>();
         }
     }

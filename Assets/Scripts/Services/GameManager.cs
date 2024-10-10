@@ -216,14 +216,6 @@ public class GameManager : MonoBehaviour
         PanelManager.LoadSceneAsync("MainMenu");
     }
 
-    public async void SaveEncyclopediaItem(string id)
-    {
-        EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);
-        if (item == null) return;
-
-        await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync(item.itemCategory);
-    }
-
     public void UnlockEncyclopediaItem(string id, string panel)
     {
         EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);

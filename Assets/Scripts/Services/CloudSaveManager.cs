@@ -15,6 +15,7 @@ public class CloudSaveManager : MonoBehaviour
     private const string CLOUD_SAVE_INVENTORY_KEY = "inventory";
     private const string CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY = "removed_objects";
     private const string CLOUD_SAVE_INTERACTED_NPC_DATA_KEY = "interacted_npc";
+    private const string CLOUD_SAVE_ENCYCLOPEDIA_DATA_KEY = "encyclopedia";             
 
     public static CloudSaveManager Singleton
     {
@@ -68,8 +69,10 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async Task SaveEncyclopediaEntryData(Dictionary<string, object> data)
+    public async Task SaveEncyclopediaEntryData(List<EncyclopediaItem> encyclopediaList)
     {
+        string jsonEncyclopedia = JsonUtility.ToJson(new EncyclopediaItemList { items = encyclopediaList });
+        var data = new Dictionary<string, object> { { CLOUD_SAVE_ENCYCLOPEDIA_DATA_KEY, jsonEncyclopedia } };
         try 
         {
             await CloudSaveService.Instance.Data.Player.SaveAsync(data);
@@ -81,12 +84,12 @@ public class CloudSaveManager : MonoBehaviour
         }
     }
 
-    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesData(string key)
+    public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesData()
     {
         try
         {
-            var encyclopediaData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { key });
-            if (encyclopediaData.TryGetValue(key, out var encyclopediaEntryJson))            {
+            var encyclopediaData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string> { CLOUD_SAVE_ENCYCLOPEDIA_DATA_KEY });
+            if (encyclopediaData.TryGetValue(CLOUD_SAVE_ENCYCLOPEDIA_DATA_KEY, out var encyclopediaEntryJson))            {
                 string json = encyclopediaEntryJson.Value.GetAsString();
                 var encyclopedia = JsonUtility.FromJson<EncyclopediaItemList>(json).items;
             return encyclopedia;
@@ -164,12 +167,9 @@ public class CloudSaveManager : MonoBehaviour
         { 
             { CLOUD_SAVE_PLAYER_DATA_KEY, jsonPlayerData },
             { CLOUD_SAVE_INVENTORY_KEY, "{}" },
+            { CLOUD_SAVE_ENCYCLOPEDIA_DATA_KEY, "{}" },
             { CLOUD_SAVE_REMOVED_OBJECTS_DATA_KEY, "{}" },
-            { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, "{}" },
-            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY, "{}" },
-            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY, "{}" },
-            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY, "{}" },
-            { EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY, "{}" }   
+            { CLOUD_SAVE_INTERACTED_NPC_DATA_KEY, "{}" }
         };
         try
         {

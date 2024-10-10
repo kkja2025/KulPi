@@ -18,7 +18,7 @@ public class QuestItemInteraction : ItemInteractable
             if (spriteID != null)
             {
                 InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
-                UnlockEntry();
+                GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
             }
         }
         if(conversationComplete)
@@ -39,19 +39,8 @@ public class QuestItemInteraction : ItemInteractable
                 GameManager.Singleton.SetCount(0);
                 await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
                 await InventoryManager.Singleton.SaveInventoryAsync();
-                SaveUnlockedEntry();
+                await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
             }
         }
-    }
-
-    private void UnlockEntry()
-    {
-        GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
-        Debug.Log("Unlocked entry: " + spriteID);
-    }
-
-    private void SaveUnlockedEntry()
-    {
-        GameManager.Singleton.SaveEncyclopediaItem(spriteID);
     }
 }

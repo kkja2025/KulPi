@@ -35,34 +35,31 @@ public class EncyclopediaPanel : Panel
     private async void LoadEntryList(string key)
     {
         string itemCategory = null;
+        List<EncyclopediaItem> loadedEncyclopediaList = null;
+
         foreach (Transform child in buttonContent)
         {
             Destroy(child.gameObject);
         }
-        List<EncyclopediaItem> loadedEncyclopediaList = null;
         switch (key)
         {
             case "figures":
-                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
                 itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
                 break;
             case "events":
-                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
                 itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
                 break;
             case "practices":
-                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
                 itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY; 
                 break;
             case "mythology":
-                loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
                 itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
                 break;
             default:
                 Debug.LogWarning("Invalid encyclopedia key provided.");
                 return;
         }
-        
+        loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         encyclopediaList = EncyclopediaManager.Singleton.GetEncyclopediaList();
         List<EncyclopediaItem> mergedList = encyclopediaList.Concat(loadedEncyclopediaList).ToList();
         EncyclopediaManager.Singleton.SetEncyclopediaList(mergedList);
@@ -77,12 +74,12 @@ public class EncyclopediaPanel : Panel
 
             foreach (var chapter in chapters)
             {
-                AddChapterButton(chapter);
+                AddChapterButton(chapter, itemCategory);
             }
         }
     }
     
-    private void AddChapterButton(string chapter)
+    private void AddChapterButton(string chapter, string itemCategory)
     {
         GameObject newButton = Instantiate(buttonPrefab, buttonContent);
         TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
@@ -95,11 +92,11 @@ public class EncyclopediaPanel : Panel
         Button button = newButton.GetComponent<Button>();
         if (button != null)
         {
-            button.onClick.AddListener(() => LoadEntryListTitles(chapter));
+            button.onClick.AddListener(() => LoadEntryListTitles(chapter, itemCategory));
         }
     }
 
-    private void LoadEntryListTitles(string chapter)
+    private void LoadEntryListTitles(string chapter, string itemCategory)
     {
         foreach (Transform child in buttonContent)
         {
@@ -108,8 +105,8 @@ public class EncyclopediaPanel : Panel
 
         AddBackButton(chapter);
         var titlesInChapter = encyclopediaList
-
-            .Where(x => x.itemChapter == chapter) 
+            .Where(x => x.itemChapter == chapter)
+            .Where(item => item.itemCategory == itemCategory)
             .Select(x => x.itemTitle)
             .Distinct()             
             .ToList();
