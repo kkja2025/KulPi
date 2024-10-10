@@ -6,7 +6,7 @@ public class SlashAnimation : MonoBehaviour
 {
     [SerializeField] private Image overlayImage;  // Reference to the overlay image component
     public Sprite[] animationFrames;  // Array of sprites for the animation
-    public float animationSpeed = 0.1f;  // Time between frames
+    public float animationSpeed = 0.01f;  // Time between frames
     public bool loop = false;  // Set to true if you want the animation to loop
 
     private int currentFrame = 0;
