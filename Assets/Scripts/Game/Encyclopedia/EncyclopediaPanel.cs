@@ -34,6 +34,7 @@ public class EncyclopediaPanel : Panel
 
     private async void LoadEntryList(string key)
     {
+        string itemCategory = null;
         foreach (Transform child in buttonContent)
         {
             Destroy(child.gameObject);
@@ -43,15 +44,19 @@ public class EncyclopediaPanel : Panel
         {
             case "figures":
                 loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
+                itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
                 break;
             case "events":
                 loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
+                itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
                 break;
             case "practices":
                 loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
+                itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY; 
                 break;
             case "mythology":
                 loadedEncyclopediaList = await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
+                itemCategory = CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY;
                 break;
             default:
                 Debug.LogWarning("Invalid encyclopedia key provided.");
@@ -61,14 +66,22 @@ public class EncyclopediaPanel : Panel
         encyclopediaList = EncyclopediaManager.Singleton.GetEncyclopediaList();
         List<EncyclopediaItem> mergedList = encyclopediaList.Concat(loadedEncyclopediaList).ToList();
         EncyclopediaManager.Singleton.SetEncyclopediaList(mergedList);
-
-        var chapters = encyclopediaList.Select(item => item.itemChapter).Distinct().ToList();
-
-        foreach (var chapter in chapters)
+        
+        if (itemCategory != null)
         {
-            AddChapterButton(chapter);
+            var chapters = encyclopediaList
+            .Where(item => item.itemCategory == itemCategory)    
+            .Select(item => item.itemChapter)
+            .Distinct()
+            .ToList();
+
+            foreach (var chapter in chapters)
+            {
+                AddChapterButton(chapter);
+            }
         }
     }
+    
     private void AddChapterButton(string chapter)
     {
         GameObject newButton = Instantiate(buttonPrefab, buttonContent);
