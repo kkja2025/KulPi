@@ -18,8 +18,7 @@ public class AudioManager : MonoBehaviour
     {
         { "Login", "Main_Theme" },
         { "MainMenu", "Main_Theme" },
-        { "Chapter1-Beach", "Shore" },
-        { "Chapter1-Jungle", "Forest" },
+        { "Chapter1", "Shore" },
         { "Chapter1BossDiwata", "Battle_Diwata" },
         { "Chapter1SigbinTikbalang", "Battle_Sigbin_Tikbalang" }
     };

@@ -68,7 +68,6 @@ public class CutsceneMenu : Panel
 
     private void StartGame()
     {
-        PanelManager.CloseAll();
-        PanelManager.LoadSceneAsync("Chapter1-Beach");
+        PanelManager.LoadSceneAsync("Chapter1");
     }
 }
