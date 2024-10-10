@@ -18,11 +18,11 @@ public class QuestItemInteraction : ItemInteractable
             if (spriteID != null)
             {
                 InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
-                GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
             }
         }
         if(conversationComplete)
         {
+            GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
             OnObjectRemoved(gameObject);
         }
     }
