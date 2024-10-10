@@ -78,12 +78,18 @@ public class GameManager : MonoBehaviour
                     await UnityServices.InitializeAsync();
                 }
                 await LoadPlayerData();
+            },
+            () => {
+                PanelManager.GetSingleton("hud").Open();
+                if (objectiveText == null)
+                {
+                    objectiveText = GameObject.Find("QuestText").GetComponent<TextMeshProUGUI>();
+                }
                 if (playerData != null)
                 {
                     SetObjective(playerData.GetActiveQuest());
                 }
-            },
-            () => PanelManager.GetSingleton("hud").Open());
+            });
         }
         catch (Exception e)
         {
@@ -128,9 +134,8 @@ public class GameManager : MonoBehaviour
     {
         playerData.SetActiveQuest(objective);
         objectiveText.text = objective;
-        await SavePlayerData();
+        await SavePlayerData();   
     }
-
     public string GetObjective()
     {
         return playerData.GetActiveQuest();
@@ -163,7 +168,6 @@ public class GameManager : MonoBehaviour
         Vector3 directionFromEnemy = (playerPosition - enemyPosition).normalized;
         float offsetDistance = 5f;
         playerPosition += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
-
         playerData.SetPosition(playerPosition);
         await CloudSaveManager.Singleton.SavePlayerData(playerData);
     }
