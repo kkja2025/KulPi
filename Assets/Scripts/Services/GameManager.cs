@@ -67,24 +67,23 @@ public class GameManager : MonoBehaviour
         StartClientService();
     }
 
-    private async void StartClientService()
+    private void StartClientService()
     {
-        PanelManager.LoadSceneAsync("");
-
-        if (UnityServices.State != ServicesInitializationState.Initialized)
-        {
-            await UnityServices.InitializeAsync();
-        }
         try
         {
-            await LoadPlayerData();
-            if (playerData != null)
-            {
-                SetObjective(playerData.GetActiveQuest());
-            }
-            await Task.Delay(2000);
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("hud").Open();
+            PanelManager.Singleton.StartLoading(3f, 
+            async () => {
+                if (UnityServices.State != ServicesInitializationState.Initialized)
+                {
+                    await UnityServices.InitializeAsync();
+                }
+                await LoadPlayerData();
+                if (playerData != null)
+                {
+                    SetObjective(playerData.GetActiveQuest());
+                }
+            },
+            () => PanelManager.GetSingleton("hud").Open());
         }
         catch (Exception e)
         {
@@ -100,7 +99,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         }
-        else if (scene.name == "Chapter1-Jungle" || scene.name == "Chapter1-Beach")
+        else if (scene.name == "Chapter1")
         {
             StartClientService();
         }
