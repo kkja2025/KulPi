@@ -64,12 +64,18 @@ public class BattleManager : MonoBehaviour
 
     private void InitializeScene()
     {
-        if (Time.timeScale != 1f)
+        PanelManager.Singleton.StartLoading(3f, 
+        () => { 
+            if (Time.timeScale != 1f)
+            {
+                Time.timeScale = 1f;
+            }
+        },
+        () =>
         {
-            Time.timeScale = 1f;
-        }
-        PanelManager.GetSingleton("hud").Open();
-        PanelManager.GetSingleton("tutorial").Open();
+            PanelManager.GetSingleton("hud").Open();
+            PanelManager.GetSingleton("tutorial").Open();
+        });
     }
 
     private void UpdateTimerDisplay()
