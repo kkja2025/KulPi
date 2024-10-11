@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CombatPauseMenu : PauseMenu
+public class PlatformPauseMenu : PauseMenu
 {
     [SerializeField] private Button retryButton = null;
 
@@ -13,12 +13,12 @@ public class CombatPauseMenu : PauseMenu
 
     private void Restart()
     {
-        BattleManager.Singleton.RestartAsync();   
+        PlatformFallManager.Singleton.RestartAsync();   
     }
 
     protected override void ReturnMainMenu()
     {
         Time.timeScale = 1;
-        BattleManager.Singleton.ExitBattleAsync();
+        PlatformFallManager.Singleton.ExitAsync();
     }
 }

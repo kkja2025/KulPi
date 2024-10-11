@@ -10,14 +10,10 @@ public class PauseMenu : Panel
 
     public override void Initialize()
     {
-        if (IsInitialized)
-        {
-            return;
-        }
+        base.Initialize();
         resumeButton.onClick.AddListener(Resume);
         settingsButton.onClick.AddListener(OpenSettings);
         mainMenuButton.onClick.AddListener(ReturnMainMenu);
-        base.Initialize();
     }
 
     private void Resume()
