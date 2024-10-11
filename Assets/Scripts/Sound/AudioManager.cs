@@ -19,7 +19,8 @@ public class AudioManager : MonoBehaviour
         { "Login", "Main_Theme" },
         { "MainMenu", "Main_Theme" },
         { "Chapter1BossDiwata", "Battle_Diwata" },
-        { "Chapter1SigbinTikbalang", "Battle_Sigbin_Tikbalang" }
+        { "Chapter1SigbinTikbalang", "Battle_Sigbin_Tikbalang" },
+        { "Chapter1SacredGrove", "Battle"}
     };
 
     private string currentMusicClipName = "";
