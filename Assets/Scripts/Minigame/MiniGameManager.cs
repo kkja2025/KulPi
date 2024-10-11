@@ -19,7 +19,7 @@ public class MiniGameManager : MonoBehaviour
         initialized = true;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isTimerRunning) 
         {

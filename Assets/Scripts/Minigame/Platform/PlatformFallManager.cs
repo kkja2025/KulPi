@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -6,7 +7,7 @@ using TMPro;
 public class PlatformFallManager : MiniGameManager
 {
     [SerializeField] private Transform player;           
-    [SerializeField] private Camera mainCamera;    
+    [SerializeField] private Camera mainCamera;
     private static PlatformFallManager singleton = null;
 
     public static PlatformFallManager Singleton
@@ -42,7 +43,13 @@ public class PlatformFallManager : MiniGameManager
         InitializeScene();
     }
     
-    public void StartGame()
+    protected override void Update()
+    {
+        base.Update();
+        CheckGameOver();
+    }
+
+    public async void StartGame()
     {
         VerticalScrollingCamera verticalScrollingCamera = mainCamera.GetComponent<VerticalScrollingCamera>();
         isTimerRunning = true;
@@ -51,18 +58,14 @@ public class PlatformFallManager : MiniGameManager
 
     private void CheckGameOver()
     {
-        // Check if the player transform is assigned
         if (player != null)
         {
-            // Calculate vertical limits based on camera size and aspect ratio
             float lowerBound = mainCamera.transform.position.y - mainCamera.orthographicSize; 
             float upperBound = mainCamera.transform.position.y + mainCamera.orthographicSize;
 
-            // Calculate horizontal limits based on camera size and aspect ratio
             float leftLimit = mainCamera.transform.position.x - mainCamera.orthographicSize * mainCamera.aspect;
             float rightLimit = mainCamera.transform.position.x + mainCamera.orthographicSize * mainCamera.aspect;
 
-            // Check if the player is below the calculated lower bound or outside the horizontal limits
             if (player.position.y < lowerBound ||
                 player.position.y > upperBound ||
                 player.position.x < leftLimit ||
@@ -75,10 +78,16 @@ public class PlatformFallManager : MiniGameManager
 
     private void GameOver()
     {
-        // Here you can implement your game over UI or restart logic
-        Debug.Log("Game Over!"); // Placeholder for game over logic
-        // Optionally reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        RespawnPlayerInCenter();
+    }
+
+    private void RespawnPlayerInCenter()
+    {
+        Vector3 centerScreenPosition = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.nearClipPlane));
+
+        float upwardOffset = 2.0f;
+        
+        player.position = new Vector3(centerScreenPosition.x, centerScreenPosition.y + upwardOffset, player.position.z);
     }
 
     public override void ExitAsync()
