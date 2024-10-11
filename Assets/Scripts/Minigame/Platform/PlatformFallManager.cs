@@ -3,14 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class PlatformFallManager : MonoBehaviour
+public class PlatformFallManager : MiniGameManager
 {
     [SerializeField] private Transform player;           
-    [SerializeField] private Camera mainCamera;       
-    [SerializeField] protected TMP_Text timerText;
-    private bool initialized = false; 
-    protected bool isTimerRunning = false;
-    protected float elapsedTime = 0f;
+    [SerializeField] private Camera mainCamera;    
     private static PlatformFallManager singleton = null;
 
     public static PlatformFallManager Singleton
@@ -33,11 +29,6 @@ public class PlatformFallManager : MonoBehaviour
         }
     }
 
-    private void Initialize()
-    {
-        if (initialized) return;
-        initialized = true;
-    }
     private void Awake()
     {
         if (singleton == null)
@@ -49,41 +40,6 @@ public class PlatformFallManager : MonoBehaviour
             Destroy(gameObject);
         }
         InitializeScene();
-    }
-    
-    private void Update()
-    {
-        if (isTimerRunning) 
-        {
-            elapsedTime += Time.deltaTime; 
-            UpdateTimerDisplay();
-        }
-        CheckGameOver();
-    }
-
-    private void InitializeScene()
-    {
-        PanelManager.Singleton.StartLoading(3f, 
-        () => { 
-            if (Time.timeScale != 1f)
-            {
-                Time.timeScale = 1f;
-            }
-        },
-        () =>
-        {
-            PanelManager.GetSingleton("hud").Open();
-            PanelManager.GetSingleton("tutorial").Open();
-        });
-    }
-
-    private void UpdateTimerDisplay()
-    {
-        if (timerText != null)
-        {
-            TimeSpan timeSpan = TimeSpan.FromSeconds(elapsedTime);
-            timerText.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
-        }
     }
     
     public void StartGame()
@@ -125,14 +81,7 @@ public class PlatformFallManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void RestartAsync()
-    {
-        Time.timeScale = 1;
-        Scene currentScene = SceneManager.GetActiveScene();
-        PanelManager.LoadSceneAsync(currentScene.name);
-    }
-
-    public async void ExitAsync()
+    public override void ExitAsync()
     {
         
     }

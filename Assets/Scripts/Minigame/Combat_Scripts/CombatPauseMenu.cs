@@ -19,6 +19,6 @@ public class CombatPauseMenu : PauseMenu
     protected override void ReturnMainMenu()
     {
         Time.timeScale = 1;
-        BattleManager.Singleton.ExitBattleAsync();
+        BattleManager.Singleton.ExitAsync();
     }
 }
