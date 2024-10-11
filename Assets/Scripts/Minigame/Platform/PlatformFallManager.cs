@@ -90,8 +90,25 @@ public class PlatformFallManager : MiniGameManager
         player.position = new Vector3(centerScreenPosition.x, centerScreenPosition.y + upwardOffset, player.position.z);
     }
 
+    public void Finish()
+    {
+        Debug.Log("Triggered finish");
+    }
+
+    public async void ShowVictoryMenu()
+    {
+        isTimerRunning = false;
+        await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
+        VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenuSacredGrove;
+        if (victoryMenu != null)
+        {
+            victoryMenu.SetTimerText($"Time: {timerText.text}");
+            victoryMenu.Open();
+        }
+    }
+
     public override void ExitAsync()
     {
-        
+        Debug.Log("Exit");
     }
 }
