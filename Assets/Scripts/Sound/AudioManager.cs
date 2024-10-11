@@ -18,7 +18,6 @@ public class AudioManager : MonoBehaviour
     {
         { "Login", "Main_Theme" },
         { "MainMenu", "Main_Theme" },
-        { "Chapter1", "Shore" },
         { "Chapter1BossDiwata", "Battle_Diwata" },
         { "Chapter1SigbinTikbalang", "Battle_Sigbin_Tikbalang" }
     };
@@ -123,7 +122,7 @@ public class AudioManager : MonoBehaviour
         return clip;
     }
 
-    public void PlayBackgroundMusic(string clipName, float fadeDuration = 1.0f)
+    private void PlayBackgroundMusic(string clipName, float fadeDuration = 1.0f)
     {
         if (currentMusicClipName == clipName && backgroundMusicSource.isPlaying)
         {
@@ -182,9 +181,7 @@ public class AudioManager : MonoBehaviour
             }
             else
             {
-                backgroundMusicSource.clip = clip;
-                backgroundMusicSource.loop = true;
-                backgroundMusicSource.Play();
+                PlayBackgroundMusic(clip.name);
             }
         }
     }
