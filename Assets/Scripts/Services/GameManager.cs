@@ -67,24 +67,29 @@ public class GameManager : MonoBehaviour
         StartClientService();
     }
 
-    private async void StartClientService()
+    private void StartClientService()
     {
-        PanelManager.LoadSceneAsync("");
-
-        if (UnityServices.State != ServicesInitializationState.Initialized)
-        {
-            await UnityServices.InitializeAsync();
-        }
         try
         {
-            await LoadPlayerData();
-            if (playerData != null)
-            {
-                SetObjective(playerData.GetActiveQuest());
-            }
-            await Task.Delay(2000);
-            PanelManager.CloseAll();
-            PanelManager.GetSingleton("hud").Open();
+            PanelManager.Singleton.StartLoading(3f, 
+            async () => {
+                if (UnityServices.State != ServicesInitializationState.Initialized)
+                {
+                    await UnityServices.InitializeAsync();
+                }
+                await LoadPlayerData();
+            },
+            () => {
+                PanelManager.GetSingleton("hud").Open();
+                if (objectiveText == null)
+                {
+                    objectiveText = GameObject.Find("QuestText").GetComponent<TextMeshProUGUI>();
+                }
+                if (playerData != null)
+                {
+                    SetObjective(playerData.GetActiveQuest());
+                }
+            });
         }
         catch (Exception e)
         {
@@ -100,7 +105,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         }
-        else if (scene.name == "Chapter1-Jungle" || scene.name == "Chapter1-Beach")
+        else if (scene.name == "Chapter1")
         {
             StartClientService();
         }
@@ -129,9 +134,8 @@ public class GameManager : MonoBehaviour
     {
         playerData.SetActiveQuest(objective);
         objectiveText.text = objective;
-        await SavePlayerData();
+        await SavePlayerData();   
     }
-
     public string GetObjective()
     {
         return playerData.GetActiveQuest();
@@ -164,7 +168,6 @@ public class GameManager : MonoBehaviour
         Vector3 directionFromEnemy = (playerPosition - enemyPosition).normalized;
         float offsetDistance = 5f;
         playerPosition += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
-
         playerData.SetPosition(playerPosition);
         await CloudSaveManager.Singleton.SavePlayerData(playerData);
     }
@@ -214,14 +217,6 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         PanelManager.LoadSceneAsync("MainMenu");
-    }
-
-    public async void SaveEncyclopediaItem(string id)
-    {
-        EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);
-        if (item == null) return;
-
-        await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync(item.itemCategory);
     }
 
     public void UnlockEncyclopediaItem(string id, string panel)

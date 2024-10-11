@@ -148,13 +148,15 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void SignInAsync(string email, string password)
+    public void SignInAsync(string email, string password)
     {
         try
         {
-            await auth.SignInWithEmailAndPasswordAsync(email, password);
-            Debug.Log("Signed in successfully.");
-            LinkFirebaseWithUnity(auth.CurrentUser);
+            PanelManager.Singleton.StartLoading(5f, async () =>
+            {
+                await auth.SignInWithEmailAndPasswordAsync(email, password);
+                LinkFirebaseWithUnity(auth.CurrentUser);
+            });
         }
         catch (FirebaseException firebaseException)
         {

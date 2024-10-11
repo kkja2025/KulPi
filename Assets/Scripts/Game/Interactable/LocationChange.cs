@@ -12,7 +12,9 @@ public class LocationChange : Interactable
         GameObject player = GameObject.FindWithTag("Player");
         if (collision.gameObject == player)
         {
-            GameManager.Singleton.SetPlayerPosition(newPosition);
+            PanelManager.Singleton.StartLoading(2f, 
+            () => GameManager.Singleton.SetPlayerPosition(newPosition), 
+            () => PanelManager.GetSingleton("hud").Open());
         }
     }
 }

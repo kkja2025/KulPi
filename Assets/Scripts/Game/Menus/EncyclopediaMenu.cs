@@ -44,7 +44,7 @@ public class EncyclopediaMenu : Panel
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY);
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("figures").Open();
     }
 
@@ -53,7 +53,7 @@ public class EncyclopediaMenu : Panel
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY);
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("events").Open();
     }
 
@@ -61,7 +61,7 @@ public class EncyclopediaMenu : Panel
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY);
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("practices").Open();
     }
 
@@ -69,7 +69,7 @@ public class EncyclopediaMenu : Panel
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync(EncyclopediaItem.CLOUD_SAVE_ENCYCLOPEDIA_MYTHOLOGY_AND_FOLKLORE_KEY);
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("mythology").Open();
     }
 

@@ -70,41 +70,44 @@ public class MainMenuManager : MonoBehaviour
 
     public void SignOut()
     {
-        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-        if (auth.CurrentUser != null)
-        {
-            auth.SignOut();
-            Debug.Log("User signed out from Firebase.");
-        }
-        else
-        {
-            Debug.Log("No user is signed in to Firebase.");
-        }
+        PanelManager.Singleton.StartLoading(2f, 
+        () => {
+            FirebaseAuth auth = FirebaseAuth.DefaultInstance;
+            if (auth.CurrentUser != null)
+            {
+                auth.SignOut();
+                Debug.Log("User signed out from Firebase.");
+            }
+            else
+            {
+                Debug.Log("No user is signed in to Firebase.");
+            }
 
-        if (AuthenticationService.Instance.IsSignedIn)
-        {
-            AuthenticationService.Instance.SignOut();
-            Debug.Log("User signed out from Unity Services.");
-        }
-        else
-        {
-            Debug.Log("No user is signed in to Unity Services.");
-        }
-
-        PanelManager.LoadSceneAsync("Login");
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                AuthenticationService.Instance.SignOut();
+                Debug.Log("User signed out from Unity Services.");
+            }
+            else
+            {
+                Debug.Log("No user is signed in to Unity Services.");
+            }
+        }, 
+        () => PanelManager.LoadSceneAsync("Login"));
     }
 
-    public async void LoadGame()
+    public void LoadGame()
     {
         try
         {
-            PlayerData playerData = await CloudSaveManager.Singleton.LoadPlayerData();
-            if (playerData == null)
-            {
-                throw new Exception("No player data found.");
-            }
-            PanelManager.LoadSceneAsync(playerData.GetLevel());
-            Debug.Log("Player data loaded successfully.");
+            PanelManager.Singleton.StartLoading(2f, async () => {
+                PlayerData playerData = await CloudSaveManager.Singleton.LoadPlayerData();
+                if (playerData == null)
+                {
+                    throw new Exception("No player data found.");
+                }
+                PanelManager.LoadSceneAsync(playerData.GetLevel());
+            }); 
         }
         catch (Exception e)
         {
@@ -120,7 +123,7 @@ public class MainMenuManager : MonoBehaviour
         try
         {
             Vector3 startingPosition = new Vector3(0, 0, 0);
-            PlayerData playerData = new PlayerData("Chapter1-Beach", startingPosition);
+            PlayerData playerData = new PlayerData("Chapter1", startingPosition);
             playerData.SetPlayerID(playerID);
             playerData.SetActiveQuest("Make your way to the village. Find out what is happening.");
 
