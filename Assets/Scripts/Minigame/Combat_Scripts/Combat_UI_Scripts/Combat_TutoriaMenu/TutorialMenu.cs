@@ -16,7 +16,7 @@ public class TutorialMenu : Panel
         }
         if (startButton != null)
         {
-        startButton.onClick.AddListener(StartBattle);
+        startButton.onClick.AddListener(StartGame);
         }
         base.Initialize();
     }
@@ -33,7 +33,7 @@ public class TutorialMenu : Panel
         }
     }
     
-    private void StartBattle()
+    protected virtual void StartGame()
     {
         PanelManager.GetSingleton("tutorial").Close();
         if (Time.timeScale == 0)

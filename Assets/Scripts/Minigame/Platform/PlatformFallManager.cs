@@ -86,9 +86,11 @@ public class PlatformFallManager : MonoBehaviour
         }
     }
     
-    public virtual void Start()
+    public void StartGame()
     {
+        VerticalScrollingCamera verticalScrollingCamera = mainCamera.GetComponent<VerticalScrollingCamera>();
         isTimerRunning = true;
+        verticalScrollingCamera.StartScrolling();
     }
 
     private void CheckGameOver()
