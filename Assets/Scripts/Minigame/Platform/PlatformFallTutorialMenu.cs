@@ -6,8 +6,13 @@ using TMPro;
 
 public class PlatformFallTutorialMenu : TutorialMenu
 { 
+    [SerializeField] string key = "";
     protected override void StartGame()
     {
+        if(key == "reset")
+        {
+            PlatformFallManager.Singleton.RestartAsync();
+        }
         PanelManager.GetSingleton("tutorial").Close();
         if (Time.timeScale == 0)
         {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TriggerFinish : MonoBehaviour
+public class PlatformTriggers : MonoBehaviour
 {
     [SerializeField] private string triggerType;
 
@@ -11,10 +11,15 @@ public class TriggerFinish : MonoBehaviour
             if(triggerType == "victory")
             {
                 PlatformFallManager.Singleton.ShowVictoryMenu();
+                Destroy(gameObject);
             } 
             else if(triggerType == "finish")
             {
                 PlatformFallManager.Singleton.Finish();
+            } 
+            else if(triggerType == "enemy")
+            {
+                PlatformFallManager.Singleton.GameOver();
             }
 
         }

@@ -8,6 +8,8 @@ public class PlatformFallManager : MiniGameManager
 {
     [SerializeField] private Transform player;           
     [SerializeField] private Camera mainCamera;
+    [SerializeField] int maxHP;
+    private int count = 0;
     private static PlatformFallManager singleton = null;
 
     public static PlatformFallManager Singleton
@@ -40,6 +42,8 @@ public class PlatformFallManager : MiniGameManager
         {
             Destroy(gameObject);
         }
+        mainCamera = Camera.main;
+        AdjustCameraSize();
         InitializeScene();
     }
     
@@ -54,6 +58,22 @@ public class PlatformFallManager : MiniGameManager
         VerticalScrollingCamera verticalScrollingCamera = mainCamera.GetComponent<VerticalScrollingCamera>();
         isTimerRunning = true;
         verticalScrollingCamera.StartScrolling();
+    }
+
+    private void AdjustCameraSize()
+    {
+        float aspectRatio = (float)Screen.width / Screen.height;
+
+        float targetAspect = 16f / 9f;
+
+        if (aspectRatio >= targetAspect)
+        {
+            mainCamera.orthographicSize = 5f;
+        }
+        else
+        {
+            mainCamera.orthographicSize = 5f * (targetAspect / aspectRatio);
+        }
     }
 
     private void CheckGameOver()
@@ -76,22 +96,27 @@ public class PlatformFallManager : MiniGameManager
         }
     }
 
-    private void GameOver()
+    public void GameOver()
     {
+        if(count >= maxHP)
+        {
+            Time.timeScale = 0;
+            PanelManager.GetSingleton("gameover").Open();
+        }
+        count++;
         RespawnPlayerInCenter();
     }
 
     private void RespawnPlayerInCenter()
     {
         Vector3 centerScreenPosition = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.nearClipPlane));
-
         float upwardOffset = 2.0f;
-        
         player.position = new Vector3(centerScreenPosition.x, centerScreenPosition.y + upwardOffset, player.position.z);
     }
 
     public void Finish()
     {
+        //Return to scene on underground
         Debug.Log("Triggered finish");
     }
 
