@@ -40,7 +40,6 @@ public class VictoryMenu : Panel
     protected virtual void Next()
     {
         PanelManager.GetSingleton("victory").Close();
-        BattleManager.Singleton.DestroyEnemy();
     }
 
     protected virtual void Retry()
