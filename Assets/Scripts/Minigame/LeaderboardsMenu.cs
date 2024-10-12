@@ -47,11 +47,15 @@ public class LeaderboardsMenu : Panel
         }
     }
 
-    private void AddLeaderboardItem (LeaderboardItem item)
+    private async void AddLeaderboardItem (LeaderboardItem item)
     {
         GameObject newItem = Instantiate(leaderboardItemPrefab, leaderboardContent);
-
         TMP_Text[] textComponents = newItem.GetComponentsInChildren<TMP_Text>();
+
+        string currentPlayerName = await LeaderboardManager.Singleton.GetPlayerNameAsync();
+        bool isCurrentPlayer = item.playerName == currentPlayerName;
+
+        Color highlightColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 
         foreach (var text in textComponents)
         {
@@ -73,6 +77,19 @@ public class LeaderboardsMenu : Panel
                 int seconds = totalSeconds % 60;
                 string formattedTime = string.Format("{0:D2}:{1:D2}", minutes, seconds);
                 text.text = formattedTime;
+            }
+        }
+        if (isCurrentPlayer)
+        {
+            
+            Image backgroundImage = newItem.transform.Find("Container/Background").GetComponent<Image>();
+            if (backgroundImage != null)
+            {
+                backgroundImage.color = highlightColor;
+            }
+            else
+            {
+                Debug.LogWarning("No Image component found on the leaderboard item prefab.");
             }
         }
     }

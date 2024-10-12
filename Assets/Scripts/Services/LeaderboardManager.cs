@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Unity.Services.Authentication;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
 using Unity.Services.Core;
@@ -57,6 +58,19 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
+    public async Task<string> GetPlayerNameAsync()
+    {
+        try
+        {
+            string player = await AuthenticationService.Instance.GetPlayerNameAsync();
+            return player;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to get player name: {e.Message}");
+            return null;
+        }
+    }
     public async Task SubmitTimeBossChapter1(long timeInMilliseconds)
     {
         try
