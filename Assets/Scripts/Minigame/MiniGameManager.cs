@@ -57,7 +57,7 @@ public class MiniGameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Scene currentScene = SceneManager.GetActiveScene();
-        PanelManager.LoadSceneAsync(currentScene.name);
+        SceneManager.LoadSceneAsync(currentScene.name);
     }
 
     public virtual async void ExitAsync()

@@ -13,7 +13,7 @@ public class PlatformFallTutorialMenu : TutorialMenu
     {
         if (startCasualButton != null)
         {
-        startCasualButton.onClick.AddListener(StartGame);
+        startCasualButton.onClick.AddListener(StartCasualGame);
         }
         base.Initialize();
     }
@@ -34,6 +34,12 @@ public class PlatformFallTutorialMenu : TutorialMenu
 
     private void StartCasualGame()
     {
-        PlatformFallManager.Singleton.StartCasualGame();
+        PanelManager.GetSingleton("tutorial").Close();
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        } else {
+            PlatformFallManager.Singleton.StartCasualGame();
+        }
     }
 }

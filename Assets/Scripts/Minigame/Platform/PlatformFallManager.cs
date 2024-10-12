@@ -107,25 +107,39 @@ public class PlatformFallManager : MiniGameManager
     {
         if(!isCasualMode)
         {
-            RespawnPlayerInCenter();  
-        } 
-        else
-        {
+            count++;
             if(count >= maxHP)
             {
             Time.timeScale = 0;
             PanelManager.GetSingleton("gameover").Open();
             }
-            count++;
-            RespawnPlayerInCenter();  
+            else
+            {
+                RespawnPlayer();
+            }  
+        } 
+        else
+        {
+            RespawnPlayer(); 
         }
     }
 
-    private void RespawnPlayerInCenter()
+    private void RespawnPlayer()
     {
         Vector3 centerScreenPosition = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.nearClipPlane));
-        float upwardOffset = 2.0f;
-        player.position = new Vector3(centerScreenPosition.x, centerScreenPosition.y + upwardOffset, player.position.z);
+
+        Vector3 startRayPosition = new Vector3(centerScreenPosition.x, mainCamera.transform.position.y - mainCamera.orthographicSize, player.position.z);
+        RaycastHit2D hit = Physics2D.Raycast(startRayPosition, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Ground"));
+
+        if (hit.collider != null)
+        {
+            Vector3 spawnPosition = new Vector3(centerScreenPosition.x, hit.point.y + 2.0f, player.position.z);
+            player.position = spawnPosition;
+        }
+        else
+        {
+            Debug.LogWarning("No ground platform found! Player will not respawn.");
+        }
     }
 
     public void Finish()
