@@ -7,6 +7,16 @@ using TMPro;
 public class PlatformFallTutorialMenu : TutorialMenu
 { 
     [SerializeField] string key = "";
+    [SerializeField] private Button startCasualButton = null;
+
+    public override void Initialize()
+    {
+        if (startCasualButton != null)
+        {
+        startCasualButton.onClick.AddListener(StartGame);
+        }
+        base.Initialize();
+    }
     protected override void StartGame()
     {
         if(key == "reset")
@@ -20,5 +30,10 @@ public class PlatformFallTutorialMenu : TutorialMenu
         } else {
             PlatformFallManager.Singleton.StartGame();
         }
+    }
+
+    private void StartCasualGame()
+    {
+        PlatformFallManager.Singleton.StartCasualGame();
     }
 }

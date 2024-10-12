@@ -10,6 +10,7 @@ public class PlatformFallManager : MiniGameManager
     [SerializeField] private Camera mainCamera;
     [SerializeField] int maxHP;
     private int count = 0;
+    private bool isCasualMode = false;
     private static PlatformFallManager singleton = null;
 
     public static PlatformFallManager Singleton
@@ -53,11 +54,17 @@ public class PlatformFallManager : MiniGameManager
         CheckGameOver();
     }
 
-    public async void StartGame()
+    public void StartGame()
     {
         VerticalScrollingCamera verticalScrollingCamera = mainCamera.GetComponent<VerticalScrollingCamera>();
         isTimerRunning = true;
         verticalScrollingCamera.StartScrolling();
+    }
+
+    public void StartCasualGame()
+    {
+        isCasualMode = true;
+        StartGame();
     }
 
     private void AdjustCameraSize()
@@ -98,13 +105,20 @@ public class PlatformFallManager : MiniGameManager
 
     public void GameOver()
     {
-        if(count >= maxHP)
+        if(!isCasualMode)
         {
+            RespawnPlayerInCenter();  
+        } 
+        else
+        {
+            if(count >= maxHP)
+            {
             Time.timeScale = 0;
             PanelManager.GetSingleton("gameover").Open();
+            }
+            count++;
+            RespawnPlayerInCenter();  
         }
-        count++;
-        RespawnPlayerInCenter();
     }
 
     private void RespawnPlayerInCenter()
@@ -123,7 +137,10 @@ public class PlatformFallManager : MiniGameManager
     public async void ShowVictoryMenu()
     {
         isTimerRunning = false;
-        await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
+        if (isCasualMode)
+        {
+            await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
+        }
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenuSacredGrove;
         if (victoryMenu != null)
         {
