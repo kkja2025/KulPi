@@ -59,29 +59,4 @@ public class BattleManager : MiniGameManager
     {
         // Play victory animation
     }
-
-    public async void DestroyEnemy()
-    {
-        EnemyEncounterData enemyData = GameManager.Singleton.GetActiveEnemy();
-        GameObject enemy = new GameObject(enemyData.GetEnemyID());
-        RemovedObjectsManager.Singleton.RemoveObject(enemy);
-        await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
-    }
-
-    public override async void ExitAsync()
-    {
-        var enemyData = GameManager.Singleton.GetActiveEnemy();
-        if (GameManager.Singleton != null)
-        {
-            if (enemyData != null)
-            {
-                GameObject enemy = new GameObject(enemyData.GetEnemyID());
-                enemy.transform.position = enemyData.GetPosition();
-                await GameManager.Singleton.SavePlayerDataWithOffset(enemy, enemyData.GetPlayerPosition());
-                GameManager.Singleton.SetActiveEnemy(null);
-            }
-        }
-        
-        PanelManager.LoadSceneAsync(enemyData.GetSceneName());
-    }
 }

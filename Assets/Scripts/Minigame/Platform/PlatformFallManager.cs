@@ -130,8 +130,8 @@ public class PlatformFallManager : MiniGameManager
 
     public void Finish()
     {
-        //Return to scene on underground
-        Debug.Log("Triggered finish");
+        PanelManager.LoadSceneAsync("Chapter1");
+        RemoveEncounter();
     }
 
     public async void ShowVictoryMenu()
@@ -147,10 +147,5 @@ public class PlatformFallManager : MiniGameManager
             victoryMenu.SetTimerText($"Time: {timerText.text}");
             victoryMenu.Open();
         }
-    }
-
-    public override void ExitAsync()
-    {
-        Debug.Log("Exit");
     }
 }

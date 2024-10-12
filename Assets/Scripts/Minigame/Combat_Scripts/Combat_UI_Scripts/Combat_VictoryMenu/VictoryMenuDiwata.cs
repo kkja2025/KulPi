@@ -15,7 +15,7 @@ public class DiwataVictoryMenu : VictoryMenu
     protected override void Next()
     {
         base.Next();
-        BattleManager.Singleton.DestroyEnemy();
+        BattleManager.Singleton.RemoveEncounter();
         PanelManager.GetSingleton("victory").Close();
         GameManager.Singleton.UnlockEncyclopediaItem("Diwata", "unlock");
     }

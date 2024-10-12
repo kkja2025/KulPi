@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 {
     private bool initialized = false;
     private static GameManager singleton = null;
-    private EnemyEncounterData activeEnemy = null;
+    private EncounterData activeEncounter = null;
     private int count = 0;
     private GameObject playerInstance;
     private PlayerData playerData;
@@ -120,14 +120,14 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
-    public void SetActiveEnemy(EnemyEncounterData enemy)
+    public void SetActiveEncounter(EncounterData encounter)
     {
-        activeEnemy = enemy;
+        activeEncounter = encounter;
     }
 
-    public EnemyEncounterData GetActiveEnemy()
+    public EncounterData GetActiveEncounter()
     {
-        return activeEnemy;
+        return activeEncounter;
     }
 
     public async void SetObjective(string objective)
@@ -162,12 +162,12 @@ public class GameManager : MonoBehaviour
         await CloudSaveManager.Singleton.SavePlayerData(playerData);
     }
 
-    public async Task SavePlayerDataWithOffset(GameObject enemy, Vector3 playerPosition)
+    public async Task SavePlayerDataWithOffset(GameObject encounter, Vector3 playerPosition)
     {
-        Vector3 enemyPosition = enemy.transform.position;
-        Vector3 directionFromEnemy = (playerPosition - enemyPosition).normalized;
+        Vector3 encounterPosition = encounter.transform.position;
+        Vector3 directionFromEncounter = (playerPosition - encounterPosition).normalized;
         float offsetDistance = 5f;
-        playerPosition += new Vector3(directionFromEnemy.x * offsetDistance, 0, 0);
+        playerPosition += new Vector3(directionFromEncounter.x * offsetDistance, 0, 0);
         playerData.SetPosition(playerPosition);
         await CloudSaveManager.Singleton.SavePlayerData(playerData);
     }

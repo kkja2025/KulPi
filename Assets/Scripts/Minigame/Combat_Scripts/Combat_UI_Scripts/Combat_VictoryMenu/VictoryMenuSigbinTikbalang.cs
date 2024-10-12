@@ -15,7 +15,7 @@ public class SigbinTikbalangVictoryMenu : VictoryMenu
     protected override void Next()
     {
         base.Next();
-        BattleManager.Singleton.DestroyEnemy();
+        BattleManager.Singleton.RemoveEncounter();
         GameManager.Singleton.UnlockEncyclopediaItem("Sigbin", "unlocksigbin");
     }
 }
