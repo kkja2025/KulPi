@@ -15,15 +15,28 @@ public class QuestItemInteraction : ItemInteractable
         {
             hasInteracted = true;
             GameManager.Singleton.IncrementCount();           
-            if (spriteID != null)
-            {
-                InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
-            }
         }
         if(conversationComplete)
         {
-            GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
-            OnObjectRemoved(gameObject);
+            conversationComplete = false;
+            PicturePuzzleItem puzzleItem = GetComponent<PicturePuzzleItem>();
+            if (puzzleItem != null)
+            {
+                puzzleItem.ShowPuzzle();
+                puzzleItem.OnPuzzleCompleted += () =>
+                {
+                    if (spriteID != null)
+                    {
+                        InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
+                        GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
+                    }  
+                    OnObjectRemoved(gameObject);
+                };
+            } else
+            {
+                GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
+                OnObjectRemoved(gameObject);
+            }
         }
     }
 

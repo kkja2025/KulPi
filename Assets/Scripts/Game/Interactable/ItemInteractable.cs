@@ -17,7 +17,7 @@ public class ItemInteractable : Interactable
         PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         if(playerMovement.isGrounded)
         {
-            if (isPlayerInRange && !conversationComplete)
+            if (isPlayerInRange)
             {
                 PanelManager.GetSingleton("dialogue").Open();
                 if(dialogueInteractButton == null)
@@ -37,6 +37,7 @@ public class ItemInteractable : Interactable
         if (lakanDialogueIndex >= lakanDialogueLines.Count)
         {
             conversationComplete = true;
+            lakanDialogueIndex = 0;
             PanelManager.GetSingleton("dialogue").Close();
             return;
         }        
