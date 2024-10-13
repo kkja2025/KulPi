@@ -57,11 +57,31 @@ public class MiniGameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Scene currentScene = SceneManager.GetActiveScene();
-        PanelManager.LoadSceneAsync(currentScene.name);
+        SceneManager.LoadSceneAsync(currentScene.name);
     }
 
-    public virtual void ExitAsync()
+    public virtual async void ExitAsync()
     {
+        var encounterData = GameManager.Singleton.GetActiveEncounter();
+        if (GameManager.Singleton != null)
+        {
+            if (encounterData != null)
+            {
+                GameObject encounter = new GameObject(encounterData.GetEncounterID());
+                encounter.transform.position = encounterData.GetPosition();
+                await GameManager.Singleton.SavePlayerDataWithOffset(encounter, encounterData.GetPlayerPosition());
+                GameManager.Singleton.SetActiveEncounter(null);
+            }
+        }
         
+        PanelManager.LoadSceneAsync(encounterData.GetSceneName());
+    }
+
+    public async void RemoveEncounter()
+    {
+        EncounterData encounterData = GameManager.Singleton.GetActiveEncounter();
+        GameObject encounter = new GameObject(encounterData.GetEncounterID());
+        RemovedObjectsManager.Singleton.RemoveObject(encounter);
+        await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
     }
 }

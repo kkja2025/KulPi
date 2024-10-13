@@ -53,8 +53,7 @@ public class LoginManager : MonoBehaviour
         int attempt = 0;
         bool success = false;
 
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
+        PanelManager.LoadSceneAsync("");
 
         while (attempt < maxRetries && !success)
         {

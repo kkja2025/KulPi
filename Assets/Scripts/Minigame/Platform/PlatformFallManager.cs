@@ -10,6 +10,7 @@ public class PlatformFallManager : MiniGameManager
     [SerializeField] private Camera mainCamera;
     [SerializeField] int maxHP;
     private int count = 0;
+    private bool isCasualMode = false;
     private static PlatformFallManager singleton = null;
 
     public static PlatformFallManager Singleton
@@ -53,11 +54,17 @@ public class PlatformFallManager : MiniGameManager
         CheckGameOver();
     }
 
-    public async void StartGame()
+    public void StartGame()
     {
         VerticalScrollingCamera verticalScrollingCamera = mainCamera.GetComponent<VerticalScrollingCamera>();
         isTimerRunning = true;
         verticalScrollingCamera.StartScrolling();
+    }
+
+    public void StartCasualGame()
+    {
+        isCasualMode = true;
+        StartGame();
     }
 
     private void AdjustCameraSize()
@@ -98,42 +105,61 @@ public class PlatformFallManager : MiniGameManager
 
     public void GameOver()
     {
-        if(count >= maxHP)
+        if(!isCasualMode)
         {
+            count++;
+            if(count >= maxHP)
+            {
             Time.timeScale = 0;
             PanelManager.GetSingleton("gameover").Open();
+            }
+            else
+            {
+                RespawnPlayer();
+            }  
+        } 
+        else
+        {
+            RespawnPlayer(); 
         }
-        count++;
-        RespawnPlayerInCenter();
     }
 
-    private void RespawnPlayerInCenter()
+    private void RespawnPlayer()
     {
         Vector3 centerScreenPosition = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.nearClipPlane));
-        float upwardOffset = 2.0f;
-        player.position = new Vector3(centerScreenPosition.x, centerScreenPosition.y + upwardOffset, player.position.z);
+
+        Vector3 startRayPosition = new Vector3(centerScreenPosition.x, mainCamera.transform.position.y - mainCamera.orthographicSize, player.position.z);
+        RaycastHit2D hit = Physics2D.Raycast(startRayPosition, Vector2.up, Mathf.Infinity, LayerMask.GetMask("Ground"));
+
+        if (hit.collider != null)
+        {
+            Vector3 spawnPosition = new Vector3(centerScreenPosition.x, hit.point.y + 2.0f, player.position.z);
+            player.position = spawnPosition;
+        }
+        else
+        {
+            Debug.LogWarning("No ground platform found! Player will not respawn.");
+        }
     }
 
     public void Finish()
     {
-        //Return to scene on underground
-        Debug.Log("Triggered finish");
+        PanelManager.LoadSceneAsync("Chapter1");
+        RemoveEncounter();
     }
 
     public async void ShowVictoryMenu()
     {
         isTimerRunning = false;
-        await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
+        if (isCasualMode)
+        {
+            await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
+        }
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenuSacredGrove;
         if (victoryMenu != null)
         {
             victoryMenu.SetTimerText($"Time: {timerText.text}");
             victoryMenu.Open();
         }
-    }
-
-    public override void ExitAsync()
-    {
-        Debug.Log("Exit");
     }
 }
