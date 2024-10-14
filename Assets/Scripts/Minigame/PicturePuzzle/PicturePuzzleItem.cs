@@ -22,6 +22,7 @@ public class PicturePuzzleItem : MonoBehaviour
         PicturePuzzleMenu puzzleMenu = PanelManager.GetSingleton("picturepuzzle") as PicturePuzzleMenu;
         if (puzzleMenu != null)
         {
+            puzzleMenu.OnPuzzleSolved -= HandlePuzzleSolved;
             puzzleMenu.ShowPuzzle(this);
             puzzleMenu.OnPuzzleSolved += HandlePuzzleSolved;
         }
@@ -30,5 +31,10 @@ public class PicturePuzzleItem : MonoBehaviour
     private void HandlePuzzleSolved()
     {
         OnPuzzleCompleted?.Invoke();
+        PicturePuzzleMenu puzzleMenu = PanelManager.GetSingleton("picturepuzzle") as PicturePuzzleMenu;
+        if (puzzleMenu != null)
+        {
+            puzzleMenu.OnPuzzleSolved -= HandlePuzzleSolved;
+        }
     }
 }

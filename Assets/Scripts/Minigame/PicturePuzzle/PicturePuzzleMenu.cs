@@ -20,6 +20,7 @@ public class PicturePuzzleMenu : Panel
     {
         base.Initialize();
         showCompletePuzzleButton.onClick.AddListener(ShowCompletePuzzle);
+        completePuzzleButton.onClick.AddListener(CompletePuzzle);
         closeButton.onClick.AddListener(Close);
     }
 
@@ -139,6 +140,7 @@ public class PicturePuzzleMenu : Panel
     private void CompletePuzzle()
     {
         OnPuzzleSolved?.Invoke();
+        PanelManager.GetSingleton("puzzlecomplete").Close();
         Close();
     }
 
@@ -159,11 +161,7 @@ public class PicturePuzzleMenu : Panel
         }
         if (isCompleted)
         {
-            if (completePuzzleButton != null)
-            {
-                completePuzzleButton.gameObject.SetActive(true);
-                completePuzzleButton.onClick.AddListener(CompletePuzzle);
-            }
+            PanelManager.GetSingleton("puzzlecomplete").Open();
         }
     }
 }
