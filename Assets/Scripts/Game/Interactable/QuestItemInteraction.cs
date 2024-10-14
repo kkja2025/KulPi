@@ -23,21 +23,24 @@ public class QuestItemInteraction : ItemInteractable
             if (puzzleItem != null)
             {
                 puzzleItem.ShowPuzzle();
-                puzzleItem.OnPuzzleCompleted += () =>
-                {
-                    if (spriteID != null)
-                    {
-                        InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
-                        GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
-                    }  
-                    OnObjectRemoved(gameObject);
-                };
-            } else
+            } 
+            else
             {
                 GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
                 OnObjectRemoved(gameObject);
             }
         }
+    }
+
+    public void OnQuestItemCompletion()
+    {
+        if (spriteID != null)
+        {
+            InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
+            GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
+            Debug.Log("Item added to inventory: " + spriteID);
+        }  
+        OnObjectRemoved(gameObject);
     }
 
     private async void OnObjectRemoved(GameObject gameObject)

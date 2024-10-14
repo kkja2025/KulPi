@@ -14,7 +14,7 @@ public class PicturePuzzleMenu : Panel
     private GameObject firstSelectedPiece = null;
     private Sprite[] correctPuzzle = null;
     private PicturePuzzleItem puzzleData;
-    public event Action OnPuzzleSolved;
+    private bool isCompleted = false;
 
     public override void Initialize()
     {
@@ -139,15 +139,19 @@ public class PicturePuzzleMenu : Panel
 
     private void CompletePuzzle()
     {
-        OnPuzzleSolved?.Invoke();
-        PanelManager.GetSingleton("puzzlecomplete").Close();
-        Close();
+        if (isCompleted)
+        {
+            puzzleData.HandlePuzzleSolved();
+            PanelManager.GetSingleton("puzzlecomplete").Close();
+            isCompleted = false;
+            Close();
+            Debug.Log("Puzzle completed");
+        }
     }
 
     private void CheckIfPuzzleCompleted()
     {
-        bool isCompleted = true;
-
+        isCompleted = true;
         for (int i = 0; i < puzzleContent.childCount; i++)
         {
             Image currentPieceImage = puzzleContent.GetChild(i).GetComponent<Image>();
