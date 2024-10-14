@@ -12,6 +12,7 @@ public class QuestCheckpointInteraction : Interactable
             if (newQuest != "")
             {
                 GameManager.Singleton.SetObjective(newQuest);
+                Destroy(gameObject);
             }
         }
     }
