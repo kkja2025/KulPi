@@ -130,14 +130,13 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    private void AutomaticSignIn()
+    private async void AutomaticSignIn()
     {
         FirebaseUser user = auth.CurrentUser;
         if (user != null)
         {
-            Debug.Log("User is already signed in: " + user.UserId);
             Debug.Log($"User is already signed in: {user.Email}");
-            LinkFirebaseWithUnity(user);
+            await LinkFirebaseWithUnity(user);
         }
         else
         {
@@ -147,15 +146,12 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public void SignInAsync(string email, string password)
+    public async void SignInAsync(string email, string password)
     {
         try
         {
-            PanelManager.Singleton.StartLoading(5f, async () =>
-            {
-                await auth.SignInWithEmailAndPasswordAsync(email, password);
-                LinkFirebaseWithUnity(auth.CurrentUser);
-            });
+            await auth.SignInWithEmailAndPasswordAsync(email, password);
+            await LinkFirebaseWithUnity(auth.CurrentUser);
         }
         catch (FirebaseException firebaseException)
         {
@@ -168,7 +164,7 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void LinkFirebaseWithUnity(FirebaseUser firebaseUser)
+    public async Task LinkFirebaseWithUnity(FirebaseUser firebaseUser)
     {
         try
         {
@@ -191,7 +187,7 @@ public class LoginManager : MonoBehaviour
             var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
 
             FirebaseUser newUser = authResult.User;
-            SignUpUnityWithFirebase(newUser);
+            await SignUpUnityWithFirebase(newUser);
         }
         catch (FirebaseException firebaseException)
         {
@@ -205,7 +201,7 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void SignUpUnityWithFirebase(FirebaseUser firebaseUser)
+    public async Task SignUpUnityWithFirebase(FirebaseUser firebaseUser)
     {
         try
         {
