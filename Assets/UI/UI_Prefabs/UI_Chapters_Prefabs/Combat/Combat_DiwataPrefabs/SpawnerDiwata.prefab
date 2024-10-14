@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6931965113038228434}
   - component: {fileID: 1571600918920133220}
+  - component: {fileID: 2465801042805163090}
   m_Layer: 0
   m_Name: SpawnerDiwata
   m_TagString: Untagged
@@ -24,7 +25,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3793701325076239829}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -54,7 +55,15 @@ MonoBehaviour:
   spawnParent: {fileID: 5476346728953485192}
   spawnPerWave: 15
   spawnInterval: 3
-  destroyThreshold: 5
+  destroyThreshold: 20
+--- !u!222 &2465801042805163090
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793701325076239829}
+  m_CullTransparentMesh: 1
 --- !u!1 &6857480633387558000
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +98,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 26.980103, y: 50}
+  m_AnchoredPosition: {x: 26.980225, y: 50}
   m_SizeDelta: {x: -242.85999, y: -358.97998}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5501065319089800221
