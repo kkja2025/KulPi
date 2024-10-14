@@ -96,18 +96,16 @@ public class MainMenuManager : MonoBehaviour
         () => PanelManager.LoadSceneAsync("Login"));
     }
 
-    public void LoadGame()
+    public async void LoadGame()
     {
         try
         {
-            PanelManager.Singleton.StartLoading(2f, async () => {
-                PlayerData playerData = await CloudSaveManager.Singleton.LoadPlayerData();
-                if (playerData == null)
-                {
-                    throw new Exception("No player data found.");
-                }
-                PanelManager.LoadSceneAsync(playerData.GetLevel());
-            }); 
+            PlayerData playerData = await CloudSaveManager.Singleton.LoadPlayerData();
+            if (playerData == null)
+            {
+                throw new Exception("No player data found.");
+            }
+            PanelManager.LoadSceneAsync(playerData.GetLevel()); 
         }
         catch (Exception e)
         {

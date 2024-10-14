@@ -166,11 +166,34 @@ public class PanelManager : MonoBehaviour
             yield break;
         }
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        asyncLoad.allowSceneActivation = false;
+        // AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        // asyncLoad.allowSceneActivation = false;
 
-        while (!asyncLoad.isDone)
+        // while (!asyncLoad.isDone)
+        // {
+        //     frameTimer += Time.deltaTime;
+        //     if (frameTimer >= frameInterval)
+        //     {
+        //         currentFrame = (currentFrame + 1) % loadingSprites.Length;
+        //         loadingImage.sprite = loadingSprites[currentFrame];
+        //         frameTimer = 0f;
+        //     }
+
+        //     if (asyncLoad.progress >= 0.9f)
+        //     {
+        //         asyncLoad.allowSceneActivation = true;
+        //     }
+
+        //     yield return null;
+        // }
+
+        SceneManager.LoadSceneAsync(sceneName);
+        float elapsedTime = 0f;
+        while (elapsedTime < 2f)
         {
+            elapsedTime += Time.deltaTime;
+
+            // Update frame animation
             frameTimer += Time.deltaTime;
             if (frameTimer >= frameInterval)
             {
@@ -179,14 +202,8 @@ public class PanelManager : MonoBehaviour
                 frameTimer = 0f;
             }
 
-            if (asyncLoad.progress >= 0.9f)
-            {
-                asyncLoad.allowSceneActivation = true;
-            }
-
             yield return null;
         }
-
         Close("loading");
     }
 
