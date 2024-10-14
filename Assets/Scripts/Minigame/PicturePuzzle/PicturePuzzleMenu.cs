@@ -28,13 +28,13 @@ public class PicturePuzzleMenu : Panel
     {
         base.Open();
         puzzleData = data;
-        correctPuzzle = data.GetPuzzleItems();
-        LoadPuzzleItems(data.GetPuzzleItems());
+        Sprite[] puzzleItems = data.GetPuzzleItems(); 
+        correctPuzzle = (Sprite[])puzzleItems.Clone();
+        LoadPuzzleItems((Sprite[])puzzleItems.Clone());
     }
 
     private void LoadPuzzleItems(Sprite[] puzzleItems)
     {
-        correctPuzzle = (Sprite[])puzzleItems.Clone();
         ShuffleArray(puzzleItems);
 
         ClearGrid();
