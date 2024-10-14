@@ -2053,7 +2053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5114600766340341369, guid: 4bb57280316f56a4fa562905b171ec7e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5152028439051991238, guid: 4bb57280316f56a4fa562905b171ec7e, type: 3}
       propertyPath: startButton
@@ -2081,7 +2081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044789601110311794, guid: 4bb57280316f56a4fa562905b171ec7e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9011720617188436876, guid: 4bb57280316f56a4fa562905b171ec7e, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2780,7 +2780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 7489760116813674726}
-  health: 3
+  health: 5
 --- !u!212 &2096500172
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2861,6 +2861,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 88748282}
     m_Modifications:
+    - target: {fileID: 1571600918920133220, guid: 3dc86acb3501303408d2c07c5e70cc22, type: 3}
+      propertyPath: destroyThreshold
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3793701325076239829, guid: 3dc86acb3501303408d2c07c5e70cc22, type: 3}
       propertyPath: m_Name
       value: Spawner
@@ -2992,17 +2996,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 88748282}
     m_Modifications:
-    - target: {fileID: 149391659095107655, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4912642083490653775, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7027927158858300242, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
       propertyPath: m_Name
       value: Victory
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123046471286998931, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7762352048036262030, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
       propertyPath: m_Pivot.x
@@ -3083,10 +3083,6 @@ PrefabInstance:
     - target: {fileID: 7762352048036262030, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8797004914097693041, guid: fd0a60b000ab40940b789d896a5fcae5, type: 3}
-      propertyPath: m_Material
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
