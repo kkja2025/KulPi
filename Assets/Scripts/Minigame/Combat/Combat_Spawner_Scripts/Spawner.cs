@@ -94,23 +94,23 @@ public class Spawner : MonoBehaviour
     {
         AudioManager.Singleton.PlaySwordSoundEffect(clickCount);
         clickCount++;
-        SlashAnimation slashAnimation = spawnButton.GetComponent<SlashAnimation>();
-        if (slashAnimation != null)
-        {
-            StartCoroutine(WaitForAnimationToFinish(slashAnimation, spawnButton));
-        }
-        else
-        {
+        // SlashAnimation slashAnimation = spawnButton.GetComponent<SlashAnimation>();
+        // if (slashAnimation != null)
+        // {
+        //     StartCoroutine(WaitForAnimationToFinish(slashAnimation, spawnButton));
+        // }
+        // else
+        // {
             Destroy(spawnButton);
             currentSpawns.Remove(spawnButton);
-        }
+        // }
     }
 
-    private IEnumerator WaitForAnimationToFinish(SlashAnimation slashAnimation, GameObject spawnButton)
-    {
-        slashAnimation.StartOverlayAnimation();
-        yield return new WaitForSeconds(slashAnimation.animationFrames.Length * slashAnimation.animationSpeed);
-        Destroy(spawnButton);
-        currentSpawns.Remove(spawnButton);
-    }
+    // private IEnumerator WaitForAnimationToFinish(SlashAnimation slashAnimation, GameObject spawnButton)
+    // {
+    //     slashAnimation.StartOverlayAnimation();
+    //     yield return new WaitForSeconds(slashAnimation.animationFrames.Length * slashAnimation.animationSpeed);
+    //     Destroy(spawnButton);
+    //     currentSpawns.Remove(spawnButton);
+    // }
 }
