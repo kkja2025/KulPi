@@ -47,7 +47,7 @@ public class InteractedNPCManager : MonoBehaviour
         await LoadInteractedNPCAsync();
     }
     
-    private async Task LoadInteractedNPCAsync()
+    public async Task LoadInteractedNPCAsync()
     {
         var result = await CloudSaveManager.Singleton.LoadInteractedNPCData();
         if (result != null)

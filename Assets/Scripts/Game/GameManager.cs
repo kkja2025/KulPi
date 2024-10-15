@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
                 {
                     await UnityServices.InitializeAsync();
                 }
+                await RemovedObjectsManager.Singleton.LoadRemovedObjectsAsync();
+                await InteractedNPCManager.Singleton.LoadInteractedNPCAsync();
                 await LoadPlayerData();
             },
             () => {

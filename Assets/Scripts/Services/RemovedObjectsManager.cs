@@ -47,7 +47,7 @@ public class RemovedObjectsManager : MonoBehaviour
         await LoadRemovedObjectsAsync();
     }
     
-    private async Task LoadRemovedObjectsAsync()
+    public async Task LoadRemovedObjectsAsync()
     {
         var result = await CloudSaveManager.Singleton.LoadRemovedObjectsData();
         if (result != null)
