@@ -164,6 +164,12 @@ public class GameManager : MonoBehaviour
         await CloudSaveManager.Singleton.SavePlayerData(playerData);
     }
 
+    public async Task SavePlayerDataPosition(Vector3 newPosition)
+    {
+        playerData.SetPosition(newPosition);
+        await CloudSaveManager.Singleton.SavePlayerData(playerData);
+    }
+
     public async Task SavePlayerDataWithOffset(GameObject encounter, Vector3 playerPosition)
     {
         Vector3 encounterPosition = encounter.transform.position;
@@ -179,7 +185,13 @@ public class GameManager : MonoBehaviour
         return playerData;
     }
 
-    public async void SetPlayerPosition(Vector3 position)
+    public async Task SetPlayerDataPosition(Vector3 position)
+    {
+        playerData.SetPosition(position);
+        await SavePlayerData();
+    }
+
+    public async Task SetPlayerPosition(Vector3 position)
     {
         if (playerInstance != null)
         {

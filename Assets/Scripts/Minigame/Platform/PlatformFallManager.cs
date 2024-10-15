@@ -9,6 +9,10 @@ public class PlatformFallManager : MiniGameManager
     [SerializeField] private Transform player;           
     [SerializeField] private Camera mainCamera;
     [SerializeField] int maxHP;
+    [SerializeField] string sceneExit;
+    [SerializeField] private float x;
+    [SerializeField] private float y;
+    [SerializeField] private float z;
     private int count = 0;
     private bool isCasualMode = false;
     private static PlatformFallManager singleton = null;
@@ -142,10 +146,18 @@ public class PlatformFallManager : MiniGameManager
         }
     }
 
-    public void Finish()
+    public async void Finish()
     {
-        PanelManager.LoadSceneAsync("Chapter1");
+        Vector3 newPosition = new Vector3(x, y, z);
         RemoveEncounter();
+        if (GameManager.Singleton != null)
+        {
+            await GameManager.Singleton.SavePlayerDataPosition(newPosition);
+            PlayerData player = GameManager.Singleton.GetPlayerData();
+            Debug.Log("Player position: " + player.GetPosition());
+        }
+        
+        PanelManager.LoadSceneAsync(sceneExit);
     }
 
     public async void ShowVictoryMenu()

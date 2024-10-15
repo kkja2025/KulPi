@@ -13,7 +13,7 @@ public class LocationChange : Interactable
         if (collision.gameObject == player)
         {
             PanelManager.Singleton.StartLoading(2f, 
-            () => GameManager.Singleton.SetPlayerPosition(newPosition), 
+            async () => await GameManager.Singleton.SetPlayerPosition(newPosition), 
             () => PanelManager.GetSingleton("hud").Open());
         }
     }
