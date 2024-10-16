@@ -106,13 +106,11 @@ public class PlayerMovement : MonoBehaviour
     public void OnEnable()
     {
         controls.Enable();
-        UnityEngine.Debug.Log("Controls enabled");
     }
 
     public void OnDisable()
     {
         controls.Disable();
-        UnityEngine.Debug.Log("Controls disabled");
     }
 }
 

@@ -48,6 +48,10 @@ public class DialogueInteractable : Interactable
                 {
                     dialogueIcon.SetActive(false);
                 }
+                if (interactButton != null)
+                {
+                    interactButton.gameObject.SetActive(false);
+                }
                 PanelManager.GetSingleton("dialogue").Open();
                 if(dialogueInteractButton == null)
                 {
@@ -68,6 +72,10 @@ public class DialogueInteractable : Interactable
             if (dialogueIcon != null)
             {
                 dialogueIcon.SetActive(true);
+            }
+            if (interactButton != null)
+            {
+                ShowInteractButton();
             }
             PanelManager.GetSingleton("dialogue").Close();
             lakanDialogueIndex = 0;
@@ -123,11 +131,9 @@ public class DialogueInteractable : Interactable
 
             if (interactButton != null)
             {
-
-                if (buttonPositioner != null)
-                {
-                    buttonPositioner.SetTargetObject(transform); 
-                }
+                interactButton.gameObject.SetActive(true);
+                ShowInteractButton();
+                Debug.Log("Show interact button");
             }
 
             if (dialogueIcon != null)
@@ -147,10 +153,7 @@ public class DialogueInteractable : Interactable
 
             if (interactButton != null)
             {
-                if (buttonPositioner != null)
-                {
-                    buttonPositioner.SetTargetObject(null); 
-                }
+                interactButton.gameObject.SetActive(false);
             }
 
             if (dialogueIcon != null)

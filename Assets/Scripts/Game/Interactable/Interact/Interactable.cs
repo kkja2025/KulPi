@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Interactable : MonoBehaviour
 {
@@ -10,31 +11,24 @@ public class Interactable : MonoBehaviour
     [SerializeField] protected Sprite normalSprite;
     [SerializeField] protected Sprite highlightedSprite;
     [SerializeField] protected AudioClip onCollisionSound;
-    protected Button interactButton;
-    protected InteractButtonPositioner buttonPositioner;
+    [SerializeField] protected string buttonText;
+    [SerializeField] protected Button interactButton;
+    protected TMP_Text interactButtonText;
 
     protected virtual void Awake()
     {
-        GameObject buttonObject = GameObject.FindWithTag("InteractButton");
-        if (buttonObject != null)
-        {
-            interactButton = buttonObject.GetComponent<Button>();
-            if (interactButton == null)
-            {
-                Debug.LogError("InteractButton found but does not have a Button component.");
-            }
-            else
-            {
-                buttonPositioner = interactButton.GetComponent<InteractButtonPositioner>();
-                interactButton.onClick.AddListener(OnInteractButtonClicked); 
-            }
-        }
-        else
-        {
-            Debug.LogError("No GameObject with the tag 'InteractButton' found.");
-        }
-
         spriteRenderer = GetComponent<SpriteRenderer>();
+        interactButton.onClick.AddListener(OnInteractButtonClicked);
+        interactButtonText = interactButton.GetComponentInChildren<TMP_Text>();
+    }
+
+    protected void ShowInteractButton()
+    {
+        if (!string.IsNullOrEmpty(buttonText))
+        {
+            interactButton.gameObject.SetActive(true);
+            interactButtonText.text = buttonText;
+        } 
     }
 
     protected virtual void OnInteractButtonClicked()
@@ -55,11 +49,7 @@ public class Interactable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
-            if (buttonPositioner != null)
-            {
-                buttonPositioner.SetTargetObject(transform); 
-            }
-
+            ShowInteractButton();
             AudioManager.Singleton.PlayBackgroundSound(onCollisionSound, false);
             HighlightObject(true); 
         }
@@ -70,10 +60,7 @@ public class Interactable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            if (buttonPositioner != null)
-            {
-                buttonPositioner.SetTargetObject(null); 
-            }
+            interactButton.gameObject.SetActive(false);
             HighlightObject(false); 
         }
     }

@@ -19,6 +19,10 @@ public class ItemInteractable : Interactable
         {
             if (isPlayerInRange)
             {
+                if (interactButton != null)
+                {
+                    interactButton.gameObject.SetActive(false);
+                }
                 PanelManager.GetSingleton("dialogue").Open();
                 if(dialogueInteractButton == null)
                 {
@@ -30,6 +34,10 @@ public class ItemInteractable : Interactable
                 playerMovement.OnDisable();
                 if (conversationComplete)
                 {
+                    if (interactButton != null)
+                    {
+                        ShowInteractButton();
+                    }
                     playerMovement.OnEnable();
                     conversationComplete = false;
                 }

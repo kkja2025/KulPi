@@ -172,6 +172,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines:
   - I must talk to the Albularyo.
@@ -765,6 +767,8 @@ MonoBehaviour:
   normalSprite: {fileID: 21300000, guid: f8d8b803bfe61354d846faa4dc98ea2a, type: 3}
   highlightedSprite: {fileID: 21300000, guid: f8d8b803bfe61354d846faa4dc98ea2a, type: 3}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   x: 380
   y: 0
   z: 0
@@ -1000,6 +1004,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
@@ -81121,6 +81127,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   newQuest: Defeat the monsters blocking your path.
 --- !u!1 &285863589
 GameObject:
@@ -81333,6 +81341,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
@@ -81692,6 +81702,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines:
   - I should find the 3 herbs first.
@@ -81932,6 +81944,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   combatSceneName: Chapter1SigbinTikbalang
 --- !u!58 &439402870
 CircleCollider2D:
@@ -82401,6 +82415,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   newQuest: Survive as you navigate deeper in the Sacred Grove.
 --- !u!1 &471419641
 GameObject:
@@ -82673,7 +82689,6 @@ RectTransform:
   - {fileID: 3360409255944086267}
   - {fileID: 840558165}
   - {fileID: 1549504315}
-  - {fileID: 1935644985}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -82987,6 +83002,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines:
   - I must talk to the Babaylan first.
@@ -83530,6 +83547,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
@@ -83970,6 +83989,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines:
   - I must talk to the villagers before going further.
@@ -84283,30 +84304,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: a3185d57b3f8fb24c975c82f6cac2169, type: 3}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: normalSprite
+      propertyPath: interactButton
       value: 
-      objectReference: {fileID: 21300000, guid: dd8886d8eb448d841baf0fc85d3c5d12, type: 3}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: highlightedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a3185d57b3f8fb24c975c82f6cac2169, type: 3}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[1]
-      value: "The first herb\u2026 I can find it near the riverbanks, open fields,
-        or along the edges of forests."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[2]
-      value: "The second herb\u2026 It often grows in open fields, and grasslands."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[3]
-      value: "The last one... It\u2019s a hardy vine that wraps itself around trees."
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 7640532005889362631, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -84377,6 +84377,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
@@ -84479,6 +84481,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines:
   - I must return to the Albularyo.
@@ -84688,6 +84692,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines:
   - I should be heading to the village first.
@@ -84844,6 +84850,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3c028633127298b4d8d1c6a1e60238d1, type: 3}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
+    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: highlightedSprite
       value: 
       objectReference: {fileID: 21300000, guid: 3f138ae9138d87a469337e73c73a7632, type: 3}
@@ -84939,6 +84949,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 8300000, guid: 719756587bf9c67438ef045ad337e0ee, type: 3}
+  buttonText: 
+  interactButton: {fileID: 0}
 --- !u!58 &802891536
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -87033,6 +87045,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3c028633127298b4d8d1c6a1e60238d1, type: 3}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
+    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: highlightedSprite
       value: 
       objectReference: {fileID: 21300000, guid: 3f138ae9138d87a469337e73c73a7632, type: 3}
@@ -87669,6 +87685,10 @@ PrefabInstance:
       propertyPath: normalSprite
       value: 
       objectReference: {fileID: 21300000, guid: 3c028633127298b4d8d1c6a1e60238d1, type: 3}
+    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: highlightedSprite
       value: 
@@ -88995,6 +89015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 3875438896095190228, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89147,6 +89171,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   combatSceneName: Chapter1SacredGrove
 --- !u!1 &1406591829
 GameObject:
@@ -89374,6 +89400,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   combatSceneName: Chapter1BossDiwata
 --- !u!58 &1414634209
 CircleCollider2D:
@@ -90161,6 +90189,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
@@ -90506,6 +90536,10 @@ PrefabInstance:
       propertyPath: normalSprite
       value: 
       objectReference: {fileID: 21300000, guid: 3c028633127298b4d8d1c6a1e60238d1, type: 3}
+    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: highlightedSprite
       value: 
@@ -91634,6 +91668,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 2a8a2d93b3d6f5444b7ec68c0208f35b, type: 3}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
+    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: highlightedSprite
       value: 
       objectReference: {fileID: 21300000, guid: b9c92ca98f4a0fd46aa9b0a4fa5584eb, type: 3}
@@ -91808,6 +91846,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: Diwata
   lakanDialogueLines:
   - "I\u2019ve come to help, not fight you. The village suffers, and I know we are
@@ -91972,6 +92012,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
@@ -92581,6 +92623,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   x: 1035
   y: -40
   z: 0
@@ -94117,11 +94161,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!224 &1935644985 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-  m_PrefabInstance: {fileID: 8790306737653206691}
+--- !u!114 &1935644989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 811770873110928022, guid: f7f78af93f92ce7459fd10a99a3108f3, type: 3}
+  m_PrefabInstance: {fileID: 1392687532}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1939878524
 GameObject:
   m_ObjectHideFlags: 0
@@ -94537,30 +94587,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 889f4021e5c218c40a9b784234b3704d, type: 3}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: normalSprite
+      propertyPath: interactButton
       value: 
-      objectReference: {fileID: 21300000, guid: f3b2b80b3fea96a4983aa6b56f7bb561, type: 3}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: highlightedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 889f4021e5c218c40a9b784234b3704d, type: 3}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[1]
-      value: "The first herb\u2026 I can find it near the riverbanks, open fields,
-        or along the edges of forests."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[2]
-      value: "The second herb\u2026 It often grows in open fields, and grasslands."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[3]
-      value: "The last one... It\u2019s a hardy vine that wraps itself around trees."
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 7640532005889362631, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -94632,6 +94661,8 @@ MonoBehaviour:
   normalSprite: {fileID: 21300000, guid: f8d8b803bfe61354d846faa4dc98ea2a, type: 3}
   highlightedSprite: {fileID: 21300000, guid: f8d8b803bfe61354d846faa4dc98ea2a, type: 3}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   x: 100
   y: -3.5
   z: 0
@@ -95107,30 +95138,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3f138ae9138d87a469337e73c73a7632, type: 3}
     - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: normalSprite
+      propertyPath: interactButton
       value: 
-      objectReference: {fileID: 21300000, guid: 3c028633127298b4d8d1c6a1e60238d1, type: 3}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: highlightedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3f138ae9138d87a469337e73c73a7632, type: 3}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[1]
-      value: "The first herb\u2026 I can find it near the riverbanks, open fields,
-        or along the edges of forests."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[2]
-      value: "The second herb\u2026 It often grows in open fields, and grasslands."
-      objectReference: {fileID: 0}
-    - target: {fileID: 6353704375836589663, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
-      propertyPath: lakanDialogueLines.Array.data[3]
-      value: "The last one... It\u2019s a hardy vine that wraps itself around trees."
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 7640532005889362631, guid: 9eb2916e948d26a47b5bbbdeb3d27c7a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -95586,6 +95596,8 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
+  buttonText: 
+  interactButton: {fileID: 0}
   newQuest: Confront the corrupted being and restore balance.
 --- !u!1 &2121336028
 GameObject:
@@ -96131,6 +96143,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1429394077}
     m_Modifications:
+    - target: {fileID: 2209191144154864108, guid: 308d19e11b3a7b94cb61a821fbd3fc66, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 3384932561551811827, guid: 308d19e11b3a7b94cb61a821fbd3fc66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.8
@@ -96188,6 +96204,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1523227125}
     m_Modifications:
+    - target: {fileID: 1911748344288142390, guid: d9796bb5d8771864a8f4ef399dd96384, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 3837664542981335906, guid: d9796bb5d8771864a8f4ef399dd96384, type: 3}
       propertyPath: m_Name
       value: Sambong
@@ -96357,6 +96377,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1523227125}
     m_Modifications:
+    - target: {fileID: 8071574957135489312, guid: 4b2478b07824cff4a9d178916d94c8b2, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 8547052888944780914, guid: 4b2478b07824cff4a9d178916d94c8b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27.11
@@ -96463,6 +96487,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5254988804587683156, guid: 30598aefb2f74e54483d1d67ac16cd32, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -96516,6 +96544,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8811611887224477447, guid: b1c9331836cff894883906342495238f, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 9054064672224054517, guid: b1c9331836cff894883906342495238f, type: 3}
       propertyPath: m_Name
       value: Albularyo
@@ -96533,6 +96565,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1523227125}
     m_Modifications:
+    - target: {fileID: 1050587165821969683, guid: 2fc00c9dd60de70438266ab5e90bebf3, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 2084307023109672646, guid: 2fc00c9dd60de70438266ab5e90bebf3, type: 3}
       propertyPath: m_Name
       value: Lagundi
@@ -96590,14 +96626,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1429394077}
     m_Modifications:
-    - target: {fileID: 246343922720912250, guid: 4cfc9e04b0a69d742bbc7463e3f172f0, type: 3}
-      propertyPath: m_Size.x
-      value: 0.60431993
-      objectReference: {fileID: 0}
-    - target: {fileID: 246343922720912250, guid: 4cfc9e04b0a69d742bbc7463e3f172f0, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.044088885
-      objectReference: {fileID: 0}
     - target: {fileID: 1544102879572490641, guid: 4cfc9e04b0a69d742bbc7463e3f172f0, type: 3}
       propertyPath: m_Name
       value: YoungVillager
@@ -96642,6 +96670,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4887789368801777683, guid: 4cfc9e04b0a69d742bbc7463e3f172f0, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -96695,6 +96727,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5399924499892732479, guid: 77023968c3a0a174db113fad72c7484d, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     - target: {fileID: 6855328215926288287, guid: 77023968c3a0a174db113fad72c7484d, type: 3}
       propertyPath: m_Name
       value: ElderFisherman
@@ -96709,111 +96745,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8743383525145787290, guid: 2fc00c9dd60de70438266ab5e90bebf3, type: 3}
   m_PrefabInstance: {fileID: 5961925441515817316}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8790306737653206691
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 500321310}
-    m_Modifications:
-    - target: {fileID: 1044078544270422678, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382574060122167106, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_Name
-      value: InteractButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 5683631103906073042, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 285863592}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 315.93738
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 286.40344
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9999375
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.00022669091
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.010553786
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.0036920398
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1600
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 184
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 1.209
-      objectReference: {fileID: 0}
-    - target: {fileID: 7692279521244693333, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.423
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4fba8633782efa6458612083290ea8b1, type: 3}
 --- !u!1001 &8922480253408127405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96866,6 +96797,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Babaylan
       objectReference: {fileID: 0}
+    - target: {fileID: 8649192344453117209, guid: 82d5eb9146827e041a30d1372564b8a2, type: 3}
+      propertyPath: interactButton
+      value: 
+      objectReference: {fileID: 1935644989}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
