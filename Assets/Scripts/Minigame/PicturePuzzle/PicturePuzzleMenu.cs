@@ -21,7 +21,13 @@ public class PicturePuzzleMenu : Panel
         base.Initialize();
         showCompletePuzzleButton.onClick.AddListener(ShowCompletePuzzle);
         completePuzzleButton.onClick.AddListener(CompletePuzzle);
-        closeButton.onClick.AddListener(Close);
+        closeButton.onClick.AddListener(ClosePuzzle);
+    }
+
+    public void ClosePuzzle()
+    {
+        PanelManager.GetSingleton("puzzlesolution").Close();
+        base.Close();
     }
 
     public void ShowPuzzle(PicturePuzzleItem data)
@@ -59,7 +65,7 @@ public class PicturePuzzleMenu : Panel
         gridLayoutGroup.constraintCount = cols;
 
         float cellSize = CalculateCellSize(numberOfPieces);
-        gridLayoutGroup.cellSize = new Vector2(cellSize, cellSize - 50);
+        gridLayoutGroup.cellSize = new Vector2(cellSize, cellSize - 68);
     }
 
     private float CalculateCellSize(int numberOfPieces)
@@ -142,10 +148,8 @@ public class PicturePuzzleMenu : Panel
         if (isCompleted)
         {
             puzzleData.HandlePuzzleSolved();
-            PanelManager.GetSingleton("puzzlecomplete").Close();
             isCompleted = false;
-            Close();
-            Debug.Log("Puzzle completed");
+            ClosePuzzle();
         }
     }
 
