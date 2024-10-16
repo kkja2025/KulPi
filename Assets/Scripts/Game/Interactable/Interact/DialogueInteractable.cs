@@ -34,12 +34,13 @@ public class DialogueInteractable : Interactable
     protected override void OnInteractButtonClicked()
     {
         PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
-        if(playerMovement.isGrounded)
+        if(playerMovement.isGrounded && !playerMovement.isMoving)
         {
             if (isConversationComplete)
             {
                 ConversationCompleted();
                 isConversationComplete = false;
+                playerMovement.OnEnable();
             }
             else if (isPlayerInRange && !isConversationComplete)
             {
@@ -55,6 +56,7 @@ public class DialogueInteractable : Interactable
                     dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
                 }
                 Interact();
+                playerMovement.OnDisable();
             } 
         }
     }

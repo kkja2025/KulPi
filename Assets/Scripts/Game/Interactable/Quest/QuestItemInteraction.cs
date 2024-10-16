@@ -18,7 +18,6 @@ public class QuestItemInteraction : ItemInteractable
         }
         if(conversationComplete)
         {
-            conversationComplete = false;
             PicturePuzzleItem puzzleItem = GetComponent<PicturePuzzleItem>();
             if (puzzleItem != null)
             {
