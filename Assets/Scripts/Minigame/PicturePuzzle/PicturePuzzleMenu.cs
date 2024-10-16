@@ -24,7 +24,7 @@ public class PicturePuzzleMenu : Panel
         closeButton.onClick.AddListener(ClosePuzzle);
     }
 
-    public void ClosePuzzle()
+    private void ClosePuzzle()
     {
         PanelManager.GetSingleton("puzzlesolution").Close();
         base.Close();
@@ -149,6 +149,7 @@ public class PicturePuzzleMenu : Panel
         {
             puzzleData.HandlePuzzleSolved();
             isCompleted = false;
+            PanelManager.GetSingleton("puzzlecomplete").Close();
             ClosePuzzle();
         }
     }
