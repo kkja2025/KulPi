@@ -39,7 +39,7 @@ public class MiniGameManager : MonoBehaviour
         },
         () =>
         {
-            PanelManager.GetSingleton("hud").Open();
+            PanelManager.CloseAll();
             PanelManager.GetSingleton("tutorial").Open();
         });
     }
@@ -57,7 +57,7 @@ public class MiniGameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadSceneAsync(currentScene.name);
+        PanelManager.LoadSceneAsync(currentScene.name);
     }
 
     public virtual async void ExitAsync()

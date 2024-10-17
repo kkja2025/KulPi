@@ -18,7 +18,6 @@ public class PlatformPauseMenu : PauseMenu
 
     protected override void ReturnMainMenu()
     {
-        Time.timeScale = 1;
         PlatformFallManager.Singleton.ExitAsync();
     }
 }

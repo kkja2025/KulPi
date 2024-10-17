@@ -22,9 +22,7 @@ public class PlatformFallTutorialMenu : TutorialMenu
         if(key == "reset")
         {
             PlatformFallManager.Singleton.RestartAsync();
-        }
-        PanelManager.GetSingleton("tutorial").Close();
-        if (Time.timeScale == 0)
+        } else if (Time.timeScale == 0)
         {
             Time.timeScale = 1;
         } else {
@@ -34,7 +32,6 @@ public class PlatformFallTutorialMenu : TutorialMenu
 
     private void StartCasualGame()
     {
-        PanelManager.GetSingleton("tutorial").Close();
         if (Time.timeScale == 0)
         {
             Time.timeScale = 1;

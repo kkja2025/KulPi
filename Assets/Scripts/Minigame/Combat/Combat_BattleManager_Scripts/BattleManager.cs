@@ -45,6 +45,7 @@ public class BattleManager : MiniGameManager
     
     public virtual void StartBattle()
     {
+        PanelManager.GetSingleton("hud").Open();
         spawnsObject.SetActive(true);
         isTimerRunning = true;
     }

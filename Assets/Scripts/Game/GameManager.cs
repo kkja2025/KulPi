@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour
                 {
                     await UnityServices.InitializeAsync();
                 }
+                if (Time.timeScale != 1f)
+                {
+                    Time.timeScale = 1f;
+                }
                 await RemovedObjectsManager.Singleton.LoadRemovedObjectsAsync();
                 await InteractedNPCManager.Singleton.LoadInteractedNPCAsync();
                 await LoadPlayerData();
