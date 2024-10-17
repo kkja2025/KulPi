@@ -18,8 +18,11 @@ public class Interactable : MonoBehaviour
     protected virtual void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        interactButton.onClick.AddListener(OnInteractButtonClicked);
-        interactButtonText = interactButton.GetComponentInChildren<TMP_Text>();
+        if(interactButton != null)
+        {
+            interactButton.onClick.AddListener(OnInteractButtonClicked);
+            interactButtonText = interactButton.GetComponentInChildren<TMP_Text>();
+        }
     }
 
     protected void ShowInteractButton()
