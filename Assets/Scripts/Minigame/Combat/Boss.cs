@@ -1,20 +1,29 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Boss : MonoBehaviour
 {
-    [SerializeField] private TMP_Text healthText;
-    [SerializeField] private int health; 
+    [SerializeField] private Image healthBarFill;
+    [SerializeField] private int maxHP;
+    private int health; 
     
-    public Boss(int hp)
-    {
-        health = hp;
-    }
 
     private void Start()
     {
-        UpdateHealthDisplay();
+        health = maxHP;
+        UpdateHealthBar();
+    }
+
+    
+    private void UpdateHealthBar()
+    {
+        if (healthBarFill != null)
+        {
+            float healthPercentage = (float) health / maxHP;
+            healthBarFill.fillAmount = healthPercentage;
+        }
     }
 
     public int GetHealth()
@@ -25,15 +34,7 @@ public class Boss : MonoBehaviour
     public virtual void TakeUltimateDamage()
     {
         int damageAmount = 1;
-        health -= damageAmount;
-        UpdateHealthDisplay();
-    }
-
-    private void UpdateHealthDisplay()
-    {
-        if (healthText != null)
-        {
-            healthText.text = $"Health: {health}";
-        }
+        health = Mathf.Max(health - damageAmount, 0);
+        UpdateHealthBar();
     }
 }

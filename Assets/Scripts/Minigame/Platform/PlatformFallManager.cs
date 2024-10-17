@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -9,7 +10,10 @@ public class PlatformFallManager : MiniGameManager
     [SerializeField] private Transform player;           
     [SerializeField] private Camera mainCamera;
     [SerializeField] int maxHP;
+    [SerializeField] private GameObject healthBar;
+    [SerializeField] private Image healthBarFill;
     [SerializeField] string sceneExit;
+    [SerializeField] private GameObject finish;
     [SerializeField] private float x;
     [SerializeField] private float y;
     [SerializeField] private float z;
@@ -49,6 +53,7 @@ public class PlatformFallManager : MiniGameManager
         }
         mainCamera = Camera.main;
         AdjustCameraSize();
+        UpdateHealthBar();
         InitializeScene();
     }
     
@@ -58,8 +63,19 @@ public class PlatformFallManager : MiniGameManager
         CheckGameOver();
     }
 
+    private void UpdateHealthBar()
+    {
+        if (healthBarFill != null)
+        {
+            float healthPercentage = (float)(maxHP - count) / maxHP;
+            healthBarFill.fillAmount = healthPercentage;
+        }
+    }
+
     public void StartGame()
     {
+        PanelManager.GetSingleton("tutorial").Close();
+        PanelManager.GetSingleton("hud").Open();
         VerticalScrollingCamera verticalScrollingCamera = mainCamera.GetComponent<VerticalScrollingCamera>();
         isTimerRunning = true;
         verticalScrollingCamera.StartScrolling();
@@ -69,6 +85,7 @@ public class PlatformFallManager : MiniGameManager
     {
         isCasualMode = true;
         StartGame();
+        healthBar.SetActive(false);
     }
 
     private void AdjustCameraSize()
@@ -112,9 +129,11 @@ public class PlatformFallManager : MiniGameManager
         if(!isCasualMode)
         {
             count++;
+            UpdateHealthBar();
             if(count >= maxHP)
             {
             Time.timeScale = 0;
+            PanelManager.CloseAll();
             PanelManager.GetSingleton("gameover").Open();
             }
             else
@@ -163,6 +182,7 @@ public class PlatformFallManager : MiniGameManager
     public async void ShowVictoryMenu()
     {
         isTimerRunning = false;
+        finish.SetActive(true);
         if (!isCasualMode)
         {
             await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
