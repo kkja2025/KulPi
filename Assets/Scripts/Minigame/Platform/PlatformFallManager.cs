@@ -163,7 +163,7 @@ public class PlatformFallManager : MiniGameManager
     public async void ShowVictoryMenu()
     {
         isTimerRunning = false;
-        if (isCasualMode)
+        if (!isCasualMode)
         {
             await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
         }
