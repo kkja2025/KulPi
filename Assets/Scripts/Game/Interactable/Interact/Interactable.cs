@@ -63,7 +63,10 @@ public class Interactable : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
-            interactButton.gameObject.SetActive(false);
+            if(interactButton != null)
+            {
+                interactButton.gameObject.SetActive(false);
+            }
             HighlightObject(false); 
         }
     }

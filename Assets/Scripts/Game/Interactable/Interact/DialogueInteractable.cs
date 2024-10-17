@@ -14,12 +14,12 @@ public class DialogueInteractable : Interactable
     [SerializeField] private GameObject dialogueIcon;
     [SerializeField] protected Sprite dialogueIconSprite;
     [SerializeField] protected Sprite dialogueIconHighlightedSprite;
-    private Button dialogueInteractButton;
+    protected Button dialogueInteractButton;
 
     private int lakanDialogueIndex = 0;
     private int characterDialogueIndex = 0;
     protected bool isLakanTurn = true;
-    private bool isConversationComplete = false;
+    protected bool isConversationComplete = false;
 
     protected override void Awake()
     {
