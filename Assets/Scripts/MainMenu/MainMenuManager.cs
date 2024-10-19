@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Firebase;
 using Firebase.Auth;
+using Unity.Services.Core;
 using Unity.Services.Authentication;
+#if UNITY_EDITOR
+using UnityEditor.Rendering.LookDev;
+#endif
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -47,27 +50,12 @@ public class MainMenuManager : MonoBehaviour
     private void StartClientService()
     {
         PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             var firebaseService = FirebaseService.Singleton;
             auth = firebaseService.Auth;
             FirebaseUser user = auth.CurrentUser;
             if (user != null)
-            {
-                Debug.Log("User is already signed in: " + user.UserId);
-                Debug.Log($"User is already signed in: {user.Email}");
-            } else
-            {
-                Debug.Log("User is not signed in.");
-            }
-            if (auth.CurrentUser == null)
-            {
-                Debug.Log("User is not signed in.");
-                PanelManager.CloseAll();
-                SceneManager.LoadScene("Login");
-            }
-            else
             {
                 PanelManager.CloseAll();
                 PanelManager.GetSingleton("main").Open();
@@ -76,47 +64,48 @@ public class MainMenuManager : MonoBehaviour
         catch (Exception exception)
         {
             Debug.LogError($"Failed to start client service: {exception.Message}");
-            ShowPopUp(PopUpMenu.Action.None, "Failed to start client service.", "Retry");
-            SceneManager.LoadScene("Login");
+            PanelManager.LoadSceneAsync("Login");
         }
     }
 
     public void SignOut()
     {
-        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-        if (auth.CurrentUser != null)
-        {
-            auth.SignOut();
-            Debug.Log("User signed out from Firebase.");
-        }
-        else
-        {
-            Debug.Log("No user is signed in to Firebase.");
-        }
+        PanelManager.Singleton.StartLoading(2f, 
+        () => {
+            FirebaseAuth auth = FirebaseAuth.DefaultInstance;
+            if (auth.CurrentUser != null)
+            {
+                auth.SignOut();
+                Debug.Log("User signed out from Firebase.");
+            }
+            else
+            {
+                Debug.Log("No user is signed in to Firebase.");
+            }
 
-        if (AuthenticationService.Instance.IsSignedIn)
-        {
-            AuthenticationService.Instance.SignOut();
-            Debug.Log("User signed out from Unity Services.");
-        }
-        else
-        {
-            Debug.Log("No user is signed in to Unity Services.");
-        }
-
-        PanelManager.CloseAll();
-        SceneManager.LoadScene("Login");
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                AuthenticationService.Instance.SignOut();
+                Debug.Log("User signed out from Unity Services.");
+            }
+            else
+            {
+                Debug.Log("No user is signed in to Unity Services.");
+            }
+        }, 
+        () => PanelManager.LoadSceneAsync("Login"));
     }
 
     public async void LoadGame()
     {
         try
         {
-            await CloudSaveManager.Singleton.LoadPlayerData();
-            
-            Debug.Log("Player data loaded successfully.");
-            PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("Chapter1");
+            PlayerData playerData = await CloudSaveManager.Singleton.LoadPlayerData();
+            if (playerData == null)
+            {
+                throw new Exception("No player data found.");
+            }
+            PanelManager.LoadSceneAsync(playerData.GetLevel()); 
         }
         catch (Exception e)
         {
@@ -124,15 +113,21 @@ public class MainMenuManager : MonoBehaviour
             ShowPopUp(PopUpMenu.Action.None, "No save data found. Please start a new game.", "Ok");
         }
     }
+    
     public async void NewGame()
     {
-        FirebaseUser user = auth.CurrentUser;
+        string playerID = AuthenticationService.Instance.PlayerInfo.Id;
+        Debug.Log("Starting new game for player: " + playerID);
         try
         {
-            await CloudSaveManager.Singleton.SavePlayerData(1, user.UserId);
+            Vector3 startingPosition = new Vector3(0, 0, 0);
+            PlayerData playerData = new PlayerData("Chapter1", startingPosition);
+            playerData.SetPlayerID(playerID);
+            playerData.SetActiveQuest("Make your way to the village. Find out what is happening.");
+
+            await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);
             PanelManager.CloseAll();
-            PanelManager.GetSingleton("loading").Open();
-            SceneManager.LoadScene("Chapter1");
+            PanelManager.GetSingleton("cutscene").Open();
         }
         catch (Exception e)
         {
@@ -142,7 +137,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
     {
-        PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
     }

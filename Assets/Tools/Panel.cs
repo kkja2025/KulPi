@@ -5,7 +5,7 @@ using UnityEngine;
 public class Panel : MonoBehaviour
 {
 
-    [SerializeField] private string id = ""; public string ID { get { return id; } }
+    [SerializeField] protected string id = ""; public string ID { get { return id; } }
     [SerializeField] private RectTransform container = null;
 
     private bool initialized = false; public bool IsInitialized { get { return initialized; } }

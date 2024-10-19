@@ -10,19 +10,10 @@ public class PauseMenu : Panel
 
     public override void Initialize()
     {
-        if (IsInitialized)
-        {
-            return;
-        }
+        base.Initialize();
         resumeButton.onClick.AddListener(Resume);
         settingsButton.onClick.AddListener(OpenSettings);
         mainMenuButton.onClick.AddListener(ReturnMainMenu);
-        base.Initialize();
-    }
-
-    public override void Open()
-    {
-        base.Open();
     }
 
     private void Resume()
@@ -41,7 +32,7 @@ public class PauseMenu : Panel
         PanelManager.GetSingleton("volumevoice").Open();
     }
 
-    private void ReturnMainMenu()
+    protected virtual void ReturnMainMenu()
     {
         Time.timeScale = 1;
         GameManager.Singleton.ReturnToMainMenu();

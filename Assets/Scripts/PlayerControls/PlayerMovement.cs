@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     public Animator anim;
     private SpriteRenderer spriteRenderer;
-    bool isGrounded;
+    public bool isGrounded;
+    public bool isMoving;
     public Transform groundCheck;
 
     private float direction = 0f;
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         running,
         jumping
     }
+    private State state;
 
     void Awake()
     {
@@ -62,9 +64,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+        isMoving = Mathf.Abs(direction) > 0f;
         rb.velocity = new Vector2(direction * moveSpeed, rb.velocity.y);
-
-        State state;
 
         if (direction > 0f)
         {
@@ -100,16 +101,14 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-
     }
 
-
-    private void OnEnable()
+    public void OnEnable()
     {
         controls.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         controls.Disable();
     }

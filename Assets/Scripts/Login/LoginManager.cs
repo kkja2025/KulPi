@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.Services.Authentication.PlayerAccounts;
@@ -54,8 +53,7 @@ public class LoginManager : MonoBehaviour
         int attempt = 0;
         bool success = false;
 
-        PanelManager.CloseAll();
-        PanelManager.GetSingleton("loading").Open();
+        PanelManager.LoadSceneAsync("");
 
         while (attempt < maxRetries && !success)
         {
@@ -72,7 +70,7 @@ public class LoginManager : MonoBehaviour
                 var firebaseService = FirebaseService.Singleton;
                 if (firebaseService == null)
                 {
-                    Debug.LogError("FirebaseService singleton is null.");
+                    Debug.Log("FirebaseService singleton is null.");
                     if (attempt < maxRetries)
                     {
                         await Task.Delay(retryDelay); 
@@ -85,7 +83,7 @@ public class LoginManager : MonoBehaviour
                 auth = firebaseService.Auth;
                 if (auth == null)
                 {
-                    Debug.LogError("FirebaseAuth instance is null.");
+                    Debug.Log("FirebaseAuth instance is null.");
                     if (attempt < maxRetries)
                     {
                         await Task.Delay(retryDelay); 
@@ -127,20 +125,18 @@ public class LoginManager : MonoBehaviour
 
         if (!success)
         {
-            Debug.LogError("Failed to initialize after multiple attempts.");
+            Debug.Log("Failed to initialize after multiple attempts.");
             ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize after multiple attempts.", "Retry");
         }
     }
 
-    private void AutomaticSignIn()
+    private async void AutomaticSignIn()
     {
-        PanelManager.GetSingleton("loading").Open();
         FirebaseUser user = auth.CurrentUser;
         if (user != null)
         {
-            Debug.Log("User is already signed in: " + user.UserId);
             Debug.Log($"User is already signed in: {user.Email}");
-            LinkFirebaseWithUnity(user);
+            await LinkFirebaseWithUnity(user);
         }
         else
         {
@@ -152,12 +148,10 @@ public class LoginManager : MonoBehaviour
 
     public async void SignInAsync(string email, string password)
     {
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             await auth.SignInWithEmailAndPasswordAsync(email, password);
-            Debug.Log("Signed in successfully.");
-            LinkFirebaseWithUnity(auth.CurrentUser);
+            await LinkFirebaseWithUnity(auth.CurrentUser);
         }
         catch (FirebaseException firebaseException)
         {
@@ -168,43 +162,32 @@ public class LoginManager : MonoBehaviour
             Debug.Log("Error during sign in: " + exception.Message);
             ShowPopUp(PopUpMenu.Action.None, "Error during sign in", "OK");
         }
-        finally
-        {
-            PanelManager.Close("loading");
-        }
     }
 
-    public async void LinkFirebaseWithUnity(FirebaseUser firebaseUser)
+    public async Task LinkFirebaseWithUnity(FirebaseUser firebaseUser)
     {
         try
         {
+            PanelManager.LoadSceneAsync("MainMenu");
             string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
             Debug.Log("Successfully linked Firebase with Unity Authentication.");
-            SignInConfirmAsync();
         }
         catch (Exception e)
         {
-            Debug.LogError("Linking Firebase with Unity Authentication failed: " + e.Message);
+            Debug.Log("Linking Firebase with Unity Authentication failed: " + e.Message);
             ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity Authentication failed", "OK");
         }
     }
 
-    private void SignInConfirmAsync()
-    {
-        PanelManager.CloseAll();
-        SceneManager.LoadScene("MainMenu");
-    }
-
     public async void SignUpAsync(string email, string password)
     {
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
 
             FirebaseUser newUser = authResult.User;
-            SignUpUnityWithFirebase(newUser);
+            await SignUpUnityWithFirebase(newUser);
         }
         catch (FirebaseException firebaseException)
         {
@@ -218,25 +201,24 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void SignUpUnityWithFirebase(FirebaseUser firebaseUser)
+    public async Task SignUpUnityWithFirebase(FirebaseUser firebaseUser)
     {
         try
         {
+            PanelManager.LoadSceneAsync("MainMenu");
             string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
             Debug.Log("Successfully linked Firebase account to Unity.");
-            SceneManager.LoadScene("MainMenu");
         }
         catch (Exception e)
         {
-            Debug.LogError("Linking Firebase with Unity failed: " + e.Message);
+            Debug.Log("Linking Firebase with Unity failed: " + e.Message);
             ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity failed", "OK");
         }
     }
 
     public async void RequestResetPasswordAsync(string email)
     {
-        PanelManager.GetSingleton("loading").Open();
         try
         {
             await auth.SendPasswordResetEmailAsync(email);
@@ -257,7 +239,6 @@ public class LoginManager : MonoBehaviour
     
     public void ShowPopUp(PopUpMenu.Action action = PopUpMenu.Action.None, string text = "", string button = "")
     {
-        PanelManager.Close("loading");
         PopUpMenu panel = (PopUpMenu)PanelManager.GetSingleton("popup");
         panel.Open(action, text, button);
     }

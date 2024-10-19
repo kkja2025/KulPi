@@ -36,10 +36,12 @@ public class InventoryMenu : Panel
             Destroy(child.gameObject);
         }
 
-        var items = InventoryManager.Singleton.inventory;
+        var items = InventoryManager.Singleton.GetInventory();
 
         foreach (var item in items)
         {
+            Sprite icon = Resources.Load<Sprite>($"Icons/Inventory/{item.itemID}");
+            item.SetSprite(icon);
             AddInventoryItem(item);
         }
     }
