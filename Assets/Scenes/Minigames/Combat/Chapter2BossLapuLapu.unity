@@ -2787,6 +2787,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5476346728953485192, guid: 3dc86acb3501303408d2c07c5e70cc22, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -0.00024414
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476346728953485192, guid: 3dc86acb3501303408d2c07c5e70cc22, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -358.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476346728953485192, guid: 3dc86acb3501303408d2c07c5e70cc22, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6931965113038228434, guid: 3dc86acb3501303408d2c07c5e70cc22, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3164,8 +3176,10 @@ MonoBehaviour:
   spawnButtonPrefab2: {fileID: 2439831260138812998, guid: 989ba6a6fd8699741ad058e96745c386, type: 3}
   spawnParent: {fileID: 3274834059206221832}
   spawnPerWave: 15
-  spawnInterval: 3
+  spawnInterval: 0
   destroyThreshold: 5
+  panelPrefab: {fileID: 8733846822256420079, guid: 7d8c1791804093343843abd33d07fb69, type: 3}
+  panelMoveSpeed: 300
 --- !u!224 &8268833243715757004 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1182522877214678488, guid: 68dc7b5eb3e3b3842b32943c3cbf78ed, type: 3}
