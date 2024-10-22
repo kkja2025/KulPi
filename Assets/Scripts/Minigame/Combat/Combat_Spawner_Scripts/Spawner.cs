@@ -9,13 +9,12 @@ public class Spawner : MonoBehaviour
     [SerializeField] protected GameObject spawnButtonPrefab2 = null;
     [SerializeField] protected RectTransform spawnParent = null;
     [SerializeField] protected int spawnPerWave;
-    [SerializeField] protected float spawnInterval;
     private int clickCount = 0;    
     protected List<GameObject> currentSpawns = new List<GameObject>();
 
     protected virtual void Start()
     {
-        InvokeRepeating(nameof(Spawn), 0f, spawnInterval);
+        Spawn();
     }
 
     protected virtual void Spawn()

@@ -10,11 +10,6 @@ public class SpawnerBossLapuLapu : Spawner
     [SerializeField] private float panelMoveSpeed = 200f;
     private BattleManagerLapuLapu bossBattleManager;
 
-    protected override void Start()
-    {
-        Spawn();
-    }
-
     protected override void Spawn()
     {
         RectTransform panelInstance = Instantiate(panelPrefab, spawnParent);
