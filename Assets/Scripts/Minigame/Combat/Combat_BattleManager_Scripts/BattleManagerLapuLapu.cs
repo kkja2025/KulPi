@@ -49,7 +49,7 @@ public class BattleManagerLapuLapu : BattleManager
         bossObject.SetActive(false);
         VictoryAnimation();
         PanelManager.GetSingleton("hud").Close();
-        // await LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
+        await LeaderboardManager.Singleton.SubmitTimeBossChapter2((long)(elapsedTime * 1000));
         VictoryMenu lapuLapuVictoryMenu = PanelManager.GetSingleton("victory") as LapuLapuVictoryMenu;
         if (lapuLapuVictoryMenu != null)
         {
