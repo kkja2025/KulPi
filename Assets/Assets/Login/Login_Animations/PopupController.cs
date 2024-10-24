@@ -1,26 +1,30 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PopupController : MonoBehaviour
 {
-     private Animator animator;
-    public Button closeButton; 
+    private Animator animator;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        closeButton.onClick.AddListener(HidePopup);
+        animator.SetBool("IsVisible", false);  // Make sure it starts hidden
     }
 
     public void ShowPopup()
     {
-        animator.Play("PopupAnimation");
+        animator.SetBool("IsVisible", true);  // Trigger the show animation
     }
 
     public void HidePopup()
     {
-        animator.Play("PopupHideAnimation");
+        animator.SetBool("IsVisible", false);  // Trigger the hide animation
+        StartCoroutine(DisableAfterAnimation());
+    }
+
+    private IEnumerator DisableAfterAnimation()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        gameObject.SetActive(false);  // Deactivate the GameObject after hiding
     }
 }
