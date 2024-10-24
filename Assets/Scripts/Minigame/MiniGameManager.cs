@@ -53,6 +53,12 @@ public class MiniGameManager : MonoBehaviour
         }
     }
 
+    public void AddTime(float secondsToAdd)
+    {
+        elapsedTime += secondsToAdd;
+        UpdateTimerDisplay();         
+    }
+
     public void RestartAsync()
     {
         Time.timeScale = 1;

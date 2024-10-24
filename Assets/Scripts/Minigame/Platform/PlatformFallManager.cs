@@ -183,6 +183,7 @@ public class PlatformFallManager : MiniGameManager
     {
         isTimerRunning = false;
         finish.SetActive(true);
+        AudioManager.Singleton.PlayVictoryMusic();
         if (!isCasualMode)
         {
             await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
