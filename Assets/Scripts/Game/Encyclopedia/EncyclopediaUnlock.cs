@@ -48,6 +48,15 @@ public class EncyclopediaUnlock : Panel
                 PanelManager.GetSingleton(id).Close();
                 GameManager.Singleton.UnlockEncyclopediaItem("Tikbalang", "unlocktikbalang");
                 break;
+            case "Chapter2":
+                Vector3 startingPosition = new Vector3(0, 0, 0);
+                PlayerData playerData = GameManager.Singleton.GetPlayerData();
+                playerData.SetLevel("Chapter2");
+                playerData.SetPosition(startingPosition);
+                playerData.SetActiveQuest("Make your way to the village. Find out what is happening.");
+                await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);
+                PanelManager.LoadSceneAsync(actionButtonNavigation);
+                break;
             default:
                 PanelManager.LoadSceneAsync(actionButtonNavigation);
                 break;
