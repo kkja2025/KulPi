@@ -37,7 +37,7 @@ public class EncyclopediaUnlock : Panel
         }
     }
 
-    public void ActionButton()
+    public async void ActionButton()
     {
         switch (actionButtonNavigation)
         {
