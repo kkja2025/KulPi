@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         }
-        else if (scene.name == "Chapter1")
+        else if (scene.name == "Chapter1" || scene.name == "Chapter2" || scene.name == "Chapter3")
         {
             StartClientService();
         }
