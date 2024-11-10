@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProgressBlocker : DialogueInteractable
 {
@@ -11,6 +12,29 @@ public class ProgressBlocker : DialogueInteractable
     {
         base.Awake();
         barrierCollider = GetComponent<Collider2D>();
+    }
+
+    protected override void OnInteractButtonClicked()
+    {
+        PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        if (isConversationComplete)
+        {
+            ConversationCompleted();
+            isConversationComplete = false;
+            // playerMovement.OnEnable();
+        }
+        else if (isPlayerInRange && !isConversationComplete)
+        {
+            PanelManager.GetSingleton("dialogue").Open();
+            if(dialogueInteractButton == null)
+            {
+                GameObject buttonObject = GameObject.FindWithTag("DialogueInteractButton");
+                dialogueInteractButton = buttonObject.GetComponent<Button>();
+                dialogueInteractButton.onClick.AddListener(OnInteractButtonClicked);
+            }
+            Interact();
+            // playerMovement.OnDisable();
+        }         
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
