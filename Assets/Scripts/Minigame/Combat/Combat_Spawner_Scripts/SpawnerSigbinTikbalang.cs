@@ -5,9 +5,15 @@ using UnityEngine.UI;
 public class SpawnerSigbinTikbalang : Spawner
 {
     [SerializeField] protected int destroyThreshold = 5;
+    [SerializeField] protected float spawnInterval;
     protected int spawn1DestroyedCount = 0;
     protected int spawn2DestroyedCount = 0;
     private BattleManagerSigbinTikbalang battleManager;
+
+    protected override void Start()
+    {
+        InvokeRepeating(nameof(Spawn), 0f, spawnInterval);
+    }
 
     public override void OnButtonClicked(GameObject spawnButton)
     {
