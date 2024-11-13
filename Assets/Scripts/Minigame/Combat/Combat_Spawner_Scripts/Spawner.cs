@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] protected GameObject spawnButtonPrefab1 = null;     
-    [SerializeField] protected GameObject spawnButtonPrefab2 = null;
-    [SerializeField] protected RectTransform spawnParent = null;
-    [SerializeField] protected int spawnPerWave;
+    [SerializeField] private GameObject spawnButtonPrefab1 = null;     
+    [SerializeField] private GameObject spawnButtonPrefab2 = null;
+    [SerializeField] private RectTransform spawnParent = null;
+    [SerializeField] private int spawnPerWave;
+    [SerializeField] private float spawnInterval;
     private int clickCount = 0;    
     protected List<GameObject> currentSpawns = new List<GameObject>();
 
-    protected virtual void Start()
+    private void Start()
     {
-        Spawn();
+        InvokeRepeating(nameof(Spawn), 0f, spawnInterval);
     }
 
-    protected virtual void Spawn()
+    private void Spawn()
     {
         
         DespawnPrevious();
@@ -80,7 +81,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    protected virtual void DespawnPrevious()
+    private void DespawnPrevious()
     {
         foreach (GameObject spawn in currentSpawns)
         {
@@ -100,21 +101,9 @@ public class Spawner : MonoBehaviour
         // }
         // else
         // {
-        //     Destroy(spawnButton);
-            // currentSpawns.Remove(spawnButton);
+            Destroy(spawnButton);
+            currentSpawns.Remove(spawnButton);
         // }
-        Image buttonImage = spawnButton.GetComponent<Image>();
-        Button buttonComponent = spawnButton.GetComponent<Button>();
-
-        if (buttonImage != null)
-        {
-            buttonImage.color = new Color(0, 0, 0, 0);
-        }
-
-        if (buttonComponent != null)
-        {
-            buttonComponent.interactable = false; 
-        }
     }
 
     // private IEnumerator WaitForAnimationToFinish(SlashAnimation slashAnimation, GameObject spawnButton)

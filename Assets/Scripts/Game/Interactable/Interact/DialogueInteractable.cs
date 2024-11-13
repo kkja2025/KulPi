@@ -133,6 +133,7 @@ public class DialogueInteractable : Interactable
             {
                 interactButton.gameObject.SetActive(true);
                 ShowInteractButton();
+                Debug.Log("Show interact button");
             }
 
             if (dialogueIcon != null)

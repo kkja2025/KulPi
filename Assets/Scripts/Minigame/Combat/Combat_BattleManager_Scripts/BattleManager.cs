@@ -58,7 +58,6 @@ public class BattleManager : MiniGameManager
 
     public void VictoryAnimation()
     {
-        AudioManager.Singleton.PlayVictoryMusic();
         // Play victory animation
     }
 }

@@ -11,6 +11,7 @@ public class PlatformTriggers : MonoBehaviour
         {
             if(triggerType == "victory")
             {
+                AudioManager.Singleton.PlayBackgroundSound(onCollisionSound, true);
                 PlatformFallManager.Singleton.ShowVictoryMenu();
                 Destroy(gameObject);
             } 

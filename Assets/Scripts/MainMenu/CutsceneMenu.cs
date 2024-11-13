@@ -1,10 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CutsceneMenu : Panel
 {
-    [SerializeField] private GameObject[] cutscenePanels;
+    [SerializeField] private Button buttonNext = null;
+    [SerializeField] private GameObject[] cutscenePanels = null;
 
     private int currentCutsceneIndex = 0;
 
@@ -15,24 +17,43 @@ public class CutsceneMenu : Panel
             return;
         }
 
+        if (buttonNext == null)
+        {
+            Debug.LogError("buttonNext is not assigned in the Inspector.");
+            return;
+        }
+
+        if (cutscenePanels == null || cutscenePanels.Length == 0)
+        {
+            Debug.LogError("cutscenePanels array is either null or empty.");
+            return;
+        }
+
         UpdateCutscene();
+        buttonNext.onClick.AddListener(NextCutscene);
         base.Initialize();
     }
 
     private void UpdateCutscene()
     {
-        foreach (GameObject panel in cutscenePanels)
+        if (cutscenePanels == null)
         {
-            panel.SetActive(false);
+            Debug.LogError("cutscenePanels is null.");
+            return;
         }
 
-        if (currentCutsceneIndex >= 0 && currentCutsceneIndex < cutscenePanels.Length)
+        for (int i = 0; i < cutscenePanels.Length; i++)
+        {
+            cutscenePanels[i].SetActive(false);
+        }
+
+        if (cutscenePanels.Length > 0)
         {
             cutscenePanels[currentCutsceneIndex].SetActive(true);
         }
     }
 
-    public void NextCutscene()
+    private void NextCutscene()
     {
         if (currentCutsceneIndex < cutscenePanels.Length - 1)
         {

@@ -26,7 +26,7 @@ public class HUDCombatMenu : Panel
         PanelManager.GetSingleton("pause").Open();
     }
 
-    protected virtual void OpenTutorial()
+    private void OpenTutorial()
     {   
         Time.timeScale = 0;
         PanelManager.GetSingleton("tutorial").Open();

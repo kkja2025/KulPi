@@ -84,7 +84,6 @@ public class AudioManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadSoundSettings();
-        currentMusicClipName = "";
         if (sceneMusicMap.TryGetValue(scene.name, out string musicClipName))
         {
             PlayBackgroundMusic(musicClipName);
@@ -187,20 +186,6 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-
-    public void PlayVictoryMusic()
-    {
-        AudioClip clip = GetCachedClip("Sound/BGM/Victory");
-        if (clip == null)
-        {
-            return; 
-        }
-
-        backgroundMusicSource.clip = clip;
-        backgroundMusicSource.loop = true;
-        backgroundMusicSource.Play();
-    }
-
     public void PlaySoundEffect(AudioClip clip, bool loop)
     {
         if (clip != null)

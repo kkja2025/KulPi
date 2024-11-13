@@ -17,19 +17,6 @@ public class PlatformFallTutorialMenu : TutorialMenu
         }
         base.Initialize();
     }
-
-    public override void Open()
-    {
-        base.Open();
-        var tutorialpause1 = PanelManager.GetSingleton("tutorialpause1");
-        if (tutorialpause1 != null)
-        {
-            tutorialpause1.Open();
-        } else {
-            return;
-        }
-    }
-
     protected override void StartGame()
     {
         if(key == "reset")
@@ -38,7 +25,6 @@ public class PlatformFallTutorialMenu : TutorialMenu
         } else if (Time.timeScale == 0)
         {
             Time.timeScale = 1;
-            Close();
         } else {
             PlatformFallManager.Singleton.StartGame();
         }

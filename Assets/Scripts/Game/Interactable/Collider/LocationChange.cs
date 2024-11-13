@@ -6,19 +6,15 @@ public class LocationChange : Interactable
     [SerializeField] private float y;
     [SerializeField] private float z;
 
-    protected override void OnInteractButtonClicked()
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerMovement playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
-        if(playerMovement.isGrounded && !playerMovement.isMoving)
+        Vector3 newPosition = new Vector3(x, y, z);
+        GameObject player = GameObject.FindWithTag("Player");
+        if (collision.gameObject == player)
         {
-            if (isPlayerInRange)
-            {
-                Vector3 newPosition = new Vector3(x, y, z);
-                GameObject player = GameObject.FindWithTag("Player");
-                PanelManager.Singleton.StartLoading(2f, 
-                async () => await GameManager.Singleton.SetPlayerPosition(newPosition), 
-                () => PanelManager.GetSingleton("hud").Open());     
-            }
+            PanelManager.Singleton.StartLoading(2f, 
+            async () => await GameManager.Singleton.SetPlayerPosition(newPosition), 
+            () => PanelManager.GetSingleton("hud").Open());
         }
     }
 }

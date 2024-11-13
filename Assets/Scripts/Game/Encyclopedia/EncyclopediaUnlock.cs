@@ -48,10 +48,6 @@ public class EncyclopediaUnlock : Panel
                 PanelManager.GetSingleton(id).Close();
                 GameManager.Singleton.UnlockEncyclopediaItem("Tikbalang", "unlocktikbalang");
                 break;
-            case "chapter2cutscene":
-                PanelManager.GetSingleton(id).Close();
-                PanelManager.GetSingleton(actionButtonNavigation).Open();
-                break;
             default:
                 PanelManager.LoadSceneAsync(actionButtonNavigation);
                 break;
