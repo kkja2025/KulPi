@@ -84,6 +84,7 @@ public class AudioManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadSoundSettings();
+        currentMusicClipName = "";
         if (sceneMusicMap.TryGetValue(scene.name, out string musicClipName))
         {
             PlayBackgroundMusic(musicClipName);
