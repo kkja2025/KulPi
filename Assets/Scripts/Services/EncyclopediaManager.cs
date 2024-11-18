@@ -94,12 +94,16 @@ public class EncyclopediaManager : MonoBehaviour
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
             case "RhythmsOfUnity":
                 return EncyclopediaItem.PracticesAndTraditions_Chapter2_RhythmsOfUnity();
+            case "SymbolicWeaving":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter2_SymbolicWeaving();
             case "Bangus":
                 return EncyclopediaItem.Events_Chapter2_Bangus();
             case "Bisugo":
                 return EncyclopediaItem.Events_Chapter2_Bisugo();
             case "Apahap":
                 return EncyclopediaItem.Events_Chapter2_Apahap();
+            case "LapuLapu":
+                return EncyclopediaItem.Figures_Chapter2_LapuLapu();
             default:
                 Debug.LogWarning("No encyclopedia entry found for the provided ID.");
                 return null;

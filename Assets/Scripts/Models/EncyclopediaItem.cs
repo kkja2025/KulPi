@@ -60,8 +60,18 @@ public class EncyclopediaItem
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
-    // Events or Items
+    public static EncyclopediaItem Figures_Chapter2_LapuLapu()
+    {
+        string id = "LapuLapu";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Lapu Lapu";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
 
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
+    // Events or Items
     public static EncyclopediaItem Events_Chapter1_Lagundi()
     {
         string id = "Lagundi";
@@ -133,6 +143,17 @@ public class EncyclopediaItem
         string id = "RhythmsOfUnity";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Rhythms Of Unity";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
+    public static EncyclopediaItem PracticesAndTraditions_Chapter2_SymbolicWeaving()
+    {
+        string id = "SymbolicWeaving";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Symbolic Weaving";
         string description = "";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
