@@ -60,58 +60,101 @@ public class EncyclopediaItem
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
-    // Events
-    /* public static EncyclopediaItem Events_Chapter1_Sacred_Grove()
+    public static EncyclopediaItem Figures_Chapter2_LapuLapu()
     {
-        string id = "SacredGrove";
-        string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Sacred Grove";
-        string description = "     The devastation of Sugbu’s once-thriving environment, brought about by the actions of the Sakim, mirrors the real-world environmental degradation faced in many regions. The air is filled with toxins, the waters are polluted, and the Sacred Grove is blighted. This event highlights how the imbalance between humanity and nature can lead to catastrophic consequences, affecting not just the land but the very spirits tied to it.";
-        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+        string id = "LapuLapu";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Lapu Lapu";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
-    public static EncyclopediaItem Events_Chapter1_Cursed_Land_of_Sugbu()
-    {
-        string id = "CursedLandOfSugbu";
-        string chapter = "Chapter 1: 'The Tainted Paradise'";
-        string title = "Cursed Land of Sugbu";
-        string description = "     This marks the beginning of Lakan’s journey to restore balance to the island. The corruption of the land has caused suffering among the people, and the once-harmonious relationship between the villagers and nature has been severed. By purifying the Sacred Grove and confronting the Diwata, Lakan will restore Sugbu to its former state of peace and prosperity.";
-        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
-
-        return new EncyclopediaItem(id, chapter, title, description, category);
-    }
-    */
-
-    // Practices and Traditions
-    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Lagundi()
+    // Events or Items
+    public static EncyclopediaItem Events_Chapter1_Lagundi()
     {
         string id = "Lagundi";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
         string title = "Lagundi";
         string description = "      Lagundi (Vitex negundo) is a plant used in traditional Filipino medicine, especially for treating coughs, colds, and asthma. Many families in the Philippines keep lagundi leaves at home for making herbal tea when someone is sick.";
-        string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
-    public static EncyclopediaItem PracticesAndTraditions_Chapter1_Sambong()
+    public static EncyclopediaItem Events_Chapter1_Sambong()
     {
         string id = "Sambong";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
         string title = "Sambong";
         string description = "      Sambong (Blumea balsamifera) is another plant used in Filipino herbal medicine. It’s often used to treat kidney problems and urinary infections. People usually boil the leaves to make tea, which is believed to help flush out toxins from the body.";
-        string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
-    public static EncyclopediaItem PracticesAndTraditions_Chapter1_NiyogNiyogan()
+    public static EncyclopediaItem Events_Chapter1_NiyogNiyogan()
     {
         string id = "NiyogNiyogan";
         string chapter = "Chapter 1: 'The Tainted Paradise'";
         string title = "Niyog-Niyogan";
         string description = "      Niyog-niyogan (Quisqualis indica) is a plant used to get rid of intestinal worms. In the Philippines, kids are often given a few seeds of niyog-niyogan to chew when they have stomach issues caused by worms.";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+    
+    public static EncyclopediaItem Events_Chapter2_Bangus()
+    {
+        string id = "Bangus";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Bangus";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
+    public static EncyclopediaItem Events_Chapter2_Bisugo()
+    {
+        string id = "Bisugo";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Bisugo";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
+    public static EncyclopediaItem Events_Chapter2_Apahap()
+    {
+        string id = "Apahap";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Apahap";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
+    // Practices and Traditions
+    public static EncyclopediaItem PracticesAndTraditions_Chapter2_RhythmsOfUnity()
+    {
+        string id = "RhythmsOfUnity";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Rhythms Of Unity";
+        string description = "";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
+    public static EncyclopediaItem PracticesAndTraditions_Chapter2_SymbolicWeaving()
+    {
+        string id = "SymbolicWeaving";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Symbolic Weaving";
+        string description = "";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
