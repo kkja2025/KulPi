@@ -11,8 +11,10 @@ public class QuestNPCInteraction : DialogueInteractable
     [SerializeField] private bool returnDoesCharacterStartFirst;
     [SerializeField] private string completeQuest;
     [SerializeField] private string giveFollowUpQuest;   
+    [SerializeField] private string encyclopediaEntry;
     private bool hasTalked = false;
     private bool hasCompleted = false;
+    private bool hasUnlocked = false;
 
     protected override void Interact()
     {
@@ -35,6 +37,11 @@ public class QuestNPCInteraction : DialogueInteractable
     protected override void ConversationCompleted()
     {
         base.ConversationCompleted();
+        if(encyclopediaEntry != "" && !hasUnlocked)
+        {
+            GameManager.Singleton.UnlockEncyclopediaItem(encyclopediaEntry, "unlock");
+            hasUnlocked = true;
+        }
         StartQuest();
     }
 
