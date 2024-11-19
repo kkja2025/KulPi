@@ -40,60 +40,6 @@ public class QuizManager : MonoBehaviour
             new string[] { "Manila", "Cebu", "Davao", "Baguio" },
             0
         ));
-
-        questions.Add(new Question(
-            "What year did the Philippines gain independence from the United States?",
-            new string[] { "1946", "1947", "1945", "1950" },
-            0
-        ));
-
-        questions.Add(new Question(
-            "Which Philippine island is the largest in terms of land area?",
-            new string[] { "Luzon", "Mindanao", "Palawan", "Visayas" },
-            0
-        ));
-
-        questions.Add(new Question(
-            "What is the national bird of the Philippines?",
-            new string[] { "Eagle", "Philippine Eagle", "Parrot", "Maya" },
-            1
-        ));
-
-        questions.Add(new Question(
-            "What is the national language of the Philippines?",
-            new string[] { "English", "Filipino", "Tagalog", "Cebuano" },
-            1
-        ));
-
-        questions.Add(new Question(
-            "What is the largest ethnic group in the Philippines?",
-            new string[] { "Ilocano", "Visayan", "Tagalog", "Kapampangan" },
-            2
-        ));
-
-        questions.Add(new Question(
-            "What is the smallest province in the Philippines by land area?",
-            new string[] { "Batanes", "Tawi-Tawi", "Siquijor", "Guimaras" },
-            0
-        ));
-
-        questions.Add(new Question(
-            "Which Philippine festival is known for its colorful masks?",
-            new string[] { "Sinulog", "Ati-Atihan", "MassKara", "Kadayawan" },
-            2
-        ));
-
-        questions.Add(new Question(
-            "What is the longest river in the Philippines?",
-            new string[] { "Agusan River", "Cagayan River", "Pasig River", "Pampanga River" },
-            1
-        ));
-
-        questions.Add(new Question(
-            "Who is known as the National Hero of the Philippines?",
-            new string[] { "Jose Rizal", "Andres Bonifacio", "Emilio Aguinaldo", "Antonio Luna" },
-            0
-        ));
     }
 
     private void InitializeSpirits()
@@ -178,8 +124,8 @@ public class QuizManager : MonoBehaviour
     {
         if (spirits.Count > 0)
         {
-            Destroy(spirits[0]); // Destroy the first Spirit object
-            spirits.RemoveAt(0); // Remove it from the list
+            Destroy(spirits[0]); 
+            spirits.RemoveAt(0);
         }
     }
 
@@ -191,8 +137,9 @@ public class QuizManager : MonoBehaviour
 
     private void EndQuiz()
     {
-        Debug.Log("Quiz Complete!");
-        // Handle end-of-quiz logic
+        Time.timeScale = 0;
+        PanelManager.GetSingleton("quiz").Close();
+        PanelManager.GetSingleton("combat").Open();
     }
 }
 [System.Serializable]

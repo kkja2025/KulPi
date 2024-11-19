@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class BattleManagerSakim : BattleManager
 {
+    [SerializeField] private GameObject bossObject;
+    [SerializeField] private GameObject ultimateButton; 
+    private Boss boss;
+    private GridPlayer player;
+
     public override void StartBattle()
     {
         PanelManager.GetSingleton("hud").Open();
@@ -14,9 +18,46 @@ public class BattleManagerSakim : BattleManager
         isTimerRunning = true;
     }
 
+    public void ShowUltimateButton()
+    {
+        ultimateButton.SetActive(true);
+    }
+
+    public void UseUltimate()
+    {
+        ultimateButton.SetActive(false);
+        player.ResetCharge();
+        boss.TakeUltimateDamage();
+        StartCoroutine(WaitForSkillAnimationThenContinue());
+    }
+
+    // When the boss is defeated
     public override void Defeated()
     {
+        // sakimBoss.gameObject.SetActive(false);  // Deactivate the boss
+        // VictoryAnimation();
+        // PanelManager.GetSingleton("hud").Close();
+        // PanelManager.GetSingleton("cutscene").Open();
+        // VictoryMenu sakimVictoryMenu = PanelManager.GetSingleton("victory") as SakimVictoryMenu;
+        // if (sakimVictoryMenu != null)
+        // {
+        //     sakimVictoryMenu.SetTimerText($"Time: {timerText.text}");
+        // }
+    }
 
-        VictoryAnimation();
+    // This coroutine waits for skill animation to complete and checks if the boss is defeated
+    private IEnumerator WaitForSkillAnimationThenContinue()
+    {
+        SkillAnimation skillAnimation = GetComponent<SkillAnimation>();
+        skillAnimation.StartMoveAnimation();  // Trigger skill animation
+
+        // Wait for the animation duration to finish
+        yield return new WaitForSeconds(skillAnimation.animationDuration + 1.5f);
+
+        // Check if the boss has been defeated
+        if (boss.GetHealth() <= 0)
+        {
+            Defeated();
+        }
     }
 }
