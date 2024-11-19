@@ -9,8 +9,8 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private Button[] answerButtons;
     [SerializeField] private Slider healthBar;
-    [SerializeField] private Transform spiritContainer; // Parent Transform for Spirit objects
-    [SerializeField] private GameObject spiritPrefab; // Prefab for Spirit object
+    [SerializeField] private Transform spiritContainer; 
+    [SerializeField] private GameObject spiritPrefab;
 
     [Header("Quiz Settings")]
     private List<Question> questions = new List<Question>();
@@ -28,8 +28,8 @@ public class QuizManager : MonoBehaviour
         healthBar.maxValue = maxHealth;
         healthBar.value = maxHealth;
 
-        InitializeQuestions(); // Load hardcoded questions
-        InitializeSpirits();   // Setup spirit objects
+        InitializeQuestions();
+        InitializeSpirits();   
         LoadQuestion();
     }
 
@@ -100,12 +100,9 @@ public class QuizManager : MonoBehaviour
     {
         foreach (Transform child in spiritContainer)
         {
-            Destroy(child.gameObject); // Destroys each spirit object
+            Destroy(child.gameObject); 
         }
-
-        // Clear the spirits list to ensure it starts empty
         spirits.Clear();
-        // Create Spirit objects equal to the number of questions
         for (int i = 0; i < questions.Count; i++)
         {
             GameObject spirit = Instantiate(spiritPrefab, spiritContainer);
@@ -124,7 +121,6 @@ public class QuizManager : MonoBehaviour
         Question currentQuestion = questions[currentQuestionIndex];
         questionText.text = currentQuestion.QuestionText;
 
-        // Shuffle answers and assign to buttons...
         List<int> shuffledIndices = new List<int>();
         for (int i = 0; i < currentQuestion.Answers.Length; i++)
         {
@@ -157,7 +153,7 @@ public class QuizManager : MonoBehaviour
 
     private void CorrectAnswer()
     {
-        RemoveSpirit(); // Remove a spirit when a question is answered correctly
+        RemoveSpirit();
         currentQuestionIndex++;
         LoadQuestion();
     }
@@ -173,7 +169,7 @@ public class QuizManager : MonoBehaviour
             return;
         }
 
-        RemoveSpirit(); // Remove a spirit for a wrong answer
+        RemoveSpirit();
         currentQuestionIndex++;
         LoadQuestion();
     }
@@ -189,8 +185,8 @@ public class QuizManager : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("Game Over! You lost all your health.");
-        // Handle Game Over logic here
+        Time.timeScale = 0;
+        PanelManager.GetSingleton("gameover").Open();
     }
 
     private void EndQuiz()
