@@ -9,9 +9,12 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private Button[] answerButtons;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private Transform spiritContainer; // Parent Transform for Spirit objects
+    [SerializeField] private GameObject spiritPrefab; // Prefab for Spirit object
 
     [Header("Quiz Settings")]
     private List<Question> questions = new List<Question>();
+    private List<GameObject> spirits = new List<GameObject>();
 
     private int maxHealth = 4;
     private int currentQuestionIndex;
@@ -26,6 +29,7 @@ public class QuizManager : MonoBehaviour
         healthBar.value = maxHealth;
 
         InitializeQuestions(); // Load hardcoded questions
+        InitializeSpirits();   // Setup spirit objects
         LoadQuestion();
     }
 
@@ -92,6 +96,22 @@ public class QuizManager : MonoBehaviour
         ));
     }
 
+    private void InitializeSpirits()
+    {
+        foreach (Transform child in spiritContainer)
+        {
+            Destroy(child.gameObject); // Destroys each spirit object
+        }
+
+        // Clear the spirits list to ensure it starts empty
+        spirits.Clear();
+        // Create Spirit objects equal to the number of questions
+        for (int i = 0; i < questions.Count; i++)
+        {
+            GameObject spirit = Instantiate(spiritPrefab, spiritContainer);
+            spirits.Add(spirit);
+        }
+    }
 
     private void LoadQuestion()
     {
@@ -104,13 +124,12 @@ public class QuizManager : MonoBehaviour
         Question currentQuestion = questions[currentQuestionIndex];
         questionText.text = currentQuestion.QuestionText;
 
-        // Create a temporary list to hold the shuffled answers
+        // Shuffle answers and assign to buttons...
         List<int> shuffledIndices = new List<int>();
         for (int i = 0; i < currentQuestion.Answers.Length; i++)
         {
             shuffledIndices.Add(i);
         }
-        // Shuffle the indices
         for (int i = 0; i < shuffledIndices.Count; i++)
         {
             int randomIndex = Random.Range(0, shuffledIndices.Count);
@@ -119,7 +138,6 @@ public class QuizManager : MonoBehaviour
             shuffledIndices[randomIndex] = temp;
         }
 
-        // Apply shuffled answers to buttons
         for (int i = 0; i < answerButtons.Length; i++)
         {
             int answerIndex = shuffledIndices[i];
@@ -137,9 +155,9 @@ public class QuizManager : MonoBehaviour
         }
     }
 
-
     private void CorrectAnswer()
     {
+        RemoveSpirit(); // Remove a spirit when a question is answered correctly
         currentQuestionIndex++;
         LoadQuestion();
     }
@@ -155,23 +173,32 @@ public class QuizManager : MonoBehaviour
             return;
         }
 
+        RemoveSpirit(); // Remove a spirit for a wrong answer
         currentQuestionIndex++;
         LoadQuestion();
+    }
+
+    private void RemoveSpirit()
+    {
+        if (spirits.Count > 0)
+        {
+            Destroy(spirits[0]); // Destroy the first Spirit object
+            spirits.RemoveAt(0); // Remove it from the list
+        }
     }
 
     private void GameOver()
     {
         Debug.Log("Game Over! You lost all your health.");
-        // Handle Game Over logic here, like transitioning to a Game Over screen.
+        // Handle Game Over logic here
     }
 
     private void EndQuiz()
     {
         Debug.Log("Quiz Complete!");
-        // Handle end-of-quiz logic, like transitioning to Phase 2.
+        // Handle end-of-quiz logic
     }
 }
-
 [System.Serializable]
 public class Question
 {
