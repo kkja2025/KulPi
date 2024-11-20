@@ -7,9 +7,10 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int columns = 8;
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private Transform gridContainer;
-    [SerializeField] private float spawnInterval = 2f;
+    [SerializeField] private float spawnInterval = 1f;
     [SerializeField] private GridPlayer player;
     private float spawnTimer;
+    private int movementCount = 0;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class GridManager : MonoBehaviour
             if (player != null)
             {
                 player.CheckTileInteraction();
+                SpeedUpSpawnRate();
             }
         }
     }
@@ -50,6 +52,21 @@ public class GridManager : MonoBehaviour
 
                 SetTileAppearance(tile, TileType.Empty);
             }
+        }
+    }
+
+    private void SpeedUpSpawnRate()
+    {
+        movementCount++;
+        if (player.GetMovementCount() == 0)
+        {
+            spawnInterval = 1f;
+            movementCount = 0;
+            return; 
+        }
+        if (movementCount >= 10)
+        {
+            spawnInterval = Mathf.Max(0.5f, spawnInterval - 0.1f);
         }
     }
 
@@ -101,8 +118,8 @@ public class GridManager : MonoBehaviour
 
     private TileType GetRandomTileType()
     {
-        float[] weights = { 0.2f, 0.35f, 0.45f }; // Energy: , Damage: , Empty: 
-        
+        float[] weights = { 0.7f, 0.1f, 0.2f }; // Empty: , Energy: , Damage: 
+
         float totalWeight = 0f;
         for (int i = 0; i < weights.Length; i++)
         {

@@ -8,11 +8,13 @@ public class BattleManagerSakim : BattleManager
 {
     [SerializeField] private GameObject bossObject;
     [SerializeField] private GameObject ultimateButton; 
+    [SerializeField] private GridPlayer player;
     private Boss boss;
-    private GridPlayer player;
 
     public override void StartBattle()
     {
+        boss = bossObject.GetComponent<Boss>();
+        ultimateButton.GetComponent<Button>().onClick.AddListener(UseUltimate);
         PanelManager.GetSingleton("hud").Open();
         PanelManager.GetSingleton("quiz").Open();
         isTimerRunning = true;
@@ -28,7 +30,7 @@ public class BattleManagerSakim : BattleManager
         ultimateButton.SetActive(false);
         player.ResetCharge();
         boss.TakeUltimateDamage();
-        StartCoroutine(WaitForSkillAnimationThenContinue());
+        // StartCoroutine(WaitForSkillAnimationThenContinue());
     }
 
     // When the boss is defeated

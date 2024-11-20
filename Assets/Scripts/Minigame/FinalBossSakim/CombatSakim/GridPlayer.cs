@@ -19,6 +19,7 @@ public class GridPlayer : MonoBehaviour
     private int totalRows = 5;
     private int currentRow = 2;
     private bool isMoving = false;
+    private int movementCount = 0;
 
     private void Start()
     {
@@ -72,8 +73,14 @@ public class GridPlayer : MonoBehaviour
         return currentRow;
     }
 
+    public int GetMovementCount()
+    {
+        return movementCount;
+    }
+
     public void CheckTileInteraction()
     {
+        movementCount++;
         Transform tileTransform = gridContainer.GetChild(currentRow);
         if (tileTransform != null)
         {
@@ -114,10 +121,17 @@ public class GridPlayer : MonoBehaviour
     private void TakeDamage()
     {
         damage++;
+        movementCount = 0;
         if (healthBarFill != null)
         {
             float healthPercentage = (float)(maxHP - damage) / maxHP;
             healthBarFill.fillAmount = healthPercentage;
+
+            if (damage >= maxHP)
+            {
+                Time.timeScale = 0;
+                PanelManager.GetSingleton("gameover").Open();
+            }
         }
     }
 }
