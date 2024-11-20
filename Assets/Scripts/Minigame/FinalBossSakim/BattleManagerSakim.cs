@@ -30,21 +30,20 @@ public class BattleManagerSakim : BattleManager
         ultimateButton.SetActive(false);
         player.ResetCharge();
         boss.TakeUltimateDamage();
-        // StartCoroutine(WaitForSkillAnimationThenContinue());
+        StartCoroutine(WaitForSkillAnimationThenContinue());
     }
 
-    // When the boss is defeated
     public override void Defeated()
     {
-        // sakimBoss.gameObject.SetActive(false);  // Deactivate the boss
-        // VictoryAnimation();
-        // PanelManager.GetSingleton("hud").Close();
+        VictoryAnimation();
+        PanelManager.GetSingleton("hud").Close();
         // PanelManager.GetSingleton("cutscene").Open();
-        // VictoryMenu sakimVictoryMenu = PanelManager.GetSingleton("victory") as SakimVictoryMenu;
-        // if (sakimVictoryMenu != null)
-        // {
-        //     sakimVictoryMenu.SetTimerText($"Time: {timerText.text}");
-        // }
+        VictoryMenu sakimVictoryMenu = PanelManager.GetSingleton("victory") as SakimVictoryMenu;
+        if (sakimVictoryMenu != null)
+        {
+            sakimVictoryMenu.SetTimerText($"Time: {timerText.text}");
+            sakimVictoryMenu.Open();
+        }
     }
 
     // This coroutine waits for skill animation to complete and checks if the boss is defeated
