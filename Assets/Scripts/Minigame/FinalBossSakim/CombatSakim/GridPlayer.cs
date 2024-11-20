@@ -15,6 +15,8 @@ public class GridPlayer : MonoBehaviour
 
     [SerializeField] private Transform gridContainer;
     [SerializeField] private float movementDuration = 0.2f;
+    [SerializeField] private Sprite energyTileSprite;
+    [SerializeField] private Sprite damageTileSprite;
 
     private int totalRows = 5;
     private int currentRow = 2;
@@ -87,11 +89,11 @@ public class GridPlayer : MonoBehaviour
             Image tileImage = tileTransform.GetComponent<Image>();
             if (tileImage != null)
             {
-                if (tileImage.color == Color.green)
+                if (tileImage.sprite == energyTileSprite)
                 {
                     ChargeSkill();
                 }
-                else if (tileImage.color == Color.red)
+                else if (tileImage.sprite == damageTileSprite)
                 {
                     TakeDamage();
                 }

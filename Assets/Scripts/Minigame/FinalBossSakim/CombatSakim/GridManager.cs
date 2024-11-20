@@ -9,6 +9,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform gridContainer;
     [SerializeField] private float spawnInterval = 1f;
     [SerializeField] private GridPlayer player;
+    [SerializeField] private Sprite energyTileSprite;
+    [SerializeField] private Sprite damageTileSprite;
     private float spawnTimer;
     private int movementCount = 0;
 
@@ -118,8 +120,7 @@ public class GridManager : MonoBehaviour
 
     private TileType GetRandomTileType()
     {
-        float[] weights = { 0.7f, 0.1f, 0.2f }; // Empty: , Energy: , Damage: 
-
+        float[] weights = { 0.7f, 0.1f, 0.2f };
         float totalWeight = 0f;
         for (int i = 0; i < weights.Length; i++)
         {
@@ -149,11 +150,11 @@ public class GridManager : MonoBehaviour
     private TileType GetTileType(GameObject tile)
     {
         Image image = tile.GetComponent<Image>();
-        if (image != null)
+        if (image != null && image.sprite != null)
         {
-            if (image.color == Color.green) return TileType.Energy;
-            else if (image.color == Color.red) return TileType.Damage;
-            else if (image.color == Color.gray) return TileType.Empty;
+            if (image.sprite == energyTileSprite) return TileType.Energy;
+            else if (image.sprite == damageTileSprite) return TileType.Damage;
+            else if (image.color == new Color(1f, 1f, 1f, 0f)) return TileType.Empty;
         }
         return TileType.Empty;
     }
@@ -166,13 +167,18 @@ public class GridManager : MonoBehaviour
             switch (type)
             {
                 case TileType.Energy:
-                    image.color = Color.green;
+                    image.sprite = energyTileSprite;
+                    image.color = new Color(1f, 1f, 1f, 1f); 
                     break;
+
                 case TileType.Damage:
-                    image.color = Color.red;
+                    image.sprite = damageTileSprite;
+                    image.color = new Color(1f, 1f, 1f, 1f); 
                     break;
+
                 case TileType.Empty:
-                    image.color = Color.gray;
+                    image.sprite = null;
+                    image.color = new Color(1f, 1f, 1f, 0f); 
                     break;
             }
         }
