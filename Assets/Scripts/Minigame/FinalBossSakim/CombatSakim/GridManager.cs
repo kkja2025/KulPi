@@ -3,20 +3,21 @@ using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private int rows = 5; 
-    [SerializeField] private int columns = 8; 
-    [SerializeField] private GameObject tilePrefab; 
-    [SerializeField] private Transform gridContainer; 
-    [SerializeField] private float spawnInterval = 2f; 
-    private float spawnTimer; 
+    [SerializeField] private int rows = 5;
+    [SerializeField] private int columns = 8;
+    [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private Transform gridContainer;
+    [SerializeField] private float spawnInterval = 2f;
+    [SerializeField] private GridPlayer player;
+    private float spawnTimer;
 
-    void Start()
+    private void Start()
     {
         InitializeGrid();
         spawnTimer = spawnInterval;
     }
 
-    void Update()
+    private void Update()
     {
         spawnTimer -= Time.deltaTime;
         if (spawnTimer <= 0f)
@@ -24,6 +25,10 @@ public class GridManager : MonoBehaviour
             SpawnRandomTiles();
             spawnTimer = spawnInterval;
             UpdateTileColorsBasedOnPosition();
+            if (player != null)
+            {
+                player.CheckTileInteraction();
+            }
         }
     }
 
@@ -40,7 +45,7 @@ public class GridManager : MonoBehaviour
             {
                 GameObject tile = Instantiate(tilePrefab, gridContainer);
 
-                Vector3 tilePosition = new Vector3(col * 50, row * -50, 0); 
+                Vector3 tilePosition = new Vector3(col * 50, row * -50, 0);
                 tile.transform.localPosition = tilePosition;
 
                 SetTileAppearance(tile, TileType.Empty);
@@ -74,7 +79,7 @@ public class GridManager : MonoBehaviour
     {
         for (int row = 0; row < rows; row++)
         {
-            for (int col = 0; col < columns - 1; col++) 
+            for (int col = 0; col < columns - 1; col++)
             {
                 GameObject currentTile = gridContainer.GetChild(row + col * rows).gameObject;
                 GameObject tileToRight = gridContainer.GetChild(row + (col + 1) * rows).gameObject;
@@ -96,8 +101,32 @@ public class GridManager : MonoBehaviour
 
     private TileType GetRandomTileType()
     {
-        int rand = UnityEngine.Random.Range(0, 3);
-        return (TileType)rand;
+        float[] weights = { 0.2f, 0.35f, 0.45f }; // Energy: , Damage: , Empty: 
+        
+        float totalWeight = 0f;
+        for (int i = 0; i < weights.Length; i++)
+        {
+            totalWeight += weights[i];
+        }
+
+        float[] cumulativeWeights = new float[weights.Length];
+        float cumulativeSum = 0f;
+        for (int i = 0; i < weights.Length; i++)
+        {
+            cumulativeSum += weights[i] / totalWeight;
+            cumulativeWeights[i] = cumulativeSum;
+        }
+
+        float randomValue = UnityEngine.Random.value;
+
+        for (int i = 0; i < cumulativeWeights.Length; i++)
+        {
+            if (randomValue <= cumulativeWeights[i])
+            {
+                return (TileType)i;
+            }
+        }
+        return TileType.Empty;
     }
 
     private TileType GetTileType(GameObject tile)
