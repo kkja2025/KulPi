@@ -30,7 +30,11 @@ public class BattleManagerSakim : BattleManager
         ultimateButton.SetActive(false);
         player.ResetCharge();
         boss.TakeUltimateDamage();
-        StartCoroutine(WaitForSkillAnimationThenContinue());
+        // StartCoroutine(WaitForSkillAnimationThenContinue());
+        if (boss.GetHealth() <= 0)
+        {
+            Defeated();
+        }
     }
 
     public override void Defeated()
