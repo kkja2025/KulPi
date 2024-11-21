@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ProgressBlocker : DialogueInteractable
 {
     [SerializeField] private string completedObjective = null;
+    [SerializeField] private string currentObjective = null;
     private Collider2D barrierCollider;
 
     protected override void Awake()
@@ -54,6 +55,10 @@ public class ProgressBlocker : DialogueInteractable
                     OnInteractButtonClicked();
                     barrierCollider.enabled = true; 
                 }
+            }
+            else if (currentObjective == GameManager.Singleton.GetObjective())
+            {
+                Destroy(gameObject);
             }
             else
             {
