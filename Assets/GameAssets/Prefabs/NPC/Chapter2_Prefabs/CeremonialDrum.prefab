@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1344522061292041041}
   - component: {fileID: 2759531684332318421}
   - component: {fileID: 7562159178217435008}
-  - component: {fileID: 1780224373155447783}
+  - component: {fileID: 2149674263184101551}
   m_Layer: 0
   m_Name: CeremonialDrum
   m_TagString: Untagged
@@ -28,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2323137016167334863}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 30.597, y: 1.639, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.04838702, y: 0.031024909, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a80a5ca5002105747b10d6cca924254d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8afa0f864fda1d546a730c12ce079099, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -144,7 +144,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 9.08, y: 9.7}
     newSize: {x: 8, y: 8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -153,7 +153,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4537048, y: 1.3259823}
   m_EdgeRadius: 0
---- !u!114 &1780224373155447783
+--- !u!114 &2149674263184101551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,10 +162,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2323137016167334863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e4e34258527d3d438da09775d338886, type: 3}
+  m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: 21300000, guid: a80a5ca5002105747b10d6cca924254d, type: 3}
+  normalSprite: {fileID: 21300000, guid: 8afa0f864fda1d546a730c12ce079099, type: 3}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
   buttonText: Interact
@@ -173,8 +173,15 @@ MonoBehaviour:
   characterName: 
   lakanDialogueLines: []
   characterDialogueLines: []
-  doesCharacterStartFirst: 1
+  doesCharacterStartFirst: 0
   dialogueIcon: {fileID: 0}
   dialogueIconSprite: {fileID: 0}
   dialogueIconHighlightedSprite: {fileID: 0}
-  sceneName: 
+  giveNewQuest: Gather support for the resistance. (1/2)
+  totalNPCs: 1
+  questReturnDialogue: []
+  npcQuestReturnDialogue: []
+  returnDoesCharacterStartFirst: 0
+  completeQuest: 
+  giveFollowUpQuest: 
+  encyclopediaEntry: 
