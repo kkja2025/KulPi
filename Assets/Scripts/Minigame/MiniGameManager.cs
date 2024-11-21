@@ -44,7 +44,7 @@ public class MiniGameManager : MonoBehaviour
         });
     }
 
-    private void UpdateTimerDisplay()
+    protected void UpdateTimerDisplay()
     {
         if (timerText != null)
         {

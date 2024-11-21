@@ -23,7 +23,7 @@ public class DiwataVictoryMenu : VictoryMenu
         PlayerData playerData = GameManager.Singleton.GetPlayerData();
         playerData.SetLevel("Chapter2");
         playerData.SetPosition(startingPosition);
-        playerData.SetActiveQuest("Make your way to the village. Find out what is happening.");
+        playerData.SetActiveQuest("Investigate Mactan Island to understand what has happened.");
         await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);     
     }
 }
