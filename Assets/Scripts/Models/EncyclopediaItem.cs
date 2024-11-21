@@ -65,7 +65,7 @@ public class EncyclopediaItem
         string id = "LapuLapu";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Lapu Lapu";
-        string description = "";
+        string description = "Lapu-Lapu was a legendary Mactan chieftain in the Philippines known for his defiance against Spanish colonization. He famously led his warriors in the Battle of Mactan in 1521, where he defeated the forces of Ferdinand Magellan, the Portuguese explorer. Lapu-Lapu's resistance marked one of the earliest successful confrontations against foreign colonizers in Philippine history.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -108,8 +108,8 @@ public class EncyclopediaItem
     {
         string id = "Bangus";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
-        string title = "Bangus";
-        string description = "";
+        string title = "Bangus (Milkfish)";
+        string description = "The Bangus is a popular fish in the Philippines, known for its mild flavor and tender, white flesh. Widely farmed in regions like Dagupan, it holds cultural significance as a symbol of Filipino agriculture and cuisine.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -117,10 +117,10 @@ public class EncyclopediaItem
 
     public static EncyclopediaItem Events_Chapter2_Bisugo()
     {
-        string id = "Bisugo";
+        string id = "Bisugo (Threadfin Bream)";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Bisugo";
-        string description = "";
+        string description = "These fish have a distinct pinkish of light reddish color accented by yellow highlights. Additionally, they are also called whiptail breams and false snappers.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -130,8 +130,8 @@ public class EncyclopediaItem
     {
         string id = "Apahap";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
-        string title = "Apahap";
-        string description = "";
+        string title = "Apahap (Sea Bass)";
+        string description = "The Apahap is a reddish fish with firm, sweet-tasting flesh, commonly found in coastal waters. Known for its versatility, it is a favorite dish during celebrations.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -142,8 +142,8 @@ public class EncyclopediaItem
     {
         string id = "RhythmsOfUnity";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
-        string title = "Rhythms Of Unity";
-        string description = "";
+        string title = "Ceremonial Drums";
+        string description = "Ceremonial drums were vital in rituals, spiritual ceremonies, and community events. Made from bamboo, wood, and animal skin, these drums were believed to summon ancestral spirits and unify communities. ";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
