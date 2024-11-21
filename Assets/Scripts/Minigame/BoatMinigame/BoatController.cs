@@ -60,6 +60,7 @@ public class BoatController : MonoBehaviour
     private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
+        Debug.Log("Move input: " + movementInput);
     }
 
     private void OnMoveCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
