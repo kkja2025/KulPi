@@ -44,7 +44,11 @@ public class ProgressBlocker : DialogueInteractable
         {
             isPlayerInRange = true;
 
-            if (string.IsNullOrEmpty(completedObjective) || completedObjective == GameManager.Singleton.GetObjective())
+            if (currentObjective == GameManager.Singleton.GetObjective())
+            {
+                Destroy(gameObject);
+            }
+            else if (string.IsNullOrEmpty(completedObjective) || completedObjective == GameManager.Singleton.GetObjective())
             {
                 Debug.Log("Opening dialogue. Objective is either null or matched.");
 
@@ -55,10 +59,6 @@ public class ProgressBlocker : DialogueInteractable
                     OnInteractButtonClicked();
                     barrierCollider.enabled = true; 
                 }
-            }
-            else if (currentObjective == GameManager.Singleton.GetObjective())
-            {
-                Destroy(gameObject);
             }
             else
             {
