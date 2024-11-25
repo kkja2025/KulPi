@@ -16,11 +16,10 @@ public class BoatVictoryMenu : VictoryMenu
     {
         base.Next();
         // BattleManager.Singleton.RemoveEncounter();
-        // PanelManager.GetSingleton("victory").Close();
-        // if (GameManager.Singleton != null)
-        // {
-        //     GameManager.Singleton.UnlockEncyclopediaItem("Albularyo", "unlock");
-        // }
-        PanelManager.LoadSceneAsync("Chapter2");
+        PanelManager.GetSingleton("victory").Close();
+        if (GameManager.Singleton != null)
+        {
+            GameManager.Singleton.UnlockEncyclopediaItem("Boat", "unlock");
+        }
     }
 }
