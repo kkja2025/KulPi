@@ -17,6 +17,7 @@ public class SakimVictoryMenu: VictoryMenu
         base.Next();
         BattleManager.Singleton.RemoveEncounter();
         PanelManager.GetSingleton("victory").Close();
+        PanelManager.GetSingleton("cutscene").Open();
         // GameManager.Singleton.UnlockEncyclopediaItem("", "unlock");
     }
 }

@@ -12,7 +12,7 @@ public class LapuLapuVictoryMenu : VictoryMenu
         base.ShowLeaderboards();
     }
 
-    protected override void Next()
+    protected async override void Next()
     {
         base.Next();
         BattleManager.Singleton.RemoveEncounter();
