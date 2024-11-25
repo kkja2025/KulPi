@@ -100,6 +100,19 @@ public class BoatManager : MiniGameManager
 
     public void StartGame()
     {
+        isTimerRunning = true;
+        PanelManager.GetSingleton("tutorial").Close();
+        PanelManager.GetSingleton("hud").Open();
+
+        if (boatController != null)
+        {
+            boatController.StartGame(); // Start the boat's movement
+            obstacleSpawner.SetActive(true); // Enable obstacle spawning
+        }
+    }
+
+    public void StartCasualGame()
+    {
         isCasualMode = true;
         isTimerRunning = true;
         PanelManager.GetSingleton("tutorial").Close();
