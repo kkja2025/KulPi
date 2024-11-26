@@ -149,12 +149,12 @@ public class EncyclopediaItem
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
-    public static EncyclopediaItem PracticesAndTraditions_Chapter2_SymbolicWeaving()
+    public static EncyclopediaItem PracticesAndTraditions_Chapter2_Boat()
     {
-        string id = "SymbolicWeaving";
+        string id = "Boat";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
-        string title = "Symbolic Weaving";
-        string description = "";
+        string title = "Navigating with Bancas";
+        string description = "Traditional outrigger boats in the Philippines, offers a unique and authentic experience. These lightweight and sturdy vessels, often powered by paddles or small motors, are commonly used for fishing, transport, and island hopping. With their narrow hulls and bamboo outriggers for balance, bancas are perfect for exploring shallow waters, hidden coves, and vibrant coral reefs.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);

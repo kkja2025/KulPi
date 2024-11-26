@@ -94,8 +94,8 @@ public class EncyclopediaManager : MonoBehaviour
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
             case "RhythmsOfUnity":
                 return EncyclopediaItem.PracticesAndTraditions_Chapter2_RhythmsOfUnity();
-            case "SymbolicWeaving":
-                return EncyclopediaItem.PracticesAndTraditions_Chapter2_SymbolicWeaving();
+            case "Boat":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter2_Boat();
             case "Bangus":
                 return EncyclopediaItem.Events_Chapter2_Bangus();
             case "Bisugo":
