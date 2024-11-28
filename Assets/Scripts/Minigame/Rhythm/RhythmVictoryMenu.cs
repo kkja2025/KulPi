@@ -12,7 +12,7 @@ public class RhythmVictoryMenu : VictoryMenu
         base.ShowLeaderboards();
     }
 
-    protected override void Next()
+    protected async override void Next()
     {
         base.Next();
         RhythmManager.Singleton.RemoveEncounter();
@@ -20,6 +20,9 @@ public class RhythmVictoryMenu : VictoryMenu
         if (GameManager.Singleton != null)
         {
             GameManager.Singleton.UnlockEncyclopediaItem("RhythmsOfUnity", "unlock");
+            PlayerData playerData = GameManager.Singleton.GetPlayerData();
+            playerData.SetActiveQuest("Gather support for the resistance. (0/2)");
+            await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
         }
     }
 }

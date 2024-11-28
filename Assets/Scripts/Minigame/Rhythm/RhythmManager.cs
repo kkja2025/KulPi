@@ -49,7 +49,7 @@ public class RhythmManager : MiniGameManager
         rhythmController.SetActive(true);
     }
 
-    public async void ShowVictoryMenu()
+    public void ShowVictoryMenu()
     {
         isTimerRunning = false;
         rhythmController.SetActive(false);
