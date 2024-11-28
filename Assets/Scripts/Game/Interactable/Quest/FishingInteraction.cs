@@ -13,8 +13,7 @@ public class FishingInteraction : ItemInteractable
         base.Interact();
         if (!hasInteracted)
         {
-            hasInteracted = true;
-            GameManager.Singleton.IncrementCount();           
+            hasInteracted = true;        
         }
         if(conversationComplete)
         {
@@ -44,6 +43,7 @@ public class FishingInteraction : ItemInteractable
 
     private async void OnObjectRemoved(GameObject gameObject)
     {
+        GameManager.Singleton.IncrementCount();   
         RemovedObjectsManager.Singleton.RemoveObject(gameObject);
         
         if (GameManager.Singleton.GetCount() >= totalItems)
