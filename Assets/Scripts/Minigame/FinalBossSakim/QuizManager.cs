@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -273,10 +274,34 @@ public class QuizManager : MonoBehaviour
             return;
         }
 
+        Button wrongButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        StartCoroutine(ShowWrongAnswerFeedback(wrongButton));
+    }
+
+    private IEnumerator ShowWrongAnswerFeedback(Button wrongButton)
+    {
+        Color originalColor = wrongButton.image.color;
+        wrongButton.image.color = Color.red;
+
+        foreach (var button in answerButtons)
+        {
+            button.interactable = false;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        wrongButton.image.color = originalColor;
+
+        foreach (var button in answerButtons)
+        {
+            button.interactable = true;
+        }
+
         RemoveSpirit();
         currentQuestionIndex++;
         LoadQuestion();
     }
+
 
     private void RemoveSpirit()
     {
