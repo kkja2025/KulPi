@@ -155,6 +155,6 @@ public class RhythmController : MonoBehaviour
         
         Debug.Log("Stopping game...");
         enabled = false; 
-        // SceneManager.LoadScene("VictoryScene");
+        RhythmManager.Singleton.ShowVictoryMenu();
     }
 }
