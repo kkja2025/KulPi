@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class RhythmController : MonoBehaviour
 {
@@ -27,10 +28,19 @@ public class RhythmController : MonoBehaviour
     [Header("Game End Settings")]
     public int perfectsToWin = 30; // Number of perfect hits required to end the game
     private int perfectHitCount = 0; // Counter for perfect hits
+    [SerializeField] private TMP_Text perfectHitCounterText;
 
     private void Awake()
     {
         controls = new PlayerInput();
+    }
+
+    private void UpdateCounterDisplay()
+    {
+        if (perfectHitCounterText != null)
+        {
+            perfectHitCounterText.text = $"Perfect Hits: {perfectHitCount} / {perfectsToWin}";
+        }
     }
 
     private void OnEnable()
@@ -51,6 +61,7 @@ public class RhythmController : MonoBehaviour
 
     private void Update()
     {
+        UpdateCounterDisplay();
         // Spawn notes at regular intervals
         spawnTimer += Time.deltaTime;
         if (spawnTimer >= spawnInterval)
