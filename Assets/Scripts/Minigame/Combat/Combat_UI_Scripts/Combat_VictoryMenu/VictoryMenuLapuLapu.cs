@@ -19,7 +19,7 @@ public class LapuLapuVictoryMenu : VictoryMenu
         PanelManager.GetSingleton("victory").Close();
         GameManager.Singleton.UnlockEncyclopediaItem("LapuLapu", "unlock");
 
-        Vector3 startingPosition = new Vector3(534, 0, 0);
+        Vector3 startingPosition = new Vector3(539, 0, 0);
         PlayerData playerData = GameManager.Singleton.GetPlayerData();
         playerData.SetPosition(startingPosition);
         playerData.SetActiveQuest("Confront the Sakim!");
