@@ -18,12 +18,6 @@ public class SakimVictoryMenu: VictoryMenu
         BattleManager.Singleton.RemoveEncounter();
         PanelManager.GetSingleton("victory").Close();
         PanelManager.GetSingleton("cutscene").Open();
-        // GameManager.Singleton.UnlockEncyclopediaItem("", "unlock");
-
-        Vector3 startingPosition = new Vector3(534, 0, 0);
-        PlayerData playerData = GameManager.Singleton.GetPlayerData();
-        playerData.SetPosition(startingPosition);
-        playerData.SetActiveQuest("Confront the Sakim.");
-        await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);     
+        // GameManager.Singleton.UnlockEncyclopediaItem("", "unlock");   
     }
 }
