@@ -12,7 +12,7 @@ public class SakimVictoryMenu: VictoryMenu
         base.ShowLeaderboards();
     }
 
-    protected async override void Next()
+    protected override void Next()
     {
         base.Next();
         BattleManager.Singleton.RemoveEncounter();
