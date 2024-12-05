@@ -35,7 +35,6 @@ public class FishingInteraction : ItemInteractable
     {
         if (spriteID != null)
         {
-            GameManager.Singleton.IncrementCount();   
             InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
             GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
         }  
@@ -44,6 +43,7 @@ public class FishingInteraction : ItemInteractable
 
     private async void OnObjectRemoved(GameObject gameObject)
     {
+        GameManager.Singleton.IncrementCount();   
         RemovedObjectsManager.Singleton.RemoveObject(gameObject);
         
         if (GameManager.Singleton.GetCount() >= totalItems)

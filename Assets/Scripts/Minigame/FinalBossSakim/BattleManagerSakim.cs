@@ -40,8 +40,6 @@ public class BattleManagerSakim : BattleManager
     public override void Defeated()
     {
         VictoryAnimation();
-        bossObject.SetActive(false);
-        spawnsObject.SetActive(false);
         PanelManager.GetSingleton("hud").Close();
         // PanelManager.GetSingleton("cutscene").Open();
         VictoryMenu sakimVictoryMenu = PanelManager.GetSingleton("victory") as SakimVictoryMenu;

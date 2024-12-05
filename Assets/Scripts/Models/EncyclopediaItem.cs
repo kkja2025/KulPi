@@ -117,9 +117,9 @@ public class EncyclopediaItem
 
     public static EncyclopediaItem Events_Chapter2_Bisugo()
     {
-        string id = "Bisugo";
+        string id = "Bisugo (Threadfin Bream)";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
-        string title = "Bisugo (Threadfin Bream)";
+        string title = "Bisugo";
         string description = "These fish have a distinct pinkish of light reddish color accented by yellow highlights. Additionally, they are also called whiptail breams and false snappers.";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
