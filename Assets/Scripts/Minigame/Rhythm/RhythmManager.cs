@@ -49,10 +49,11 @@ public class RhythmManager : MiniGameManager
         rhythmController.SetActive(true);
     }
 
-    public void ShowVictoryMenu()
+    public async void ShowVictoryMenu()
     {
         isTimerRunning = false;
         rhythmController.SetActive(false);
+        await LeaderboardManager.Singleton.SubmitTimeRhythm((long)(elapsedTime * 1000));
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as RhythmVictoryMenu;
         if (victoryMenu != null)
         {

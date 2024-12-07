@@ -6,9 +6,9 @@ using TMPro;
 
 public class RhythmVictoryMenu : VictoryMenu
 {
-    protected override void ShowLeaderboards()
+    protected async override void ShowLeaderboards()
     {
-        // await LeaderboardManager.Singleton.DisplayBossChapter2Leaderboard();
+        await LeaderboardManager.Singleton.DisplayRhythmLeaderboard();
         base.ShowLeaderboards();
     }
 
