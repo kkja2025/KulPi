@@ -37,6 +37,7 @@ public class BattleManagerSakim : BattleManager
     {
         VictoryAnimation();
         PanelManager.GetSingleton("hud").Close();
+        PanelManager.GetSingleton("combat").Close();
         // PanelManager.GetSingleton("cutscene").Open();
         VictoryMenu sakimVictoryMenu = PanelManager.GetSingleton("victory") as SakimVictoryMenu;
         if (sakimVictoryMenu != null)
