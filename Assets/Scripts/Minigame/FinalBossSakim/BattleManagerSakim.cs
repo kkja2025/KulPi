@@ -30,11 +30,7 @@ public class BattleManagerSakim : BattleManager
         ultimateButton.SetActive(false);
         player.ResetCharge();
         boss.TakeUltimateDamage();
-        // StartCoroutine(WaitForSkillAnimationThenContinue());
-        if (boss.GetHealth() <= 0)
-        {
-            Defeated();
-        }
+        StartCoroutine(WaitForSkillAnimationThenContinue());
     }
 
     public override void Defeated()
@@ -50,14 +46,11 @@ public class BattleManagerSakim : BattleManager
         }
     }
 
-    // This coroutine waits for skill animation to complete and checks if the boss is defeated
     private IEnumerator WaitForSkillAnimationThenContinue()
     {
-        SkillAnimation skillAnimation = GetComponent<SkillAnimation>();
-        skillAnimation.StartMoveAnimation();  // Trigger skill animation
-
-        // Wait for the animation duration to finish
-        yield return new WaitForSeconds(skillAnimation.animationDuration + 1.5f);
+        spawnsObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        spawnsObject.SetActive(false);
 
         // Check if the boss has been defeated
         if (boss.GetHealth() <= 0)
