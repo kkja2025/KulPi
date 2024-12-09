@@ -12,14 +12,16 @@ public class BoatVictoryMenu : VictoryMenu
         base.ShowLeaderboards();
     }
 
-    protected override void Next()
+    protected async override void Next()
     {
         base.Next();
-        // BattleManager.Singleton.RemoveEncounter();
         PanelManager.GetSingleton("victory").Close();
         if (GameManager.Singleton != null)
         {
             GameManager.Singleton.UnlockEncyclopediaItem("Boat", "unlock");
+            Vector3 newPosition = new Vector3(227, -5, 0);
+            await GameManager.Singleton.SavePlayerDataPosition(newPosition);
+            PlayerData player = GameManager.Singleton.GetPlayerData();
         }
     }
 }

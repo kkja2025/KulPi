@@ -12,7 +12,6 @@ public class PlatformFallManager : MiniGameManager
     [SerializeField] int maxHP;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private Image healthBarFill;
-    [SerializeField] string sceneExit;
     [SerializeField] private GameObject finish;
     private int count = 0;
     private bool isCasualMode = false;
@@ -174,7 +173,7 @@ public class PlatformFallManager : MiniGameManager
             await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
         }
         
-        PanelManager.LoadSceneAsync(sceneExit);
+        PanelManager.LoadSceneAsync("Chapter1");
     }
 
     public async void ShowVictoryMenu()
