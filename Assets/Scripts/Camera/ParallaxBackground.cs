@@ -7,6 +7,7 @@ public class ParallaxBackground : MonoBehaviour
     private float length, startpos;
     public GameObject cam;
     public float parallaxEffect;
+    public PlayerData playerLoc;
 
     // Store the initial Y position of the background
     private float startY; 
