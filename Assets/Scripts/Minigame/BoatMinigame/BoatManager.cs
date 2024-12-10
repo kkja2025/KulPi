@@ -7,9 +7,6 @@ public class BoatManager : MiniGameManager
 
     [SerializeField] private GameObject boat; // Reference to the boat GameObject
     [SerializeField] private GameObject obstacleSpawner; // Reference to the obstacle spawner GameObject
-    [SerializeField] private float x;
-    [SerializeField] private float y;
-    [SerializeField] private float z;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private Image healthBarFill;
     [SerializeField] private float duration = 60f; // Game duration in seconds
@@ -131,25 +128,15 @@ public class BoatManager : MiniGameManager
         PanelManager.GetSingleton("gameover").Open();
     }
 
-    public async void ShowVictoryMenu()
+    public void ShowVictoryMenu()
     {
         isTimerRunning = false;
         obstacleSpawner.SetActive(false); // Stop obstacle spawning
         AudioManager.Singleton.PlayVictoryMusic();
-        if (GameManager.Singleton != null)
-        {
-            Vector3 newPosition = new Vector3(x, y, z);
-            await GameManager.Singleton.SavePlayerDataPosition(newPosition);
-            PlayerData player = GameManager.Singleton.GetPlayerData();
-        }
-
-        // Example of submitting score to the leaderboard
-        // await LeaderboardManager.Singleton.SubmitTimeChapter1SacredGrove((long)(elapsedTime * 1000));
 
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as BoatVictoryMenu;
         if (victoryMenu != null)
         {
-            // victoryMenu.SetTimerText($"Time: {timerText.text}");
             victoryMenu.Open();
         }
     }

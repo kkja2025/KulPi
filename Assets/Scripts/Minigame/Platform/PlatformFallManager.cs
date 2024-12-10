@@ -12,11 +12,7 @@ public class PlatformFallManager : MiniGameManager
     [SerializeField] int maxHP;
     [SerializeField] private GameObject healthBar;
     [SerializeField] private Image healthBarFill;
-    [SerializeField] string sceneExit;
     [SerializeField] private GameObject finish;
-    [SerializeField] private float x;
-    [SerializeField] private float y;
-    [SerializeField] private float z;
     private int count = 0;
     private bool isCasualMode = false;
     private static PlatformFallManager singleton = null;
@@ -167,16 +163,17 @@ public class PlatformFallManager : MiniGameManager
 
     public async void Finish()
     {
-        Vector3 newPosition = new Vector3(x, y, z);
         RemoveEncounter();
         if (GameManager.Singleton != null)
         {
-            await GameManager.Singleton.SavePlayerDataPosition(newPosition);
-            PlayerData player = GameManager.Singleton.GetPlayerData();
-            Debug.Log("Player position: " + player.GetPosition());
+            Vector3 startingPosition = new Vector3(1035, -40, 0);
+            PlayerData playerData = GameManager.Singleton.GetPlayerData();
+            playerData.SetPosition(startingPosition);
+            playerData.SetActiveQuest("Confront the corrupted being and restore balance.");
+            await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
         }
         
-        PanelManager.LoadSceneAsync(sceneExit);
+        PanelManager.LoadSceneAsync("Chapter1");
     }
 
     public async void ShowVictoryMenu()

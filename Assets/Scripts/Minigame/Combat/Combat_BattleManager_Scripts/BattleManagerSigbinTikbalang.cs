@@ -38,14 +38,6 @@ public class BattleManagerSigbinTikbalang : BattleManager
         base.Defeated();
         PanelManager.GetSingleton("hud").Close();
         await LeaderboardManager.Singleton.SubmitTimeSigbinTikbalangChapter1((long)(elapsedTime * 1000));
-
-        Vector3 startingPosition = new Vector3(536, 0, 0);
-        PlayerData playerData = GameManager.Singleton.GetPlayerData();
-        playerData.SetLevel("Chapter2");
-        playerData.SetPosition(startingPosition);
-        playerData.SetActiveQuest("Survive as you navigate deeper in the Sacred Grove.");
-        await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
-
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as SigbinTikbalangVictoryMenu;
         if (victoryMenu != null)
         {
