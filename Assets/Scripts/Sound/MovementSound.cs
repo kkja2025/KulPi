@@ -16,6 +16,17 @@ public class MovementSound : OnScreenButtonWithSound, IPointerUpHandler
     
     private void Update()
     {
+        if (playerMovement == null)
+        {
+            playerMovement = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        }
+        if (soundEffectsSource == null)
+        {
+            soundEffectsSource = AudioManager.Singleton.GetSoundEffectsSource();
+            soundEffectsSource.clip = clickSound;
+            soundEffectsSource.loop = true;
+        }
+
         if (isButtonHeld)
         {
             if (playerMovement.isGrounded && !soundEffectsSource.isPlaying)
