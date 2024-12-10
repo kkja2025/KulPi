@@ -24,4 +24,9 @@ public class BoatVictoryMenu : VictoryMenu
             PlayerData player = GameManager.Singleton.GetPlayerData();
         }
     }
+
+    protected override void Retry()
+    {
+        BoatManager.Singleton.RestartAsync();
+    }
 }

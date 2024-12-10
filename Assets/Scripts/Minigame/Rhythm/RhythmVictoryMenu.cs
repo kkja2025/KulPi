@@ -25,4 +25,9 @@ public class RhythmVictoryMenu : VictoryMenu
             await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
         }
     }
+
+    protected override void Retry()
+    {
+        RhythmManager.Singleton.RestartAsync();
+    }
 }
