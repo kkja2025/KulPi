@@ -7,9 +7,9 @@ public class PlayerData
     [SerializeField] private string level;
     [SerializeField] private string playerID;
     [SerializeField] private string activeQuest;
-    [SerializeField] private float x;
-    [SerializeField] private float y;
-    [SerializeField] private float z;
+    [SerializeField] public float x;
+    [SerializeField] public float y;
+    [SerializeField] public float z;
 
     public PlayerData(string level, Vector3 position)
     {
