@@ -12,10 +12,16 @@ public class SigbinTikbalangVictoryMenu : VictoryMenu
         base.ShowLeaderboards();
     }
 
-    protected override void Next()
+    protected async override void Next()
     {
         base.Next();
         BattleManager.Singleton.RemoveEncounter();
         GameManager.Singleton.UnlockEncyclopediaItem("Sigbin", "unlocksigbin");
+        
+        Vector3 startingPosition = new Vector3(536, 0, 0);
+        PlayerData playerData = GameManager.Singleton.GetPlayerData();
+        playerData.SetPosition(startingPosition);
+        playerData.SetActiveQuest("Survive as you navigate deeper in the Sacred Grove.");
+        await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);
     }
 }

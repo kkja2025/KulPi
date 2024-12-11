@@ -55,7 +55,7 @@ public class LeaderboardsMenu : Panel
         string currentPlayerName = await LeaderboardManager.Singleton.GetPlayerNameAsync();
         bool isCurrentPlayer = item.playerName == currentPlayerName;
 
-        Color highlightColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        Color highlightColor = new Color(1.0f, 1.0f, 0.0f, 1.0f);
 
         foreach (var text in textComponents)
         {
@@ -82,7 +82,7 @@ public class LeaderboardsMenu : Panel
         if (isCurrentPlayer)
         {
             
-            Image backgroundImage = newItem.transform.Find("Container/Background").GetComponent<Image>();
+            Image backgroundImage = newItem.transform.Find("Container").GetComponent<Image>();
             if (backgroundImage != null)
             {
                 backgroundImage.color = highlightColor;
