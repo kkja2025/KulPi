@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ParallaxBackground : MonoBehaviour
     private float startY; 
 
     public float minTriggerPoint;
+    public float maxTriggerPoint;
 
     void Start()
     {
@@ -41,7 +43,9 @@ public class ParallaxBackground : MonoBehaviour
             {
                 startpos -= length;
             }
-        }
-        
+        } else if (playerLocX >= maxTriggerPoint) 
+          {
+            return;
+          }      
     }
 }
