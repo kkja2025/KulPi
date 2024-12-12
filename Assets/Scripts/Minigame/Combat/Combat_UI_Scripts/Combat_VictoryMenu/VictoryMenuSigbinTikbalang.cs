@@ -18,7 +18,7 @@ public class SigbinTikbalangVictoryMenu : VictoryMenu
         BattleManager.Singleton.RemoveEncounter();
         GameManager.Singleton.UnlockEncyclopediaItem("Sigbin", "unlocksigbin");
         
-        Vector3 startingPosition = new Vector3(536, 0, 0);
+        Vector3 startingPosition = new Vector3(553, 0, 0);
         PlayerData playerData = GameManager.Singleton.GetPlayerData();
         playerData.SetPosition(startingPosition);
         playerData.SetActiveQuest("Survive as you navigate deeper in the Sacred Grove.");

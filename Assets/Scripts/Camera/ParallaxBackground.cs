@@ -23,31 +23,33 @@ public class ParallaxBackground : MonoBehaviour
 
     void FixedUpdate()
     {
-        float playerLocX = cam.transform.position.x;
-        
         if (cam != null)
-
-        if(playerLocX >= minTriggerPoint)
         {
-            // Debug.Log(cam.transform.position.x);
-            float distance = cam.transform.position.x * parallaxEffect;
-            float movement = cam.transform.position.x * (1 - parallaxEffect);
+            float playerLocX = cam.transform.position.x;
 
-            Debug.Log(transform.position.x);
-            // Maintain the original Y position when updating the background's position
-            transform.position = new Vector3(startpos + distance, startY, transform.position.z);
+            if(playerLocX >= minTriggerPoint)
+            {
+                // Debug.Log(cam.transform.position.x);
+                float distance = cam.transform.position.x * parallaxEffect;
+                float movement = cam.transform.position.x * (1 - parallaxEffect);
 
-            if (movement > startpos + length)
+                // Debug.Log(transform.position.x);
+                // Maintain the original Y position when updating the background's position
+                transform.position = new Vector3(startpos + distance, startY, transform.position.z);
+
+                if (movement > startpos + length)
+                {
+                    startpos += length;
+                }
+                else if (movement < startpos - length)
+                {
+                    startpos -= length;
+                }
+            } else if (playerLocX >= maxTriggerPoint) 
             {
-                startpos += length;
-            }
-            else if (movement < startpos - length)
-            {
-                startpos -= length;
-            }
-        } else if (playerLocX >= maxTriggerPoint) 
-          {
-            return;
-          }      
+                return;
+            }     
+        }
+         
     }
 }
