@@ -4,8 +4,10 @@ using UnityEngine;
 public class FishingInteraction : ItemInteractable
 {
     [SerializeField] protected string spriteID;
+    [SerializeField] private string updatedObjective;
     [SerializeField] private string giveNewObjective;
     [SerializeField] private int totalItems;
+    [SerializeField] private GameObject nextFishingSpot;
     private bool hasInteracted = false;
 
     protected override void Interact()
@@ -24,19 +26,13 @@ public class FishingInteraction : ItemInteractable
                 menu.StartFishing(this);
             }
         }
-        else
-        {
-            GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
-            OnObjectRemoved(gameObject);
-        }
     }
 
     public void OnQuestItemCompletion()
     {
         if (spriteID != null)
-        {
-            GameManager.Singleton.IncrementCount();   
-            InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
+        { 
+            GameManager.Singleton.IncrementCount();
             GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
         }  
         OnObjectRemoved(gameObject);
@@ -45,15 +41,22 @@ public class FishingInteraction : ItemInteractable
     private async void OnObjectRemoved(GameObject gameObject)
     {
         RemovedObjectsManager.Singleton.RemoveObject(gameObject);
+        if (nextFishingSpot != null)
+        {
+            nextFishingSpot.SetActive(true);
+        }
+        if (updatedObjective != "")
+        {
+            GameManager.Singleton.SetTemporaryObjective(updatedObjective + " " + GameManager.Singleton.GetCount() / 2 + "/" + totalItems);
+        }
         
-        if (GameManager.Singleton.GetCount() >= totalItems)
+        if (GameManager.Singleton.GetCount() / 2 >= totalItems)
         {
             if(giveNewObjective != "") 
             {
                 GameManager.Singleton.SetObjective(giveNewObjective);
                 GameManager.Singleton.SetCount(0);
                 await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
-                await InventoryManager.Singleton.SaveInventoryAsync();
                 await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
             }
         }
