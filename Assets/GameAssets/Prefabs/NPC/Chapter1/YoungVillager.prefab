@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.531, y: 0.0566, z: 0}
-  m_LocalScale: {x: 1.9407194, y: 1.6687143, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 160839482784110966}
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4f933a0341834304d94330b0e138f2aa, type: 3}
+  m_Sprite: {fileID: 705631601, guid: c87b54259cfa0be4c9ce0fea0fa680f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 2.125, y: 2.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -96,9 +96,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544102879572490641}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e21fe113a45eaee4e959e40fe3fca182, type: 2}
+  m_Controller: {fileID: 9100000, guid: 62d0a5d0476ab134abb08df78bf205a8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: 21300000, guid: 4f933a0341834304d94330b0e138f2aa, type: 3}
+  normalSprite: {fileID: 705631601, guid: c87b54259cfa0be4c9ce0fea0fa680f3, type: 3}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
   buttonText: Young Villager
@@ -146,6 +146,7 @@ MonoBehaviour:
   returnDoesCharacterStartFirst: 0
   completeQuest: 
   giveFollowUpQuest: 
+  encyclopediaEntry: 
 --- !u!61 &246343922720912250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -178,18 +179,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.044088885, y: -0.088794574}
+  m_Offset: {x: 0.055089593, y: -0.54500103}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.18, y: 0.33}
-    newSize: {x: 3, y: 3}
+    oldSize: {x: 2.125, y: 2.125}
+    newSize: {x: 2.125, y: 2.125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.60431993, y: 0.075526685}
+  m_Size: {x: 2.8126252, y: 0.9879396}
   m_EdgeRadius: 1
 --- !u!1 &8232328965663578375
 GameObject:
@@ -217,8 +218,8 @@ Transform:
   m_GameObject: {fileID: 8232328965663578375}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.137, y: 0.103, z: 0}
-  m_LocalScale: {x: 0.21935827, y: 0.19386885, z: 1}
+  m_LocalPosition: {x: -0.93, y: 0.74, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3213093011315587057}
