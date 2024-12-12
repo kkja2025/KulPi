@@ -23,7 +23,7 @@ public class ParallaxBackground : MonoBehaviour
 
     void FixedUpdate()
     {
-        if  (player != null)
+        if (player != null)
         {
             float playerLocX = player.transform.position.x;
 
@@ -47,7 +47,7 @@ public class ParallaxBackground : MonoBehaviour
                 }
             } else if (playerLocX >= maxTriggerPoint) 
             {
-                return;
+                return;..................................................................................................................................................................................................................................
             }     
         }
          
