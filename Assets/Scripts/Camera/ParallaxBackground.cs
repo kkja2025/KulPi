@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class ParallaxBackground : MonoBehaviour
 {
     private float length, startpos;
-    public GameObject cam;
+    public GameObject player;
     public float parallaxEffect;
     
     private float startY; 
@@ -23,15 +23,15 @@ public class ParallaxBackground : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (cam != null)
+        if  (player != null)
         {
-            float playerLocX = cam.transform.position.x;
+            float playerLocX = player.transform.position.x;
 
             if(playerLocX >= minTriggerPoint)
             {
-                // Debug.Log(cam.transform.position.x);
-                float distance = cam.transform.position.x * parallaxEffect;
-                float movement = cam.transform.position.x * (1 - parallaxEffect);
+                // Debug.Log player.transform.position.x);
+                float distance = player.transform.position.x * parallaxEffect;
+                float movement = player.transform.position.x * (1 - parallaxEffect);
 
                 // Debug.Log(transform.position.x);
                 // Maintain the original Y position when updating the background's position
