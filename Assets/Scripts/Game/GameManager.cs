@@ -142,6 +142,13 @@ public class GameManager : MonoBehaviour
         objectiveText.text = objective;
         await SavePlayerData();   
     }
+
+    public void SetTemporaryObjective(string objective)
+    {
+        playerData.SetActiveQuest(objective);
+        objectiveText.text = objective;
+    }
+
     public string GetObjective()
     {
         return playerData.GetActiveQuest();

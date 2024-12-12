@@ -4,6 +4,7 @@ using UnityEngine;
 public class QuestItemInteraction : ItemInteractable
 {
     [SerializeField] protected string spriteID;
+    [SerializeField] private string updatedObjective;
     [SerializeField] private string giveNewObjective;
     [SerializeField] private int totalItems;
     private bool hasInteracted = false;
@@ -45,7 +46,11 @@ public class QuestItemInteraction : ItemInteractable
     private async void OnObjectRemoved(GameObject gameObject)
     {
         RemovedObjectsManager.Singleton.RemoveObject(gameObject);
-        
+        if (updatedObjective != "")
+        {
+            GameManager.Singleton.SetTemporaryObjective(updatedObjective + " " + GameManager.Singleton.GetCount() + "/" + totalItems);
+        }
+
         if (GameManager.Singleton.GetCount() >= totalItems)
         {
             if(giveNewObjective != "") 
