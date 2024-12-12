@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
     private float length, startpos;
     public GameObject cam;
     public float parallaxEffect;
-
-    // Store the initial Y position of the background
+    
     private float startY; 
+
+    public float minTriggerPoint;
+    public float maxTriggerPoint;
 
     void Start()
     {
@@ -20,19 +23,29 @@ public class ParallaxBackground : MonoBehaviour
 
     void FixedUpdate()
     {
-        float distance = cam.transform.position.x * parallaxEffect;
-        float movement = cam.transform.position.x * (1 - parallaxEffect);
+        float playerLocX = cam.transform.position.x;
 
-        // Maintain the original Y position when updating the background's position
-        transform.position = new Vector3(startpos + distance, startY, transform.position.z);
+        if(playerLocX >= minTriggerPoint)
+        {
+            Debug.Log(cam.transform.position.x);
+            float distance = cam.transform.position.x * parallaxEffect;
+            float movement = cam.transform.position.x * (1 - parallaxEffect);
 
-        if (movement > startpos + length)
-        {
-            startpos += length;
-        }
-        else if (movement < startpos - length)
-        {
-            startpos -= length;
-        }
+            Debug.Log(transform.position.x);
+            // Maintain the original Y position when updating the background's position
+            transform.position = new Vector3(startpos + distance, startY, transform.position.z);
+
+            if (movement > startpos + length)
+            {
+                startpos += length;
+            }
+            else if (movement < startpos - length)
+            {
+                startpos -= length;
+            }
+        } else if (playerLocX >= maxTriggerPoint) 
+          {
+            return;
+          }      
     }
 }
