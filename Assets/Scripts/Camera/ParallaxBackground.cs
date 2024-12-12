@@ -24,10 +24,12 @@ public class ParallaxBackground : MonoBehaviour
     void FixedUpdate()
     {
         float playerLocX = cam.transform.position.x;
+        
+        if (cam != null)
 
         if(playerLocX >= minTriggerPoint)
         {
-            Debug.Log(cam.transform.position.x);
+            // Debug.Log(cam.transform.position.x);
             float distance = cam.transform.position.x * parallaxEffect;
             float movement = cam.transform.position.x * (1 - parallaxEffect);
 
