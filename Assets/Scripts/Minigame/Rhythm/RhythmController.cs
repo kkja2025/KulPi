@@ -157,6 +157,7 @@ public class RhythmController : MonoBehaviour
         if (perfectHitCount >= perfectsToWin)
         {
             Debug.Log("Game Over! You Win!");
+            UpdateCounterDisplay();
             EndGame();
         }
     }
