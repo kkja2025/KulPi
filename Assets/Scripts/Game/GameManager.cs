@@ -88,6 +88,11 @@ public class GameManager : MonoBehaviour
                 await LoadPlayerData();
             },
             () => {
+                GameObject playerObject = GameObject.FindWithTag("Player");
+                if (playerObject == null)
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
                 PanelManager.CloseAll();
                 PanelManager.GetSingleton("hud").Open();
                 if (objectiveText == null)
