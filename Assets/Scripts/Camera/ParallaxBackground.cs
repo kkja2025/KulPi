@@ -1,55 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    private float length, startpos;
-    public GameObject cam;
-    public float parallaxEffect;
-    
-    private float startY; 
+    private float length, startposX, startposY;
+    public GameObject player;
+    public float parallaxEffectX;
+    public float parallaxEffectY; // New variable for Y-axis parallax effect
 
     public float minTriggerPoint;
     public float maxTriggerPoint;
 
     void Start()
     {
-        startpos = transform.position.x;
-        startY = transform.position.y; // Store the initial Y
+        startposX = transform.position.x;
+        startposY = transform.position.y; // Store the initial Y position
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     void FixedUpdate()
     {
-        if (cam != null)
+        if (player != null)
         {
-            float playerLocX = cam.transform.position.x;
+            float playerLocX = player.transform.position.x;
+            float playerLocY = player.transform.position.y;
 
-            if(playerLocX >= minTriggerPoint)
+            if (playerLocX >= minTriggerPoint && playerLocX <= maxTriggerPoint)
             {
-                // Debug.Log(cam.transform.position.x);
-                float distance = cam.transform.position.x * parallaxEffect;
-                float movement = cam.transform.position.x * (1 - parallaxEffect);
+                // Calculate the parallax effect for both axes
+                float distanceX = playerLocX * parallaxEffectX;
+                float distanceY = playerLocY * parallaxEffectY;
+                float movementX = playerLocX * (1 - parallaxEffectX);
 
-                // Debug.Log(transform.position.x);
-                // Maintain the original Y position when updating the background's position
-                transform.position = new Vector3(startpos + distance, startY, transform.position.z);
+                // Update the background's position, maintaining its starting offsets
+                transform.position = new Vector3(startposX + distanceX, startposY + distanceY, transform.position.z);
 
-                if (movement > startpos + length)
+                // Handle wrapping for horizontal movement
+                if (movementX > startposX + length)
                 {
-                    startpos += length;
+                    startposX += length;
                 }
-                else if (movement < startpos - length)
+                else if (movementX < startposX - length)
                 {
-                    startpos -= length;
+                    startposX -= length;
                 }
-            } else if (playerLocX >= maxTriggerPoint) 
+            }
+            else if (playerLocX >= maxTriggerPoint)
             {
                 return;
-            }     
+            }
         }
-         
     }
 }
