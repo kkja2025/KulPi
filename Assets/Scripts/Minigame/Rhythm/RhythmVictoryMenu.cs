@@ -22,7 +22,7 @@ public class RhythmVictoryMenu : VictoryMenu
             GameManager.Singleton.UnlockEncyclopediaItem("RhythmsOfUnity", "unlock");
             PlayerData playerData = GameManager.Singleton.GetPlayerData();
             playerData.SetActiveQuest("Gather support for the resistance. (0/2)");
-            await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
+            await CloudSaveManager.Singleton.SavePlayerData(playerData);  
         }
     }
 
