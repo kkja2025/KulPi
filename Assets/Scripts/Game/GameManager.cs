@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            PanelManager.Singleton.StartLoading(3f, 
+            PanelManager.Singleton.StartLoading(10f, 
             async () => {
                 if (UnityServices.State != ServicesInitializationState.Initialized)
                 {
@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
                 }
                 await RemovedObjectsManager.Singleton.LoadRemovedObjectsAsync();
                 await InteractedNPCManager.Singleton.LoadInteractedNPCAsync();
+                await EncyclopediaManager.Singleton.LoadEncyclopediaAsync();
                 await LoadPlayerData();
             },
             () => {
