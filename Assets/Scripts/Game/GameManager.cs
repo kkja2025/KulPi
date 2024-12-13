@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
                 }
                 await RemovedObjectsManager.Singleton.LoadRemovedObjectsAsync();
                 await InteractedNPCManager.Singleton.LoadInteractedNPCAsync();
-                await EncyclopediaManager.Singleton.LoadEncyclopediaAsync();
+                await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
                 await LoadPlayerData();
             },
             () => {
