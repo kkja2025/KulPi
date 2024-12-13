@@ -8,6 +8,7 @@ public class QuizManager : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private int numberOfQuestions = 10;
     [SerializeField] private Button[] answerButtons;
     [SerializeField] private Slider healthBar;
     [SerializeField] private Transform spiritContainer; 
@@ -183,9 +184,9 @@ public class QuizManager : MonoBehaviour
 
         ShuffleQuestions();
 
-        if (questions.Count > 10)
+        if (questions.Count > numberOfQuestions)
         {
-            questions = questions.GetRange(0, 10);
+            questions = questions.GetRange(0, numberOfQuestions);
         }
     }
 
