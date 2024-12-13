@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    private float length, startpos;
+    private float length, startposX, startposY;
     public GameObject player;
-    public float parallaxEffect;
-    
-    private float startY; 
+    public float parallaxEffectX;
+    public float parallaxEffectY; // New variable for Y-axis parallax effect
 
     public float minTriggerPoint;
     public float maxTriggerPoint;
 
     void Start()
     {
-        startpos = transform.position.x;
-        startY = transform.position.y; // Store the initial Y
+        startposX = transform.position.x;
+        startposY = transform.position.y; // Store the initial Y position
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
@@ -26,29 +26,29 @@ public class ParallaxBackground : MonoBehaviour
         if (player != null)
         {
             float playerLocX = player.transform.position.x;
+            float playerLocY = player.transform.position.y;
 
-            if(playerLocX >= minTriggerPoint)
+            if (playerLocX >= minTriggerPoint && playerLocX <= maxTriggerPoint)
             {
-                // Debug.Log player.transform.position.x);
-                float distance = player.transform.position.x * parallaxEffect;
-                float movement = player.transform.position.x * (1 - parallaxEffect);
+                float distanceX = playerLocX * parallaxEffectX;
+                float distanceY = playerLocY * parallaxEffectY;
+                float movementX = playerLocX * (1 - parallaxEffectX);
 
-                // Debug.Log(transform.position.x);
-                // Maintain the original Y position when updating the background's position
-                transform.position = new Vector3(startpos + distance, startY, transform.position.z);
-
-                if (movement > startpos + length)
+                transform.position = new Vector3(startposX + distanceX, startposY + distanceY, transform.position.z);
+                
+                if (movementX > startposX + length)
                 {
-                    startpos += length;
+                    startposX += length;
                 }
-                else if (movement < startpos - length)
+                else if (movementX < startposX - length)
                 {
-                    startpos -= length;
+                    startposX -= length;
                 }
-            } else if (playerLocX >= maxTriggerPoint) 
+            }
+            else if (playerLocX >= maxTriggerPoint)
             {
                 return;
             }
-        }   
+        }
     }
 }
