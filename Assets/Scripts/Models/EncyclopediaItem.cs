@@ -60,6 +60,17 @@ public class EncyclopediaItem
         return new EncyclopediaItem(id, chapter, title, description, category);
     }
 
+    public static EncyclopediaItem Figures_Chapter2_Datu()
+    {
+        string id = "Datu";
+        string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
+        string title = "Datu";
+        string description = "Datu is a title given to a tribal chief or leader in ancient Filipino communities. They were respected for their wisdom, bravery, and ability to unite their people. Datu were responsible for making important decisions, settling disputes, and protecting their community from enemies. Today, the title is still used in some indigenous groups in the Philippines.";
+        string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
     public static EncyclopediaItem Figures_Chapter2_LapuLapu()
     {
         string id = "LapuLapu";

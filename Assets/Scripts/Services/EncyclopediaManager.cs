@@ -93,6 +93,8 @@ public class EncyclopediaManager : MonoBehaviour
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Sigbin();
             case "Diwata":
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
+            case "Datu":
+                return EncyclopediaItem.Figures_Chapter2_Datu();
             case "RhythmsOfUnity":
                 return EncyclopediaItem.PracticesAndTraditions_Chapter2_RhythmsOfUnity();
             case "Boat":
