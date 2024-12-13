@@ -84,9 +84,11 @@ public class GameManager : MonoBehaviour
                 await RemovedObjectsManager.Singleton.LoadRemovedObjectsAsync();
                 await InteractedNPCManager.Singleton.LoadInteractedNPCAsync();
                 await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
+                PanelManager.GetSingleton("figures").Open();
                 await LoadPlayerData();
             },
             () => {
+                PanelManager.CloseAll();
                 PanelManager.GetSingleton("hud").Open();
                 if (objectiveText == null)
                 {

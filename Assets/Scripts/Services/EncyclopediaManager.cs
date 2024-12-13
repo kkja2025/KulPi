@@ -77,6 +77,8 @@ public class EncyclopediaManager : MonoBehaviour
     {
         switch (id)
         {
+            case "Sample":
+                return EncyclopediaItem.Sample();
             case "Babaylan":
                 return EncyclopediaItem.Figures_Chapter1_Babaylan();
             case "Albularyo":

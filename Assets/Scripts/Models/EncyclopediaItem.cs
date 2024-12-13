@@ -38,6 +38,17 @@ public class EncyclopediaItem
         itemIcon = sprite;
     }
 
+    public static EncyclopediaItem Sample()
+    {
+        string id = "";
+        string chapter = "";
+        string title = "";
+        string description = "";
+        string category = "encyclopedia_sample";
+
+        return new EncyclopediaItem(id, chapter, title, description, category);
+    }
+
     // Figures
     public static EncyclopediaItem Figures_Chapter1_Babaylan()
     {
