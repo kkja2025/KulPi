@@ -1,42 +1,54 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ResponsivePanel : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField[] inputFields; // Array to hold all your TMP_InputFields
-    private RectTransform panelRectTransform;
-    private float originalHeight;
+    [SerializeField] private RectTransform panelRectTransform;
+    [SerializeField] private TMP_InputField[] inputFields; 
+    [SerializeField] private float[] moveAmounts;
+    [SerializeField] private Button returnButton;
+    [SerializeField] private Button[] inputFieldButtons;
 
-    void Start()
+    private Vector2 originalPosition; 
+
+    private void Start()
     {
-        // Store the original height of the panel
-        panelRectTransform = GetComponent<RectTransform>();
-        originalHeight = panelRectTransform.sizeDelta.y;
+        originalPosition = panelRectTransform.anchoredPosition;
+
+        if (moveAmounts.Length != inputFields.Length)
+        {
+            return;
+        }
+
+        if (inputFieldButtons.Length != inputFields.Length)
+        {
+            return;
+        }
+
+        for (int i = 0; i < inputFieldButtons.Length; i++)
+        {
+            int index = i; 
+            inputFieldButtons[i].onClick.AddListener(() => OnInputFieldButtonClick(index));
+        }
+
+        returnButton.onClick.AddListener(ReturnToOriginalPosition);
     }
 
-    void Update()
+    private void OnInputFieldButtonClick(int index)
     {
-        // Check if any input field is selected (focused)
-        bool isAnyInputFieldFocused = false;
+        inputFields[index].Select();
+        MovePanelToInputField(index);
+    }
 
-        foreach (var inputField in inputFields)
-        {
-            if (inputField.isFocused)
-            {
-                isAnyInputFieldFocused = true;
-                break;
-            }
-        }
+    private void MovePanelToInputField(int index)
+    {
+        float moveAmount = moveAmounts[index];
+        panelRectTransform.anchoredPosition = new Vector2(originalPosition.x, originalPosition.y + moveAmount);
+    }
 
-        if (isAnyInputFieldFocused && TouchScreenKeyboard.visible)
-        {
-            // Adjust the position of the panel when the keyboard is visible
-            panelRectTransform.anchoredPosition = new Vector2(panelRectTransform.anchoredPosition.x, 100); // Adjust this value as needed
-        }
-        else
-        {
-            // Reset to the original position when the keyboard is not visible
-            panelRectTransform.anchoredPosition = new Vector2(panelRectTransform.anchoredPosition.x, 0);
-        }
+    private void ReturnToOriginalPosition()
+    {
+        panelRectTransform.anchoredPosition = originalPosition;
     }
 }
