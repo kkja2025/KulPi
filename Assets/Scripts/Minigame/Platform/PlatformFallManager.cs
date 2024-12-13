@@ -170,7 +170,7 @@ public class PlatformFallManager : MiniGameManager
             PlayerData playerData = GameManager.Singleton.GetPlayerData();
             playerData.SetPosition(startingPosition);
             playerData.SetActiveQuest("Confront the corrupted being and restore balance.");
-            await CloudSaveManager.Singleton.SaveNewPlayerData(playerData);  
+            await CloudSaveManager.Singleton.SavePlayerData(playerData);  
         }
         
         PanelManager.LoadSceneAsync("Chapter1");

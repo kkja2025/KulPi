@@ -142,6 +142,13 @@ public class GameManager : MonoBehaviour
         objectiveText.text = objective;
         await SavePlayerData();   
     }
+
+    public void SetTemporaryObjective(string objective)
+    {
+        playerData.SetActiveQuest(objective);
+        objectiveText.text = objective;
+    }
+
     public string GetObjective()
     {
         return playerData.GetActiveQuest();
@@ -241,6 +248,7 @@ public class GameManager : MonoBehaviour
     {
         EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);
         if (item == null) return;
+        EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
 
         EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
         if (encyclopediaUnlockEntry != null)
@@ -248,7 +256,5 @@ public class GameManager : MonoBehaviour
             encyclopediaUnlockEntry.SetEncyclopediaItem(item);
             encyclopediaUnlockEntry.Open();
         }
-
-        EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
     }
 }

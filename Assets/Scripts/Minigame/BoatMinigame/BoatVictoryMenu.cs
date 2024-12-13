@@ -19,7 +19,7 @@ public class BoatVictoryMenu : VictoryMenu
         if (GameManager.Singleton != null)
         {
             GameManager.Singleton.UnlockEncyclopediaItem("Boat", "unlock");
-            Vector3 newPosition = new Vector3(227, -5, 0);
+            Vector3 newPosition = new Vector3(223, 0, 0);
             await GameManager.Singleton.SavePlayerDataPosition(newPosition);
             PlayerData player = GameManager.Singleton.GetPlayerData();
         }

@@ -30,15 +30,12 @@ public class ParallaxBackground : MonoBehaviour
 
             if (playerLocX >= minTriggerPoint && playerLocX <= maxTriggerPoint)
             {
-                // Calculate the parallax effect for both axes
                 float distanceX = playerLocX * parallaxEffectX;
                 float distanceY = playerLocY * parallaxEffectY;
                 float movementX = playerLocX * (1 - parallaxEffectX);
 
-                // Update the background's position, maintaining its starting offsets
                 transform.position = new Vector3(startposX + distanceX, startposY + distanceY, transform.position.z);
-
-                // Handle wrapping for horizontal movement
+                
                 if (movementX > startposX + length)
                 {
                     startposX += length;

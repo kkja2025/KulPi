@@ -4,6 +4,7 @@ using UnityEngine;
 public class QuestItemInteraction : ItemInteractable
 {
     [SerializeField] protected string spriteID;
+    [SerializeField] private string updatedObjective;
     [SerializeField] private string giveNewObjective;
     [SerializeField] private int totalItems;
     private bool hasInteracted = false;
@@ -35,9 +36,7 @@ public class QuestItemInteraction : ItemInteractable
     {
         if (spriteID != null)
         {
-            InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
             GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
-            Debug.Log("Item added to inventory: " + spriteID);
         }  
         OnObjectRemoved(gameObject);
     }
@@ -45,7 +44,11 @@ public class QuestItemInteraction : ItemInteractable
     private async void OnObjectRemoved(GameObject gameObject)
     {
         RemovedObjectsManager.Singleton.RemoveObject(gameObject);
-        
+        if (updatedObjective != "")
+        {
+            GameManager.Singleton.SetTemporaryObjective(updatedObjective + " " + GameManager.Singleton.GetCount() + "/" + totalItems);
+        }
+
         if (GameManager.Singleton.GetCount() >= totalItems)
         {
             if(giveNewObjective != "") 
@@ -53,7 +56,6 @@ public class QuestItemInteraction : ItemInteractable
                 GameManager.Singleton.SetObjective(giveNewObjective);
                 GameManager.Singleton.SetCount(0);
                 await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
-                await InventoryManager.Singleton.SaveInventoryAsync();
                 await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
             }
         }

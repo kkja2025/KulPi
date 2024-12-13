@@ -79,5 +79,6 @@ public class InteractedNPCManager : MonoBehaviour
     public async void SaveInteractedNPC()
     {
         await CloudSaveManager.Singleton.SaveInteractedNPCData(interactedNPC);
+        await LoadInteractedNPCAsync();
     }
 }
