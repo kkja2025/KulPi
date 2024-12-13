@@ -36,9 +36,7 @@ public class QuestItemInteraction : ItemInteractable
     {
         if (spriteID != null)
         {
-            InventoryManager.Singleton.AddItem(spriteID, gameObject.name);
             GameManager.Singleton.UnlockEncyclopediaItem(spriteID, "unlock");
-            Debug.Log("Item added to inventory: " + spriteID);
         }  
         OnObjectRemoved(gameObject);
     }
@@ -58,7 +56,6 @@ public class QuestItemInteraction : ItemInteractable
                 GameManager.Singleton.SetObjective(giveNewObjective);
                 GameManager.Singleton.SetCount(0);
                 await RemovedObjectsManager.Singleton.SaveRemovedObjectsAsync();
-                await InventoryManager.Singleton.SaveInventoryAsync();
                 await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
             }
         }

@@ -12,7 +12,7 @@ public class QuestNPCInteraction : DialogueInteractable
     [SerializeField] private string completeQuest;
     [SerializeField] private string giveFollowUpQuest;   
     [SerializeField] private string encyclopediaEntry;
-    private bool hasTalked = false;
+    [SerializeField] private bool hasTalked = false;
     private bool hasCompleted = false;
     private bool hasUnlocked = false;
 
@@ -29,17 +29,17 @@ public class QuestNPCInteraction : DialogueInteractable
             hasTalked = true;
             GameManager.Singleton.IncrementCount();
             InteractedNPCManager.Singleton.AddInteractedNPC(gameObject);
-            Debug.Log("Incremented count: " + GameManager.Singleton.GetCount());
         }   
         base.Interact();
     }
 
-    protected override void ConversationCompleted()
+    protected async override void ConversationCompleted()
     {
         base.ConversationCompleted();
         if(encyclopediaEntry != "" && !hasUnlocked)
         {
             GameManager.Singleton.UnlockEncyclopediaItem(encyclopediaEntry, "unlock");
+            await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
             hasUnlocked = true;
         }
         StartQuest();
@@ -54,7 +54,6 @@ public class QuestNPCInteraction : DialogueInteractable
                 GameManager.Singleton.SetObjective(giveNewQuest);
                 GameManager.Singleton.SetCount(0);
                 InteractedNPCManager.Singleton.SaveInteractedNPC();
-                Debug.Log("Quest started: " + giveNewQuest);
             }
         }
     }

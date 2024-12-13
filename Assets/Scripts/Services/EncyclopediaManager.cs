@@ -52,6 +52,7 @@ public class EncyclopediaManager : MonoBehaviour
     public async Task SaveEncyclopediaEntryAsync()
     {
         await CloudSaveManager.Singleton.SaveEncyclopediaEntryData(encyclopediaList);
+        await LoadEncyclopediaEntriesAsync();
     }
 
     public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesAsync()

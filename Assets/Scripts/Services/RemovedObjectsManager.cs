@@ -76,5 +76,6 @@ public class RemovedObjectsManager : MonoBehaviour
     public async Task SaveRemovedObjectsAsync()
     {
         await CloudSaveManager.Singleton.SaveRemovedObjectsData(removedObjects);
+        await LoadRemovedObjectsAsync();
     }
 }
