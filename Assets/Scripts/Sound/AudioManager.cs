@@ -20,7 +20,11 @@ public class AudioManager : MonoBehaviour
         { "MainMenu", "Main_Theme" },
         { "Chapter1BossDiwata", "Battle_Diwata" },
         { "Chapter1SigbinTikbalang", "Battle_Sigbin_Tikbalang" },
-        { "Chapter1SacredGrove", "Battle"}
+        { "Chapter1SacredGrove", "Battle"},
+        { "Rhythm-Minigame", "Rhythm" },
+        { "Boat-Minigame", "Boat" },
+        { "Chapter2BossLapuLapu", "Battle_LapuLapu" },
+        { "FinalBoss", "FinalBossCombat" },
     };
 
     private string currentMusicClipName = "";
