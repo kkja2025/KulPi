@@ -35,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     {
         idle,
         running,
-        jumping
+        jumping,
+        falling
     }
     private State state;
 
@@ -89,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (rb.velocity.y < -0.1f)
         {
-            state = State.jumping;
+            state = State.falling;
         }
 
         anim.SetInteger("state", (int)state);
