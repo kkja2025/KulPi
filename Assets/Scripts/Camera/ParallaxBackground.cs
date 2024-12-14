@@ -14,6 +14,8 @@ public class ParallaxBackground : MonoBehaviour
     public float minTriggerPointX;
     public float maxTriggerPointX;
 
+    public float limitY;
+
     void Start()
     {
         startposX = transform.position.x;
@@ -28,9 +30,7 @@ public class ParallaxBackground : MonoBehaviour
             float playerLocX = player.transform.position.x;
             float playerLocY = player.transform.position.y;
 
-            float limit = -104;
-
-            if (playerLocX >= minTriggerPointX && playerLocX <= maxTriggerPointX && playerLocY >= limit)
+            if (playerLocX >= minTriggerPointX && playerLocX <= maxTriggerPointX && playerLocY >= limitY)
             {
                 float distanceX = playerLocX * parallaxEffectX;
                 float distanceY = playerLocY * parallaxEffectY;
