@@ -188,7 +188,13 @@ public class PlatformFallManager : MiniGameManager
         VictoryMenu victoryMenu = PanelManager.GetSingleton("victory") as VictoryMenuSacredGrove;
         if (victoryMenu != null)
         {
-            victoryMenu.SetTimerText($"Time: {timerText.text}");
+            if (!isCasualMode)
+            {
+                victoryMenu.SetTimerText($"Time: {timerText.text}");
+            } else
+            {
+                victoryMenu.SetTimerText("In Casual Mode. Time not submitted to leaderboard.");
+            }
             victoryMenu.Open();
         }
     }
