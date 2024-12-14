@@ -51,7 +51,8 @@ public class EncyclopediaUnlock : Panel
                 break;
             case "chapter2cutscene":
                 PanelManager.GetSingleton(id).Close();
-                PanelManager.GetSingleton(actionButtonNavigation).Open();
+                PanelManager.Singleton.StartLoading(3f, null, 
+                () => PanelManager.GetSingleton(actionButtonNavigation).Open());
                 break;
             case "cutscenesakim":
                 PanelManager.GetSingleton(id).Close();
