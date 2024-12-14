@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    private float length, startposX, startposY;
+    private float length, startPositionX, startPositionY;
     public GameObject player;
     public float parallaxEffectX;
     public float parallaxEffectY; // New variable for Y-axis parallax effect
@@ -18,8 +18,8 @@ public class ParallaxBackground : MonoBehaviour
 
     void Start()
     {
-        startposX = transform.position.x;
-        startposY = transform.position.y; // Store the initial Y position
+        startPositionX = transform.position.x;
+        startPositionY = transform.position.y; 
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
@@ -27,27 +27,27 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (player != null)
         {
-            float playerLocX = player.transform.position.x;
-            float playerLocY = player.transform.position.y;
+            float playerLocationX = player.transform.position.x;
+            float playerLocationY = player.transform.position.y;
 
-            if (playerLocX >= minTriggerPointX && playerLocX <= maxTriggerPointX && playerLocY >= limitY)
+            if (playerLocationX >= minTriggerPointX && playerLocationX <= maxTriggerPointX && playerLocationY >= limitY)
             {
-                float distanceX = playerLocX * parallaxEffectX;
-                float distanceY = playerLocY * parallaxEffectY;
-                float movementX = playerLocX * (1 - parallaxEffectX);
+                float distanceX = playerLocationX * parallaxEffectX;
+                float distanceY = playerLocationY * parallaxEffectY;
+                float movementX = playerLocationX * (1 - parallaxEffectX);
 
-                transform.position = new Vector3(startposX + distanceX, startposY + distanceY, transform.position.z);
+                transform.position = new Vector3(startPositionX + distanceX, startPositionY + distanceY, transform.position.z);
                 
-                if (movementX > startposX + length)
+                if (movementX > startPositionX + length)
                 {
-                    startposX += length;
+                    startPositionX += length;
                 }
-                else if (movementX < startposX - length)
+                else if (movementX < startPositionX - length)
                 {
-                    startposX -= length;
+                    startPositionX -= length;
                 }
             }
-            else if (playerLocX >= maxTriggerPointX)
+            else if (playerLocationX >= maxTriggerPointX)
             {
                 return;
             }
