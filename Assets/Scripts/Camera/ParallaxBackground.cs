@@ -11,8 +11,10 @@ public class ParallaxBackground : MonoBehaviour
     public float parallaxEffectX;
     public float parallaxEffectY; // New variable for Y-axis parallax effect
 
-    public float minTriggerPoint;
-    public float maxTriggerPoint;
+    public float minTriggerPointX;
+    public float maxTriggerPointX;
+
+    public float limitY;
 
     void Start()
     {
@@ -28,7 +30,7 @@ public class ParallaxBackground : MonoBehaviour
             float playerLocX = player.transform.position.x;
             float playerLocY = player.transform.position.y;
 
-            if (playerLocX >= minTriggerPoint && playerLocX <= maxTriggerPoint)
+            if (playerLocX >= minTriggerPointX && playerLocX <= maxTriggerPointX && playerLocY >= limitY)
             {
                 float distanceX = playerLocX * parallaxEffectX;
                 float distanceY = playerLocY * parallaxEffectY;
@@ -45,7 +47,7 @@ public class ParallaxBackground : MonoBehaviour
                     startposX -= length;
                 }
             }
-            else if (playerLocX >= maxTriggerPoint)
+            else if (playerLocX >= maxTriggerPointX)
             {
                 return;
             }
