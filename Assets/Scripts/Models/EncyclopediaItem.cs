@@ -76,7 +76,7 @@ public class EncyclopediaItem
         string id = "Datu";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Datu";
-        string description = "Datu is a title given to a tribal chief or leader in ancient Filipino communities. They were respected for their wisdom, bravery, and ability to unite their people. Datu were responsible for making important decisions, settling disputes, and protecting their community from enemies. Today, the title is still used in some indigenous groups in the Philippines.";
+        string description = "A Datu was a leader in pre-colonial Philippine societies, governing a barangay or village. Datus held both administrative and judicial roles and were integral to societal structures before Spanish colonization. Source: National Historical Commission of the Philippines";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -87,7 +87,7 @@ public class EncyclopediaItem
         string id = "LapuLapu";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Lapu Lapu";
-        string description = "Lapu-Lapu was a legendary Mactan chieftain in the Philippines known for his defiance against Spanish colonization. He famously led his warriors in the Battle of Mactan in 1521, where he defeated the forces of Ferdinand Magellan, the Portuguese explorer. Lapu-Lapu's resistance marked one of the earliest successful confrontations against foreign colonizers in Philippine history.";
+        string description = "Lapu-Lapu was a chieftain of Mactan Island who resisted Spanish colonization. In 1521, his warriors defeated Ferdinand Magellan in the Battle of Mactan. Lapu-Lapu is celebrated as the first Filipino hero. Source: National Historical Commission of the Philippines";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_FIGURES_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -131,7 +131,7 @@ public class EncyclopediaItem
         string id = "Bangus";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Bangus (Milkfish)";
-        string description = "The Bangus is a popular fish in the Philippines, known for its mild flavor and tender, white flesh. Widely farmed in regions like Dagupan, it holds cultural significance as a symbol of Filipino agriculture and cuisine.";
+        string description = "Bangus, or milkfish (Chanos chanos), is the national fish of the Philippines and a significant species in aquaculture. It thrives in brackish water and is a key export product. Its tender flesh is versatile in Filipino cuisine, commonly prepared grilled, fried, or in sour soups. Source: Philippine Department of Agriculture - Bureau of Fisheries and Aquatic Resources (BFAR)";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -142,7 +142,7 @@ public class EncyclopediaItem
         string id = "Bisugo";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Bisugo (Threadfin Bream)";
-        string description = "These fish have a distinct pinkish of light reddish color accented by yellow highlights. Additionally, they are also called whiptail breams and false snappers.";
+        string description = "Bisugo is a common fish in Philippine waters, known for its pinkish hue and delicate flavor. It is popular in dishes such as 'pesang bisugo,' a soup made with ginger and vegetables. Source: Philippine Department of Agriculture - BFAR";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -153,7 +153,7 @@ public class EncyclopediaItem
         string id = "Apahap";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Apahap (Sea Bass)";
-        string description = "The Apahap is a reddish fish with firm, sweet-tasting flesh, commonly found in coastal waters. Known for its versatility, it is a favorite dish during celebrations.";
+        string description = "Apahap, or Asian sea bass (Lates calcarifer), is a commercially valuable species farmed for its mild, firm meat. It is often prepared grilled or steamed in the Philippines and is a key species in aquaculture initiatives. Source: Philippine Department of Agriculture - BFAR";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_EVENTS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -165,7 +165,7 @@ public class EncyclopediaItem
         string id = "RhythmsOfUnity";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Ceremonial Drums";
-        string description = "Ceremonial drums were vital in rituals, spiritual ceremonies, and community events. Made from bamboo, wood, and animal skin, these drums were believed to summon ancestral spirits and unify communities. ";
+        string description = "In the past, Filipinos used drums to bring people together during ceremonies or to call for courage in tough times. The beats of these drums connected them to nature and their ancestors. Instruments like the kulintang and tambol are still used today, keeping these traditions alive. Source: National Commission for Culture and the Arts (NCCA)";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
@@ -176,7 +176,7 @@ public class EncyclopediaItem
         string id = "Boat";
         string chapter = "Chapter 2: 'Betrayal at Mactan: The Fallen Hero'";
         string title = "Navigating with Bancas";
-        string description = "Traditional outrigger boats in the Philippines, offers a unique and authentic experience. These lightweight and sturdy vessels, often powered by paddles or small motors, are commonly used for fishing, transport, and island hopping. With their narrow hulls and bamboo outriggers for balance, bancas are perfect for exploring shallow waters, hidden coves, and vibrant coral reefs.";
+        string description = "Boats in the Philippines serve vital roles in transportation, fishing, and cultural practices. Traditional outrigger boats, or bancas, are integral to coastal communities. Modern advancements include motorized and eco-friendly boats for sustainability. Source: Maritime Industry Authority of the Philippines";
         string category = CLOUD_SAVE_ENCYCLOPEDIA_PRACTICES_AND_TRADITIONS_KEY;
 
         return new EncyclopediaItem(id, chapter, title, description, category);
