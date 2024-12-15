@@ -33,7 +33,7 @@ public class BattleManagerSakim : BattleManager
         StartCoroutine(WaitForSkillAnimationThenContinue());
     }
 
-    public override void Defeated()
+    public async override void Defeated()
     {
         VictoryAnimation();
         PanelManager.GetSingleton("hud").Close();
