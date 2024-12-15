@@ -40,7 +40,7 @@ public class BattleManagerDiwata : BattleManagerSigbinTikbalang
         bossObject.SetActive(false);
         VictoryAnimation();
         PanelManager.GetSingleton("hud").Close();
-        PanelManager.GetSingleton("cutscene").Open();
+        PanelManager.GetSingleton("cutscenediwata").Open();
         await LeaderboardManager.Singleton.SubmitTimeBossChapter1((long)(elapsedTime * 1000));
         VictoryMenu diwataVictoryMenu = PanelManager.GetSingleton("victory") as DiwataVictoryMenu;
         if (diwataVictoryMenu != null)
