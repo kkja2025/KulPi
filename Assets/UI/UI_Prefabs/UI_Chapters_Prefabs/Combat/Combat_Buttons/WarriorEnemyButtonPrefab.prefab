@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7539543245424305463}
   - component: {fileID: 8144503183571114910}
-  - component: {fileID: 2213949001876047774}
   - component: {fileID: 6222381434501324812}
-  - component: {fileID: 6105150897272743888}
+  - component: {fileID: 8494480337742614717}
+  - component: {fileID: 7401698013627396337}
   m_Layer: 5
   m_Name: WarriorEnemyButtonPrefab
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 150, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8144503183571114910
 CanvasRenderer:
@@ -48,36 +48,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2439831260138812998}
   m_CullTransparentMesh: 1
---- !u!114 &2213949001876047774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2439831260138812998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 011c50b42d63bcc4299db481e6229395, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &6222381434501324812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,37 +88,61 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2213949001876047774}
+  m_TargetGraphic: {fileID: 7401698013627396337}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6105150897272743888
+--- !u!114 &8494480337742614717
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2439831260138812998}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d10eda4d18ba6f247b8b92a34984f8b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 97aaba36df002f04f99d86fa6ecab1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlayImage: {fileID: 8837311431965797087}
-  animationFrames:
-  - {fileID: 21300000, guid: 535157426c3998a4ba97aee882f8133e, type: 3}
-  - {fileID: 21300000, guid: e6c2d9b76970af24ab91ba6e715a40d7, type: 3}
-  - {fileID: 21300000, guid: ac1614db18da29f49a180cf943104905, type: 3}
-  - {fileID: 21300000, guid: 7b6224dd27c162a43b8d3f8bef889f96, type: 3}
-  - {fileID: 21300000, guid: 08974677f54c30343a6659da9e8075cf, type: 3}
-  - {fileID: 21300000, guid: 5ab32d07c9a5da14b882b630ea683e43, type: 3}
-  - {fileID: 21300000, guid: 97cd9d334f31ca44aaa12357fb7c3bc6, type: 3}
-  - {fileID: 21300000, guid: 8db7e69c9d4d77845984a973001b4b9b, type: 3}
-  - {fileID: 21300000, guid: b6c7a3a43a8fbf2468349b6247fe4f07, type: 3}
-  - {fileID: 21300000, guid: 77a1639844610454588f5024a6731fa6, type: 3}
-  - {fileID: 21300000, guid: 78c25ce5c8b2b1641a902194b6b7d222, type: 3}
-  animationSpeed: 0.1
-  loop: 0
+  frames:
+  - {fileID: -709701428, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  - {fileID: 474703481, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  - {fileID: -2078772182, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  - {fileID: -990289244, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  - {fileID: -947482499, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  - {fileID: -1078151886, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  - {fileID: -871644773, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  frameRate: 0.1
+--- !u!114 &7401698013627396337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439831260138812998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -709701428, guid: 4abd6ec48a1047149926ac277b27483c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4601541232232956340
 GameObject:
   m_ObjectHideFlags: 0
