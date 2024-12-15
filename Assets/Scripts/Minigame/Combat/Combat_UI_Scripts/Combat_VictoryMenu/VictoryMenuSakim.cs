@@ -15,9 +15,7 @@ public class SakimVictoryMenu: VictoryMenu
     protected override void Next()
     {
         base.Next();
-        BattleManager.Singleton.RemoveEncounter();
         PanelManager.GetSingleton("victory").Close();
-        PanelManager.GetSingleton("cutscene").Open();
-        // GameManager.Singleton.UnlockEncyclopediaItem("", "unlock");   
+        PanelManager.GetSingleton("cutscene").Open();   
     }
 }
