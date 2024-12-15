@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
@@ -19,7 +15,7 @@ public class ParallaxBackground : MonoBehaviour
     void Start()
     {
         startPositionX = transform.position.x;
-        startPositionY = transform.position.y; 
+        startPositionY = transform.position.y;  
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
@@ -46,10 +42,6 @@ public class ParallaxBackground : MonoBehaviour
                 {
                     startPositionX -= length;
                 }
-            }
-            else if (playerLocationX >= maxTriggerPointX)
-            {
-                return;
             }
         }
     }
