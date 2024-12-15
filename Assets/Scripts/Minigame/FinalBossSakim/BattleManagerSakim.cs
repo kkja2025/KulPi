@@ -50,7 +50,7 @@ public class BattleManagerSakim : BattleManager
     private IEnumerator WaitForSkillAnimationThenContinue()
     {
         spawnsObject.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         spawnsObject.SetActive(false);
 
         // Check if the boss has been defeated

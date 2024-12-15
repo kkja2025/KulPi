@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GridPlayer : MonoBehaviour
 {
+    [SerializeField] private int energyCost = 10;
     private int skillCharge = 0;
     private int damage = 0;
 
@@ -105,7 +106,7 @@ public class GridPlayer : MonoBehaviour
     private void ChargeSkill()
     {
         skillCharge++;
-        if (skillCharge >= 5)
+        if (skillCharge >= energyCost)
         {
             BattleManagerSakim bossBattleManager = BattleManager.Singleton as BattleManagerSakim;
             if (bossBattleManager != null)
