@@ -5,7 +5,7 @@ public class ParallaxBackground : MonoBehaviour
     private float length, startPositionX, startPositionY;
     public GameObject player;
     public float parallaxEffectX;
-    public float parallaxEffectY; // New variable for Y-axis parallax effect
+    public float parallaxEffectY; 
 
     public float minTriggerPointX;
     public float maxTriggerPointX;
