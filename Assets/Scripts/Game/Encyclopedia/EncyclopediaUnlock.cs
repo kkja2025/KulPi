@@ -53,10 +53,6 @@ public class EncyclopediaUnlock : Panel
                 PanelManager.GetSingleton(id).Close();
                 PanelManager.GetSingleton(actionButtonNavigation).Open();
                 break;
-            case "cutscenesakim":
-                PanelManager.GetSingleton(id).Close();
-                PanelManager.GetSingleton(actionButtonNavigation).Open();
-                break;
             default:
                 PanelManager.LoadSceneAsync(actionButtonNavigation);
                 break;

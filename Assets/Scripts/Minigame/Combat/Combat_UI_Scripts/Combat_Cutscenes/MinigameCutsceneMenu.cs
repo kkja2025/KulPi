@@ -52,6 +52,11 @@ public class MinigameCutsceneMenu : Panel
                 PanelManager.Singleton.StartLoading(3f, null, 
                 () => PanelManager.GetSingleton(actionButtonNavigation).Open());
                 break;
+            case "cutscenesakim":
+                Close();
+                PanelManager.Singleton.StartLoading(3f, null, 
+                () => PanelManager.GetSingleton(actionButtonNavigation).Open());
+                break;
             default:
                 PanelManager.LoadSceneAsync(actionButtonNavigation);
                 break;
