@@ -11,6 +11,9 @@ public class AuthenticationMenu : Panel
     [SerializeField] private Button SignInButton = null;
     [SerializeField] private Button SignUpButton = null;
     [SerializeField] private Button ForgotPasswordButton = null;
+    [SerializeField] private RectTransform panelRectTransform;
+
+    private Vector2 originalPosition; 
 
     public override void Initialize()
     {
@@ -21,11 +24,13 @@ public class AuthenticationMenu : Panel
         ForgotPasswordButton.onClick.AddListener(ForgotPassword);
         SignInButton.onClick.AddListener(SignIn);
         SignUpButton.onClick.AddListener(SignUp);
+        originalPosition = panelRectTransform.anchoredPosition;
         base.Initialize();
     }
 
     public override void Open()
     {
+        panelRectTransform.anchoredPosition = originalPosition;
         emailInput.text = "";
         passwordInput.text = "";
         base.Open();

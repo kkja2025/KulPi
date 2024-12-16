@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            PanelManager.Singleton.StartLoading(3f, 
+            PanelManager.Singleton.StartLoading(10f, 
             async () => {
                 if (UnityServices.State != ServicesInitializationState.Initialized)
                 {
@@ -83,9 +83,17 @@ public class GameManager : MonoBehaviour
                 }
                 await RemovedObjectsManager.Singleton.LoadRemovedObjectsAsync();
                 await InteractedNPCManager.Singleton.LoadInteractedNPCAsync();
+                await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
+                PanelManager.GetSingleton("figures").Open();
                 await LoadPlayerData();
             },
             () => {
+                GameObject playerObject = GameObject.FindWithTag("Player");
+                if (playerObject == null)
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
+                PanelManager.CloseAll();
                 PanelManager.GetSingleton("hud").Open();
                 if (objectiveText == null)
                 {
@@ -111,7 +119,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         }
-        else if (scene.name == "Chapter1")
+        else if (scene.name == "Chapter1" || scene.name == "Chapter2" || scene.name == "Chapter3")
         {
             StartClientService();
         }
@@ -142,6 +150,13 @@ public class GameManager : MonoBehaviour
         objectiveText.text = objective;
         await SavePlayerData();   
     }
+
+    public void SetTemporaryObjective(string objective)
+    {
+        playerData.SetActiveQuest(objective);
+        objectiveText.text = objective;
+    }
+
     public string GetObjective()
     {
         return playerData.GetActiveQuest();
@@ -241,6 +256,7 @@ public class GameManager : MonoBehaviour
     {
         EncyclopediaItem item = EncyclopediaManager.Singleton.GetEncyclopediaItemById(id);
         if (item == null) return;
+        EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
 
         EncyclopediaUnlock encyclopediaUnlockEntry = PanelManager.GetSingleton(panel) as EncyclopediaUnlock;
         if (encyclopediaUnlockEntry != null)
@@ -248,7 +264,5 @@ public class GameManager : MonoBehaviour
             encyclopediaUnlockEntry.SetEncyclopediaItem(item);
             encyclopediaUnlockEntry.Open();
         }
-
-        EncyclopediaManager.Singleton.AddItemToEncyclopedia(item);
     }
 }

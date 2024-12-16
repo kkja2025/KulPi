@@ -1,12 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -35,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
     {
         idle,
         running,
-        jumping
+        jumping,
+        falling
     }
     private State state;
 
@@ -89,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (rb.velocity.y < -0.1f)
         {
-            state = State.jumping;
+            state = State.falling;
         }
 
         anim.SetInteger("state", (int)state);

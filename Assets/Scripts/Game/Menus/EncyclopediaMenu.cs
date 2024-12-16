@@ -35,41 +35,38 @@ public class EncyclopediaMenu : Panel
         base.Initialize();
     }
 
-    public override void Open()
+    public async override void Open()
     {
+        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         base.Open();
     }
 
-    private async void OpenFigures()
+    private void OpenFigures()
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("figures").Open();
     }
 
 
-    private async void OpenEvents()
+    private void OpenEvents()
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("events").Open();
     }
 
-    private async void OpenPractices()
+    private void OpenPractices()
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("practices").Open();
     }
 
-    private async void OpenMythology()
+    private void OpenMythology()
     {
         backButton.gameObject.SetActive(true);
         HideAllButtons();
-        await EncyclopediaManager.Singleton.LoadEncyclopediaEntriesAsync();
         PanelManager.GetSingleton("mythology").Open();
     }
 

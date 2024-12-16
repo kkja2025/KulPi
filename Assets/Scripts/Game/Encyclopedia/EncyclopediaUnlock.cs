@@ -37,7 +37,7 @@ public class EncyclopediaUnlock : Panel
         }
     }
 
-    public void ActionButton()
+    public async void ActionButton()
     {
         switch (actionButtonNavigation)
         {
@@ -47,6 +47,11 @@ public class EncyclopediaUnlock : Panel
             case "unlocktikbalang":
                 PanelManager.GetSingleton(id).Close();
                 GameManager.Singleton.UnlockEncyclopediaItem("Tikbalang", "unlocktikbalang");
+                await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
+                break;
+            case "cutscenefinale":
+                PanelManager.GetSingleton(id).Close();
+                PanelManager.GetSingleton(actionButtonNavigation).Open();
                 break;
             default:
                 PanelManager.LoadSceneAsync(actionButtonNavigation);
@@ -81,7 +86,7 @@ public class EncyclopediaUnlock : Panel
         Sprite icon = Resources.Load<Sprite>($"Icons/Encyclopedia/{item.itemID}");
         item.SetSprite(icon);
         if (itemIconImage != null)
-        {   
+        {
             itemIconImage.sprite = item.itemIcon;
         }
     }

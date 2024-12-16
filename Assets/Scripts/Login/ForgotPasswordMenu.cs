@@ -9,6 +9,9 @@ public class ForgotPasswordMenu : Panel
     [SerializeField] private TMP_InputField emailInput = null;
     [SerializeField] private Button RequestButton = null;
     [SerializeField] private Button BackButton = null;
+    [SerializeField] private RectTransform panelRectTransform;
+
+    private Vector2 originalPosition; 
 
     public override void Initialize()
     {
@@ -18,11 +21,13 @@ public class ForgotPasswordMenu : Panel
         }
         RequestButton.onClick.AddListener(RequestPasswordReset);
         BackButton.onClick.AddListener(Back);
+        originalPosition = panelRectTransform.anchoredPosition;
         base.Initialize();
     }
 
     public override void Open()
     {
+        panelRectTransform.anchoredPosition = originalPosition;
         emailInput.text = "";
         base.Open();
     }

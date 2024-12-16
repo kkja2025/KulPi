@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class HUDMenu : Panel
 {
     [SerializeField] private Button pauseButton = null;
-    [SerializeField] private Button inventoryButton = null;
+    // [SerializeField] private Button inventoryButton = null;
     [SerializeField] private Button encyclopediaButton = null;
     [SerializeField] private Button questButton = null;
     [SerializeField] private GameObject questTextObject;
@@ -23,16 +23,16 @@ public class HUDMenu : Panel
         }
         isQuestTextVisible = questTextObject.activeSelf;
         pauseButton.onClick.AddListener(OpenPause);
-        inventoryButton.onClick.AddListener(OpenInventory);
+        // inventoryButton.onClick.AddListener(OpenInventory);
         encyclopediaButton.onClick.AddListener(OpenEncyclopedia);
         questButton.onClick.AddListener(ShowQuest);
         base.Initialize();
     }
 
-    private void OpenInventory()
-    {
-        PanelManager.GetSingleton("inventory").Open();
-    }
+    // private void OpenInventory()
+    // {
+    //     PanelManager.GetSingleton("inventory").Open();
+    // }
 
     private void OpenEncyclopedia()
     {

@@ -172,4 +172,106 @@ public class LeaderboardManager : MonoBehaviour
             Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
         }
     }
+
+    public async Task SubmitTimeBossChapter2(long timeInMilliseconds)
+    {
+        try
+        {
+            string leaderboardId = "lapulapu_battle_leaderboard";
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardId, timeInMilliseconds);
+            Debug.Log("Best time submitted successfully!");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to submit time: {e.Message}");
+        }
+    }
+
+    public async Task DisplayBossChapter2Leaderboard()
+    {
+        try
+        {
+            string leaderboardId = "lapulapu_battle_leaderboard";
+            var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId);
+            leaderboard = new List<LeaderboardItem>();
+            foreach (var leaderboardEntry in leaderboardEntries.Results)
+            {
+                LeaderboardItem item = new LeaderboardItem(leaderboardEntry.PlayerName, leaderboardEntry.Score.ToString(), leaderboardEntry.Rank.ToString());
+                leaderboard.Add(item);
+            }
+        }
+        catch (Exception e)
+        {
+            leaderboard = new List<LeaderboardItem>();
+            Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
+        }
+    }
+
+    public async Task SubmitTimeFinalBoss(long timeInMilliseconds)
+    {
+        try
+        {
+            string leaderboardId = "final_boss_leaderboard";
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardId, timeInMilliseconds);
+            Debug.Log("Best time submitted successfully!");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to submit time: {e.Message}");
+        }
+    }
+
+    public async Task DisplayFinalBossLeaderboard()
+    {
+        try
+        {
+            string leaderboardId = "final_boss_leaderboard";
+            var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId);
+            leaderboard = new List<LeaderboardItem>();
+            foreach (var leaderboardEntry in leaderboardEntries.Results)
+            {
+                LeaderboardItem item = new LeaderboardItem(leaderboardEntry.PlayerName, leaderboardEntry.Score.ToString(), leaderboardEntry.Rank.ToString());
+                leaderboard.Add(item);
+            }
+        }
+        catch (Exception e)
+        {
+            leaderboard = new List<LeaderboardItem>();
+            Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
+        }
+    }
+
+    public async Task SubmitTimeRhythm(long timeInMilliseconds)
+    {
+        try
+        {
+            string leaderboardId = "rhythm_leaderboard";
+            await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardId, timeInMilliseconds);
+            Debug.Log("Best time submitted successfully!");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to submit time: {e.Message}");
+        }
+    }
+
+    public async Task DisplayRhythmLeaderboard()
+    {
+        try
+        {
+            string leaderboardId = "rhythm_leaderboard";
+            var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId);
+            leaderboard = new List<LeaderboardItem>();
+            foreach (var leaderboardEntry in leaderboardEntries.Results)
+            {
+                LeaderboardItem item = new LeaderboardItem(leaderboardEntry.PlayerName, leaderboardEntry.Score.ToString(), leaderboardEntry.Rank.ToString());
+                leaderboard.Add(item);
+            }
+        }
+        catch (Exception e)
+        {
+            leaderboard = new List<LeaderboardItem>();
+            Debug.LogError($"Failed to fetch leaderboard: {e.Message}");
+        }
+    }
 }

@@ -52,6 +52,7 @@ public class EncyclopediaManager : MonoBehaviour
     public async Task SaveEncyclopediaEntryAsync()
     {
         await CloudSaveManager.Singleton.SaveEncyclopediaEntryData(encyclopediaList);
+        await LoadEncyclopediaEntriesAsync();
     }
 
     public async Task<List<EncyclopediaItem>> LoadEncyclopediaEntriesAsync()
@@ -76,22 +77,38 @@ public class EncyclopediaManager : MonoBehaviour
     {
         switch (id)
         {
+            case "Sample":
+                return EncyclopediaItem.Sample();
             case "Babaylan":
                 return EncyclopediaItem.Figures_Chapter1_Babaylan();
             case "Albularyo":
                 return EncyclopediaItem.Figures_Chapter1_Albularyo();
             case "Lagundi":
-                return EncyclopediaItem.PracticesAndTraditions_Chapter1_Lagundi();
+                return EncyclopediaItem.Events_Chapter1_Lagundi();
             case "Sambong":
-                return EncyclopediaItem.PracticesAndTraditions_Chapter1_Sambong();
+                return EncyclopediaItem.Events_Chapter1_Sambong();
             case "NiyogNiyogan":
-                return EncyclopediaItem.PracticesAndTraditions_Chapter1_NiyogNiyogan();
+                return EncyclopediaItem.Events_Chapter1_NiyogNiyogan();
             case "Tikbalang":
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Tikbalang();
             case "Sigbin":
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Sigbin();
             case "Diwata":
                 return EncyclopediaItem.MythologyAndFolklore_Chapter1_Diwata();
+            case "Datu":
+                return EncyclopediaItem.Figures_Chapter2_Datu();
+            case "RhythmsOfUnity":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter2_RhythmsOfUnity();
+            case "Boat":
+                return EncyclopediaItem.PracticesAndTraditions_Chapter2_Boat();
+            case "Bangus":
+                return EncyclopediaItem.Events_Chapter2_Bangus();
+            case "Bisugo":
+                return EncyclopediaItem.Events_Chapter2_Bisugo();
+            case "Apahap":
+                return EncyclopediaItem.Events_Chapter2_Apahap();
+            case "LapuLapu":
+                return EncyclopediaItem.Figures_Chapter2_LapuLapu();
             default:
                 Debug.LogWarning("No encyclopedia entry found for the provided ID.");
                 return null;

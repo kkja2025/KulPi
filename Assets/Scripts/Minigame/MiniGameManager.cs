@@ -44,13 +44,19 @@ public class MiniGameManager : MonoBehaviour
         });
     }
 
-    private void UpdateTimerDisplay()
+    protected void UpdateTimerDisplay()
     {
         if (timerText != null)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(elapsedTime);
             timerText.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
         }
+    }
+
+    public void AddTime(float secondsToAdd)
+    {
+        elapsedTime += secondsToAdd;
+        UpdateTimerDisplay();         
     }
 
     public void RestartAsync()
