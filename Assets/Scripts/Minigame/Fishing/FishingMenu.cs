@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class FishingMenu : Panel
 {
     [SerializeField] private Button CloseButton = null;
+    [SerializeField] private Button TutorialButton = null;
     [SerializeField] private Button FishingButton = null;
     [SerializeField] private Button CompleteButton = null;
     [SerializeField] private RectTransform catchZone;
@@ -24,11 +25,13 @@ public class FishingMenu : Panel
     private bool isHoldingButton;
     private bool isCompleted = false;
     private bool isFishing = false;
+    private bool isRead = false;
 
     public override void Initialize()
     {
         base.Initialize();
         CloseButton.onClick.AddListener(Close);
+        TutorialButton.onClick.AddListener(OpenTutorial);
         CompleteButton.onClick.AddListener(OnCompleteButtonClicked);
         SetupCatchZone();
         SetupFishingButtonEvent();
@@ -55,6 +58,11 @@ public class FishingMenu : Panel
         isCompleted = false;
         base.Open();
         PanelManager.GetSingleton("fishcomplete").Close();
+        if(!isRead)
+        {
+            OpenTutorial();
+            isRead = true;
+        }
     }
 
     public override void Close()
@@ -62,6 +70,18 @@ public class FishingMenu : Panel
         isFishing = false;
         base.Close();
         PanelManager.GetSingleton("hud").Open();
+    }
+
+    public void OpenTutorial()
+    {
+        var tutorial = PanelManager.GetSingleton("tutorial");
+        if (tutorial != null)
+        {
+            Time.timeScale = 0;
+            tutorial.Open();
+        } else {
+            return;
+        }
     }
 
     public void StartFishing(FishingInteraction data)
