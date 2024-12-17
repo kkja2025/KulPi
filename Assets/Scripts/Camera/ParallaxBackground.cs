@@ -1,87 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    private float length, startPositionX, startPositionY;
-    private Transform cam; 
-    private Vector3 previousCamPos;
-
+    private float length, startposX, startposY;
     public GameObject player;
-    public float parallaxEffectX = 0.5f; 
-    public float parallaxEffectY = 0.5f; 
+    public float parallaxEffectX;
+    public float parallaxEffectY; // New variable for Y-axis parallax effect
 
-    public float smoothingX = 1f; 
-    public float smoothingY = 1f;
+    public float minTriggerPointX;
+    public float maxTriggerPointX;
 
-    public float minTriggerPointX = -10f;
-    public float maxTriggerPointX = 10f;
-    public float limitY = 0f;
-
-    void Awake()
-    {
-        cam = Camera.main.transform;
-    }
+    public float limitY;
 
     void Start()
     {
-        startPositionX = transform.position.x;
-        startPositionY = transform.position.y;
+        startposX = transform.position.x;
+        startposY = transform.position.y; 
         length = GetComponent<SpriteRenderer>().bounds.size.x;
-        previousCamPos = cam.position; 
     }
 
     void FixedUpdate()
     {
-        ApplyPlayerParallax();
-        ApplyCameraParallax();
-    }
-
-    private void ApplyPlayerParallax()
-    {
-        if (player == null) return;
-
-        Vector3 playerPosition = player.transform.position;
-
-        if (IsPlayerWithinTrigger(playerPosition))
+        if (player != null)
         {
-            float distanceX = playerPosition.x * parallaxEffectX;
-            float distanceY = playerPosition.y * parallaxEffectY;
+            float playerLocX = player.transform.position.x;
+            float playerLocY = player.transform.position.y;
 
-            transform.position = new Vector3(startPositionX + distanceX, startPositionY + distanceY, transform.position.z);
-
-            float movementX = playerPosition.x * (1 - parallaxEffectX);
-
-            if (movementX > startPositionX + length)
+            if (playerLocX >= minTriggerPointX && playerLocX <= maxTriggerPointX && playerLocY >= limitY)
             {
-                startPositionX += length;
+                float distanceX = playerLocX * parallaxEffectX;
+                float distanceY = playerLocY * parallaxEffectY;
+                float movementX = playerLocX * (1 - parallaxEffectX);
+
+                transform.position = new Vector3(startposX + distanceX, startposY + distanceY, transform.position.z);
+                
+                if (movementX > startposX + length)
+                {
+                    startposX += length;
+                }
+                else if (movementX < startposX - length)
+                {
+                    startposX -= length;
+                }
             }
-            else if (movementX < startPositionX - length)
+            else if (playerLocX >= maxTriggerPointX)
             {
-                startPositionX -= length;
+                return;
             }
         }
-    }
-
-    private void ApplyCameraParallax()
-    {
-        float parallaxX = (previousCamPos.x - cam.position.x) * parallaxEffectX;
-        float parallaxY = (previousCamPos.y - cam.position.y) * parallaxEffectY;
-
-        Vector3 backgroundTargetPos = new Vector3(
-            transform.position.x + parallaxX,
-            transform.position.y + parallaxY,
-            transform.position.z
-        );
-
-        transform.position = Vector3.Lerp(transform.position, backgroundTargetPos, Mathf.Max(smoothingX, smoothingY) * Time.deltaTime);
-
-        previousCamPos = cam.position;
-    }
-
-    private bool IsPlayerWithinTrigger(Vector3 playerPosition)
-    {
-        return playerPosition.x >= minTriggerPointX &&
-               playerPosition.x <= maxTriggerPointX &&
-               playerPosition.y >= limitY;
     }
 }
