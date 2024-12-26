@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.Services.Authentication;
 using UnityEngine.UI;
 
 public class RegisterMenu : Panel

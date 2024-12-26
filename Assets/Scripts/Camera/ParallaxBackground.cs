@@ -3,8 +3,8 @@ using UnityEngine;
 public class ParallaxBackground : MonoBehaviour
 {
     private float length, startPositionX, startPositionY;
-    private Transform cam; 
-    private Vector3 previousCamPos;
+    private Vector2 previousCamPos;
+    private Transform cam;
 
     public GameObject player; 
     public float parallaxEffectX = 0.5f; 
@@ -27,7 +27,7 @@ public class ParallaxBackground : MonoBehaviour
         startPositionX = transform.position.x;
         startPositionY = transform.position.y;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
-        previousCamPos = cam.position; 
+        previousCamPos = cam.position;
     }
 
     void FixedUpdate()
@@ -40,14 +40,14 @@ public class ParallaxBackground : MonoBehaviour
     {
         if (player == null) return;
 
-        Vector3 playerPosition = player.transform.position;
+        Vector2 playerPosition = player.transform.position;
 
         if (IsPlayerWithinTrigger(playerPosition))
         {
             float distanceX = playerPosition.x * parallaxEffectX;
             float distanceY = playerPosition.y * parallaxEffectY;
 
-            transform.position = new Vector3(startPositionX + distanceX, startPositionY + distanceY, transform.position.z);
+            transform.position = new Vector2(startPositionX + distanceX, startPositionY + distanceY);
 
             float movementX = playerPosition.x * (1 - parallaxEffectX);
 
@@ -64,21 +64,22 @@ public class ParallaxBackground : MonoBehaviour
 
     private void ApplyCameraParallax()
     {
-        float parallaxX = (previousCamPos.x - cam.position.x) * parallaxEffectX;
-        float parallaxY = (previousCamPos.y - cam.position.y) * parallaxEffectY;
+        Vector2 camPos = cam.position;
+        float parallaxX = (previousCamPos.x - camPos.x) * parallaxEffectX;
+        float parallaxY = (previousCamPos.y - camPos.y) * parallaxEffectY;
 
-        Vector3 backgroundTargetPos = new Vector3(
+        Vector2 backgroundTargetPos = new Vector2(
             transform.position.x + parallaxX,
-            transform.position.y + parallaxY,
-            transform.position.z
+            transform.position.y + parallaxY
         );
 
-        transform.position = Vector3.Lerp(transform.position, backgroundTargetPos, Mathf.Max(smoothingX, smoothingY) * Time.deltaTime);
+        Vector2 currentPos = transform.position;
+        transform.position = Vector2.Lerp(currentPos, backgroundTargetPos, Mathf.Max(smoothingX, smoothingY) * Time.deltaTime);
 
-        previousCamPos = cam.position;
+        previousCamPos = camPos;
     }
 
-    private bool IsPlayerWithinTrigger(Vector3 playerPosition)
+    private bool IsPlayerWithinTrigger(Vector2 playerPosition)
     {
         return playerPosition.x >= minTriggerPointX &&
                playerPosition.x <= maxTriggerPointX &&
