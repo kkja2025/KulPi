@@ -3,7 +3,6 @@ using UnityEngine;
 public class ParallaxBackground : MonoBehaviour
 {
     private float length, startPositionX, startPositionY;
-    private Transform cam;
 
     public GameObject player; 
     public float parallaxEffectX = 0.5f; 
