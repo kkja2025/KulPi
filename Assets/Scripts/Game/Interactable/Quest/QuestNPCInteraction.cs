@@ -14,7 +14,6 @@ public class QuestNPCInteraction : DialogueInteractable
     [SerializeField] private string encyclopediaEntry;
     [SerializeField] private bool hasTalked = false;
     private bool hasCompleted = false;
-    private bool hasUnlocked = false;
 
     protected override void Interact()
     {
@@ -33,28 +32,30 @@ public class QuestNPCInteraction : DialogueInteractable
         base.Interact();
     }
 
-    protected async override void ConversationCompleted()
+    protected override void ConversationCompleted()
     {
         base.ConversationCompleted();
-        if(encyclopediaEntry != "" && !hasUnlocked)
-        {
-            GameManager.Singleton.UnlockEncyclopediaItem(encyclopediaEntry, "unlock");
-            await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
-            hasUnlocked = true;
-        }
         StartQuest();
     }
 
-    private void StartQuest()
+    private async void StartQuest()
     {
+        string currentQuest = GameManager.Singleton.GetObjective();
+        string trimmedGiveNewQuest = giveNewQuest.Split('.')[0].Trim();
         if (GameManager.Singleton.GetCount() >= totalNPCs)
         {
-            if(giveNewQuest != "") 
+            if(giveNewQuest != "" && !currentQuest.Contains(trimmedGiveNewQuest)) 
             {
                 GameManager.Singleton.SetObjective(giveNewQuest);
                 GameManager.Singleton.SetCount(0);
                 InteractedNPCManager.Singleton.SaveInteractedNPC();
-            }
+                
+                if(encyclopediaEntry != "")
+                {
+                    GameManager.Singleton.UnlockEncyclopediaItem(encyclopediaEntry, "unlock");
+                    await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
+                }
+            } 
         }
     }
 

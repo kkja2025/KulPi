@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
-using Unity.Services.Authentication.PlayerAccounts;
 using Firebase;
 using Firebase.Auth;
 

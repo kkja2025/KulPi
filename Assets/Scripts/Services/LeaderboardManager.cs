@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Authentication;
 using Unity.Services.Leaderboards;
-using Unity.Services.Leaderboards.Models;
 using Unity.Services.Core;
 
 public class LeaderboardManager : MonoBehaviour

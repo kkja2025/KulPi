@@ -16,7 +16,7 @@ public class LocationChange : Interactable
                 Vector3 newPosition = new Vector3(x, y, z);
                 GameObject player = GameObject.FindWithTag("Player");
                 PanelManager.Singleton.StartLoading(2f, 
-                async () => await GameManager.Singleton.SetPlayerPosition(newPosition), 
+                () => GameManager.Singleton.SetPlayerPosition(newPosition), 
                 () => PanelManager.GetSingleton("hud").Open());     
             }
         }
