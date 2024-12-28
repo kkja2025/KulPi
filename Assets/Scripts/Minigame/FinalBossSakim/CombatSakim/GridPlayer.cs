@@ -87,7 +87,7 @@ public class GridPlayer : MonoBehaviour
         Transform tileTransform = gridContainer.GetChild(currentRow);
         if (tileTransform != null)
         {
-            Image tileImage = tileTransform.GetComponent<Image>();
+            Image tileImage = tileTransform.GetComponentInChildren<Image>();
             if (tileImage != null)
             {
                 if (tileImage.sprite == energyTileSprite)
@@ -98,6 +98,7 @@ public class GridPlayer : MonoBehaviour
                 {
                     TakeDamage();
                 }
+                tileImage.color = new Color(1f, 1f, 1f, 0f); 
             }
         }
     }
@@ -105,6 +106,7 @@ public class GridPlayer : MonoBehaviour
 
     private void ChargeSkill()
     {
+        AudioManager.Singleton.PlaySoundEffectResourceOneSot("Energy");
         skillCharge++;
         if (skillCharge >= energyCost)
         {
@@ -123,6 +125,7 @@ public class GridPlayer : MonoBehaviour
 
     private void TakeDamage()
     {
+        AudioManager.Singleton.PlaySoundEffectResourceOneSot("EnemyHit");
         damage++;
         movementCount = 0;
         if (healthBarFill != null)
