@@ -41,8 +41,6 @@ public class SpawnerBossLapuLapu : Spawner
             : new Vector2(parentWidth / 2, selectedYPosition); 
 
         GridLayoutGroup gridLayout = panelInstance.GetComponent<GridLayoutGroup>();
-        gridLayout.cellSize = new Vector2(125f, 125f);
-        gridLayout.spacing = new Vector2(10f, 10f);
         gridLayout.constraint = GridLayoutGroup.Constraint.FixedRowCount;
         gridLayout.constraintCount = 1;
 
