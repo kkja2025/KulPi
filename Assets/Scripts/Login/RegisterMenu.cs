@@ -9,6 +9,7 @@ public class RegisterMenu : Panel
     [SerializeField] private TMP_InputField confirmPasswordInput = null;
     [SerializeField] private Button SignUpButton = null;
     [SerializeField] private Button BackButton = null;
+    [SerializeField] private GameObject passwordWarning = null;
     [SerializeField] private RectTransform panelRectTransform;
 
     private Vector2 originalPosition; 
@@ -31,6 +32,7 @@ public class RegisterMenu : Panel
         emailInput.text = "";
         passwordInput.text = "";
         confirmPasswordInput.text = "";
+        passwordWarning.gameObject.SetActive(false);
         base.Open();
     }
 
@@ -43,7 +45,8 @@ public class RegisterMenu : Panel
         {
             if (IsPasswordValid(pass) == false)
             {
-                LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
+                // LoginManager.Singleton.ShowPopUp(PopUpMenu.Action.None, "Password must be between 8 and 30 characters and contain at least one uppercase letter, one lowercase letter, one digit, and one symbol", "OK");
+                passwordWarning.gameObject.SetActive(true);
             }
             else if (pass != passConfirm)
             {
