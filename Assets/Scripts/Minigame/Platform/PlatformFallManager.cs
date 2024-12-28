@@ -193,7 +193,7 @@ public class PlatformFallManager : MiniGameManager
                 victoryMenu.SetTimerText($"Time: {timerText.text}");
             } else
             {
-                victoryMenu.SetTimerText("In Casual Mode. Time not submitted to leaderboard.");
+                victoryMenu.SetTimerText("In casual mode, time is not submitted to the leaderboard.");
             }
             victoryMenu.Open();
         }
