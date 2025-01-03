@@ -15,8 +15,8 @@ public class ButtonPopEffect : MonoBehaviour
 
     void ButtonClicked()
     {
-        transform.LeanScale(Vector3.one * popScale, animationDuration).setOnComplete(() => {
-            transform.LeanScale(Vector3.one, animationDuration);
+        transform.LeanScale(Vector2.one * popScale, animationDuration).setOnComplete(() => {
+            transform.LeanScale(Vector2.one, animationDuration);
         });
     }
 }
