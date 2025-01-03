@@ -254,19 +254,16 @@ public class PanelManager : MonoBehaviour
         // Close the loading screen after the specified time
         Close("loading");
 
-        // Start fade-out animation
-        Image fadeOverlay = CreateFadeOverlay(); // Helper method to create a fade overlay
-        fadeOverlay.color = new Color(0, 0, 0, 1); // Start with transparent
+        Image fadeOverlay = CreateFadeOverlay(); 
+        fadeOverlay.color = new Color(0, 0, 0, 1); //start from black
 
         LeanTween.alpha(fadeOverlay.rectTransform, 1f, 0.5f).setOnComplete(() =>
         {
-            // Once fade-out is complete, run post-loading logic
             postLoadingAction?.Invoke();
 
-            // Start fade-in animation
             LeanTween.alpha(fadeOverlay.rectTransform, 0f, 0.5f).setOnComplete(() =>
             {
-                Destroy(fadeOverlay.gameObject); // Clean up overlay after fade-in
+                Destroy(fadeOverlay.gameObject); 
             });
         });
     }
@@ -274,12 +271,12 @@ public class PanelManager : MonoBehaviour
     private Image CreateFadeOverlay()
     {
         GameObject fadeOverlayObject = new GameObject("FadeOverlay");
-        fadeOverlayObject.transform.SetParent(GameObject.Find("Canvas").transform, false); // Ensure it's under your main UI Canvas
+        fadeOverlayObject.transform.SetParent(GameObject.Find("Canvas").transform, false); 
 
         Image fadeOverlay = fadeOverlayObject.AddComponent<Image>();
-        fadeOverlay.color = new Color(0, 0, 0, 0); // Fully transparent initially
-        fadeOverlay.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height); // Cover the entire screen
-        fadeOverlay.raycastTarget = false; // Allow interactions to pass through the overlay
+        fadeOverlay.color = new Color(0, 0, 0, 0); 
+        fadeOverlay.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height); 
+        fadeOverlay.raycastTarget = false; 
 
         return fadeOverlay;
     }
