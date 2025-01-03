@@ -9,7 +9,6 @@ public class PopUpMenu : Panel
 {
 
     [SerializeField] private TextMeshProUGUI MenuText = null;
-    [SerializeField] private TextMeshProUGUI ButtonText = null;
     [SerializeField] private Button ActionButton = null;
 
     public float popAnimationScale = 1.1f;
@@ -50,10 +49,6 @@ public class PopUpMenu : Panel
         if (string.IsNullOrEmpty(menu) == false)
         {
             MenuText.text = menu;
-        }
-        if (string.IsNullOrEmpty(button) == false)
-        {
-            ButtonText.text = button;
         }
     }
     
