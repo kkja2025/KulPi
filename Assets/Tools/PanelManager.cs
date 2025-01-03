@@ -161,7 +161,7 @@ public class PanelManager : MonoBehaviour
 
                 yield return null;
             }
-
+            Debug.Log("loading scene coroutine");
             Close("loading");
             yield break;
         }
@@ -250,7 +250,6 @@ public class PanelManager : MonoBehaviour
 
             yield return null;
         }
-
         // Close the loading screen after the specified time
         Close("loading");
 
