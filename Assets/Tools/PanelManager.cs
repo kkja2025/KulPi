@@ -212,7 +212,7 @@ public class PanelManager : MonoBehaviour
         StartCoroutine(LoadingCoroutine(loadingDuration, duringLoadingAction, postLoadingAction));
     }
 
-    private IEnumerator LoadingCoroutine(float loadingDuration, Action duringLoadingAction, Action postLoadingAction)
+        private IEnumerator LoadingCoroutine(float loadingDuration, Action duringLoadingAction, Action postLoadingAction)
     {
         CloseAll();
         Open("loading");
@@ -250,10 +250,38 @@ public class PanelManager : MonoBehaviour
 
             yield return null;
         }
+
         // Close the loading screen after the specified time
         Close("loading");
 
-        // Run any logic that should happen after the loading completes
-        postLoadingAction?.Invoke();
+        // Start fade-out animation
+        Image fadeOverlay = CreateFadeOverlay(); // Helper method to create a fade overlay
+        fadeOverlay.color = new Color(0, 0, 0, 1); // Start with transparent
+
+        LeanTween.alpha(fadeOverlay.rectTransform, 1f, 0.5f).setOnComplete(() =>
+        {
+            // Once fade-out is complete, run post-loading logic
+            postLoadingAction?.Invoke();
+
+            // Start fade-in animation
+            LeanTween.alpha(fadeOverlay.rectTransform, 0f, 0.5f).setOnComplete(() =>
+            {
+                Destroy(fadeOverlay.gameObject); // Clean up overlay after fade-in
+            });
+        });
     }
+
+    private Image CreateFadeOverlay()
+    {
+        GameObject fadeOverlayObject = new GameObject("FadeOverlay");
+        fadeOverlayObject.transform.SetParent(GameObject.Find("Canvas").transform, false); // Ensure it's under your main UI Canvas
+
+        Image fadeOverlay = fadeOverlayObject.AddComponent<Image>();
+        fadeOverlay.color = new Color(0, 0, 0, 0); // Fully transparent initially
+        fadeOverlay.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height); // Cover the entire screen
+        fadeOverlay.raycastTarget = false; // Allow interactions to pass through the overlay
+
+        return fadeOverlay;
+    }
+
 }
