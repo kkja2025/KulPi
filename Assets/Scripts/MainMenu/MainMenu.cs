@@ -31,7 +31,8 @@ public class MainMenu : Panel
 
     private void SignOut()
     {
-        MainMenuManager.Singleton.SignOut();
+        PopUpMenu_2 panel = (PopUpMenu_2)PanelManager.GetSingleton("popup2");
+        panel.Open(PopUpMenu_2.Action.LogOut, "Are you sure you want to sign out?", "Cancel", "Confirm"); 
     }
 
     private void LoadGame()

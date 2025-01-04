@@ -15,7 +15,8 @@ public class PopUpMenu_2 : Panel
     public enum Action
     {
         None = 0,
-        NewGame = 1
+        NewGame = 1,
+        LogOut = 2
     }
     
     private Action action = Action.None;
@@ -62,6 +63,8 @@ public class PopUpMenu_2 : Panel
         {
             case Action.NewGame:
                 break;
+            case Action.LogOut:
+                break;
         }
     }
 
@@ -72,6 +75,9 @@ public class PopUpMenu_2 : Panel
         {
             case Action.NewGame:
                 MainMenuManager.Singleton.NewGame();
+                break;
+            case Action.LogOut:
+                MainMenuManager.Singleton.SignOut();
                 break;
         }
     }
