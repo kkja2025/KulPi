@@ -31,7 +31,7 @@ public class MovementSound : OnScreenButtonWithSound, IPointerUpHandler
         {
             if (playerMovement.isGrounded && !soundEffectsSource.isPlaying)
             {
-                soundEffectsSource.Play();
+                soundEffectsSource.PlayOneShot(clickSound);
             }
             else if (!playerMovement.isGrounded)
             {
