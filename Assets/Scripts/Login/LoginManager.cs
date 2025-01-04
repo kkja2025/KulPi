@@ -51,7 +51,8 @@ public class LoginManager : MonoBehaviour
         int retryDelay = 2000;  
         int attempt = 0;
         bool success = false;
-
+        
+        AudioManager.Singleton.OnSceneLoaded();
         PanelManager.LoadSceneAsync("");
 
         while (attempt < maxRetries && !success)

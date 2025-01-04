@@ -49,17 +49,24 @@ public class MainMenuManager : MonoBehaviour
 
     private void StartClientService()
     {
-        PanelManager.CloseAll();
         try
         {
-            var firebaseService = FirebaseService.Singleton;
-            auth = firebaseService.Auth;
-            FirebaseUser user = auth.CurrentUser;
-            if (user != null)
+            PanelManager.Singleton.StartLoading(2f, 
+            () => { 
+                AudioManager.Singleton.OnSceneLoaded();
+            },
+            () =>
             {
-                PanelManager.CloseAll();
-                PanelManager.GetSingleton("main").Open();
-            }
+                AudioManager.Singleton.OnSceneLoaded();
+                var firebaseService = FirebaseService.Singleton;
+                auth = firebaseService.Auth;
+                FirebaseUser user = auth.CurrentUser;
+                if (user != null)
+                {
+                    PanelManager.CloseAll();
+                    PanelManager.GetSingleton("main").Open();
+                }
+            });
         }
         catch (Exception exception)
         {
