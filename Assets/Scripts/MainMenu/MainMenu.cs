@@ -9,7 +9,6 @@ public class MainMenu : Panel
     [SerializeField] private Button LogoutButton = null;
     [SerializeField] private Button LoadButton = null;
     [SerializeField] private Button SettingsButton = null;
-    [SerializeField] private Button CloseGameButton = null;
 
     public override void Initialize()
     {
@@ -20,7 +19,6 @@ public class MainMenu : Panel
         LogoutButton.onClick.AddListener(SignOut);
         LoadButton.onClick.AddListener(LoadGame);
         SettingsButton.onClick.AddListener(OpenSettings);
-        CloseGameButton.onClick.AddListener(CloseGame);
         base.Initialize();
     }
 
@@ -49,14 +47,5 @@ public class MainMenu : Panel
         PanelManager.GetSingleton("volumebgm").Open();
         PanelManager.GetSingleton("volumesfx").Open();
         PanelManager.GetSingleton("volumevoice").Open();
-    }
-
-    private void CloseGame()
-    {
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
     }
 }
