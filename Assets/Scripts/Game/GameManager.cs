@@ -210,12 +210,11 @@ public class GameManager : MonoBehaviour
         await SavePlayerData();
     }
 
-    public async Task SetPlayerPosition(Vector3 position)
+    public void SetPlayerPosition(Vector3 position)
     {
         if (playerInstance != null)
         {
             playerInstance.transform.position = position;
-            await SavePlayerData();
         }
     }
 

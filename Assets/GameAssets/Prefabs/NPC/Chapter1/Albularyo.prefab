@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 6673676574854773255}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5462, y: -0.2809, z: 0}
-  m_LocalScale: {x: 2.040698, y: 1.496666, z: 1}
+  m_LocalPosition: {x: -1.34, y: 1.9, z: 0}
+  m_LocalScale: {x: 1.8, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 525127352422275954}
@@ -114,7 +114,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.62, y: 0.3, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
+  m_LocalScale: {x: 0.15641999, y: 0.15595502, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2733280148994742411}
@@ -161,9 +161,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1445501271, guid: 5f872937fdcc43242b71867e9ffe99b6, type: 3}
+  m_Sprite: {fileID: 1265844978, guid: 614c8d83e86b0fe449fc7e62e07b0081, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 3, y: 3}
@@ -182,7 +182,7 @@ Animator:
   m_GameObject: {fileID: 9054064672224054517}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ec0876970f0aa5f4ead3e8f55502695d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 694ecb343a8dedc418eafc2c07b346ad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: -1445501271, guid: 5f872937fdcc43242b71867e9ffe99b6, type: 3}
+  normalSprite: {fileID: 1265844978, guid: 614c8d83e86b0fe449fc7e62e07b0081, type: 3}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
-  buttonText: Albularyo
+  buttonText: Talk to Albularyo
   interactButton: {fileID: 0}
   characterName: Albularyo
   lakanDialogueLines:
@@ -217,8 +217,8 @@ MonoBehaviour:
   characterDialogueLines:
   - "So, you\u2019re the one the Babaylan sent. I fear the spirits no longer hear
     my prayers. The sickness grows worse with each passing day."
-  - Our medicine is almost gone, but there are herbs in the forest that still carry
-    the spirit's blessing. I need you to gather them for me.
+  - Our medicine is almost gone, but there are herbs in the Sacred Grove that still
+    carry the spirit's blessing. I need you to gather them for me.
   - "The first herb\u2026 You\u2019ll find it near riverbanks, in open fields, and
     along the edges of forests. Its leaves carry the strength to heal fevers and
     ease breathing."
@@ -230,6 +230,7 @@ MonoBehaviour:
     even the most restless spirit."
   - "Be swift, for the land grows weaker with each moment. And be wary\u2014the land
     is not what it once was. The spirits are restless."
+  - Find my apprentice once you have gathered the herbs.
   doesCharacterStartFirst: 1
   dialogueIcon: {fileID: 6673676574854773255}
   dialogueIconSprite: {fileID: 21300000, guid: 9285c02589854f54c9ad3f79a8c7633f, type: 3}
@@ -257,6 +258,7 @@ MonoBehaviour:
   completeQuest: Return to the Albularyo.
   giveFollowUpQuest: Leave the village. Make your way deeper into the Sacred Grove.
   encyclopediaEntry: Albularyo
+  hasTalked: 0
 --- !u!61 &962590284157633915
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -289,16 +291,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.30892396, y: -3.5140696}
+  m_Offset: {x: 0.030194283, y: -1.6727033}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 8}
+    oldSize: {x: 1.79, y: 3.86}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.9996, y: 1.0789812}
+  m_Size: {x: 4.3213634, y: 1.0555243}
   m_EdgeRadius: 0

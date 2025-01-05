@@ -49,7 +49,6 @@ public class MainMenuManager : MonoBehaviour
 
     private void StartClientService()
     {
-        PanelManager.CloseAll();
         try
         {
             var firebaseService = FirebaseService.Singleton;

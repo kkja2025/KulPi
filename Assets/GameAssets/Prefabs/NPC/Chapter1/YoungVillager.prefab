@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 705631601, guid: c87b54259cfa0be4c9ce0fea0fa680f3, type: 3}
+  m_Sprite: {fileID: 1517662279, guid: a7781a76c142e6b4ea094e6f03eecc27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.125, y: 2.125}
+  m_Size: {x: 1.55, y: 1.38}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 1544102879572490641}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 62d0a5d0476ab134abb08df78bf205a8, type: 2}
+  m_Controller: {fileID: 9100000, guid: c01d6196fd861e74da5ffc81355cb1a5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -121,10 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: 705631601, guid: c87b54259cfa0be4c9ce0fea0fa680f3, type: 3}
+  normalSprite: {fileID: 1517662279, guid: a7781a76c142e6b4ea094e6f03eecc27, type: 3}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
-  buttonText: Young Villager
+  buttonText: Talk to Young Villager
   interactButton: {fileID: 0}
   characterName: Young Villager
   lakanDialogueLines:
@@ -147,6 +147,7 @@ MonoBehaviour:
   completeQuest: 
   giveFollowUpQuest: 
   encyclopediaEntry: 
+  hasTalked: 0
 --- !u!61 &246343922720912250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -179,18 +180,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.055089593, y: -0.54500103}
+  m_Offset: {x: 0.055089593, y: -0.4184016}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.125, y: 2.125}
-    newSize: {x: 2.125, y: 2.125}
+    oldSize: {x: 1.55, y: 1.38}
+    newSize: {x: 1.55, y: 1.38}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.8126252, y: 0.9879396}
+  m_Size: {x: 2.8126252, y: 0.73474085}
   m_EdgeRadius: 1
 --- !u!1 &8232328965663578375
 GameObject:
@@ -218,8 +219,8 @@ Transform:
   m_GameObject: {fileID: 8232328965663578375}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.93, y: 0.74, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.4234, y: 0.7309, z: 0}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3213093011315587057}

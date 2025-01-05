@@ -55,7 +55,7 @@ public class LeaderboardsMenu : Panel
         string currentPlayerName = await LeaderboardManager.Singleton.GetPlayerNameAsync();
         bool isCurrentPlayer = item.playerName == currentPlayerName;
 
-        Color highlightColor = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+        Color highlightColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
         foreach (var text in textComponents)
         {

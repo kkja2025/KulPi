@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 5398334174405085132}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.3, z: 0}
-  m_LocalScale: {x: 1.5214329, y: 1.1813608, z: 1}
+  m_LocalPosition: {x: -0.928, y: 0.8556, z: -0.0004}
+  m_LocalScale: {x: 1.1, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 258978790572135017}
@@ -161,12 +161,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
+  m_Sprite: {fileID: -479019156, guid: 5ef55c3ffd0d1074082789c271619df9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3, y: 3}
+  m_Size: {x: 1.05, y: 1.99}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -182,7 +182,7 @@ Animator:
   m_GameObject: {fileID: 6855328215926288287}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e21fe113a45eaee4e959e40fe3fca182, type: 2}
+  m_Controller: {fileID: 9100000, guid: a6b5d2ff7d712584aa06f39895dae5bf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bf37cb0c1bfb847882a5087c29718e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSprite: {fileID: 1082707274, guid: ebdc01a27d546c540b194922a3630c1b, type: 3}
+  normalSprite: {fileID: -479019156, guid: 5ef55c3ffd0d1074082789c271619df9, type: 3}
   highlightedSprite: {fileID: 0}
   onCollisionSound: {fileID: 0}
-  buttonText: Elder Fisherman
+  buttonText: Talk to Elder Fisherman
   interactButton: {fileID: 0}
   characterName: Elder Fisherman
   lakanDialogueLines:
@@ -231,6 +231,8 @@ MonoBehaviour:
   returnDoesCharacterStartFirst: 0
   completeQuest: 
   giveFollowUpQuest: 
+  encyclopediaEntry: 
+  hasTalked: 0
 --- !u!61 &2644287233204874022
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -263,16 +265,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.8047732, y: -1.1172276}
+  m_Offset: {x: 0.015741944, y: -0.7280796}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 3}
-    newSize: {x: 3, y: 3}
+    oldSize: {x: 1.05, y: 1.99}
+    newSize: {x: 1.05, y: 1.99}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2416604, y: 0.7594018}
+  m_Size: {x: 3.0963438, y: 0.8372313}
   m_EdgeRadius: 0

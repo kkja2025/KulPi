@@ -31,13 +31,19 @@ public class CutscenePanel : Panel
 
     public void NextPanel()
     {
-        PanelManager.GetSingleton(id).Close();
-        PanelManager.GetSingleton(nextCutsceneID).Open();
+        if(nextCutsceneID != "")
+        {
+            PanelManager.GetSingleton(id).Close();
+            PanelManager.GetSingleton(nextCutsceneID).Open();
+        }
     }
 
     public void PreviousPanel()
     {
-        PanelManager.GetSingleton(id).Close();
-        PanelManager.GetSingleton(previousCutsceneID).Open();
+        if(previousCutsceneID != "")
+        {
+            PanelManager.GetSingleton(id).Close();
+            PanelManager.GetSingleton(previousCutsceneID).Open();
+        }
     }
 }

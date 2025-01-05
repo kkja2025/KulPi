@@ -9,8 +9,10 @@ public class PopUpMenu : Panel
 {
 
     [SerializeField] private TextMeshProUGUI MenuText = null;
-    [SerializeField] private TextMeshProUGUI ButtonText = null;
     [SerializeField] private Button ActionButton = null;
+
+    public float popAnimationScale = 1.1f;
+    public float animationDuration = 0.4f;
 
     public enum Action
     {
@@ -39,15 +41,14 @@ public class PopUpMenu : Panel
     
     public void Open(Action action, string menu, string button)
     {
+        transform.LeanScale(Vector2.one * popAnimationScale, animationDuration).setOnComplete(() => {
+            transform.LeanScale(Vector2.one, animationDuration);
+        });
         Open();
         this.action = action;
         if (string.IsNullOrEmpty(menu) == false)
         {
             MenuText.text = menu;
-        }
-        if (string.IsNullOrEmpty(button) == false)
-        {
-            ButtonText.text = button;
         }
     }
     

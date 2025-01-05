@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
-using Unity.Services.Authentication.PlayerAccounts;
 using Firebase;
 using Firebase.Auth;
 
@@ -52,7 +51,7 @@ public class LoginManager : MonoBehaviour
         int retryDelay = 2000;  
         int attempt = 0;
         bool success = false;
-
+        
         PanelManager.LoadSceneAsync("");
 
         while (attempt < maxRetries && !success)

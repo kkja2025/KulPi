@@ -51,9 +51,14 @@ public class QuestNPCInteraction : DialogueInteractable
         {
             if(giveNewQuest != "") 
             {
-                GameManager.Singleton.SetObjective(giveNewQuest);
-                GameManager.Singleton.SetCount(0);
-                InteractedNPCManager.Singleton.SaveInteractedNPC();
+                string currentQuest = GameManager.Singleton.GetObjective();
+                string trimmedGiveNewQuest = giveNewQuest.Split('.')[0].Trim();
+                if(!currentQuest.Contains(trimmedGiveNewQuest) || giveNewQuest == "Gather support for the resistance. (1/2)") 
+                {
+                    GameManager.Singleton.SetObjective(giveNewQuest);
+                    GameManager.Singleton.SetCount(0);
+                    InteractedNPCManager.Singleton.SaveInteractedNPC();
+                }
             }
         }
     }

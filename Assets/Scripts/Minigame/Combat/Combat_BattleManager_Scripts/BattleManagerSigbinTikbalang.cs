@@ -9,6 +9,7 @@ public class BattleManagerSigbinTikbalang : BattleManager
 {
     [SerializeField] private TMP_Text sigbinCountText;
     [SerializeField] private TMP_Text tikbalangCountText;  
+    private SpawnerSigbinTikbalang spawner;
 
     public void UpdateTikbalangCount(int count)
     {
@@ -29,8 +30,9 @@ public class BattleManagerSigbinTikbalang : BattleManager
     public override void StartBattle()
     {
         base.StartBattle();
-        UpdateSigbinCount(0);
-        UpdateTikbalangCount(0);
+        spawner = spawnsObject.GetComponent<SpawnerSigbinTikbalang>();
+        UpdateSigbinCount(spawner.GetDestroyThreshold());
+        UpdateTikbalangCount(spawner.GetDestroyThreshold());
     }
 
     public override async void Defeated()

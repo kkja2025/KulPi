@@ -9,7 +9,6 @@ public class MainMenu : Panel
     [SerializeField] private Button LogoutButton = null;
     [SerializeField] private Button LoadButton = null;
     [SerializeField] private Button SettingsButton = null;
-    [SerializeField] private Button CloseGameButton = null;
 
     public override void Initialize()
     {
@@ -20,7 +19,6 @@ public class MainMenu : Panel
         LogoutButton.onClick.AddListener(SignOut);
         LoadButton.onClick.AddListener(LoadGame);
         SettingsButton.onClick.AddListener(OpenSettings);
-        CloseGameButton.onClick.AddListener(CloseGame);
         base.Initialize();
     }
 
@@ -31,7 +29,8 @@ public class MainMenu : Panel
 
     private void SignOut()
     {
-        MainMenuManager.Singleton.SignOut();
+        PopUpMenu_2 panel = (PopUpMenu_2)PanelManager.GetSingleton("popup2");
+        panel.Open(PopUpMenu_2.Action.LogOut, "Are you sure you want to sign out?", "Cancel", "Confirm"); 
     }
 
     private void LoadGame()
@@ -48,14 +47,5 @@ public class MainMenu : Panel
         PanelManager.GetSingleton("volumebgm").Open();
         PanelManager.GetSingleton("volumesfx").Open();
         PanelManager.GetSingleton("volumevoice").Open();
-    }
-
-    private void CloseGame()
-    {
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
     }
 }

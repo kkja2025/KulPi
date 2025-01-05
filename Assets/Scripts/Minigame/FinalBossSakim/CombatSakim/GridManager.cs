@@ -64,7 +64,7 @@ public class GridManager : MonoBehaviour
         {
             spawnInterval = 1f;
             movementCount = 0;
-            return; 
+            return;
         }
         if (movementCount >= 10)
         {
@@ -149,7 +149,7 @@ public class GridManager : MonoBehaviour
 
     private TileType GetTileType(GameObject tile)
     {
-        Image image = tile.GetComponent<Image>();
+        Image image = tile.GetComponentInChildren<Image>();
         if (image != null && image.sprite != null)
         {
             if (image.sprite == energyTileSprite) return TileType.Energy;
@@ -161,17 +161,24 @@ public class GridManager : MonoBehaviour
 
     private void SetTileAppearance(GameObject tile, TileType type)
     {
-        Image image = tile.GetComponent<Image>();
+        Image image = tile.GetComponentInChildren<Image>();
         if (image != null)
         {
+            RectTransform imageRect = image.rectTransform;
+            RectTransform parentRect = tile.GetComponent<RectTransform>();
+
+            Vector2 originalSize = new Vector2(100f, 100f); 
+
             switch (type)
             {
                 case TileType.Energy:
+                    imageRect.sizeDelta = originalSize;
                     image.sprite = energyTileSprite;
-                    image.color = new Color(1f, 1f, 1f, 1f); 
+                    image.color = new Color(1f, 1f, 1f, 1f);
                     break;
 
                 case TileType.Damage:
+                    imageRect.sizeDelta = parentRect.rect.size; 
                     image.sprite = damageTileSprite;
                     image.color = new Color(1f, 1f, 1f, 1f); 
                     break;
@@ -179,6 +186,9 @@ public class GridManager : MonoBehaviour
                 case TileType.Empty:
                     image.sprite = null;
                     image.color = new Color(1f, 1f, 1f, 0f); 
+                    break;
+
+                default:
                     break;
             }
         }

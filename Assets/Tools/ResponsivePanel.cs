@@ -11,6 +11,7 @@ public class ResponsivePanel : MonoBehaviour
     [SerializeField] private Button[] inputFieldButtons;
 
     private Vector2 originalPosition; 
+    private bool isKeyboardOpen = false;
 
     private void Start()
     {
@@ -33,6 +34,19 @@ public class ResponsivePanel : MonoBehaviour
         }
 
         returnButton.onClick.AddListener(ReturnToOriginalPosition);
+    }
+
+    private void Update()
+    {
+        if (TouchScreenKeyboard.visible)
+        {
+            isKeyboardOpen = true;
+        }
+        else if (isKeyboardOpen)
+        {
+            isKeyboardOpen = false;
+            ReturnToOriginalPosition();
+        }
     }
 
     private void OnInputFieldButtonClick(int index)

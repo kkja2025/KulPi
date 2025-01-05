@@ -7,6 +7,7 @@ public class ProgressBlocker : DialogueInteractable
 {
     [SerializeField] private string completedObjective = null;
     [SerializeField] private string currentObjective = null;
+    [SerializeField] private GameObject returnBarrier = null;
     private Collider2D barrierCollider;
 
     protected override void Awake()
@@ -46,7 +47,12 @@ public class ProgressBlocker : DialogueInteractable
 
             if (currentObjective == GameManager.Singleton.GetObjective())
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                
+                if (returnBarrier != null)
+                {
+                    returnBarrier.gameObject.SetActive(true);
+                }
             }
             else if (string.IsNullOrEmpty(completedObjective) || completedObjective == GameManager.Singleton.GetObjective())
             {
@@ -63,7 +69,12 @@ public class ProgressBlocker : DialogueInteractable
             else
             {
                 Debug.Log("Objective completed. Destroying the barrier.");
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+
+                if (returnBarrier != null)
+                {
+                    returnBarrier.gameObject.SetActive(true);
+                }
             }
         }
     }

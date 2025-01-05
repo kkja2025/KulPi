@@ -30,14 +30,28 @@ public class PicturePuzzleMenu : Panel
         base.Close();
     }
 
+    private void ShowButtonSolution()
+    {
+        if (showCompletePuzzleButton != null)
+        {
+            showCompletePuzzleButton.gameObject.SetActive(true); 
+        }
+    }
+
     public void ShowPuzzle(PicturePuzzleItem data)
     {
         base.Open();
+        showCompletePuzzleButton.gameObject.SetActive(false);
         puzzleData = data;
         Sprite[] puzzleItems = data.GetPuzzleItems(); 
         correctPuzzle = (Sprite[])puzzleItems.Clone();
         LoadPuzzleItems((Sprite[])puzzleItems.Clone());
+        if(!isCompleted)
+        {
+            Invoke(nameof(ShowButtonSolution), 45f);
+        }
     }
+    
 
     private void LoadPuzzleItems(Sprite[] puzzleItems)
     {

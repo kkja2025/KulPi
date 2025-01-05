@@ -161,7 +161,7 @@ public class PanelManager : MonoBehaviour
 
                 yield return null;
             }
-
+            Debug.Log("loading scene coroutine");
             Close("loading");
             yield break;
         }
@@ -212,7 +212,7 @@ public class PanelManager : MonoBehaviour
         StartCoroutine(LoadingCoroutine(loadingDuration, duringLoadingAction, postLoadingAction));
     }
 
-    private IEnumerator LoadingCoroutine(float loadingDuration, Action duringLoadingAction, Action postLoadingAction)
+        private IEnumerator LoadingCoroutine(float loadingDuration, Action duringLoadingAction, Action postLoadingAction)
     {
         CloseAll();
         Open("loading");
@@ -254,7 +254,31 @@ public class PanelManager : MonoBehaviour
         // Close the loading screen after the specified time
         Close("loading");
 
-        // Run any logic that should happen after the loading completes
-        postLoadingAction?.Invoke();
+        Image fadeOverlay = CreateFadeOverlay(); 
+        fadeOverlay.color = new Color(0, 0, 0, 1); //start from black
+
+        LeanTween.alpha(fadeOverlay.rectTransform, 1f, 0.5f).setOnComplete(() =>
+        {
+            postLoadingAction?.Invoke();
+
+            LeanTween.alpha(fadeOverlay.rectTransform, 0f, 0.5f).setOnComplete(() =>
+            {
+                Destroy(fadeOverlay.gameObject); 
+            });
+        });
     }
+
+    private Image CreateFadeOverlay()
+    {
+        GameObject fadeOverlayObject = new GameObject("FadeOverlay");
+        fadeOverlayObject.transform.SetParent(GameObject.Find("Canvas").transform, false); 
+
+        Image fadeOverlay = fadeOverlayObject.AddComponent<Image>();
+        fadeOverlay.color = new Color(0, 0, 0, 0); 
+        fadeOverlay.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height); 
+        fadeOverlay.raycastTarget = false; 
+
+        return fadeOverlay;
+    }
+
 }
