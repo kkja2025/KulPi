@@ -7,6 +7,8 @@ public class PicturePuzzleMenu : Panel
 {
     [SerializeField] private Button showCompletePuzzleButton = null;
     [SerializeField] private Button closeButton = null;
+    [SerializeField] private Button tutorialButton = null;
+    [SerializeField] private Button closeTutorialButton = null;
     [SerializeField] private Button completePuzzleButton = null;
     [SerializeField] private RectTransform puzzleContent = null;
     [SerializeField] private GameObject puzzlePiecePrefab = null;
@@ -22,6 +24,8 @@ public class PicturePuzzleMenu : Panel
         showCompletePuzzleButton.onClick.AddListener(ShowCompletePuzzle);
         completePuzzleButton.onClick.AddListener(CompletePuzzle);
         closeButton.onClick.AddListener(ClosePuzzle);
+        tutorialButton.onClick.AddListener(ShowTutorial);
+        closeTutorialButton.onClick.AddListener(CloseTutorial);
     }
 
     private void ClosePuzzle()
@@ -38,6 +42,16 @@ public class PicturePuzzleMenu : Panel
         }
     }
 
+    private void ShowTutorial()
+    {
+        PanelManager.GetSingleton("puzzletutorial").Open();
+    }
+
+    private void CloseTutorial()
+    {
+        PanelManager.GetSingleton("puzzletutorial").Close();
+    }
+
     public void ShowPuzzle(PicturePuzzleItem data)
     {
         base.Open();
@@ -48,7 +62,7 @@ public class PicturePuzzleMenu : Panel
         LoadPuzzleItems((Sprite[])puzzleItems.Clone());
         if(!isCompleted)
         {
-            Invoke(nameof(ShowButtonSolution), 45f);
+            Invoke(nameof(ShowButtonSolution), 60f);
         }
     }
     
