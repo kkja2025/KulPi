@@ -36,11 +36,9 @@ public class MiniGameManager : MonoBehaviour
             {
                 Time.timeScale = 1f;
             }
-            AudioManager.Singleton.OnSceneLoaded();
         },
         () =>
         {
-            AudioManager.Singleton.OnSceneLoaded();
             PanelManager.CloseAll();
             PanelManager.GetSingleton("tutorial").Open();
         });

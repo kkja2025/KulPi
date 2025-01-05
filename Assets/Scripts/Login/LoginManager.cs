@@ -52,7 +52,6 @@ public class LoginManager : MonoBehaviour
         int attempt = 0;
         bool success = false;
         
-        AudioManager.Singleton.OnSceneLoaded();
         PanelManager.LoadSceneAsync("");
 
         while (attempt < maxRetries && !success)
