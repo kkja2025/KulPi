@@ -138,7 +138,7 @@ public class AudioManager : MonoBehaviour
         return clip;
     }
 
-    private void PlayBackgroundMusic(string clipName, float fadeDuration = 0.5f)
+    private void PlayBackgroundMusic(string clipName, float fadeDuration = 1.0f)
     {
         if (currentMusicClipName == clipName && backgroundMusicSource.isPlaying)
         {
