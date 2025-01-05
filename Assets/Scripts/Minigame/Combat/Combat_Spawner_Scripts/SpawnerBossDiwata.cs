@@ -13,12 +13,20 @@ public class SpawnerBossDiwata : SpawnerSigbinTikbalang
         if (spawnButton.name == "SpawnType1")
         {
             spawn1DestroyedCount++;
-            bossBattleManager.UpdateSigbinCount(spawn1DestroyedCount);
+            int currentCount = destroyThreshold - spawn1DestroyedCount;
+            if (currentCount >= 0)
+            {
+                bossBattleManager.UpdateSigbinCount(currentCount);
+            }
         }
         else if (spawnButton.name == "SpawnType2")
         {
             spawn2DestroyedCount++;
-            bossBattleManager.UpdateTikbalangCount(spawn2DestroyedCount);
+            int currentCount = destroyThreshold - spawn2DestroyedCount;
+            if (currentCount >= 0)
+            {
+                bossBattleManager.UpdateTikbalangCount(currentCount);
+            }
         }
 
         if (spawn1DestroyedCount >= destroyThreshold && spawn2DestroyedCount >= destroyThreshold)
@@ -31,7 +39,7 @@ public class SpawnerBossDiwata : SpawnerSigbinTikbalang
     {
         spawn1DestroyedCount = 0;
         spawn2DestroyedCount = 0;
-        bossBattleManager.UpdateSigbinCount(0);
-        bossBattleManager.UpdateTikbalangCount(0);
+        bossBattleManager.UpdateSigbinCount(destroyThreshold);
+        bossBattleManager.UpdateTikbalangCount(destroyThreshold);
     }
 }

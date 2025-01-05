@@ -27,7 +27,7 @@ public class BattleManagerLapuLapu : BattleManager
         bossObject.SetActive(true);
         boss = bossObject.GetComponent<Boss>();
         spawner = spawnsObject.GetComponent<SpawnerBossLapuLapu>();
-        UpdateEnemyCount(0);
+        UpdateEnemyCount(spawner.GetDestroyThreshold());
     }
 
     public void ShowUltimateButton()
