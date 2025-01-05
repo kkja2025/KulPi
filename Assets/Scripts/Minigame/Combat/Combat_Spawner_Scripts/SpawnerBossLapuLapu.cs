@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpawnerBossLapuLapu : Spawner
 {
-    [SerializeField] protected int destroyThreshold = 5;
+    [SerializeField] protected int destroyThreshold;
     protected int spawnDestroyedCount = 0;
     [SerializeField] private RectTransform panelPrefab;
     [SerializeField] private float panelMoveSpeed = 200f;
@@ -18,6 +18,11 @@ public class SpawnerBossLapuLapu : Spawner
 
     private float[] yPositions = { 200f, 0f, -200f };
     private bool[] yPositionsOccupied = new bool[3];
+
+    public int GetDestroyThreshold()
+    {
+        return destroyThreshold;
+    }
 
     protected override void Spawn()
     {
@@ -113,7 +118,11 @@ public class SpawnerBossLapuLapu : Spawner
         else if (spawnButton.name == "SpawnType2")
         {
             spawnDestroyedCount++;
-            bossBattleManager.UpdateEnemyCount(spawnDestroyedCount);
+            int currentCount = destroyThreshold - spawnDestroyedCount;
+            if (currentCount >= 0)
+            {
+                bossBattleManager.UpdateEnemyCount(currentCount);
+            }
 
             comboCount++;
             speedMultiplier = 1.0f + Mathf.Clamp(comboCount / (float)maxComboCount, 0.0f, maxSpeedMultiplier - 1.0f);
@@ -140,6 +149,6 @@ public class SpawnerBossLapuLapu : Spawner
     {
         bossBattleManager = BattleManager.Singleton as BattleManagerLapuLapu;
         spawnDestroyedCount = 0;
-        bossBattleManager.UpdateEnemyCount(0);
+        bossBattleManager.UpdateEnemyCount(destroyThreshold);
     }
 }

@@ -74,7 +74,7 @@ public class AudioManager : MonoBehaviour
         singleton = this;
         DontDestroyOnLoad(gameObject);
         backgroundMusicSource.ignoreListenerPause = true;
-        SceneManager.sceneLoaded += OnSceneLoading;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDestroy()
@@ -83,24 +83,13 @@ public class AudioManager : MonoBehaviour
         {
             singleton = null;
         }
-        SceneManager.sceneLoaded -= OnSceneLoading;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void OnSceneLoading(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentMusicClipName = "";
         if (sceneMusicMap.TryGetValue(scene.name, out string musicClipName))
-        {
-            PlayBackgroundMusic(musicClipName);
-        }
-    }
-
-    public void OnSceneLoaded()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        currentMusicClipName = "";
-        if (sceneMusicMap.TryGetValue(currentScene.name, out string musicClipName))
-        {
+        { 
             PlayBackgroundMusic(musicClipName);
         }
     }
@@ -138,7 +127,7 @@ public class AudioManager : MonoBehaviour
         return clip;
     }
 
-    private void PlayBackgroundMusic(string clipName, float fadeDuration = 0.5f)
+    private void PlayBackgroundMusic(string clipName)
     {
         if (currentMusicClipName == clipName && backgroundMusicSource.isPlaying)
         {
@@ -150,43 +139,10 @@ public class AudioManager : MonoBehaviour
         {
             return; 
         }
-
-        if (backgroundMusicSource.isPlaying)
-        {
-            StartCoroutine(CrossfadeMusic(clip, fadeDuration));
-            Debug.Log($"Crossfading to {clipName}");
-        }
-        else
-        {
-            backgroundMusicSource.clip = clip;
-            backgroundMusicSource.Play();
-            currentMusicClipName = clipName;
-            Debug.Log($"Playing {clipName}");
-        }
-    }
-
-    private IEnumerator CrossfadeMusic(AudioClip newClip, float fadeDuration)
-    {
-        float startVolume = backgroundMusicSource.volume;
-
-        while (backgroundMusicSource.volume > 0)
-        {
-            backgroundMusicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
-            yield return null;
-        }
-
-        backgroundMusicSource.Stop();
-        backgroundMusicSource.clip = newClip;
+        
+        backgroundMusicSource.clip = clip;
         backgroundMusicSource.Play();
-
-        while (backgroundMusicSource.volume < startVolume)
-        {
-            backgroundMusicSource.volume += startVolume * Time.deltaTime / fadeDuration;
-            yield return null;
-        }
-
-        backgroundMusicSource.volume = startVolume;
-        currentMusicClipName = newClip.name; 
+        currentMusicClipName = clipName;
     }
 
     public void PlayBackgroundSound(AudioClip clip, bool loop)
@@ -289,10 +245,10 @@ public class AudioManager : MonoBehaviour
         masterMixer.SetFloat(mixerParam, volumeDb);
     }
 
-    public void SetMasterVolume(int volume) => SetVolume("Master", volume, 20f);
-    public void SetBackgroundMusicVolume(int volume) => SetVolume("Background", volume, 10f);
+    public void SetMasterVolume(int volume) => SetVolume("Master", volume, 10f);
+    public void SetBackgroundMusicVolume(int volume) => SetVolume("Background", volume, 0f);
     public void SetSoundEffectsVolume(int volume) => SetVolume("SoundEffects", volume, 0f);
-    public void SetVoiceOverVolume(int volume) => SetVolume("VoiceOver", volume, 10f);
+    public void SetVoiceOverVolume(int volume) => SetVolume("VoiceOver", volume, 0f);
 
     public void LoadSoundSettings()
     {
