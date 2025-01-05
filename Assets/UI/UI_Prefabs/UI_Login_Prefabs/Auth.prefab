@@ -554,6 +554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1183545772392539094}
+  - component: {fileID: 2157643684270600539}
   m_Layer: 0
   m_Name: InputField
   m_TagString: Untagged
@@ -581,6 +582,20 @@ RectTransform:
   m_AnchoredPosition: {x: 84, y: 6.25}
   m_SizeDelta: {x: 650, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2157643684270600539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259191409541395300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f83d21a79f33be4284c1fc1e64a93e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passwordInputField: {fileID: 1288394196755452799}
+  maskCharacter: 9679
 --- !u!1 &1361766772808386995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,8 +2393,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
