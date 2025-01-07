@@ -29,7 +29,6 @@ public class PauseMenu : Panel
         PanelManager.GetSingleton("volumemaster").Open();
         PanelManager.GetSingleton("volumebgm").Open();
         PanelManager.GetSingleton("volumesfx").Open();
-        PanelManager.GetSingleton("volumevoice").Open();
     }
 
     protected virtual void ReturnMainMenu()
