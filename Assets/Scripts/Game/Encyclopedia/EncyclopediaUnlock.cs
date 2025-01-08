@@ -47,8 +47,14 @@ public class EncyclopediaUnlock : Panel
                 await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
                 break;
             case "chapter2cutscene":
-                PanelManager.GetSingleton(id).Close();
-                PanelManager.GetSingleton(actionButtonNavigation).Open();
+                Close();
+                PanelManager.Singleton.StartLoading(3f, null, 
+                () => PanelManager.GetSingleton(actionButtonNavigation).Open());
+                break;
+            case "cutscenesakim":
+                Close();
+                PanelManager.Singleton.StartLoading(3f, null, 
+                () => PanelManager.GetSingleton(actionButtonNavigation).Open());
                 break;
             default:
                 PanelManager.LoadSceneAsync(actionButtonNavigation);
