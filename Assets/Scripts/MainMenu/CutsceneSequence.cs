@@ -53,6 +53,10 @@ public class CutsceneSequence : Panel
                     Close();
                     PanelManager.GetSingleton(sceneNavigation).Open();
                     break;
+                case "end":
+                    Close();
+                    PanelManager.GetSingleton(sceneNavigation).Open();
+                    break;
                 default:
                     PanelManager.LoadSceneAsync(sceneNavigation);
                     break;

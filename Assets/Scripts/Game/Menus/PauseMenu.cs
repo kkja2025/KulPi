@@ -11,9 +11,18 @@ public class PauseMenu : Panel
     public override void Initialize()
     {
         base.Initialize();
-        resumeButton.onClick.AddListener(Resume);
-        settingsButton.onClick.AddListener(OpenSettings);
-        mainMenuButton.onClick.AddListener(ReturnMainMenu);
+        if (resumeButton != null)
+        {
+            resumeButton.onClick.AddListener(Resume);
+        }
+        if (settingsButton != null)
+        {
+            settingsButton.onClick.AddListener(OpenSettings);
+        }
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.onClick.AddListener(ReturnMainMenu);
+        }
     }
 
     private void Resume()
