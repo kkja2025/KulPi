@@ -171,6 +171,7 @@ public class AudioManager : MonoBehaviour
         backgroundMusicSource.clip = clip;
         backgroundMusicSource.loop = true;
         backgroundMusicSource.Play();
+        currentMusicClipName = clip.name;
     }
 
     public void PlaySoundEffect(AudioClip clip, bool loop)
