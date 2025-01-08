@@ -4,13 +4,20 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement; 
 
-public class CutsceneSequence : MonoBehaviour
+public class CutsceneSequence : Panel
 {
     public VideoPlayer videoPlayer; 
     public VideoClip[] videoClips;
     private int currentVideoIndex = 0;
 
-    void Start()
+    public override void Open()
+    {
+        base.Open();
+        AudioManager.Singleton.GetBackgroundMusicSource().Stop();
+        Play();
+    }
+
+    private void Play()
     {
         if (videoClips.Length > 0)
         {
@@ -24,7 +31,7 @@ public class CutsceneSequence : MonoBehaviour
         }
     }
 
-    void OnVideoEnd(VideoPlayer vp)
+    private void OnVideoEnd(VideoPlayer vp)
     {
         currentVideoIndex++;
         if (currentVideoIndex < videoClips.Length)
