@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
         if (initialized) { return; }
         initialized = true;
         DontDestroyOnLoad(gameObject);
-        LoadSoundSettings();
+        // LoadSoundSettings();
     }
 
     private void Awake()
