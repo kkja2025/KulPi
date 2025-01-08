@@ -70,7 +70,6 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         singleton = this;
         DontDestroyOnLoad(gameObject);
         backgroundMusicSource.ignoreListenerPause = true;
@@ -88,6 +87,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        LoadSoundSettings();
         if (sceneMusicMap.TryGetValue(scene.name, out string musicClipName))
         { 
             PlayBackgroundMusic(musicClipName);
@@ -252,10 +252,12 @@ public class AudioManager : MonoBehaviour
 
     public void LoadSoundSettings()
     {
-        int masterVolume = PlayerPrefs.GetInt(MASTER_VOLUME_KEY);
-        int bgmVolume = PlayerPrefs.GetInt(BGM_VOLUME_KEY);
-        int sfxVolume = PlayerPrefs.GetInt(SFX_VOLUME_KEY);
-        int voiceOverVolume = PlayerPrefs.GetInt(VOICEOVER_VOLUME_KEY);
+        int masterVolume = PlayerPrefs.GetInt(MASTER_VOLUME_KEY, 4);
+        int bgmVolume = PlayerPrefs.GetInt(BGM_VOLUME_KEY, 4);
+        int sfxVolume = PlayerPrefs.GetInt(SFX_VOLUME_KEY, 4);
+        int voiceOverVolume = PlayerPrefs.GetInt(VOICEOVER_VOLUME_KEY, 4);
+
+        Debug.Log($"Loaded sound settings: Master={masterVolume}, BGM={bgmVolume}, SFX={sfxVolume}, VoiceOver={voiceOverVolume}");
 
         SetMasterVolume(masterVolume);
         SetBackgroundMusicVolume(bgmVolume);
