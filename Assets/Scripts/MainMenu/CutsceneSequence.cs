@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class CutsceneSequence : Panel
 {
-    public VideoPlayer videoPlayer; 
-    public VideoClip[] videoClips;
+    [SerializeField] private VideoPlayer videoPlayer; 
+    [SerializeField] private VideoClip[] videoClips;
+    [SerializeField] private string nextSceneName;
     private int currentVideoIndex = 0;
 
     public override void Open()
@@ -41,8 +42,10 @@ public class CutsceneSequence : Panel
         }
         else
         {
-            Debug.Log("All videos finished. Redirecting to Chapter 1.");
-            SceneManager.LoadScene("Chapter1"); 
+            if (!string.IsNullOrEmpty(nextSceneName))
+            {
+                PanelManager.LoadSceneAsync(nextSceneName);
+            }
         }
     }
 }
