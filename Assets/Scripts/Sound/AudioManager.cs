@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
         if (initialized) { return; }
         initialized = true;
         DontDestroyOnLoad(gameObject);
-        // LoadSoundSettings();
+        LoadSoundSettings();
     }
 
     private void Awake()
@@ -252,10 +252,10 @@ public class AudioManager : MonoBehaviour
 
     public void LoadSoundSettings()
     {
-        int masterVolume = PlayerPrefs.GetInt(MASTER_VOLUME_KEY, 4);
-        int bgmVolume = PlayerPrefs.GetInt(BGM_VOLUME_KEY, 4);
-        int sfxVolume = PlayerPrefs.GetInt(SFX_VOLUME_KEY, 4);
-        int voiceOverVolume = PlayerPrefs.GetInt(VOICEOVER_VOLUME_KEY, 4);
+        int masterVolume = PlayerPrefs.GetInt(MASTER_VOLUME_KEY);
+        int bgmVolume = PlayerPrefs.GetInt(BGM_VOLUME_KEY);
+        int sfxVolume = PlayerPrefs.GetInt(SFX_VOLUME_KEY);
+        int voiceOverVolume = PlayerPrefs.GetInt(VOICEOVER_VOLUME_KEY);
 
         SetMasterVolume(masterVolume);
         SetBackgroundMusicVolume(bgmVolume);
