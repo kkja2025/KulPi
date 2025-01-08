@@ -10,7 +10,7 @@ public class VolumeControlMenu : Panel
     [SerializeField] private string volumeType;
     private const int minVolume = 0;
     private const int maxVolume = 5;
-    private const int defaultVolume = 5;
+    private const int defaultVolume = 4;
 
     public override void Initialize()
     {
