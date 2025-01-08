@@ -8,7 +8,7 @@ public class CutsceneSequence : Panel
 {
     [SerializeField] private VideoPlayer videoPlayer; 
     [SerializeField] private VideoClip[] videoClips;
-    [SerializeField] private string nextSceneName;
+    [SerializeField] private string sceneNavigation;
     private int currentVideoIndex = 0;
 
     public override void Open()
@@ -42,9 +42,30 @@ public class CutsceneSequence : Panel
         }
         else
         {
-            if (!string.IsNullOrEmpty(nextSceneName))
+            if (Time.timeScale == 0)
             {
-                PanelManager.LoadSceneAsync(nextSceneName);
+                Time.timeScale = 1;
+            }
+
+            switch (sceneNavigation)
+            {
+                case "victory":
+                    Close();
+                    PanelManager.GetSingleton(sceneNavigation).Open();
+                    break;
+                case "chapter2cutscene":
+                    Close();
+                    PanelManager.Singleton.StartLoading(3f, null, 
+                    () => PanelManager.GetSingleton(sceneNavigation).Open());
+                    break;
+                case "cutscenesakim":
+                    Close();
+                    PanelManager.Singleton.StartLoading(3f, null, 
+                    () => PanelManager.GetSingleton(sceneNavigation).Open());
+                    break;
+                default:
+                    PanelManager.LoadSceneAsync(sceneNavigation);
+                    break;
             }
         }
     }

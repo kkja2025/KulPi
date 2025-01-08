@@ -46,7 +46,7 @@ public class EncyclopediaUnlock : Panel
                 GameManager.Singleton.UnlockEncyclopediaItem("Tikbalang", "unlocktikbalang");
                 await EncyclopediaManager.Singleton.SaveEncyclopediaEntryAsync();
                 break;
-            case "cutscenefinale":
+            case "chapter2cutscene":
                 PanelManager.GetSingleton(id).Close();
                 PanelManager.GetSingleton(actionButtonNavigation).Open();
                 break;
