@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
-using Firebase;
-using Firebase.Auth;
+// using Firebase;
+// using Firebase.Auth;
 
 public class LoginManager : MonoBehaviour
 {
     private bool initialized = false;
     private static LoginManager singleton = null;
-    private FirebaseAuth auth;
+    // private FirebaseAuth auth;
 
     public static LoginManager Singleton
     {
@@ -66,33 +66,34 @@ public class LoginManager : MonoBehaviour
                     Debug.Log("Unity Services initialized.");
                 }
 
-                var firebaseService = FirebaseService.Singleton;
-                if (firebaseService == null)
-                {
-                    Debug.Log("FirebaseService singleton is null.");
-                    if (attempt < maxRetries)
-                    {
-                        await Task.Delay(retryDelay); 
-                        continue; 
-                    }
-                    ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
-                    return;
-                }
+                // var firebaseService = FirebaseService.Singleton;
+                // if (firebaseService == null)
+                // {
+                //     Debug.Log("FirebaseService singleton is null.");
+                //     if (attempt < maxRetries)
+                //     {
+                //         await Task.Delay(retryDelay); 
+                //         continue; 
+                //     }
+                //     ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase.", "Retry");
+                //     return;
+                // }
 
-                auth = firebaseService.Auth;
-                if (auth == null)
-                {
-                    Debug.Log("FirebaseAuth instance is null.");
-                    if (attempt < maxRetries)
-                    {
-                        await Task.Delay(retryDelay); 
-                        continue; 
-                    }
-                    ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
-                    return;
-                }
+                // auth = firebaseService.Auth;
+                // if (auth == null)
+                // {
+                //     Debug.Log("FirebaseAuth instance is null.");
+                //     if (attempt < maxRetries)
+                //     {
+                //         await Task.Delay(retryDelay); 
+                //         continue; 
+                //     }
+                //     ShowPopUp(PopUpMenu.Action.StartService, "Failed to initialize Firebase Auth.", "Retry");
+                //     return;
+                // }
 
-                if (auth.CurrentUser != null)
+                // if (auth.CurrentUser != null)
+                if (AuthenticationService.Instance.IsSignedIn)
                 {
                     Debug.Log("User is signed in.");
                     AutomaticSignIn();
@@ -131,12 +132,17 @@ public class LoginManager : MonoBehaviour
 
     private async void AutomaticSignIn()
     {
-        FirebaseUser user = auth.CurrentUser;
-        if (user != null)
+        // FirebaseUser user = auth.CurrentUser;
+        if (AuthenticationService.Instance.IsSignedIn)
         {
-            Debug.Log($"User is already signed in: {user.Email}");
-            await LinkFirebaseWithUnity(user);
+            Debug.Log("User is already signed in.");
+            PanelManager.LoadSceneAsync("MainMenu");
         }
+        // if (user != null)
+        // {
+        //     Debug.Log($"User is already signed in: {user.Email}");
+        //     await LinkFirebaseWithUnity(user);
+        // }
         else
         {
             Debug.Log("No user is signed in.");
@@ -149,13 +155,15 @@ public class LoginManager : MonoBehaviour
     {
         try
         {
-            await auth.SignInWithEmailAndPasswordAsync(email, password);
-            await LinkFirebaseWithUnity(auth.CurrentUser);
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(email, password);
+            // await auth.SignInWithEmailAndPasswordAsync(email, password);
+            // await LinkFirebaseWithUnity(auth.CurrentUser);
+            AutomaticSignIn();
         }
-        catch (FirebaseException firebaseException)
-        {
-            HandleFirebaseAuthErrors(firebaseException);
-        }
+        // catch (FirebaseException firebaseException)
+        // {
+        //     HandleFirebaseAuthErrors(firebaseException);
+        // }
         catch (Exception exception)
         {
             Debug.Log("Error during sign in: " + exception.Message);
@@ -163,36 +171,37 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async Task LinkFirebaseWithUnity(FirebaseUser firebaseUser)
-    {
-        try
-        {
-            PanelManager.LoadSceneAsync("MainMenu");
-            string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
-            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
-            Debug.Log("Successfully linked Firebase with Unity Authentication.");
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Linking Firebase with Unity Authentication failed: " + e.Message);
-            ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity Authentication failed", "OK");
-        }
-    }
+    // public async Task LinkFirebaseWithUnity(FirebaseUser firebaseUser)
+    // {
+    //     try
+    //     {
+    //         PanelManager.LoadSceneAsync("MainMenu");
+    //         string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
+    //         await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
+    //         Debug.Log("Successfully linked Firebase with Unity Authentication.");
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Debug.Log("Linking Firebase with Unity Authentication failed: " + e.Message);
+    //         ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity Authentication failed", "OK");
+    //     }
+    // }
 
     public async void SignUpAsync(string email, string password)
     {
         try
         {
-            var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
-
-            FirebaseUser newUser = authResult.User;
-            await SignUpUnityWithFirebase(newUser);
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(email, password);
+            AutomaticSignIn();
+            // var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
+            // FirebaseUser newUser = authResult.User;
+            // await SignUpUnityWithFirebase(newUser);
         }
-        catch (FirebaseException firebaseException)
-        {
-            Debug.Log("Firebase error during user creation: " + firebaseException.Message);
-            ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
-        }
+        // catch (FirebaseException firebaseException)
+        // {
+        //     Debug.Log("Firebase error during user creation: " + firebaseException.Message);
+        //     ShowPopUp(PopUpMenu.Action.None, "Email already registered", "OK");
+        // }
         catch (Exception exception)
         {
             Debug.Log("Error during user creation: " + exception.Message);
@@ -200,35 +209,35 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async Task SignUpUnityWithFirebase(FirebaseUser firebaseUser)
-    {
-        try
-        {
-            PanelManager.LoadSceneAsync("MainMenu");
-            string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
-            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
-            Debug.Log("Successfully linked Firebase account to Unity.");
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Linking Firebase with Unity failed: " + e.Message);
-            ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity failed", "OK");
-        }
-    }
+    // public async Task SignUpUnityWithFirebase(FirebaseUser firebaseUser)
+    // {
+    //     try
+    //     {
+    //         PanelManager.LoadSceneAsync("MainMenu");
+    //         string trimmedString = firebaseUser.UserId.Length > 20 ? firebaseUser.UserId.Substring(0, 20) : firebaseUser.UserId;
+    //         await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(trimmedString, "A1b@C2d#Ef3G");
+    //         Debug.Log("Successfully linked Firebase account to Unity.");
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         Debug.Log("Linking Firebase with Unity failed: " + e.Message);
+    //         ShowPopUp(PopUpMenu.Action.StartService, "Linking Firebase with Unity failed", "OK");
+    //     }
+    // }
 
     public async void RequestResetPasswordAsync(string email)
     {
         try
         {
-            await auth.SendPasswordResetEmailAsync(email);
+            // await auth.SendPasswordResetEmailAsync(email);
             Debug.Log("Password reset email sent successfully.");
             ShowPopUp(PopUpMenu.Action.None, "Password reset email sent successfully.", "OK");
         }
-        catch (FirebaseException firebaseException)
-        {
-            Debug.Log("Firebase error during password reset: " + firebaseException.Message);
-            ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
-        }
+        // catch (FirebaseException firebaseException)
+        // {
+        //     Debug.Log("Firebase error during password reset: " + firebaseException.Message);
+        //     ShowPopUp(PopUpMenu.Action.None, "Password reset encountered an error", "OK");
+        // }
         catch (Exception exception)
         {
             Debug.Log("Error during password reset: " + exception.Message);
@@ -242,23 +251,23 @@ public class LoginManager : MonoBehaviour
         panel.Open(action, text, button);
     }
 
-    private void HandleFirebaseAuthErrors(FirebaseException firebaseException)
-    {
-        switch ((AuthError)firebaseException.ErrorCode)
-        {
-            case AuthError.InvalidEmail:
-                ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
-                break;
-            case AuthError.WrongPassword:
-                ShowPopUp(PopUpMenu.Action.None, "Incorrect password", "OK");
-                break;
-            case AuthError.UserNotFound:
-                ShowPopUp(PopUpMenu.Action.None, "User not found", "OK");
-                break;
-            default:
-                ShowPopUp(PopUpMenu.Action.None, "Login failed. Please try again.", "OK");
-                break;
-        }
-        Debug.Log("Firebase error during sign in: " + firebaseException.Message);
-    }
+    // private void HandleFirebaseAuthErrors(FirebaseException firebaseException)
+    // {
+    //     switch ((AuthError)firebaseException.ErrorCode)
+    //     {
+    //         case AuthError.InvalidEmail:
+    //             ShowPopUp(PopUpMenu.Action.None, "Invalid email format", "OK");
+    //             break;
+    //         case AuthError.WrongPassword:
+    //             ShowPopUp(PopUpMenu.Action.None, "Incorrect password", "OK");
+    //             break;
+    //         case AuthError.UserNotFound:
+    //             ShowPopUp(PopUpMenu.Action.None, "User not found", "OK");
+    //             break;
+    //         default:
+    //             ShowPopUp(PopUpMenu.Action.None, "Login failed. Please try again.", "OK");
+    //             break;
+    //     }
+    //     Debug.Log("Firebase error during sign in: " + firebaseException.Message);
+    // }
 }

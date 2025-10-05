@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-using Firebase;
-using Firebase.Auth;
+// using Firebase;
+// using Firebase.Auth;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 #if UNITY_EDITOR
@@ -12,8 +12,8 @@ public class MainMenuManager : MonoBehaviour
 {
     private bool initialized = false;
     private static MainMenuManager singleton = null;
-    private FirebaseAuth auth;
-    private FirebaseUser user;
+    // private FirebaseAuth auth;
+    // private FirebaseUser user;
 
     public static MainMenuManager Singleton
     {
@@ -51,10 +51,11 @@ public class MainMenuManager : MonoBehaviour
     {
         try
         {
-            var firebaseService = FirebaseService.Singleton;
-            auth = firebaseService.Auth;
-            FirebaseUser user = auth.CurrentUser;
-            if (user != null)
+            // var firebaseService = FirebaseService.Singleton;
+            // auth = firebaseService.Auth;
+            // FirebaseUser user = auth.CurrentUser;
+            // if (user != null)
+            if (AuthenticationService.Instance.IsSignedIn)
             {
                 PanelManager.CloseAll();
                 PanelManager.GetSingleton("main").Open();
@@ -71,16 +72,16 @@ public class MainMenuManager : MonoBehaviour
     {
         PanelManager.Singleton.StartLoading(2f, 
         () => {
-            FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-            if (auth.CurrentUser != null)
-            {
-                auth.SignOut();
-                Debug.Log("User signed out from Firebase.");
-            }
-            else
-            {
-                Debug.Log("No user is signed in to Firebase.");
-            }
+            // FirebaseAuth auth = FirebaseAuth.DefaultInstance;
+            // if (auth.CurrentUser != null)
+            // {
+            //     auth.SignOut();
+            //     Debug.Log("User signed out from Firebase.");
+            // }
+            // else
+            // {
+            //     Debug.Log("No user is signed in to Firebase.");
+            // }
 
             if (AuthenticationService.Instance.IsSignedIn)
             {
